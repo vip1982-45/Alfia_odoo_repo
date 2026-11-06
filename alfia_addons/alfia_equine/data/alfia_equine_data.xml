@@ -1,0 +1,58 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_embryo" model="ir.sequence">
+            <field name="name">Embryo code</field>
+            <field name="code">alfia.embryo</field>
+            <field name="prefix">EMB-</field>
+            <field name="padding">5</field>
+        </record>
+        <record id="seq_semen_collection" model="ir.sequence">
+            <field name="name">Semen collection</field>
+            <field name="code">alfia.semen.collection</field>
+            <field name="prefix">SEM-</field>
+            <field name="padding">5</field>
+        </record>
+
+        <!-- Teasing chart symbols: the stud's own chart replaces these during design. -->
+        <record id="symbol_strong_heat" model="alfia.teasing.symbol">
+            <field name="name">Strong heat (receptive)</field><field name="code">SH</field><field name="sequence">10</field><field name="is_heat" eval="True"/>
+        </record>
+        <record id="symbol_heat" model="alfia.teasing.symbol">
+            <field name="name">Heat</field><field name="code">H</field><field name="sequence">20</field><field name="is_heat" eval="True"/>
+        </record>
+        <record id="symbol_doubtful" model="alfia.teasing.symbol">
+            <field name="name">Doubtful</field><field name="code">D</field><field name="sequence">30</field><field name="is_heat" eval="False"/>
+        </record>
+        <record id="symbol_not_receptive" model="alfia.teasing.symbol">
+            <field name="name">Not receptive</field><field name="code">N</field><field name="sequence">40</field><field name="is_heat" eval="False"/>
+        </record>
+
+        <!-- Draft rule set with the target parameters. A resident vet must approve it before anything is scheduled. -->
+        <record id="rule_default" model="alfia.breeding.rule">
+            <field name="name">Standard breeding schedule</field>
+            <field name="version">1</field>
+            <field name="state">draft</field>
+            <field name="check_offsets">14,18,21,28,35,45,60,75,90,120</field>
+            <field name="gestation_days">340</field>
+            <field name="prep_days">30</field>
+            <field name="vaccine_months">3,5,7,9</field>
+            <field name="teasing_pregnant_until_day">120</field>
+            <field name="day_zero_notes">Day zero is the vet-confirmed ovulation date. Pregnancy months are counted from it. To be signed off by the resident veterinarian.</field>
+        </record>
+
+        <!-- Controlled stock: semen and embryos are visible only to custodians and need two approvals to dispatch. -->
+        <record id="category_semen" model="product.category">
+            <field name="name">Semen and embryos</field>
+            <field name="alfia_access_group_id" ref="alfia_security.group_alfia_semen_custodian"/>
+            <field name="alfia_dual_approval" eval="True"/>
+            <field name="alfia_approver_group_ids" eval="[(6, 0, [ref('alfia_security.group_alfia_dispatch_admin_approver'), ref('alfia_security.group_alfia_dispatch_vet_approver')])]"/>
+        </record>
+        <record id="product_frozen_semen" model="product.product">
+            <field name="name">Frozen semen dose</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">lot</field>
+            <field name="categ_id" ref="category_semen"/>
+        </record>
+    </data>
+</odoo>

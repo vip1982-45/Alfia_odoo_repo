@@ -1,0 +1,201 @@
+<odoo>
+    <record id="alfia_horse_view_list" model="ir.ui.view">
+        <field name="name">alfia.horse.list</field>
+        <field name="model">alfia.horse</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="sex"/>
+                <field name="birthdate"/>
+                <field name="age_text"/>
+                <field name="breed"/>
+                <field name="reg_id"/>
+                <field name="location_id"/>
+                <field name="reproductive_state" optional="show"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="alfia_horse_view_form" model="ir.ui.view">
+        <field name="name">alfia.horse.form</field>
+        <field name="model">alfia.horse</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_open_merge" string="Merge duplicate…" type="object"/>
+                    <field name="status" widget="statusbar" statusbar_visible="active,reference,sold,retired,dead"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_open_records" context="{'records_model': 'alfia.task'}" icon="fa-tasks">
+                            <div class="o_stat_info"><span class="o_stat_text">Work items</span></div></button>
+                        <button class="oe_stat_button" type="object" name="action_open_records" context="{'records_model': 'alfia.health.record'}" icon="fa-heartbeat">
+                            <div class="o_stat_info"><span class="o_stat_text">Health</span></div></button>
+                        <button class="oe_stat_button" type="object" name="action_open_records" context="{'records_model': 'alfia.treatment'}" icon="fa-medkit">
+                            <div class="o_stat_info"><span class="o_stat_text">Treatments</span></div></button>
+                        <button class="oe_stat_button" type="object" name="action_open_records" context="{'records_model': 'alfia.farrier.visit'}" icon="fa-wrench">
+                            <div class="o_stat_info"><span class="o_stat_text">Farrier</span></div></button>
+                        <button class="oe_stat_button" type="object" name="action_open_records" context="{'records_model': 'alfia.measurement'}" icon="fa-balance-scale">
+                            <div class="o_stat_info"><span class="o_stat_text">Weight</span></div></button>
+                        <button class="oe_stat_button" type="object" name="action_open_records" context="{'records_model': 'alfia.temperature'}" icon="fa-thermometer-half">
+                            <div class="o_stat_info"><span class="o_stat_text">Temperature</span></div></button>
+                        <button class="oe_stat_button" type="object" name="action_open_records" context="{'records_model': 'alfia.training.session'}" icon="fa-road">
+                            <div class="o_stat_info"><span class="o_stat_text">Training</span></div></button>
+                        <button class="oe_stat_button" type="object" name="action_open_records" context="{'records_model': 'alfia.pregnancy'}" icon="fa-venus" invisible="sex != 'female'">
+                            <div class="o_stat_info"><span class="o_stat_text">Pregnancies</span></div></button>
+                        <button class="oe_stat_button" type="object" name="action_open_records" context="{'records_model': 'alfia.semen.collection'}" icon="fa-flask" invisible="sex != 'male'">
+                            <div class="o_stat_info"><span class="o_stat_text">Semen</span></div></button>
+                    </div>
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    <div class="oe_title"><h1><field name="name" placeholder="Horse name"/></h1></div>
+                    <group>
+                        <group string="Identity">
+                            <field name="sex"/>
+                            <field name="birthdate"/>
+                            <field name="age_text"/>
+                            <field name="breed"/>
+                            <field name="color"/>
+                            <field name="reg_id"/>
+                            <field name="microchip"/>
+                            <field name="passport"/>
+                            <field name="ueln"/>
+                            <field name="fei"/>
+                        </group>
+                        <group string="Today">
+                            <field name="location_id"/>
+                            <field name="on_site"/>
+                            <field name="owner_ids" widget="many2many_tags"/>
+                            <field name="reproductive_state" invisible="sex != 'female'"/>
+                            <field name="fitness_state"/>
+                            <field name="eligibility_state"/>
+                            <field name="next_health_due"/>
+                            <field name="initial_location_id" invisible="id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Pedigree" name="pedigree">
+                            <group>
+                                <group>
+                                    <field name="sire_id"/>
+                                    <field name="sire_name"/>
+                                    <field name="dam_id"/>
+                                    <field name="dam_name"/>
+                                    <field name="carrier_mare_id"/>
+                                </group>
+                                <group>
+                                    <field name="inbreeding"/>
+                                    <field name="offspring_count"/>
+                                    <field name="sibling_count"/>
+                                </group>
+                            </group>
+                            <field name="pedigree_html"/>
+                        </page>
+                        <page string="Ownership" name="ownership">
+                            <field name="ownership_ids">
+                                <list editable="bottom">
+                                    <field name="partner_id"/>
+                                    <field name="share"/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="reason"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Movements" name="movements">
+                            <field name="movement_ids">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="kind"/>
+                                    <field name="location_from_id"/>
+                                    <field name="location_to_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="People" name="people">
+                            <group>
+                                <field name="breeder_id"/>
+                                <field name="rider_id"/>
+                                <field name="vet_id"/>
+                                <field name="invoice_to_id"/>
+                                <field name="insurance_policy"/>
+                                <field name="insurance_contact"/>
+                            </group>
+                        </page>
+                        <page string="Markings and notes" name="notes">
+                            <group>
+                                <field name="markings"/>
+                                <field name="comments"/>
+                            </group>
+                        </page>
+                        <page string="Status history" name="status_log">
+                            <field name="status_log_ids">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="status"/>
+                                    <field name="user_id"/>
+                                    <field name="reason"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="alfia_horse_view_search" model="ir.ui.view">
+        <field name="name">alfia.horse.search</field>
+        <field name="model">alfia.horse</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="['|', '|', '|', ('name', 'ilike', self), ('alias', 'ilike', self), ('reg_id', 'ilike', self), ('microchip', 'ilike', self)]"/>
+                <field name="breed"/>
+                <field name="location_id"/>
+                <filter name="active_status" string="Active" domain="[('status', '=', 'active')]"/>
+                <filter name="mares" string="Mares" domain="[('sex', '=', 'female')]"/>
+                <filter name="stallions" string="Stallions" domain="[('sex', '=', 'male')]"/>
+                <filter name="pregnant" string="Bred or pregnant" domain="[('reproductive_state', 'in', ('bred', 'pregnant'))]"/>
+                <filter name="teasing_due" string="To tease today" domain="[('teasing_due', '=', True)]"/>
+                <filter name="on_site" string="On site" domain="[('on_site', '=', True)]"/>
+                <filter name="inactive" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="by_sex" string="Sex" context="{'group_by': 'sex'}"/>
+                    <filter name="by_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="by_location" string="Location" context="{'group_by': 'location_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="alfia_horse_action" model="ir.actions.act_window">
+        <field name="name">Horses</field>
+        <field name="res_model">alfia.horse</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_active_status': 1}</field>
+    </record>
+
+    <record id="alfia_horse_merge_view_form" model="ir.ui.view">
+        <field name="name">alfia.horse.merge.form</field>
+        <field name="model">alfia.horse.merge</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>Every record of the duplicate (health, breeding, ownership, tasks, movements…) moves to the horse you keep. Identifiers the kept horse lacks
+                    are taken from the duplicate, and the duplicate is archived.</p>
+                <group>
+                    <field name="duplicate_id"/>
+                    <field name="keep_id"/>
+                </group>
+                <footer>
+                    <button string="Merge" name="action_merge" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

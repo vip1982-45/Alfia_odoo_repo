@@ -1,0 +1,692 @@
+<odoo>
+
+    <record id="alfia_task_view_list" model="ir.ui.view">
+        <field name="name">alfia.task.list</field>
+        <field name="model">alfia.task</field>
+        <field name="arch" type="xml"><list><field name="due_date"/><field name="horse_id"/><field name="name"/><field name="kind"/><field name="urgent"/><field name="assigned_group_id"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_task_view_form" model="ir.ui.view">
+        <field name="name">alfia.task.form</field>
+        <field name="model">alfia.task</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_done" string="Mark done" type="object" class="btn-primary" invisible="state in ('done','cancelled')"/><button name="action_defer" string="Defer" type="object" class="" invisible="state != 'todo'"/><button name="action_cancel" string="Cancel" type="object" class="" invisible="state in ('done','cancelled')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="horse_id"/><field name="kind"/><field name="due_date"/></group><group><field name="urgent"/><field name="assigned_user_id"/><field name="assigned_group_id"/><field name="state"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_task_view_search" model="ir.ui.view">
+        <field name="name">alfia.task.search</field>
+        <field name="model">alfia.task</field>
+        <field name="arch" type="xml"><search><field name="name"/><field name="horse_id"/><filter name="todo" string="To do" domain="[('state', '=', 'todo')]"/><filter name="overdue" string="Overdue" domain="[('overdue', '=', True)]"/><filter name="urgent" string="Urgent" domain="[('urgent', '=', True)]"/></search></field>
+    </record>
+    <record id="alfia_task_action" model="ir.actions.act_window">
+        <field name="name">Work items</field>
+        <field name="res_model">alfia.task</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_health_record_view_list" model="ir.ui.view">
+        <field name="name">alfia.health.record.list</field>
+        <field name="model">alfia.health.record</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="type"/><field name="title"/><field name="vet_id"/><field name="next_due"/><field name="cost"/></list></field>
+    </record>
+    <record id="alfia_health_record_view_form" model="ir.ui.view">
+        <field name="name">alfia.health.record.form</field>
+        <field name="model">alfia.health.record</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="date"/><field name="type"/><field name="title"/></group><group><field name="vet_id"/><field name="cost"/><field name="next_due"/></group></group><group><field name="description"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_health_record_view_search" model="ir.ui.view">
+        <field name="name">alfia.health.record.search</field>
+        <field name="model">alfia.health.record</field>
+        <field name="arch" type="xml"><search><field name="title"/><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_health_record_action" model="ir.actions.act_window">
+        <field name="name">Health records</field>
+        <field name="res_model">alfia.health.record</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_vet_visit_view_list" model="ir.ui.view">
+        <field name="name">alfia.vet.visit.list</field>
+        <field name="model">alfia.vet.visit</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="vet_id"/><field name="reason"/><field name="follow_up"/><field name="cost"/></list></field>
+    </record>
+    <record id="alfia_vet_visit_view_form" model="ir.ui.view">
+        <field name="name">alfia.vet.visit.form</field>
+        <field name="model">alfia.vet.visit</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="date"/><field name="vet_id"/></group><group><field name="reason"/><field name="follow_up"/><field name="cost"/></group></group><group><field name="diagnosis"/><field name="treatment_given"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_vet_visit_view_search" model="ir.ui.view">
+        <field name="name">alfia.vet.visit.search</field>
+        <field name="model">alfia.vet.visit</field>
+        <field name="arch" type="xml"><search><field name="reason"/><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_vet_visit_action" model="ir.actions.act_window">
+        <field name="name">Vet visits</field>
+        <field name="res_model">alfia.vet.visit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_treatment_view_list" model="ir.ui.view">
+        <field name="name">alfia.treatment.list</field>
+        <field name="model">alfia.treatment</field>
+        <field name="arch" type="xml"><list><field name="start_date"/><field name="horse_id"/><field name="drug"/><field name="dose"/><field name="route"/><field name="frequency"/><field name="withdrawal_until"/><field name="given_count"/></list></field>
+    </record>
+    <record id="alfia_treatment_view_form" model="ir.ui.view">
+        <field name="name">alfia.treatment.form</field>
+        <field name="model">alfia.treatment</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="drug"/><field name="dose"/><field name="route"/><field name="frequency"/></group><group><field name="vet_id"/><field name="start_date"/><field name="end_date"/><field name="withdrawal_days"/><field name="withdrawal_until"/></group></group><group><field name="notes"/></group><field name="dose_ids"><list editable="bottom"><field name="given_at"/><field name="dose_given"/><field name="missed"/><field name="notes"/></list></field></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_treatment_view_search" model="ir.ui.view">
+        <field name="name">alfia.treatment.search</field>
+        <field name="model">alfia.treatment</field>
+        <field name="arch" type="xml"><search><field name="drug"/><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_treatment_action" model="ir.actions.act_window">
+        <field name="name">Treatments</field>
+        <field name="res_model">alfia.treatment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_treatment_dose_view_list" model="ir.ui.view">
+        <field name="name">alfia.treatment.dose.list</field>
+        <field name="model">alfia.treatment.dose</field>
+        <field name="arch" type="xml"><list><field name="given_at"/><field name="horse_id"/><field name="treatment_id"/><field name="dose_given"/><field name="missed"/><field name="given_by_id"/></list></field>
+    </record>
+    <record id="alfia_treatment_dose_view_form" model="ir.ui.view">
+        <field name="name">alfia.treatment.dose.form</field>
+        <field name="model">alfia.treatment.dose</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="treatment_id"/><field name="given_at"/><field name="dose_given"/></group><group><field name="missed"/><field name="notes"/></group></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_treatment_dose_view_search" model="ir.ui.view">
+        <field name="name">alfia.treatment.dose.search</field>
+        <field name="model">alfia.treatment.dose</field>
+        <field name="arch" type="xml"><search><field name="treatment_id"/></search></field>
+    </record>
+    <record id="alfia_treatment_dose_action" model="ir.actions.act_window">
+        <field name="name">Doses given</field>
+        <field name="res_model">alfia.treatment.dose</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_lab_test_view_list" model="ir.ui.view">
+        <field name="name">alfia.lab.test.list</field>
+        <field name="model">alfia.lab.test</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="test"/><field name="lab"/><field name="result"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_lab_test_view_form" model="ir.ui.view">
+        <field name="name">alfia.lab.test.form</field>
+        <field name="model">alfia.lab.test</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_review" string="Vet review" type="object" class="btn-primary" invisible="state == 'reviewed'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="date"/><field name="test"/><field name="lab"/><field name="vet_id"/></group><group><field name="result"/><field name="reference_range"/><field name="state"/><field name="reviewed_by_id"/></group></group><group><field name="notes"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_lab_test_view_search" model="ir.ui.view">
+        <field name="name">alfia.lab.test.search</field>
+        <field name="model">alfia.lab.test</field>
+        <field name="arch" type="xml"><search><field name="test"/><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_lab_test_action" model="ir.actions.act_window">
+        <field name="name">Laboratory tests</field>
+        <field name="res_model">alfia.lab.test</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_diag_image_view_list" model="ir.ui.view">
+        <field name="name">alfia.diag.image.list</field>
+        <field name="model">alfia.diag.image</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="modality"/><field name="body_part"/><field name="vet_id"/></list></field>
+    </record>
+    <record id="alfia_diag_image_view_form" model="ir.ui.view">
+        <field name="name">alfia.diag.image.form</field>
+        <field name="model">alfia.diag.image</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="date"/><field name="modality"/></group><group><field name="body_part"/><field name="vet_id"/><field name="attachment_ids"/></group></group><group><field name="findings"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_diag_image_view_search" model="ir.ui.view">
+        <field name="name">alfia.diag.image.search</field>
+        <field name="model">alfia.diag.image</field>
+        <field name="arch" type="xml"><search><field name="body_part"/><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_diag_image_action" model="ir.actions.act_window">
+        <field name="name">Diagnostic images</field>
+        <field name="res_model">alfia.diag.image</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_odontology_view_list" model="ir.ui.view">
+        <field name="name">alfia.odontology.list</field>
+        <field name="model">alfia.odontology</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="vet_id"/><field name="floated"/><field name="next_date"/></list></field>
+    </record>
+    <record id="alfia_odontology_view_form" model="ir.ui.view">
+        <field name="name">alfia.odontology.form</field>
+        <field name="model">alfia.odontology</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="date"/><field name="vet_id"/><field name="floated"/></group><group><field name="extractions"/><field name="next_date"/><field name="cost"/></group></group><group><field name="findings"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_odontology_view_search" model="ir.ui.view">
+        <field name="name">alfia.odontology.search</field>
+        <field name="model">alfia.odontology</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_odontology_action" model="ir.actions.act_window">
+        <field name="name">Dental exams</field>
+        <field name="res_model">alfia.odontology</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_farrier_visit_view_list" model="ir.ui.view">
+        <field name="name">alfia.farrier.visit.list</field>
+        <field name="model">alfia.farrier.visit</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="farrier_id"/><field name="lf_shoe"/><field name="rf_shoe"/><field name="lh_shoe"/><field name="rh_shoe"/><field name="next_date"/></list></field>
+    </record>
+    <record id="alfia_farrier_visit_view_form" model="ir.ui.view">
+        <field name="name">alfia.farrier.visit.form</field>
+        <field name="model">alfia.farrier.visit</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="date"/><field name="farrier_id"/><field name="lf_shoe"/><field name="rf_shoe"/></group><group><field name="lh_shoe"/><field name="rh_shoe"/><field name="materials"/><field name="cost"/><field name="next_date"/></group></group><group><field name="findings"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_farrier_visit_view_search" model="ir.ui.view">
+        <field name="name">alfia.farrier.visit.search</field>
+        <field name="model">alfia.farrier.visit</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_farrier_visit_action" model="ir.actions.act_window">
+        <field name="name">Farrier</field>
+        <field name="res_model">alfia.farrier.visit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_measurement_view_list" model="ir.ui.view">
+        <field name="name">alfia.measurement.list</field>
+        <field name="model">alfia.measurement</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="weight"/><field name="height"/><field name="girth"/></list></field>
+    </record>
+    <record id="alfia_measurement_view_form" model="ir.ui.view">
+        <field name="name">alfia.measurement.form</field>
+        <field name="model">alfia.measurement</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="date"/><field name="weight"/></group><group><field name="height"/><field name="girth"/><field name="notes"/></group></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_measurement_view_search" model="ir.ui.view">
+        <field name="name">alfia.measurement.search</field>
+        <field name="model">alfia.measurement</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_measurement_action" model="ir.actions.act_window">
+        <field name="name">Weight and height</field>
+        <field name="res_model">alfia.measurement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_temperature_view_list" model="ir.ui.view">
+        <field name="name">alfia.temperature.list</field>
+        <field name="model">alfia.temperature</field>
+        <field name="arch" type="xml"><list><field name="taken_at"/><field name="horse_id"/><field name="temperature"/><field name="pulse"/><field name="respiration"/><field name="notes"/></list></field>
+    </record>
+    <record id="alfia_temperature_view_form" model="ir.ui.view">
+        <field name="name">alfia.temperature.form</field>
+        <field name="model">alfia.temperature</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="taken_at"/><field name="temperature"/></group><group><field name="pulse"/><field name="respiration"/><field name="notes"/></group></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_temperature_view_search" model="ir.ui.view">
+        <field name="name">alfia.temperature.search</field>
+        <field name="model">alfia.temperature</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_temperature_action" model="ir.actions.act_window">
+        <field name="name">Temperature</field>
+        <field name="res_model">alfia.temperature</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_horse_note_view_list" model="ir.ui.view">
+        <field name="name">alfia.horse.note.list</field>
+        <field name="model">alfia.horse.note</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="content"/><field name="recorded_by_id"/></list></field>
+    </record>
+    <record id="alfia_horse_note_view_form" model="ir.ui.view">
+        <field name="name">alfia.horse.note.form</field>
+        <field name="model">alfia.horse.note</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/></group><group><field name="date"/></group></group><group><field name="content"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_horse_note_view_search" model="ir.ui.view">
+        <field name="name">alfia.horse.note.search</field>
+        <field name="model">alfia.horse.note</field>
+        <field name="arch" type="xml"><search><field name="content"/><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_horse_note_action" model="ir.actions.act_window">
+        <field name="name">Notes</field>
+        <field name="res_model">alfia.horse.note</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_clearance_view_list" model="ir.ui.view">
+        <field name="name">alfia.clearance.list</field>
+        <field name="model">alfia.clearance</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="kind"/><field name="state"/><field name="restricted_until"/><field name="decided_by_id"/></list></field>
+    </record>
+    <record id="alfia_clearance_view_form" model="ir.ui.view">
+        <field name="name">alfia.clearance.form</field>
+        <field name="model">alfia.clearance</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_clear" string="Clear" type="object" class="btn-primary" invisible="state == 'cleared'"/><button name="action_restrict" string="Restrict" type="object" class="" invisible="state == 'restricted'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="kind"/><field name="date"/></group><group><field name="state"/><field name="restricted_until"/><field name="decided_by_id"/></group></group><group><field name="notes"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_clearance_view_search" model="ir.ui.view">
+        <field name="name">alfia.clearance.search</field>
+        <field name="model">alfia.clearance</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_clearance_action" model="ir.actions.act_window">
+        <field name="name">Fitness and eligibility</field>
+        <field name="res_model">alfia.clearance</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_training_session_view_list" model="ir.ui.view">
+        <field name="name">alfia.training.session.list</field>
+        <field name="model">alfia.training.session</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="program"/><field name="gait"/><field name="distance_km"/><field name="duration_min"/><field name="effort"/><field name="rest_day"/></list></field>
+    </record>
+    <record id="alfia_training_session_view_form" model="ir.ui.view">
+        <field name="name">alfia.training.session.form</field>
+        <field name="model">alfia.training.session</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="date"/><field name="program"/><field name="trainer_id"/><field name="gait"/><field name="distance_km"/></group><group><field name="duration_min"/><field name="effort"/><field name="horse_weight"/><field name="rest_day"/><field name="entry_mode"/></group></group><group><field name="notes"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_training_session_view_search" model="ir.ui.view">
+        <field name="name">alfia.training.session.search</field>
+        <field name="model">alfia.training.session</field>
+        <field name="arch" type="xml"><search><field name="program"/><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_training_session_action" model="ir.actions.act_window">
+        <field name="name">Training sessions</field>
+        <field name="res_model">alfia.training.session</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_competition_view_list" model="ir.ui.view">
+        <field name="name">alfia.competition.list</field>
+        <field name="model">alfia.competition</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="event"/><field name="discipline"/><field name="result"/><field name="score"/><field name="prize_money"/></list></field>
+    </record>
+    <record id="alfia_competition_view_form" model="ir.ui.view">
+        <field name="name">alfia.competition.form</field>
+        <field name="model">alfia.competition</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="date"/><field name="event"/><field name="location"/><field name="discipline"/></group><group><field name="class_name"/><field name="rider_id"/><field name="result"/><field name="score"/><field name="prize_money"/></group></group><group><field name="notes"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_competition_view_search" model="ir.ui.view">
+        <field name="name">alfia.competition.search</field>
+        <field name="model">alfia.competition</field>
+        <field name="arch" type="xml"><search><field name="event"/><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_competition_action" model="ir.actions.act_window">
+        <field name="name">Competitions</field>
+        <field name="res_model">alfia.competition</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_scoring_view_list" model="ir.ui.view">
+        <field name="name">alfia.scoring.list</field>
+        <field name="model">alfia.scoring</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="assessor_id"/><field name="score"/><field name="movement"/><field name="conformation"/><field name="temperament"/></list></field>
+    </record>
+    <record id="alfia_scoring_view_form" model="ir.ui.view">
+        <field name="name">alfia.scoring.form</field>
+        <field name="model">alfia.scoring</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="date"/><field name="assessor_id"/><field name="score"/></group><group><field name="movement"/><field name="conformation"/><field name="temperament"/></group></group><group><field name="notes"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_scoring_view_search" model="ir.ui.view">
+        <field name="name">alfia.scoring.search</field>
+        <field name="model">alfia.scoring</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_scoring_action" model="ir.actions.act_window">
+        <field name="name">Assessments</field>
+        <field name="res_model">alfia.scoring</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_teasing_view_list" model="ir.ui.view">
+        <field name="name">alfia.teasing.list</field>
+        <field name="model">alfia.teasing</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="mare_id"/><field name="symbol_id"/><field name="is_heat"/><field name="observer_id"/><field name="notes"/></list></field>
+    </record>
+    <record id="alfia_teasing_view_form" model="ir.ui.view">
+        <field name="name">alfia.teasing.form</field>
+        <field name="model">alfia.teasing</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="mare_id"/><field name="date"/></group><group><field name="symbol_id"/><field name="notes"/></group></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_teasing_view_search" model="ir.ui.view">
+        <field name="name">alfia.teasing.search</field>
+        <field name="model">alfia.teasing</field>
+        <field name="arch" type="xml"><search><field name="mare_id"/><filter name="heat" string="Heat observed" domain="[('is_heat', '=', True)]"/></search></field>
+    </record>
+    <record id="alfia_teasing_action" model="ir.actions.act_window">
+        <field name="name">Teasing chart</field>
+        <field name="res_model">alfia.teasing</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_breeding_service_view_list" model="ir.ui.view">
+        <field name="name">alfia.breeding.service.list</field>
+        <field name="model">alfia.breeding.service</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="mare_id"/><field name="stallion_id"/><field name="stallion_name"/><field name="method"/><field name="season"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_breeding_service_view_form" model="ir.ui.view">
+        <field name="name">alfia.breeding.service.form</field>
+        <field name="model">alfia.breeding.service</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_done" string="Mark done" type="object" class="btn-primary" invisible="state != 'planned'"/><button name="action_cancel" string="Cancel" type="object" class="" invisible="state != 'planned'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="mare_id"/><field name="stallion_id"/><field name="stallion_name"/><field name="date"/></group><group><field name="method"/><field name="semen_lot_id"/><field name="state"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_breeding_service_view_search" model="ir.ui.view">
+        <field name="name">alfia.breeding.service.search</field>
+        <field name="model">alfia.breeding.service</field>
+        <field name="arch" type="xml"><search><field name="mare_id"/><field name="stallion_id"/></search></field>
+    </record>
+    <record id="alfia_breeding_service_action" model="ir.actions.act_window">
+        <field name="name">Services</field>
+        <field name="res_model">alfia.breeding.service</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_ovulation_view_list" model="ir.ui.view">
+        <field name="name">alfia.ovulation.list</field>
+        <field name="model">alfia.ovulation</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="mare_id"/><field name="service_id"/><field name="state"/><field name="pregnancy_id"/></list></field>
+    </record>
+    <record id="alfia_ovulation_view_form" model="ir.ui.view">
+        <field name="name">alfia.ovulation.form</field>
+        <field name="model">alfia.ovulation</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_confirm" string="Vet confirms ovulation" type="object" class="btn-primary" invisible="state == 'confirmed'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="mare_id"/><field name="service_id"/><field name="date"/></group><group><field name="state"/><field name="confirmed_by_id"/><field name="pregnancy_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_ovulation_view_search" model="ir.ui.view">
+        <field name="name">alfia.ovulation.search</field>
+        <field name="model">alfia.ovulation</field>
+        <field name="arch" type="xml"><search><field name="mare_id"/></search></field>
+    </record>
+    <record id="alfia_ovulation_action" model="ir.actions.act_window">
+        <field name="name">Ovulations</field>
+        <field name="res_model">alfia.ovulation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_reproductive_exam_view_list" model="ir.ui.view">
+        <field name="name">alfia.reproductive.exam.list</field>
+        <field name="model">alfia.reproductive.exam</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="mare_id"/><field name="left_follicle_mm"/><field name="right_follicle_mm"/><field name="edema"/><field name="cervix"/><field name="next_action"/></list></field>
+    </record>
+    <record id="alfia_reproductive_exam_view_form" model="ir.ui.view">
+        <field name="name">alfia.reproductive.exam.form</field>
+        <field name="model">alfia.reproductive.exam</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="mare_id"/><field name="date"/><field name="left_follicle_mm"/><field name="right_follicle_mm"/></group><group><field name="edema"/><field name="cervix"/><field name="service_id"/><field name="next_action"/></group></group><group><field name="findings"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_reproductive_exam_view_search" model="ir.ui.view">
+        <field name="name">alfia.reproductive.exam.search</field>
+        <field name="model">alfia.reproductive.exam</field>
+        <field name="arch" type="xml"><search><field name="mare_id"/></search></field>
+    </record>
+    <record id="alfia_reproductive_exam_action" model="ir.actions.act_window">
+        <field name="name">Reproductive exams</field>
+        <field name="res_model">alfia.reproductive.exam</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_pregnancy_view_list" model="ir.ui.view">
+        <field name="name">alfia.pregnancy.list</field>
+        <field name="model">alfia.pregnancy</field>
+        <field name="arch" type="xml"><list><field name="ovulation_date"/><field name="mare_id"/><field name="genetic_dam_id"/><field name="sire_id"/><field name="expected_foaling"/><field name="state"/><field name="day_count"/></list></field>
+    </record>
+    <record id="alfia_pregnancy_view_form" model="ir.ui.view">
+        <field name="name">alfia.pregnancy.form</field>
+        <field name="model">alfia.pregnancy</field>
+        <field name="arch" type="xml">
+            <form><header><field name="state" widget="statusbar"/></header><sheet><group><group><field name="mare_id"/><field name="genetic_dam_id"/><field name="sire_id"/><field name="service_id"/></group><group><field name="ovulation_date"/><field name="rule_id"/><field name="expected_foaling"/><field name="state"/></group></group><field name="check_ids"><list><field name="date"/><field name="days_after_ovulation"/><field name="result"/><field name="next_check_date"/><field name="vet_id"/></list></field><field name="task_ids"><list><field name="due_date"/><field name="name"/><field name="state"/></list></field></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_pregnancy_view_search" model="ir.ui.view">
+        <field name="name">alfia.pregnancy.search</field>
+        <field name="model">alfia.pregnancy</field>
+        <field name="arch" type="xml"><search><field name="mare_id"/></search></field>
+    </record>
+    <record id="alfia_pregnancy_action" model="ir.actions.act_window">
+        <field name="name">Pregnancies</field>
+        <field name="res_model">alfia.pregnancy</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_pregnancy_check_view_list" model="ir.ui.view">
+        <field name="name">alfia.pregnancy.check.list</field>
+        <field name="model">alfia.pregnancy.check</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="mare_id"/><field name="days_after_ovulation"/><field name="result"/><field name="next_check_date"/><field name="vet_id"/></list></field>
+    </record>
+    <record id="alfia_pregnancy_check_view_form" model="ir.ui.view">
+        <field name="name">alfia.pregnancy.check.form</field>
+        <field name="model">alfia.pregnancy.check</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="pregnancy_id"/><field name="task_id"/><field name="date"/></group><group><field name="result"/><field name="next_check_date"/></group></group><group><field name="notes"/></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_pregnancy_check_view_search" model="ir.ui.view">
+        <field name="name">alfia.pregnancy.check.search</field>
+        <field name="model">alfia.pregnancy.check</field>
+        <field name="arch" type="xml"><search><field name="mare_id"/></search></field>
+    </record>
+    <record id="alfia_pregnancy_check_action" model="ir.actions.act_window">
+        <field name="name">Pregnancy checks</field>
+        <field name="res_model">alfia.pregnancy.check</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_foaling_view_list" model="ir.ui.view">
+        <field name="name">alfia.foaling.list</field>
+        <field name="model">alfia.foaling</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="mare_id"/><field name="outcome"/><field name="foal_name"/><field name="state"/><field name="foal_id"/></list></field>
+    </record>
+    <record id="alfia_foaling_view_form" model="ir.ui.view">
+        <field name="name">alfia.foaling.form</field>
+        <field name="model">alfia.foaling</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_vet_confirm" string="Vet confirms birth" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_complete" string="Complete foal identity" type="object" class="btn-primary" invisible="state != 'vet_confirmed'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="pregnancy_id"/><field name="date"/><field name="outcome"/><field name="foal_sex"/></group><group><field name="foal_name"/><field name="complications"/><field name="state"/><field name="foal_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_foaling_view_search" model="ir.ui.view">
+        <field name="name">alfia.foaling.search</field>
+        <field name="model">alfia.foaling</field>
+        <field name="arch" type="xml"><search><field name="mare_id"/><field name="foal_name"/></search></field>
+    </record>
+    <record id="alfia_foaling_action" model="ir.actions.act_window">
+        <field name="name">Foalings</field>
+        <field name="res_model">alfia.foaling</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_embryo_view_list" model="ir.ui.view">
+        <field name="name">alfia.embryo.list</field>
+        <field name="model">alfia.embryo</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="donor_id"/><field name="sire_id"/><field name="flush_date"/><field name="grade"/><field name="state"/><field name="tank_id"/></list></field>
+    </record>
+    <record id="alfia_embryo_view_form" model="ir.ui.view">
+        <field name="name">alfia.embryo.form</field>
+        <field name="model">alfia.embryo</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_store" string="Freeze / store" type="object" class="" invisible="state != 'collected'"/><button name="action_discard" string="Discard" type="object" class="" invisible="state in ('transferred','discarded')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="donor_id"/><field name="sire_id"/><field name="flush_date"/><field name="stage"/></group><group><field name="grade"/><field name="state"/><field name="tank_id"/><field name="pregnancy_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_embryo_view_search" model="ir.ui.view">
+        <field name="name">alfia.embryo.search</field>
+        <field name="model">alfia.embryo</field>
+        <field name="arch" type="xml"><search><field name="name"/><field name="donor_id"/></search></field>
+    </record>
+    <record id="alfia_embryo_action" model="ir.actions.act_window">
+        <field name="name">Embryos</field>
+        <field name="res_model">alfia.embryo</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_semen_collection_view_list" model="ir.ui.view">
+        <field name="name">alfia.semen.collection.list</field>
+        <field name="model">alfia.semen.collection</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="name"/><field name="stallion_id"/><field name="doses"/><field name="motility"/><field name="concentration"/><field name="tank_id"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_semen_collection_view_form" model="ir.ui.view">
+        <field name="name">alfia.semen.collection.form</field>
+        <field name="model">alfia.semen.collection</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_release" string="Release batch" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_reject" string="Reject" type="object" class="" invisible="state != 'draft'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="stallion_id"/><field name="date"/><field name="volume_ml"/><field name="concentration"/><field name="motility"/><field name="morphology"/></group><group><field name="doses"/><field name="product_id"/><field name="tank_id"/><field name="state"/><field name="lot_id"/><field name="released_by_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_semen_collection_view_search" model="ir.ui.view">
+        <field name="name">alfia.semen.collection.search</field>
+        <field name="model">alfia.semen.collection</field>
+        <field name="arch" type="xml"><search><field name="name"/><field name="stallion_id"/></search></field>
+    </record>
+    <record id="alfia_semen_collection_action" model="ir.actions.act_window">
+        <field name="name">Semen collections</field>
+        <field name="res_model">alfia.semen.collection</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_breeding_rule_view_list" model="ir.ui.view">
+        <field name="name">alfia.breeding.rule.list</field>
+        <field name="model">alfia.breeding.rule</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="version"/><field name="state"/><field name="check_offsets"/><field name="gestation_days"/><field name="approved_by_id"/></list></field>
+    </record>
+    <record id="alfia_breeding_rule_view_form" model="ir.ui.view">
+        <field name="name">alfia.breeding.rule.form</field>
+        <field name="model">alfia.breeding.rule</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_approve" string="Approve (resident vet)" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_new_version" string="New version" type="object" class="" invisible="state == 'draft'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="version"/><field name="state"/><field name="check_offsets"/><field name="gestation_days"/><field name="prep_days"/><field name="vaccine_months"/></group><group><field name="season_start_month"/><field name="season_start_day"/><field name="season_end_month"/><field name="season_end_day"/><field name="teasing_pregnant_until_day"/><field name="approved_by_id"/><field name="approved_date"/></group></group><group><field name="day_zero_notes"/></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_breeding_rule_view_search" model="ir.ui.view">
+        <field name="name">alfia.breeding.rule.search</field>
+        <field name="model">alfia.breeding.rule</field>
+        <field name="arch" type="xml"><search><field name="name"/></search></field>
+    </record>
+    <record id="alfia_breeding_rule_action" model="ir.actions.act_window">
+        <field name="name">Breeding schedule rule sets</field>
+        <field name="res_model">alfia.breeding.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_teasing_symbol_view_list" model="ir.ui.view">
+        <field name="name">alfia.teasing.symbol.list</field>
+        <field name="model">alfia.teasing.symbol</field>
+        <field name="arch" type="xml"><list><field name="sequence"/><field name="code"/><field name="name"/><field name="is_heat"/></list></field>
+    </record>
+    <record id="alfia_teasing_symbol_view_form" model="ir.ui.view">
+        <field name="name">alfia.teasing.symbol.form</field>
+        <field name="model">alfia.teasing.symbol</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="code"/><field name="name"/></group><group><field name="sequence"/><field name="is_heat"/></group></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_teasing_symbol_view_search" model="ir.ui.view">
+        <field name="name">alfia.teasing.symbol.search</field>
+        <field name="model">alfia.teasing.symbol</field>
+        <field name="arch" type="xml"><search><field name="name"/><field name="code"/></search></field>
+    </record>
+    <record id="alfia_teasing_symbol_action" model="ir.actions.act_window">
+        <field name="name">Teasing chart symbols</field>
+        <field name="res_model">alfia.teasing.symbol</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_horse_ownership_view_list" model="ir.ui.view">
+        <field name="name">alfia.horse.ownership.list</field>
+        <field name="model">alfia.horse.ownership</field>
+        <field name="arch" type="xml"><list><field name="horse_id"/><field name="partner_id"/><field name="share"/><field name="date_from"/><field name="date_to"/><field name="reason"/></list></field>
+    </record>
+    <record id="alfia_horse_ownership_view_form" model="ir.ui.view">
+        <field name="name">alfia.horse.ownership.form</field>
+        <field name="model">alfia.horse.ownership</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="partner_id"/><field name="share"/></group><group><field name="date_from"/><field name="date_to"/><field name="reason"/></group></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_horse_ownership_view_search" model="ir.ui.view">
+        <field name="name">alfia.horse.ownership.search</field>
+        <field name="model">alfia.horse.ownership</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/><field name="partner_id"/></search></field>
+    </record>
+    <record id="alfia_horse_ownership_action" model="ir.actions.act_window">
+        <field name="name">Ownership</field>
+        <field name="res_model">alfia.horse.ownership</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_horse_movement_view_list" model="ir.ui.view">
+        <field name="name">alfia.horse.movement.list</field>
+        <field name="model">alfia.horse.movement</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="kind"/><field name="location_from_id"/><field name="location_to_id"/><field name="partner_id"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_horse_movement_view_form" model="ir.ui.view">
+        <field name="name">alfia.horse.movement.form</field>
+        <field name="model">alfia.horse.movement</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_done" string="Complete" type="object" class="btn-primary" invisible="state != 'planned'"/><button name="action_cancel" string="Cancel" type="object" class="" invisible="state != 'planned'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="kind"/><field name="date"/><field name="location_to_id"/></group><group><field name="partner_id"/><field name="responsible_id"/><field name="reason"/><field name="state"/></group></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_horse_movement_view_search" model="ir.ui.view">
+        <field name="name">alfia.horse.movement.search</field>
+        <field name="model">alfia.horse.movement</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_horse_movement_action" model="ir.actions.act_window">
+        <field name="name">Movements</field>
+        <field name="res_model">alfia.horse.movement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_horse_status_log_view_list" model="ir.ui.view">
+        <field name="name">alfia.horse.status.log.list</field>
+        <field name="model">alfia.horse.status.log</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="status"/><field name="user_id"/><field name="reason"/></list></field>
+    </record>
+    <record id="alfia_horse_status_log_view_form" model="ir.ui.view">
+        <field name="name">alfia.horse.status.log.form</field>
+        <field name="model">alfia.horse.status.log</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="status"/></group><group><field name="date"/></group></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_horse_status_log_view_search" model="ir.ui.view">
+        <field name="name">alfia.horse.status.log.search</field>
+        <field name="model">alfia.horse.status.log</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/></search></field>
+    </record>
+    <record id="alfia_horse_status_log_action" model="ir.actions.act_window">
+        <field name="name">Status history</field>
+        <field name="res_model">alfia.horse.status.log</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

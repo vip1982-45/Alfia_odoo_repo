@@ -1,0 +1,37 @@
+<odoo>
+    <menuitem id="menu_alfia_equine_root" name="Stud" sequence="1" web_icon="base,static/description/icon.png" groups="alfia_security.group_alfia_breeding_user,alfia_security.group_alfia_training_user,alfia_security.group_alfia_vet_user,alfia_security.group_alfia_stable_user,alfia_security.group_alfia_security_auditor,base.group_system"/>
+    <menuitem id="menu_alfia_horses" name="Horses" parent="menu_alfia_equine_root" action="alfia_horse_action" sequence="5"/>
+    <menuitem id="menu_alfia_work" name="Daily work" parent="menu_alfia_equine_root" sequence="20"/>
+    <menuitem id="menu_alfia_care" name="Daily care" parent="menu_alfia_equine_root" sequence="30"/>
+    <menuitem id="menu_alfia_health" name="Health and veterinary" parent="menu_alfia_equine_root" sequence="40"/>
+    <menuitem id="menu_alfia_breeding" name="Breeding" parent="menu_alfia_equine_root" sequence="50"/>
+    <menuitem id="menu_alfia_training" name="Training and competition" parent="menu_alfia_equine_root" sequence="60"/>
+    <menuitem id="menu_alfia_config" name="Configuration" parent="menu_alfia_equine_root" sequence="90"/>
+    <menuitem id="menu_alfia_task" name="Work items" parent="menu_alfia_work" action="alfia_task_action" sequence="10"/>
+    <menuitem id="menu_alfia_health_record" name="Health records" parent="menu_alfia_health" action="alfia_health_record_action" sequence="20"/>
+    <menuitem id="menu_alfia_vet_visit" name="Vet visits" parent="menu_alfia_health" action="alfia_vet_visit_action" sequence="30"/>
+    <menuitem id="menu_alfia_treatment" name="Treatments" parent="menu_alfia_health" action="alfia_treatment_action" sequence="40"/>
+    <menuitem id="menu_alfia_lab_test" name="Laboratory tests" parent="menu_alfia_health" action="alfia_lab_test_action" sequence="50"/>
+    <menuitem id="menu_alfia_diag_image" name="Diagnostic images" parent="menu_alfia_health" action="alfia_diag_image_action" sequence="60"/>
+    <menuitem id="menu_alfia_odontology" name="Dental exams" parent="menu_alfia_health" action="alfia_odontology_action" sequence="70"/>
+    <menuitem id="menu_alfia_farrier_visit" name="Farrier" parent="menu_alfia_care" action="alfia_farrier_visit_action" sequence="80"/>
+    <menuitem id="menu_alfia_measurement" name="Weight and height" parent="menu_alfia_care" action="alfia_measurement_action" sequence="90"/>
+    <menuitem id="menu_alfia_temperature" name="Temperature" parent="menu_alfia_care" action="alfia_temperature_action" sequence="100"/>
+    <menuitem id="menu_alfia_horse_note" name="Notes" parent="menu_alfia_care" action="alfia_horse_note_action" sequence="110"/>
+    <menuitem id="menu_alfia_clearance" name="Fitness and eligibility" parent="menu_alfia_training" action="alfia_clearance_action" sequence="120"/>
+    <menuitem id="menu_alfia_training_session" name="Training sessions" parent="menu_alfia_training" action="alfia_training_session_action" sequence="130"/>
+    <menuitem id="menu_alfia_competition" name="Competitions" parent="menu_alfia_training" action="alfia_competition_action" sequence="140"/>
+    <menuitem id="menu_alfia_scoring" name="Assessments" parent="menu_alfia_training" action="alfia_scoring_action" sequence="150"/>
+    <menuitem id="menu_alfia_teasing" name="Teasing chart" parent="menu_alfia_breeding" action="alfia_teasing_action" sequence="160"/>
+    <menuitem id="menu_alfia_breeding_service" name="Services" parent="menu_alfia_breeding" action="alfia_breeding_service_action" sequence="170"/>
+    <menuitem id="menu_alfia_ovulation" name="Ovulations" parent="menu_alfia_breeding" action="alfia_ovulation_action" sequence="180"/>
+    <menuitem id="menu_alfia_reproductive_exam" name="Reproductive exams" parent="menu_alfia_breeding" action="alfia_reproductive_exam_action" sequence="190"/>
+    <menuitem id="menu_alfia_pregnancy" name="Pregnancies" parent="menu_alfia_breeding" action="alfia_pregnancy_action" sequence="200"/>
+    <menuitem id="menu_alfia_pregnancy_check" name="Pregnancy checks" parent="menu_alfia_breeding" action="alfia_pregnancy_check_action" sequence="210"/>
+    <menuitem id="menu_alfia_foaling" name="Foalings" parent="menu_alfia_breeding" action="alfia_foaling_action" sequence="220"/>
+    <menuitem id="menu_alfia_embryo" name="Embryos" parent="menu_alfia_breeding" action="alfia_embryo_action" sequence="230"/>
+    <menuitem id="menu_alfia_semen_collection" name="Semen collections" parent="menu_alfia_breeding" action="alfia_semen_collection_action" sequence="240"/>
+    <menuitem id="menu_alfia_breeding_rule" name="Breeding schedule rule sets" parent="menu_alfia_config" action="alfia_breeding_rule_action" sequence="250"/>
+    <menuitem id="menu_alfia_teasing_symbol" name="Teasing chart symbols" parent="menu_alfia_config" action="alfia_teasing_symbol_action" sequence="260"/>
+    <menuitem id="menu_alfia_horse_movement" name="Movements" parent="menu_alfia_equine_root" action="alfia_horse_movement_action" sequence="270"/>
+</odoo>
