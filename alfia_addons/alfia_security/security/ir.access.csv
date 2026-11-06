@@ -1,0 +1,52 @@
+id,name,model_id,group_id/id,operation,domain
+alfia_scope_quant,Alfia site scope: quants,stock.quant,,crud,"[('location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+alfia_scope_move,Alfia site scope: stock moves,stock.move,,crud,"['|', ('location_id', 'child_of', user.alfia_location_ids.ids), ('location_dest_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+alfia_scope_move_line,Alfia site scope: move lines,stock.move.line,,crud,"['|', ('location_id', 'child_of', user.alfia_location_ids.ids), ('location_dest_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+alfia_scope_picking,Alfia site scope: transfers,stock.picking,,crud,"['|', ('location_id', 'child_of', user.alfia_location_ids.ids), ('location_dest_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+alfia_scope_orderpoint,Alfia site scope: reordering rules,stock.warehouse.orderpoint,,crud,"[('location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+alfia_scope_location,Alfia site scope: changes to locations,stock.location,,cud,"[('id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+alfia_restrict_quant,Alfia controlled stock: quants,stock.quant,,crud,"['!', ('product_id.categ_id.alfia_effective_group_id', 'not in', user.all_group_ids.ids + [False])] if (user.alfia_is_internal and not user.alfia_is_auditor) else []"
+alfia_restrict_move,Alfia controlled stock: moves,stock.move,,crud,"['!', ('product_id.categ_id', 'any', [('alfia_effective_group_id', 'not in', user.all_group_ids.ids + [False]), ('alfia_effective_approver_group_ids', 'not in', user.all_group_ids.ids)])] if (user.alfia_is_internal and not user.alfia_is_auditor) else []"
+alfia_restrict_move_line,Alfia controlled stock: move lines,stock.move.line,,crud,"['!', ('product_id.categ_id', 'any', [('alfia_effective_group_id', 'not in', user.all_group_ids.ids + [False]), ('alfia_effective_approver_group_ids', 'not in', user.all_group_ids.ids)])] if (user.alfia_is_internal and not user.alfia_is_auditor) else []"
+alfia_restrict_lot,Alfia controlled stock: lots,stock.lot,,crud,"['!', ('product_id.categ_id', 'any', [('alfia_effective_group_id', 'not in', user.all_group_ids.ids + [False]), ('alfia_effective_approver_group_ids', 'not in', user.all_group_ids.ids)])] if (user.alfia_is_internal and not user.alfia_is_auditor) else []"
+alfia_restrict_picking,Alfia controlled stock: transfers,stock.picking,,crud,"['!', ('move_ids', 'any', [('product_id.categ_id.alfia_effective_group_id', 'not in', user.all_group_ids.ids + [False]), ('product_id.categ_id.alfia_effective_approver_group_ids', 'not in', user.all_group_ids.ids)])] if (user.alfia_is_internal and not user.alfia_is_auditor) else []"
+alfia_scope_po,Alfia warehouse scope: purchase orders,purchase.order,,crud,"[('picking_type_id.warehouse_id', 'in', user.alfia_warehouse_ids.ids)] if user.alfia_scope_warehouses else []"
+alfia_scope_po_line,Alfia warehouse scope: purchase lines,purchase.order.line,,crud,"[('order_id.picking_type_id.warehouse_id', 'in', user.alfia_warehouse_ids.ids)] if user.alfia_scope_warehouses else []"
+alfia_scope_so,Alfia warehouse scope: sales orders,sale.order,,crud,"[('warehouse_id', 'in', user.alfia_warehouse_ids.ids)] if user.alfia_scope_warehouses else []"
+alfia_scope_so_line,Alfia warehouse scope: sales lines,sale.order.line,,crud,"[('order_id.warehouse_id', 'in', user.alfia_warehouse_ids.ids)] if user.alfia_scope_warehouses else []"
+alfia_scope_move_journal,Alfia journal scope: entries,account.move,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
+alfia_scope_move_line_journal,Alfia journal scope: entry lines,account.move.line,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
+alfia_scope_payment_journal,Alfia journal scope: payments,account.payment,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
+alfia_scope_statement_journal,Alfia journal scope: bank statements,account.bank.statement,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
+alfia_scope_statement_line_journal,Alfia journal scope: statement lines,account.bank.statement.line,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
+alfia_scope_journal,Alfia journal scope: journals,account.journal,,crud,"[('id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
+alfia_access_profile_system,Access profile: system administrators,alfia.access.profile,base.group_system,crud,
+alfia_access_profile_officer,Access profile: security officers read,alfia.access.profile,alfia_security.group_alfia_security_officer,r,
+alfia_access_profile_auditor,Access profile: auditors read,alfia.access.profile,alfia_security.group_alfia_security_auditor,r,
+alfia_audit_system,Audit trail: system administrators read,alfia.security.audit,base.group_system,r,
+alfia_audit_officer,Audit trail: security officers read,alfia.security.audit,alfia_security.group_alfia_security_officer,r,
+alfia_audit_auditor,Audit trail: auditors read,alfia.security.audit,alfia_security.group_alfia_security_auditor,r,
+alfia_picking_approval_stock,Dispatch approvals: stock users read,alfia.picking.approval,stock.group_stock_user,r,
+alfia_picking_approval_approver_admin,Dispatch approvals: approvers read (administration),alfia.picking.approval,alfia_security.group_alfia_dispatch_admin_approver,r,
+alfia_picking_approval_approver_vet,Dispatch approvals: approvers read (veterinary),alfia.picking.approval,alfia_security.group_alfia_dispatch_vet_approver,r,
+alfia_auditor_model_stock_picking,Auditor read: transfers,stock.picking,alfia_security.group_alfia_security_auditor,r,
+alfia_auditor_model_stock_move,Auditor read: moves,stock.move,alfia_security.group_alfia_security_auditor,r,
+alfia_auditor_model_stock_move_line,Auditor read: move lines,stock.move.line,alfia_security.group_alfia_security_auditor,r,
+alfia_auditor_model_stock_quant,Auditor read: quants,stock.quant,alfia_security.group_alfia_security_auditor,r,
+alfia_auditor_model_stock_lot,Auditor read: lots,stock.lot,alfia_security.group_alfia_security_auditor,r,
+alfia_auditor_model_stock_location,Auditor read: locations,stock.location,alfia_security.group_alfia_security_auditor,r,
+alfia_auditor_model_purchase_order,Auditor read: purchase orders,purchase.order,alfia_security.group_alfia_security_auditor,r,
+alfia_auditor_model_purchase_order_line,Auditor read: purchase lines,purchase.order.line,alfia_security.group_alfia_security_auditor,r,
+alfia_auditor_model_sale_order,Auditor read: sales orders,sale.order,alfia_security.group_alfia_security_auditor,r,
+alfia_auditor_model_sale_order_line,Auditor read: sales lines,sale.order.line,alfia_security.group_alfia_security_auditor,r,
+alfia_approver_admin_picking,Dispatch approver (admin) read: stock.picking,stock.picking,alfia_security.group_alfia_dispatch_admin_approver,r,
+alfia_approver_admin_move,Dispatch approver (admin) read: stock.move,stock.move,alfia_security.group_alfia_dispatch_admin_approver,r,
+alfia_approver_admin_move_line,Dispatch approver (admin) read: stock.move.line,stock.move.line,alfia_security.group_alfia_dispatch_admin_approver,r,
+alfia_approver_admin_lot,Dispatch approver (admin) read: stock.lot,stock.lot,alfia_security.group_alfia_dispatch_admin_approver,r,
+alfia_approver_admin_location,Dispatch approver (admin) read: stock.location,stock.location,alfia_security.group_alfia_dispatch_admin_approver,r,
+alfia_approver_vet_picking,Dispatch approver (vet) read: stock.picking,stock.picking,alfia_security.group_alfia_dispatch_vet_approver,r,
+alfia_approver_vet_move,Dispatch approver (vet) read: stock.move,stock.move,alfia_security.group_alfia_dispatch_vet_approver,r,
+alfia_approver_vet_move_line,Dispatch approver (vet) read: stock.move.line,stock.move.line,alfia_security.group_alfia_dispatch_vet_approver,r,
+alfia_approver_vet_lot,Dispatch approver (vet) read: stock.lot,stock.lot,alfia_security.group_alfia_dispatch_vet_approver,r,
+alfia_approver_vet_location,Dispatch approver (vet) read: stock.location,stock.location,alfia_security.group_alfia_dispatch_vet_approver,r,
+alfia_category_officer,Officers maintain stock restrictions on categories,product.category,alfia_security.group_alfia_security_officer,ru,

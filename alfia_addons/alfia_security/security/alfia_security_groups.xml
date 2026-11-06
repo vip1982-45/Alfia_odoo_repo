@@ -1,0 +1,130 @@
+<odoo>
+    <record id="module_category_alfia" model="ir.module.category">
+        <field name="name">Alfia Stud</field>
+        <field name="sequence">5</field>
+    </record>
+
+    <!-- Scope bypass (technical): who is NOT limited to the sites / journals of their profile -->
+    <record id="group_alfia_all_locations" model="res.groups">
+        <field name="name">All sites and stock locations</field>
+    </record>
+    <record id="group_alfia_all_warehouses" model="res.groups">
+        <field name="name">All warehouses (purchasing and sales)</field>
+    </record>
+    <record id="group_alfia_all_journals" model="res.groups">
+        <field name="name">All accounting journals</field>
+    </record>
+
+    <!-- Security administration: three separate duties -->
+    <record id="privilege_alfia_security" model="res.groups.privilege">
+        <field name="name">Security</field>
+        <field name="category_id" ref="module_category_alfia"/>
+    </record>
+    <record id="group_alfia_security_officer" model="res.groups">
+        <field name="name">Security officer (assign profiles, create users)</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id" ref="privilege_alfia_security"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')), (4, ref('base.group_erp_manager'))]"/>
+    </record>
+    <record id="group_alfia_security_auditor" model="res.groups">
+        <field name="name">Security auditor (read-only)</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id" ref="privilege_alfia_security"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')), (4, ref('account.group_account_readonly')), (4, ref('group_alfia_all_locations')), (4, ref('group_alfia_all_warehouses')), (4, ref('group_alfia_all_journals'))]"/>
+    </record>
+    <record id="group_alfia_sod_exempt" model="res.groups">
+        <field name="name">Exempt from segregation of duties (emergency use)</field>
+        <field name="sequence">30</field>
+        <field name="privilege_id" ref="privilege_alfia_security"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Stud operations: functional roles. The equine models attach to these. -->
+    <record id="privilege_alfia_stud" model="res.groups.privilege">
+        <field name="name">Stud operations</field>
+        <field name="category_id" ref="module_category_alfia"/>
+    </record>
+    <record id="group_alfia_breeding_user" model="res.groups">
+        <field name="name">Breeding staff</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id" ref="privilege_alfia_stud"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="group_alfia_breeding_manager" model="res.groups">
+        <field name="name">Breeding manager</field>
+        <field name="sequence">11</field>
+        <field name="privilege_id" ref="privilege_alfia_stud"/>
+        <field name="implied_ids" eval="[(4, ref('group_alfia_breeding_user'))]"/>
+    </record>
+    <record id="group_alfia_training_user" model="res.groups">
+        <field name="name">Training staff</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id" ref="privilege_alfia_stud"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="group_alfia_training_manager" model="res.groups">
+        <field name="name">Training manager</field>
+        <field name="sequence">21</field>
+        <field name="privilege_id" ref="privilege_alfia_stud"/>
+        <field name="implied_ids" eval="[(4, ref('group_alfia_training_user'))]"/>
+    </record>
+    <record id="group_alfia_vet_user" model="res.groups">
+        <field name="name">Veterinary staff</field>
+        <field name="sequence">30</field>
+        <field name="privilege_id" ref="privilege_alfia_stud"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="group_alfia_vet_manager" model="res.groups">
+        <field name="name">Resident veterinarian</field>
+        <field name="sequence">31</field>
+        <field name="privilege_id" ref="privilege_alfia_stud"/>
+        <field name="implied_ids" eval="[(4, ref('group_alfia_vet_user'))]"/>
+    </record>
+    <record id="group_alfia_stable_user" model="res.groups">
+        <field name="name">Stable staff (grooms, foremen)</field>
+        <field name="sequence">40</field>
+        <field name="privilege_id" ref="privilege_alfia_stud"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Controlled stock -->
+    <record id="privilege_alfia_inventory" model="res.groups.privilege">
+        <field name="name">Controlled inventory</field>
+        <field name="category_id" ref="module_category_alfia"/>
+    </record>
+    <record id="group_alfia_semen_custodian" model="res.groups">
+        <field name="name">Semen and embryo custodian</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id" ref="privilege_alfia_inventory"/>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user'))]"/>
+    </record>
+    <record id="group_alfia_medicine_custodian" model="res.groups">
+        <field name="name">Medicine store custodian</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id" ref="privilege_alfia_inventory"/>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user'))]"/>
+    </record>
+    <record id="group_alfia_dispatch_admin_approver" model="res.groups">
+        <field name="name">Dispatch approver: administration</field>
+        <field name="sequence">30</field>
+        <field name="privilege_id" ref="privilege_alfia_inventory"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="group_alfia_dispatch_vet_approver" model="res.groups">
+        <field name="name">Dispatch approver: veterinary</field>
+        <field name="sequence">31</field>
+        <field name="privilege_id" ref="privilege_alfia_inventory"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="group_alfia_stock_adjust_approver" model="res.groups">
+        <field name="name">Approve inventory adjustments</field>
+        <field name="sequence">40</field>
+        <field name="privilege_id" ref="privilege_alfia_inventory"/>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user'))]"/>
+    </record>
+
+    <!-- System administrators are not scope-limited. -->
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_alfia_all_locations')), (4, ref('group_alfia_all_warehouses')), (4, ref('group_alfia_all_journals'))]"/>
+    </record>
+</odoo>

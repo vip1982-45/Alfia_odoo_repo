@@ -1,0 +1,28 @@
+<odoo>
+    <record id="alfia_res_users_view_form" model="ir.ui.view">
+        <field name="name">res.users.form.alfia</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='access_rights']" position="after">
+                <page string="Alfia access" name="alfia_access" invisible="share">
+                    <group string="Profiles">
+                        <field name="alfia_profile_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                    <group string="Effective scope (from profiles)">
+                        <field name="alfia_location_ids" widget="many2many_tags" readonly="1"/>
+                        <field name="alfia_warehouse_ids" widget="many2many_tags" readonly="1"/>
+                        <field name="alfia_journal_ids" widget="many2many_tags" readonly="1"/>
+                        <field name="alfia_managed_group_ids" widget="many2many_tags" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="alfia_users_without_mfa_action" model="ir.actions.act_window">
+        <field name="name">Privileged users without two-factor</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain" eval="[('totp_enabled', '=', False), ('share', '=', False), ('all_group_ids', 'in', [ref('base.group_system'), ref('base.group_erp_manager'), ref('account.group_account_manager'), ref('stock.group_stock_manager'), ref('purchase.group_purchase_manager'), ref('group_alfia_semen_custodian'), ref('group_alfia_security_officer')])]"/>
+    </record>
+</odoo>

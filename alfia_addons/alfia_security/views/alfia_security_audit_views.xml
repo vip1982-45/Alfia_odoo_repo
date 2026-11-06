@@ -1,0 +1,55 @@
+<odoo>
+    <record id="alfia_security_audit_view_list" model="ir.ui.view">
+        <field name="name">alfia.security.audit.list</field>
+        <field name="model">alfia.security.audit</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0">
+                <field name="create_date" string="When"/>
+                <field name="actor_login"/>
+                <field name="action"/>
+                <field name="target_ref"/>
+                <field name="details"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_security_audit_view_form" model="ir.ui.view">
+        <field name="name">alfia.security.audit.form</field>
+        <field name="model">alfia.security.audit</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" delete="0">
+                <sheet>
+                    <group>
+                        <field name="create_date" string="When"/>
+                        <field name="actor_id"/>
+                        <field name="actor_login"/>
+                        <field name="action"/>
+                        <field name="target_model"/>
+                        <field name="target_ref"/>
+                    </group>
+                    <field name="details"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_security_audit_view_search" model="ir.ui.view">
+        <field name="name">alfia.security.audit.search</field>
+        <field name="model">alfia.security.audit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="actor_login"/>
+                <field name="action"/>
+                <field name="target_ref"/>
+                <field name="details"/>
+                <group>
+                    <filter name="by_action" string="Action" context="{'group_by': 'action'}"/>
+                    <filter name="by_actor" string="Done by" context="{'group_by': 'actor_login'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="alfia_security_audit_action" model="ir.actions.act_window">
+        <field name="name">Security audit trail</field>
+        <field name="res_model">alfia.security.audit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

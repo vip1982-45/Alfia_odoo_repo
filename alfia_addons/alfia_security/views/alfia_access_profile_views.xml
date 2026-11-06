@@ -1,0 +1,61 @@
+<odoo>
+    <record id="alfia_access_profile_view_list" model="ir.ui.view">
+        <field name="name">alfia.access.profile.list</field>
+        <field name="model">alfia.access.profile</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="group_ids" widget="many2many_tags"/>
+                <field name="location_ids" widget="many2many_tags"/>
+                <field name="journal_ids" widget="many2many_tags"/>
+                <field name="user_count"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_access_profile_view_form" model="ir.ui.view">
+        <field name="name">alfia.access.profile.form</field>
+        <field name="model">alfia.access.profile</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title"><h1><field name="name" placeholder="e.g. Breeding staff, Stud site A"/></h1></div>
+                    <field name="description" placeholder="What this profile is for"/>
+                    <notebook>
+                        <page string="Functions" name="functions">
+                            <p class="text-muted">The groups a user receives. Profiles cannot grant administrator rights.</p>
+                            <field name="group_ids" widget="many2many_tags"/>
+                        </page>
+                        <page string="Where they may work" name="scope">
+                            <group>
+                                <field name="location_ids" widget="many2many_tags"/>
+                                <field name="warehouse_ids" widget="many2many_tags"/>
+                                <field name="journal_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                        <page string="Users" name="users">
+                            <field name="user_ids" readonly="1" widget="many2many_tags"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_access_profile_view_search" model="ir.ui.view">
+        <field name="name">alfia.access.profile.search</field>
+        <field name="model">alfia.access.profile</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+    <record id="alfia_access_profile_action" model="ir.actions.act_window">
+        <field name="name">Access profiles</field>
+        <field name="res_model">alfia.access.profile</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

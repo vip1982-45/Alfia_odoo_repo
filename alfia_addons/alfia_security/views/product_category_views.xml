@@ -1,0 +1,17 @@
+<odoo>
+    <record id="alfia_product_category_view_form" model="ir.ui.view">
+        <field name="name">product.category.form.alfia</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='first']" position="after">
+                <group string="Stock control" name="alfia_stock_control">
+                    <field name="alfia_access_group_id" options="{'no_create': True}"/>
+                    <field name="alfia_effective_group_id" readonly="1" invisible="alfia_access_group_id or not alfia_effective_group_id"/>
+                    <field name="alfia_dual_approval"/>
+                    <field name="alfia_approver_group_ids" widget="many2many_tags" invisible="not alfia_dual_approval" required="alfia_dual_approval" options="{'no_create': True}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

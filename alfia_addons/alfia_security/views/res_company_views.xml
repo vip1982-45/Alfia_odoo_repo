@@ -1,0 +1,19 @@
+<odoo>
+    <record id="alfia_res_company_view_form" model="ir.ui.view">
+        <field name="name">res.company.form.alfia</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Segregation of duties" name="alfia_sod">
+                    <group>
+                        <field name="alfia_sod_enabled"/>
+                        <field name="alfia_sod_threshold" invisible="not alfia_sod_enabled"/>
+                    </group>
+                    <p class="text-muted">When enabled, the person who creates a purchase order, vendor bill or outgoing payment
+                        cannot approve or post it, and the person who approves a controlled-stock dispatch cannot dispatch it.</p>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
