@@ -1,0 +1,21 @@
+<odoo noupdate="1">
+    <record id="seq_breeding_contract" model="ir.sequence">
+        <field name="name">Breeding contract</field>
+        <field name="code">alfia.breeding.contract</field>
+        <field name="prefix">BC/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="product_horse_sale" model="product.product">
+        <field name="name">Horse sale</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+    </record>
+    <record id="cron_generate_charges" model="ir.cron">
+        <field name="name">Alfia: generate recurring charges</field>
+        <field name="model_id" ref="model_alfia_charge_plan"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_generate()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+</odoo>

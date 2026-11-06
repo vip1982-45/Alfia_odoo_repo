@@ -1,0 +1,21 @@
+<odoo>
+    <menuitem id="menu_ops_billing" name="Billing" parent="alfia_equine.menu_alfia_equine_root" sequence="25"/>
+    <menuitem id="menu_ops_facilities" name="Facilities" parent="alfia_equine.menu_alfia_equine_root" sequence="70"/>
+    <menuitem id="menu_ops_reports" name="Reports" parent="alfia_equine.menu_alfia_equine_root" sequence="80"/>
+    <menuitem id="menu_alfia_horse_group" name="Horse groups" parent="alfia_equine.menu_alfia_equine_root" action="alfia_horse_group_action" sequence="210"/>
+    <menuitem id="menu_alfia_charge" name="Charges" parent="menu_ops_billing" action="alfia_charge_action" sequence="220"/>
+    <menuitem id="menu_alfia_charge_plan" name="Recurring charges" parent="menu_ops_billing" action="alfia_charge_plan_action" sequence="230"/>
+    <menuitem id="menu_alfia_horse_sale" name="Sales and gifts" parent="menu_ops_billing" action="alfia_horse_sale_action" sequence="240"/>
+    <menuitem id="menu_alfia_breeding_contract" name="Breeding contracts" parent="alfia_equine.menu_alfia_breeding" action="alfia_breeding_contract_action" sequence="250"/>
+    <menuitem id="menu_alfia_boarding" name="Boarding" parent="alfia_equine.menu_alfia_care" action="alfia_boarding_action" sequence="260"/>
+    <menuitem id="menu_alfia_diet" name="Feed plans" parent="alfia_equine.menu_alfia_care" action="alfia_diet_action" sequence="270"/>
+    <menuitem id="menu_alfia_diet_line" name="Daily feed needs" parent="alfia_equine.menu_alfia_care" action="alfia_diet_line_action" sequence="280"/>
+    <menuitem id="menu_alfia_quarantine" name="Quarantine" parent="alfia_equine.menu_alfia_health" action="alfia_quarantine_action" sequence="290"/>
+    <menuitem id="menu_alfia_medicine_issue" name="Medicine issues" parent="alfia_equine.menu_alfia_health" action="alfia_medicine_issue_action" sequence="300"/>
+    <menuitem id="menu_alfia_restriction_rule" name="Entry rules" parent="alfia_equine.menu_alfia_training" action="alfia_restriction_rule_action" sequence="310"/>
+    <menuitem id="menu_alfia_event" name="Events" parent="alfia_equine.menu_alfia_training" action="alfia_event_action" sequence="320"/>
+    <menuitem id="menu_alfia_event_entry" name="Event entries" parent="alfia_equine.menu_alfia_training" action="alfia_event_entry_action" sequence="330"/>
+    <menuitem id="menu_alfia_asset" name="Fleet, trophies, library" parent="menu_ops_facilities" action="alfia_asset_action" sequence="340"/>
+    <menuitem id="menu_alfia_report_breeding" name="Breeding performance" parent="menu_ops_reports" action="alfia_report_breeding_action" sequence="350"/>
+    <menuitem id="menu_alfia_horse_import" name="Import horses" parent="menu_ops_facilities" action="alfia_horse_import_action" sequence="900" groups="alfia_security.group_alfia_breeding_manager,alfia_security.group_alfia_training_manager,alfia_security.group_alfia_vet_manager"/>
+</odoo>

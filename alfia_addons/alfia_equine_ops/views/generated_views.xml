@@ -1,0 +1,340 @@
+<odoo>
+
+    <record id="alfia_horse_group_view_list" model="ir.ui.view">
+        <field name="name">alfia.horse.group.list</field>
+        <field name="model">alfia.horse.group</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="description"/><field name="member_count"/><field name="active"/></list></field>
+    </record>
+    <record id="alfia_horse_group_view_form" model="ir.ui.view">
+        <field name="name">alfia.horse.group.form</field>
+        <field name="model">alfia.horse.group</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_open_members" string="Show members" type="object" class=""/></header><sheet><group><group><field name="name"/><field name="description"/><field name="active"/><field name="company_id"/><field name="sex"/><field name="status"/></group><group><field name="breed"/><field name="reproductive_state"/><field name="min_age_years"/><field name="max_age_years"/><field name="location_id"/></group></group><field name="member_ids"/></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_horse_group_view_search" model="ir.ui.view">
+        <field name="name">alfia.horse.group.search</field>
+        <field name="model">alfia.horse.group</field>
+        <field name="arch" type="xml"><search><field name="name"/></search></field>
+    </record>
+    <record id="alfia_horse_group_action" model="ir.actions.act_window">
+        <field name="name">Horse groups</field>
+        <field name="res_model">alfia.horse.group</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_charge_view_list" model="ir.ui.view">
+        <field name="name">alfia.charge.list</field>
+        <field name="model">alfia.charge</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="partner_id"/><field name="product_id"/><field name="quantity"/><field name="price_unit"/><field name="amount"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_charge_view_form" model="ir.ui.view">
+        <field name="name">alfia.charge.form</field>
+        <field name="model">alfia.charge</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_approve" string="Approve" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_invoice" string="Create invoice" type="object" class="btn-primary" invisible="state != 'approved'"/><button name="action_cancel" string="Cancel" type="object" class="" invisible="state in ('invoiced','cancelled')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="partner_id"/><field name="product_id"/><field name="name"/><field name="date"/><field name="quantity"/></group><group><field name="price_unit"/><field name="amount"/><field name="plan_id"/><field name="move_id"/><field name="state"/></group></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_charge_view_search" model="ir.ui.view">
+        <field name="name">alfia.charge.search</field>
+        <field name="model">alfia.charge</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/><field name="partner_id"/><filter name="draft" string="To approve" domain="[('state', '=', 'draft')]"/><filter name="approved" string="Ready to invoice" domain="[('state', '=', 'approved')]"/></search></field>
+    </record>
+    <record id="alfia_charge_action" model="ir.actions.act_window">
+        <field name="name">Charges</field>
+        <field name="res_model">alfia.charge</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="alfia_charge_plan_view_list" model="ir.ui.view">
+        <field name="name">alfia.charge.plan.list</field>
+        <field name="model">alfia.charge.plan</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="target_kind"/><field name="product_id"/><field name="price_unit"/><field name="interval"/><field name="next_date"/><field name="active"/></list></field>
+    </record>
+    <record id="alfia_charge_plan_view_form" model="ir.ui.view">
+        <field name="name">alfia.charge.plan.form</field>
+        <field name="model">alfia.charge.plan</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_generate" string="Generate due charges now" type="object" class="btn-primary"/></header><sheet><group><group><field name="name"/><field name="active"/><field name="company_id"/><field name="target_kind"/><field name="horse_id"/><field name="location_id"/><field name="group_id"/><field name="partner_id"/></group><group><field name="product_id"/><field name="quantity"/><field name="price_unit"/><field name="interval"/><field name="next_date"/><field name="end_date"/><field name="auto_approve"/></group></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_charge_plan_view_search" model="ir.ui.view">
+        <field name="name">alfia.charge.plan.search</field>
+        <field name="model">alfia.charge.plan</field>
+        <field name="arch" type="xml"><search><field name="name"/></search></field>
+    </record>
+    <record id="alfia_charge_plan_action" model="ir.actions.act_window">
+        <field name="name">Recurring charges</field>
+        <field name="res_model">alfia.charge.plan</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_horse_sale_view_list" model="ir.ui.view">
+        <field name="name">alfia.horse.sale.list</field>
+        <field name="model">alfia.horse.sale</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="kind"/><field name="buyer_id"/><field name="price"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_horse_sale_view_form" model="ir.ui.view">
+        <field name="name">alfia.horse.sale.form</field>
+        <field name="model">alfia.horse.sale</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_approve" string="Approve" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_complete" string="Complete" type="object" class="btn-primary" invisible="state != 'approved'"/><button name="action_cancel" string="Cancel" type="object" class="" invisible="state in ('done','cancelled')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="kind"/><field name="buyer_id"/><field name="date"/><field name="price"/></group><group><field name="currency_id"/><field name="created_by_id"/><field name="approved_by_id"/><field name="move_id"/><field name="state"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_horse_sale_view_search" model="ir.ui.view">
+        <field name="name">alfia.horse.sale.search</field>
+        <field name="model">alfia.horse.sale</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/><field name="buyer_id"/></search></field>
+    </record>
+    <record id="alfia_horse_sale_action" model="ir.actions.act_window">
+        <field name="name">Sales and gifts</field>
+        <field name="res_model">alfia.horse.sale</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_breeding_contract_view_list" model="ir.ui.view">
+        <field name="name">alfia.breeding.contract.list</field>
+        <field name="model">alfia.breeding.contract</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="client_id"/><field name="stallion_id"/><field name="season"/><field name="fee"/><field name="outcome"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_breeding_contract_view_form" model="ir.ui.view">
+        <field name="name">alfia.breeding.contract.form</field>
+        <field name="model">alfia.breeding.contract</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_confirm" string="Confirm" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_invoice" string="Create invoice" type="object" class="btn-primary" invisible="state != 'confirmed'"/><button name="action_refund" string="Refund (no live foal)" type="object" class="" invisible="state != 'invoiced'"/><button name="action_close" string="Close" type="object" class="" invisible="state not in ('invoiced','refunded')"/><button name="action_cancel" string="Cancel" type="object" class="" invisible="state in ('invoiced','refunded','closed','cancelled')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="client_id"/><field name="stallion_id"/><field name="mare_id"/><field name="season"/><field name="product_id"/><field name="fee"/></group><group><field name="live_foal_guarantee"/><field name="refund_percent"/><field name="pregnancy_id"/><field name="outcome"/><field name="invoice_id"/><field name="credit_note_id"/><field name="state"/></group></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_breeding_contract_view_search" model="ir.ui.view">
+        <field name="name">alfia.breeding.contract.search</field>
+        <field name="model">alfia.breeding.contract</field>
+        <field name="arch" type="xml"><search><field name="name"/><field name="client_id"/><field name="stallion_id"/></search></field>
+    </record>
+    <record id="alfia_breeding_contract_action" model="ir.actions.act_window">
+        <field name="name">Breeding contracts</field>
+        <field name="res_model">alfia.breeding.contract</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_boarding_view_list" model="ir.ui.view">
+        <field name="name">alfia.boarding.list</field>
+        <field name="model">alfia.boarding</field>
+        <field name="arch" type="xml"><list><field name="horse_id"/><field name="client_id"/><field name="product_id"/><field name="rate"/><field name="interval"/><field name="start_date"/><field name="end_date"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_boarding_view_form" model="ir.ui.view">
+        <field name="name">alfia.boarding.form</field>
+        <field name="model">alfia.boarding</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_start" string="Start billing" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_end" string="End stay" type="object" class="" invisible="state != 'active'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="client_id"/><field name="product_id"/><field name="rate"/><field name="interval"/></group><group><field name="start_date"/><field name="end_date"/><field name="location_id"/><field name="plan_id"/><field name="state"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_boarding_view_search" model="ir.ui.view">
+        <field name="name">alfia.boarding.search</field>
+        <field name="model">alfia.boarding</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/><field name="client_id"/></search></field>
+    </record>
+    <record id="alfia_boarding_action" model="ir.actions.act_window">
+        <field name="name">Boarding</field>
+        <field name="res_model">alfia.boarding</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_diet_view_list" model="ir.ui.view">
+        <field name="name">alfia.diet.list</field>
+        <field name="model">alfia.diet</field>
+        <field name="arch" type="xml"><list><field name="horse_id"/><field name="name"/><field name="date_from"/><field name="date_to"/><field name="current"/></list></field>
+    </record>
+    <record id="alfia_diet_view_form" model="ir.ui.view">
+        <field name="name">alfia.diet.form</field>
+        <field name="model">alfia.diet</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="horse_id"/><field name="name"/></group><group><field name="date_from"/><field name="date_to"/></group></group><group><field name="notes"/></group><field name="line_ids"><list editable="bottom"><field name="product_id"/><field name="qty_per_meal"/><field name="meals_per_day"/><field name="daily_qty"/></list></field></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_diet_view_search" model="ir.ui.view">
+        <field name="name">alfia.diet.search</field>
+        <field name="model">alfia.diet</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/><field name="name"/><filter name="current" string="Current" domain="[('current', '=', True)]"/></search></field>
+    </record>
+    <record id="alfia_diet_action" model="ir.actions.act_window">
+        <field name="name">Feed plans</field>
+        <field name="res_model">alfia.diet</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_diet_line_view_list" model="ir.ui.view">
+        <field name="name">alfia.diet.line.list</field>
+        <field name="model">alfia.diet.line</field>
+        <field name="arch" type="xml"><list><field name="horse_id"/><field name="product_id"/><field name="qty_per_meal"/><field name="meals_per_day"/><field name="daily_qty"/></list></field>
+    </record>
+    <record id="alfia_diet_line_view_form" model="ir.ui.view">
+        <field name="name">alfia.diet.line.form</field>
+        <field name="model">alfia.diet.line</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="diet_id"/><field name="product_id"/></group><group><field name="qty_per_meal"/><field name="meals_per_day"/></group></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_diet_line_view_search" model="ir.ui.view">
+        <field name="name">alfia.diet.line.search</field>
+        <field name="model">alfia.diet.line</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/><field name="product_id"/></search></field>
+    </record>
+    <record id="alfia_diet_line_action" model="ir.actions.act_window">
+        <field name="name">Daily feed needs</field>
+        <field name="res_model">alfia.diet.line</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <record id="alfia_quarantine_view_list" model="ir.ui.view">
+        <field name="name">alfia.quarantine.list</field>
+        <field name="model">alfia.quarantine</field>
+        <field name="arch" type="xml"><list><field name="horse_id"/><field name="start_date"/><field name="planned_end"/><field name="reason"/><field name="isolation_location_id"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_quarantine_view_form" model="ir.ui.view">
+        <field name="name">alfia.quarantine.form</field>
+        <field name="model">alfia.quarantine</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_release" string="Release" type="object" class="btn-primary" invisible="state != 'active'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="start_date"/><field name="planned_end"/><field name="end_date"/></group><group><field name="reason"/><field name="isolation_location_id"/><field name="released_by_id"/><field name="state"/></group></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_quarantine_view_search" model="ir.ui.view">
+        <field name="name">alfia.quarantine.search</field>
+        <field name="model">alfia.quarantine</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/><field name="reason"/></search></field>
+    </record>
+    <record id="alfia_quarantine_action" model="ir.actions.act_window">
+        <field name="name">Quarantine</field>
+        <field name="res_model">alfia.quarantine</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_medicine_issue_view_list" model="ir.ui.view">
+        <field name="name">alfia.medicine.issue.list</field>
+        <field name="model">alfia.medicine.issue</field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="product_id"/><field name="quantity"/><field name="returned_qty"/><field name="location_id"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_medicine_issue_view_form" model="ir.ui.view">
+        <field name="name">alfia.medicine.issue.form</field>
+        <field name="model">alfia.medicine.issue</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_issue" string="Issue from stock" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_return" string="Return remaining" type="object" class="" invisible="state not in ('issued','returned')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="date"/><field name="product_id"/><field name="quantity"/></group><group><field name="returned_qty"/><field name="location_id"/><field name="treatment_id"/><field name="state"/></group></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_medicine_issue_view_search" model="ir.ui.view">
+        <field name="name">alfia.medicine.issue.search</field>
+        <field name="model">alfia.medicine.issue</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/><field name="product_id"/></search></field>
+    </record>
+    <record id="alfia_medicine_issue_action" model="ir.actions.act_window">
+        <field name="name">Medicine issues</field>
+        <field name="res_model">alfia.medicine.issue</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_restriction_rule_view_list" model="ir.ui.view">
+        <field name="name">alfia.restriction.rule.list</field>
+        <field name="model">alfia.restriction.rule</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="sex"/><field name="min_age_years"/><field name="max_age_years"/><field name="require_fitness"/><field name="forbid_withdrawal"/></list></field>
+    </record>
+    <record id="alfia_restriction_rule_view_form" model="ir.ui.view">
+        <field name="name">alfia.restriction.rule.form</field>
+        <field name="model">alfia.restriction.rule</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="name"/><field name="active"/><field name="company_id"/><field name="sex"/><field name="min_age_years"/></group><group><field name="max_age_years"/><field name="require_fitness"/><field name="forbid_withdrawal"/><field name="forbid_pregnant"/><field name="forbid_quarantine"/></group></group></sheet></form>
+        </field>
+    </record>
+    <record id="alfia_restriction_rule_view_search" model="ir.ui.view">
+        <field name="name">alfia.restriction.rule.search</field>
+        <field name="model">alfia.restriction.rule</field>
+        <field name="arch" type="xml"><search><field name="name"/></search></field>
+    </record>
+    <record id="alfia_restriction_rule_action" model="ir.actions.act_window">
+        <field name="name">Entry rules</field>
+        <field name="res_model">alfia.restriction.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_event_view_list" model="ir.ui.view">
+        <field name="name">alfia.event.list</field>
+        <field name="model">alfia.event</field>
+        <field name="arch" type="xml"><list><field name="date_start"/><field name="name"/><field name="venue"/><field name="discipline"/><field name="entry_count"/></list></field>
+    </record>
+    <record id="alfia_event_view_form" model="ir.ui.view">
+        <field name="name">alfia.event.form</field>
+        <field name="model">alfia.event</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="name"/><field name="company_id"/><field name="date_start"/><field name="date_end"/></group><group><field name="venue"/><field name="discipline"/><field name="rule_id"/></group></group><field name="entry_ids"><list><field name="horse_id"/><field name="rider_id"/><field name="state"/></list></field></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_event_view_search" model="ir.ui.view">
+        <field name="name">alfia.event.search</field>
+        <field name="model">alfia.event</field>
+        <field name="arch" type="xml"><search><field name="name"/></search></field>
+    </record>
+    <record id="alfia_event_action" model="ir.actions.act_window">
+        <field name="name">Events</field>
+        <field name="res_model">alfia.event</field>
+        <field name="view_mode">list,form,calendar</field>
+    </record>
+
+    <record id="alfia_event_entry_view_list" model="ir.ui.view">
+        <field name="name">alfia.event.entry.list</field>
+        <field name="model">alfia.event.entry</field>
+        <field name="arch" type="xml"><list><field name="event_id"/><field name="horse_id"/><field name="rider_id"/><field name="vet_confirmed"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_event_entry_view_form" model="ir.ui.view">
+        <field name="name">alfia.event.entry.form</field>
+        <field name="model">alfia.event.entry</field>
+        <field name="arch" type="xml">
+            <form><header><button name="action_check" string="Check rules" type="object" class="" invisible="state in ('approved','rejected')"/><button name="action_submit" string="Submit" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_vet_confirm" string="Vet confirms fitness" type="object" class="" invisible="state != 'pending'"/><button name="action_approve" string="Approve" type="object" class="btn-primary" invisible="state != 'pending'"/><button name="action_reject" string="Reject" type="object" class="" invisible="state in ('approved','rejected')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="event_id"/><field name="horse_id"/><field name="rider_id"/></group><group><field name="vet_confirmed"/><field name="decided_by_id"/><field name="state"/></group></group><group><field name="issues"/></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_event_entry_view_search" model="ir.ui.view">
+        <field name="name">alfia.event.entry.search</field>
+        <field name="model">alfia.event.entry</field>
+        <field name="arch" type="xml"><search><field name="horse_id"/><field name="event_id"/></search></field>
+    </record>
+    <record id="alfia_event_entry_action" model="ir.actions.act_window">
+        <field name="name">Event entries</field>
+        <field name="res_model">alfia.event.entry</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_asset_view_list" model="ir.ui.view">
+        <field name="name">alfia.asset.list</field>
+        <field name="model">alfia.asset</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="kind"/><field name="reference"/><field name="responsible_id"/><field name="next_service"/><field name="state"/></list></field>
+    </record>
+    <record id="alfia_asset_view_form" model="ir.ui.view">
+        <field name="name">alfia.asset.form</field>
+        <field name="model">alfia.asset</field>
+        <field name="arch" type="xml">
+            <form><header><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="kind"/><field name="company_id"/><field name="reference"/><field name="responsible_id"/><field name="horse_id"/></group><group><field name="acquired"/><field name="value"/><field name="next_service"/><field name="state"/><field name="borrower_id"/><field name="active"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+        </field>
+    </record>
+    <record id="alfia_asset_view_search" model="ir.ui.view">
+        <field name="name">alfia.asset.search</field>
+        <field name="model">alfia.asset</field>
+        <field name="arch" type="xml"><search><field name="name"/><field name="reference"/></search></field>
+    </record>
+    <record id="alfia_asset_action" model="ir.actions.act_window">
+        <field name="name">Fleet, trophies, library</field>
+        <field name="res_model">alfia.asset</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="alfia_report_breeding_view_list" model="ir.ui.view">
+        <field name="name">alfia.report.breeding.list</field>
+        <field name="model">alfia.report.breeding</field>
+        <field name="arch" type="xml"><list><field name="stallion_id"/><field name="season"/><field name="services"/><field name="pregnancies"/><field name="live_foals"/><field name="pregnancy_rate"/></list></field>
+    </record>
+    <record id="alfia_report_breeding_view_search" model="ir.ui.view">
+        <field name="name">alfia.report.breeding.search</field>
+        <field name="model">alfia.report.breeding</field>
+        <field name="arch" type="xml"><search><field name="stallion_id"/><field name="season"/></search></field>
+    </record>
+    <record id="alfia_report_breeding_action" model="ir.actions.act_window">
+        <field name="name">Breeding performance</field>
+        <field name="res_model">alfia.report.breeding</field>
+        <field name="view_mode">list,pivot,graph</field>
+    </record>
+</odoo>
