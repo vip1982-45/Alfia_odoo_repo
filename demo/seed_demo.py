@@ -58,7 +58,8 @@ foaling, quarantine = loc('وحدة الولادة · Foaling unit'), loc('إس�
 yard = loc('ساحة التدريب · Training yard')
 tank_room = loc('غرفة خزانات السائل المنوي · Semen tank room')
 tank_1 = loc('الخزان 1 · Tank 1', tank_room)
-med_store, feed_store = loc('مخزن الأدوية · Medicine store'), loc('مخزن الأعلاف · Feed store')
+med_store = loc('مخزن الأدوية · Medicine store')
+feed_store = loc('مخزن الأعلاف · Feed store', wh.lot_stock_id)   # inside the warehouse's stock, so sales orders can reserve feed
 
 # ------------------------------------------------------------------ people
 P = E['res.partner']
