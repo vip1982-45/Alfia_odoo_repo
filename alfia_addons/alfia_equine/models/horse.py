@@ -4,6 +4,7 @@ from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 MAX_GENERATIONS = 12
+KINSHIP_GENERATIONS = 30
 
 
 class AlfiaHorse(models.Model):
@@ -117,25 +118,27 @@ class AlfiaHorse(models.Model):
             return 0
         if horse.id in memo:
             return memo[horse.id]
-        if horse.id in stack:
+        if horse.id in stack or len(stack) > KINSHIP_GENERATIONS:
             return 0
         depth = 1 + max(self._depth(horse.sire_id, memo, stack + (horse.id,)), self._depth(horse.dam_id, memo, stack + (horse.id,)))
         memo[horse.id] = depth
         return depth
 
-    def _kinship(self, a, b, _ctx=None):
-        """Wright's kinship coefficient between two horses (the inbreeding of their foal is kinship(sire, dam))."""
+    def _kinship(self, a, b, _ctx=None, _depth=0):
+        """Wright's kinship coefficient between two horses (the inbreeding of their foal is kinship(sire, dam)).
+
+        Ancestors beyond KINSHIP_GENERATIONS are treated as unrelated founders, which bounds both time and recursion."""
         ctx = _ctx if _ctx is not None else {'k': {}, 'd': {}}
-        if not a or not b:
+        if not a or not b or _depth > KINSHIP_GENERATIONS:
             return 0.0
         key = (min(a.id, b.id), max(a.id, b.id))
         if key in ctx['k']:
             return ctx['k'][key]
         if a == b:
-            value = 0.5 * (1 + self._kinship(a.sire_id, a.dam_id, ctx))
+            value = 0.5 * (1 + self._kinship(a.sire_id, a.dam_id, ctx, _depth + 1))
         else:
             first, second = (a, b) if self._depth(a, ctx['d']) >= self._depth(b, ctx['d']) else (b, a)
-            value = 0.5 * (self._kinship(first.sire_id, second, ctx) + self._kinship(first.dam_id, second, ctx))
+            value = 0.5 * (self._kinship(first.sire_id, second, ctx, _depth + 1) + self._kinship(first.dam_id, second, ctx, _depth + 1))
         ctx['k'][key] = value
         return value
 
@@ -342,6 +345,7 @@ class AlfiaHorseMovement(models.Model):
         self.state = 'cancelled'
 
     def write(self, vals):
-        if any(m.state == 'done' for m in self) and set(vals) - {'reason', 'state', 'location_from_id'}:
+        allowed = {'reason', 'state', 'location_from_id'} | ({'horse_id'} if self.env.context.get('alfia_merge') else set())
+        if any(m.state == 'done' for m in self) and set(vals) - allowed:
             raise UserError(self.env._("A completed movement cannot be changed. Record a new movement to correct it."))
         return super().write(vals)

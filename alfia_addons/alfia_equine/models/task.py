@@ -64,8 +64,15 @@ class AlfiaTask(models.Model):
         return task, 'created'
 
     @api.model
+    def _alfia_key_domain(self, key_prefix):
+        """Keys equal to `key_prefix`, or below it (`prefix:...`). 'quarantine:1' must not match 'quarantine:12'."""
+        base = key_prefix.rstrip(':')
+        escaped = base.replace('\\', '\\\\').replace('%', '\\%').replace('_', '\\_')
+        return ['|', ('key', '=', base), ('key', '=like', escaped + ':%')]
+
+    @api.model
     def _alfia_cancel_pending(self, key_prefix, reason):
-        pending = self.sudo().search([('key', '=like', key_prefix + '%'), ('state', 'in', ('todo', 'deferred'))])
+        pending = self.sudo().search(self._alfia_key_domain(key_prefix) + [('state', 'in', ('todo', 'deferred'))])
         for task in pending:
             task.message_post(body=reason)
         pending.write({'state': 'cancelled'})

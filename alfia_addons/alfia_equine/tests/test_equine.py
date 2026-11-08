@@ -508,3 +508,61 @@ class TestSegregation(EquineCase):
         self.assertEqual(action['domain'], [('horse_id', '=', self.mare.id)])
         with self.assertRaises(UserError):
             self.mare.with_context(records_model='res.users').action_open_records()
+
+
+@tagged('post_install', '-at_install', 'alfia_equine')
+class TestHardening(EquineCase):
+
+    def test_cancelling_one_keys_work_never_touches_a_longer_key(self):
+        Task = self.env['alfia.task']
+        today = fields.Date.context_today(Task)
+        one, _ = Task._alfia_upsert('quarantine:1', self.mare, today, 'one', 'exam')
+        twelve, _ = Task._alfia_upsert('quarantine:12', self.mare, today, 'twelve', 'exam')
+        child, _ = Task._alfia_upsert('quarantine:1:sub', self.mare, today, 'child', 'exam')
+        odd, _ = Task._alfia_upsert('quarantineX1', self.mare, today, 'odd', 'exam')
+        Task._alfia_cancel_pending('quarantine:1', 'released')
+        self.assertEqual((one.state, child.state, twelve.state, odd.state), ('cancelled', 'cancelled', 'todo', 'todo'))
+        wild, _ = Task._alfia_upsert('a_b:1', self.mare, today, 'wild', 'exam')
+        Task._alfia_cancel_pending('a%b', 'nothing')
+        self.assertEqual(wild.state, 'todo', "LIKE wildcards in a prefix are taken literally")
+
+    def test_merge_moves_completed_movements(self):
+        keep = self.env['alfia.horse'].create({'name': 'Keep2', 'sex': 'female', 'initial_location_id': self.barn_a.id})
+        dup = self.env['alfia.horse'].create({'name': 'Keep2 dup', 'sex': 'female', 'initial_location_id': self.barn_a.id})
+        self.env['alfia.horse.merge'].with_user(self.breed_mgr).create({'duplicate_id': dup.id, 'keep_id': keep.id}).action_merge()
+        self.assertEqual(len(keep.movement_ids), 2)
+        with self.assertRaises(UserError):
+            keep.movement_ids[:1].write({'horse_id': dup.id})     # outside a merge, completed movements stay fixed
+
+    def test_merge_needs_access_to_both_horses(self):
+        scoped = self._user('scopedmerge', ['breeding_manager'], scoped=True)
+        profile = self.env['alfia.access.profile'].create({'name': 'Eq barn A only', 'location_ids': [Command.set([self.barn_a.id])]})
+        scoped.with_context(alfia_sync=True).sudo().write({'alfia_profile_ids': [Command.set([profile.id])]})
+        with self.assertRaises(AccessError):
+            self.env['alfia.horse.merge'].with_user(scoped).create({'duplicate_id': self.far_mare.id, 'keep_id': self.mare2.id}).action_merge()
+        self.assertTrue(self.far_mare.active)
+
+    def test_deep_pedigree_is_bounded(self):
+        Horse = self.env['alfia.horse']
+        sire = Horse.create({'name': 'Root sire', 'sex': 'male'})
+        for n in range(80):
+            sire = Horse.create({'name': f'Line {n}', 'sex': 'male', 'sire_id': sire.id})
+        foal = Horse.create({'name': 'Deep foal', 'sex': 'female', 'sire_id': sire.id, 'dam_id': self.mare.id})
+        self.assertEqual(foal.inbreeding, 0.0)
+
+    def test_embryo_discard_and_transfer_need_a_vet(self):
+        embryo = self.env['alfia.embryo'].create({'donor_id': self.mare.id, 'tank_id': self.tank.id})
+        with self.assertRaises(AccessError):
+            embryo.with_user(self.breeder).action_discard()
+        embryo.with_user(self.vet).action_discard()
+        self.assertEqual(embryo.state, 'discarded')
+
+    def test_semen_goes_only_into_a_tank_in_scope(self):
+        profile = self.env['alfia.access.profile'].create({'name': 'Eq vet barn B', 'group_ids': [Command.set([self.env.ref('alfia_security.group_alfia_vet_user').id])],
+                                                           'location_ids': [Command.set([self.barn_b.id])]})
+        vet_b = self.env['res.users'].with_context(no_reset_password=True).create(
+            {'name': 'vetb', 'login': 'vetb@eq.local', 'alfia_profile_ids': [Command.set([profile.id])]})
+        col = self.env['alfia.semen.collection'].create({'stallion_id': self.stallion.id, 'doses': 5, 'concentration': 100, 'motility': 60, 'tank_id': self.tank.id})
+        with self.assertRaises(AccessError):
+            col.with_user(vet_b).action_release()
+        self.assertEqual(col.state, 'draft')

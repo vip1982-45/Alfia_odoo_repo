@@ -117,11 +117,16 @@ class AlfiaHorseBreeding(models.Model):
             horse.active_pregnancy_id = active
             horse.reproductive_state = active.state if active else ('open' if horse.sex == 'female' else False)
 
-    def _is_teasing_due(self, day):
+    def _is_teasing_due(self, day, rules=None):
         self.ensure_one()
         if self.sex != 'female' or self.status != 'active' or not self.on_site:
             return False
-        rule = self.env['alfia.breeding.rule'].sudo().search([('state', '=', 'approved'), ('company_id', '=', self.company_id.id)], limit=1)
+        if rules is None:
+            rules = {}
+        if self.company_id.id not in rules:
+            rules[self.company_id.id] = self.env['alfia.breeding.rule'].sudo().search(
+                [('state', '=', 'approved'), ('company_id', '=', self.company_id.id)], limit=1)
+        rule = rules[self.company_id.id]
         if not rule:
             return False
         if self.reproductive_state == 'open':
@@ -131,12 +136,15 @@ class AlfiaHorseBreeding(models.Model):
 
     def _compute_teasing_due(self):
         today = fields.Date.context_today(self)
+        rules = {}
         for horse in self:
-            horse.teasing_due = horse._is_teasing_due(today)
+            horse.teasing_due = horse._is_teasing_due(today, rules)
 
     def _search_teasing_due(self, operator, value):
         today = fields.Date.context_today(self)
-        mares = self.sudo().search([('sex', '=', 'female')]).filtered(lambda h: h._is_teasing_due(today))
+        rules = {}
+        candidates = self.sudo().search([('sex', '=', 'female'), ('status', '=', 'active'), ('on_site', '=', True)])
+        mares = candidates.filtered(lambda h: h._is_teasing_due(today, rules))
         if operator in ('=', '!='):
             wanted = bool(value) == (operator == '=')
         elif operator in ('in', 'not in'):
@@ -362,7 +370,7 @@ class AlfiaPregnancy(models.Model):
 
     def _compute_task_ids(self):
         for rec in self:
-            rec.task_ids = self.env['alfia.task'].search([('key', '=like', f"preg:{rec.id}:%")])
+            rec.task_ids = self.env['alfia.task'].search(self.env['alfia.task']._alfia_key_domain(f"preg:{rec.id}"))
 
     @api.constrains('genetic_dam_id', 'mare_id')
     def _check_dam(self):
@@ -539,10 +547,15 @@ class AlfiaEmbryo(models.Model):
             rec.state = 'stored'
 
     def action_discard(self):
+        _require_group(self.env, 'alfia_security.group_alfia_vet_user', self.env._("veterinary staff"))
+        for rec in self:
+            if rec.state == 'transferred':
+                raise UserError(self.env._("A transferred embryo cannot be discarded."))
         self.state = 'discarded'
 
     def action_transfer(self, pregnancy):
         """Place the embryo in a recipient's pregnancy: the recipient stays the carrier; the donor becomes the genetic dam."""
+        _require_group(self.env, 'alfia_security.group_alfia_vet_user', self.env._("veterinary staff"))
         for rec in self:
             if rec.state not in ('collected', 'stored'):
                 raise UserError(self.env._("This embryo is %s and cannot be transferred.", dict(rec._fields['state'].selection)[rec.state].lower()))
@@ -602,6 +615,7 @@ class AlfiaSemenCollection(models.Model):
                 raise UserError(self.env._("Enter doses, concentration and motility before the batch can be released."))
             if not rec.tank_id or not rec.product_id:
                 raise UserError(self.env._("Choose the semen product and the tank location."))
+            self.env.user._alfia_check_location(rec.tank_id, self.env._("semen tank"))
             product = rec.product_id
             lot = self.env['stock.lot'].sudo().create({'name': f"{rec.name}-{rec.stallion_id.id}", 'product_id': product.id, 'company_id': rec.company_id.id})
             source = self.env['stock.location'].sudo().search([('usage', '=', 'inventory'), ('company_id', 'in', (False, rec.company_id.id))], limit=1)

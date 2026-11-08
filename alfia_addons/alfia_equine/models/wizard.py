@@ -14,6 +14,7 @@ class AlfiaHorseMerge(models.TransientModel):
         dup, keep = self.duplicate_id, self.keep_id
         if dup == keep:
             raise UserError(self.env._("Choose two different horses."))
+        (dup | keep).check_access('write')
         if dup.sex != keep.sex:
             raise UserError(self.env._("The two horses have different sexes. Check that they really are the same animal."))
         Fields = self.env['ir.model.fields'].sudo()
