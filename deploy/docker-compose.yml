@@ -1,0 +1,43 @@
+# Alfia stud farm demo: database, application, and HTTPS in front.
+#   cd deploy && cp .env.example .env   (then edit .env)
+#   docker compose up -d --build
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      POSTGRES_DB: postgres
+    volumes: [db-data:/var/lib/postgresql/data]
+    restart: unless-stopped
+
+  odoo:
+    build: {context: .., dockerfile: deploy/Dockerfile}
+    image: alfia-stud:latest
+    depends_on: [db]
+    environment:
+      DB_HOST: db
+      DB_USER: odoo
+      DB_PASSWORD: ${DB_PASSWORD}
+      MASTER_PASSWORD: ${MASTER_PASSWORD:?Set MASTER_PASSWORD in .env}
+      ALFIA_DEMO_PASSWORD: ${DEMO_PASSWORD:?Set DEMO_PASSWORD in .env}
+      ALFIA_ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
+      LOAD_DEMO_FARM: ${LOAD_DEMO_FARM:-1}
+    volumes: [odoo-data:/var/lib/alfia/data]
+    restart: unless-stopped
+
+  https:
+    image: caddy:2
+    depends_on: [odoo]
+    ports: ["80:80", "443:443"]
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:?Set SITE_ADDRESS in .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    restart: unless-stopped
+
+volumes:
+  db-data:
+  odoo-data:
+  caddy-data:

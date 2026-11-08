@@ -18,8 +18,11 @@ if ! command -v rtlcss >/dev/null 2>&1; then
 fi
 
 $PY odoo-bin db -c "$CONF" drop "$DB" 2>/dev/null || true
-echo "Installing the Alfia modules into $DB (English; the seed adds Arabic)…"
-$PY odoo-bin -c "$CONF" -d "$DB" -i alfia_equine_ops --stop-after-init --log-level=warn
+echo "Creating $DB for a company in Qatar (so the Qatar chart of accounts is used)…"
+$PY odoo-bin -c "$CONF" -d "$DB" -i base --stop-after-init --log-level=warn
+$PY odoo-bin shell -c "$CONF" -d "$DB" --log-level=error < demo/set_country.py
+echo "Installing the Alfia modules (English; the seed adds Arabic)…"
+$PY odoo-bin -c "$CONF" -d "$DB" -i alfia_finance --stop-after-init --log-level=warn
 echo "Loading the demonstration farm…"
 $PY odoo-bin shell -c "$CONF" -d "$DB" --log-level=error < demo/seed_demo.py
 echo "Done. Start the server with:"

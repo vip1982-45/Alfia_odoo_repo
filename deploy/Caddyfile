@@ -1,0 +1,10 @@
+# HTTPS certificate is obtained automatically for the domain in SITE_ADDRESS.
+{$SITE_ADDRESS} {
+	encode gzip
+	reverse_proxy odoo:8069
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+	}
+}

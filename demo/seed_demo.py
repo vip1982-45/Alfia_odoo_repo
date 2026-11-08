@@ -8,13 +8,16 @@ Every name, number and person here is invented. All demo accounts share one pass
 change it, or delete the accounts, before the system holds real data.
 """
 import logging
+import os
 
 from dateutil.relativedelta import relativedelta
 
 from odoo import Command, fields
 
 _logger = logging.getLogger('alfia.demo')
-DEMO_PASSWORD = 'AlfiaDemo-2026'
+DEMO_PASSWORD = os.environ.get('ALFIA_DEMO_PASSWORD') or 'AlfiaDemo-2026'
+# On a server others can reach, the administrator gets a password of its own (deploy/.env).
+ADMIN_PASSWORD = os.environ.get('ALFIA_ADMIN_PASSWORD') or DEMO_PASSWORD
 E = env(context=dict(env.context, lang='ar_001', tz='Asia/Qatar'))  # noqa: F821 - generated work items and history are written in Arabic
 ref = E.ref
 TODAY = fields.Date.context_today(E['res.users'])
@@ -127,7 +130,7 @@ for login, name, profiles, groups in USERS:
         'group_ids': [Command.link(ref('base.group_user').id)] + [Command.link(ref(g).id) for g in groups],
         'alfia_profile_ids': [Command.set([p.id for p in profiles])]})
 admin = ref('base.user_admin')
-admin.write({'password': DEMO_PASSWORD, 'name': 'مدير النظام', 'lang': 'ar_001', 'tz': 'Asia/Qatar'})
+admin.write({'password': ADMIN_PASSWORD, 'name': 'مدير النظام', 'lang': 'ar_001', 'tz': 'Asia/Qatar'})
 admin.group_ids = [Command.link(ref('alfia_security.group_alfia_semen_custodian').id)]   # sees controlled stock in the demo
 
 # ------------------------------------------------------------------ horses and pedigrees
@@ -356,4 +359,4 @@ for profile, name in ((med_profile, 'أمين مخزن الأدوية – مخز
 
 E.flush_all()
 E.cr.commit()
-print(f"Demo farm ready: {Horse.search_count([])} horses, {len(USERS) + 1} accounts (password {DEMO_PASSWORD!r}).")
+print(f"Demo farm ready: {Horse.search_count([])} horses, {len(USERS) + 1} accounts.")

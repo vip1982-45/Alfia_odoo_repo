@@ -1,0 +1,10 @@
+# Sent to the image build: Odoo source, the Alfia modules and the demo kit.
+**/__pycache__
+**/*.pyc
+.git
+doc
+debian
+setup
+skills
+deploy/.env
+.sandbox-ca.crt

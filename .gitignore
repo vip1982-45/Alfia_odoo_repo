@@ -51,3 +51,6 @@ package.json
 /man/
 /share/
 /src/
+
+# Deployment secrets
+deploy/.env
