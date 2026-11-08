@@ -1,6 +1,6 @@
 {
     'name': 'Alfia Security',
-    'version': '20.0.1.0.0',
+    'version': '20.0.1.1.0',
     'category': 'Administration',
     'summary': 'Segregated accounts by site, function and sensitive stock, with segregation of duties and audit',
     'description': """

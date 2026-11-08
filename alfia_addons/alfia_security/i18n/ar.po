@@ -378,6 +378,7 @@ msgstr "معتمِد الصرف: البيطري"
 #. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_account_move__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_account_payment__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_account_payment_register__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__display_name
@@ -497,6 +498,7 @@ msgstr "المجموعات الممنوحة من ملفات الصلاحيات"
 #. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_account_move__id
 #: model:ir.model.fields,field_description:alfia_security.field_account_payment__id
+#: model:ir.model.fields,field_description:alfia_security.field_account_payment_register__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__id
@@ -657,6 +659,11 @@ msgid ""
 msgstr ""
 "تحتاج التحويلات الصادرة التي تحتوي على هذه المنتجات إلى اعتماد من كل مجموعة "
 "أدناه، على أن يصدر كل اعتماد عن شخص مختلف."
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_account_payment_register
+msgid "Pay"
+msgstr "دفع"
 
 #. module: alfia_security
 #: model:ir.model,name:alfia_security.model_account_payment
@@ -1017,6 +1024,12 @@ msgstr "المستخدمون دون مصادقة ثنائية"
 #: model:res.groups,name:alfia_security.group_alfia_vet_user
 msgid "Veterinary staff"
 msgstr "الموظفون البيطريون"
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/account.py:0
+msgid "Waiting for a second person to confirm this outgoing payment."
+msgstr "بانتظار تأكيد شخص ثانٍ لهذه الدفعة الصادرة."
 
 #. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__warehouse_ids

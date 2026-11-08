@@ -68,16 +68,16 @@
         </record>
         <record id="profile_ap_clerk" model="alfia.access.profile">
             <field name="name">Accounts payable clerk</field>
-            <field name="description">Enters vendor bills. Add the purchase journals they may use.</field>
-            <field name="group_ids" eval="[(6, 0, [ref('account.group_account_invoice')])]"/>
+            <field name="description">Enters vendor bills against purchase orders of every warehouse. Add the purchase journals they may use.</field>
+            <field name="group_ids" eval="[(6, 0, [ref('account.group_account_invoice'), ref('group_alfia_all_warehouses')])]"/>
         </record>
         <record id="profile_ar_clerk" model="alfia.access.profile">
             <field name="name">Sales and receivables clerk</field>
-            <field name="group_ids" eval="[(6, 0, [ref('sales_team.group_sale_salesman'), ref('account.group_account_invoice')])]"/>
+            <field name="group_ids" eval="[(6, 0, [ref('sales_team.group_sale_salesman'), ref('account.group_account_invoice'), ref('group_alfia_all_warehouses')])]"/>
         </record>
         <record id="profile_accountant" model="alfia.access.profile">
             <field name="name">Accountant</field>
-            <field name="group_ids" eval="[(6, 0, [ref('account.group_account_user')])]"/>
+            <field name="group_ids" eval="[(6, 0, [ref('account.group_account_user'), ref('group_alfia_all_warehouses')])]"/>
         </record>
         <record id="profile_finance_controller" model="alfia.access.profile">
             <field name="name">Finance controller</field>
