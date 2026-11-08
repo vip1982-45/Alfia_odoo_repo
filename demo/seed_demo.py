@@ -285,6 +285,7 @@ E['alfia.horse.group'].create({'name': 'أفراس إسطبل أ (تلقائية
 E['alfia.horse.group'].create({'name': 'الأفراس العشار (تلقائية)', 'reproductive_state': 'pregnant'})
 plan = E['alfia.charge.plan'].create({'name': 'أفراس العملاء – إيواء كامل', 'target_kind': 'group', 'group_id': group_client.id,
                                       'product_id': board.id, 'interval': 'monthly', 'next_date': d(-60), 'auto_approve': True})
+plan.with_user(users['finance']).action_approve()   # a second person approves the plan before it bills
 plan.action_generate()
 E['alfia.charge'].create({'horse_id': mares[4].id, 'product_id': vet_fee.id, 'name': 'زيارة العرج · Lameness visit', 'date': d(-3)})
 stay = E['alfia.boarding'].create({'horse_id': new_arrival.id, 'client_id': client_2.id, 'product_id': board.id, 'rate': 4200, 'start_date': d(-5),
