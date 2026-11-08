@@ -51,3 +51,4 @@ alfia_approver_vet_lot,Dispatch approver (vet) read: stock.lot,stock.lot,alfia_s
 alfia_approver_vet_location,Dispatch approver (vet) read: stock.location,stock.location,alfia_security.group_alfia_dispatch_vet_approver,r,
 alfia_category_officer,Officers maintain stock restrictions on categories,product.category,alfia_security.group_alfia_security_officer,ru,
 alfia_users_officer,Security officers manage user accounts,res.users,alfia_security.group_alfia_security_officer,cru,
+alfia_site_setup_system,Add a site: system administrators,alfia.site.setup,base.group_system,crud,

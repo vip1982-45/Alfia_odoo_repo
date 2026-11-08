@@ -1,6 +1,8 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from .common import BILLING_MANAGERS, require_any, sod_blocks
+
 G = 'alfia_security.group_alfia_'
 
 
@@ -31,11 +33,14 @@ class AlfiaBoarding(models.Model):
                 raise ValidationError(self.env._("The stay ends before it starts."))
 
     def action_start(self):
+        require_any(self.env, BILLING_MANAGERS, self.env._("managers or accounting staff"))
         for rec in self.filtered(lambda r: r.state == 'draft'):
+            if sod_blocks(rec, rec.rate):
+                raise UserError(self.env._("You entered the boarding agreement for %s, so someone else must start its billing.", rec.horse_id.name))
             rec.plan_id = self.env['alfia.charge.plan'].sudo().create({
                 'name': self.env._("Board: %s", rec.horse_id.name), 'target_kind': 'horse', 'horse_id': rec.horse_id.id, 'partner_id': rec.client_id.id,
                 'product_id': rec.product_id.id, 'price_unit': rec.rate, 'interval': rec.interval, 'next_date': rec.start_date, 'end_date': rec.end_date,
-                'company_id': rec.company_id.id})
+                'company_id': rec.company_id.id, 'state': 'approved', 'approved_by_id': self.env.user.id})
             rec.state = 'active'
 
     def action_end(self):

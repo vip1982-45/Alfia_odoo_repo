@@ -1,6 +1,3 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* alfia_equine
 #
 msgid ""
 msgstr ""
@@ -37,6 +34,12 @@ msgstr ""
 #: code:addons/alfia_equine/models/clinical.py:0
 msgid "%(type)s due: %(title)s"
 msgstr "استحقاق %(type)s: %(title)s"
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "%(years)sY %(months)sM %(days)sD"
+msgstr "%(years)s سنة %(months)s شهر %(days)s يوم"
 
 #. module: alfia_equine
 #. odoo-python
@@ -2432,6 +2435,11 @@ msgid "Ownership shares of %s add up to more than 100%% in that period."
 msgstr "مجموع حصص ملكية %s يتجاوز 100%% في تلك الفترة."
 
 #. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__drafted_by_id
+msgid "Parameters set by"
+msgstr "حدّد المعايير"
+
+#. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__passport
 msgid "Passport no."
 msgstr "رقم جواز السفر"
@@ -3223,6 +3231,13 @@ msgid "The genetic dam must be a mare."
 msgstr "يجب أن تكون الأم الوراثية فرسًا."
 
 #. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_rule__drafted_by_id
+msgid ""
+"The last person who changed the schedule parameters. Someone else must "
+"approve them."
+msgstr "آخر شخص غيّر معايير الجدول. يجب أن يعتمدها شخص آخر."
+
+#. module: alfia_equine
 #. odoo-python
 #: code:addons/alfia_equine/models/breeding.py:0
 msgid "The mare of a service must be a mare."
@@ -3593,6 +3608,15 @@ msgstr "أشعة سينية"
 
 #. module: alfia_equine
 #. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid ""
+"You set these schedule parameters, so another resident veterinarian must "
+"approve them."
+msgstr ""
+"أنت من حدّد معايير هذا الجدول، لذا يجب أن يعتمدها طبيب بيطري مقيم آخر."
+
+#. module: alfia_equine
+#. odoo-python
 #: code:addons/alfia_equine/models/clinical.py:0
 msgid "a training or competition manager"
 msgstr "مدير التدريب أو المنافسات"
@@ -3639,10 +3663,3 @@ msgstr "الطاقم البيطري"
 #: code:addons/alfia_equine/models/breeding.py:0
 msgid "veterinary staff (staff observations never close a pregnancy)"
 msgstr "الطاقم البيطري (ملاحظات الموظفين لا تُنهي الحمل أبدًا)"
-
-#. module: alfia_equine
-#. odoo-python
-#: code:addons/alfia_equine/models/horse.py:0
-#, python-format
-msgid "%(years)sY %(months)sM %(days)sD"
-msgstr "%(years)s سنة %(months)s شهر %(days)s يوم"

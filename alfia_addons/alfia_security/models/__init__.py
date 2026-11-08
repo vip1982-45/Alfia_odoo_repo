@@ -10,3 +10,4 @@ from . import stock
 from . import purchase
 from . import account
 from . import admin_guard
+from . import site_setup

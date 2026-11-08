@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-08 21:38+0000\n"
-"PO-Revision-Date: 2026-11-08 21:38+0000\n"
+"POT-Creation-Date: 2026-11-08 22:10+0000\n"
+"PO-Revision-Date: 2026-11-08 22:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -65,6 +65,12 @@ msgid ""
 msgstr ""
 
 #. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/site_setup.py:0
+msgid "A profile named %s already exists."
+msgstr ""
+
+#. module: alfia_security
 #: model:ir.model.constraint,message:alfia_security.constraint_alfia_access_profile_name_uniq
 msgid "A profile with this name already exists."
 msgstr ""
@@ -115,6 +121,17 @@ msgstr ""
 #. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__active
 msgid "Active"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.actions.act_window,name:alfia_security.alfia_site_setup_action
+#: model:ir.ui.menu,name:alfia_security.menu_alfia_site_setup
+msgid "Add a site"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_alfia_site_setup
+msgid "Add a site with its access profiles"
 msgstr ""
 
 #. module: alfia_security
@@ -246,6 +263,11 @@ msgid "Breeding staff"
 msgstr ""
 
 #. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_site_setup_view_form
+msgid "Cancel"
+msgstr ""
+
+#. module: alfia_security
 #: model:ir.model,name:alfia_security.model_res_company
 msgid "Company"
 msgstr ""
@@ -264,9 +286,15 @@ msgid ""
 msgstr ""
 
 #. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_site_setup_view_form
+msgid "Create site and profiles"
+msgstr ""
+
+#. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__create_uid
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__create_uid
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__create_uid
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__create_uid
 msgid "Created by"
 msgstr ""
 
@@ -274,7 +302,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__create_date
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__create_date
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__create_date
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_site_setup_view_form
+msgid ""
+"Creates the site and one access profile per role, limited to this site. Then"
+" give people these profiles from their user form."
 msgstr ""
 
 #. module: alfia_security
@@ -330,6 +366,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_sod_mixin__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_ir_access__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_ir_model_data__display_name
@@ -362,6 +399,13 @@ msgid "Each approval must come from a different person."
 msgstr ""
 
 #. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_alfia_site_setup__template_ids
+msgid ""
+"Each chosen profile is copied as '<role> – <site>' with this site as its "
+"only place of work."
+msgstr ""
+
+#. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_effective_approver_group_ids
 msgid "Effective approver groups"
 msgstr ""
@@ -382,13 +426,29 @@ msgid "Enforce segregation of duties"
 msgstr ""
 
 #. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/site_setup.py:0
+msgid "Enter the site name."
+msgstr ""
+
+#. module: alfia_security
 #: model:res.groups,name:alfia_security.group_alfia_sod_exempt
 msgid "Exempt from segregation of duties (emergency use)"
 msgstr ""
 
 #. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__location_id
+msgid "Existing location"
+msgstr ""
+
+#. module: alfia_security
 #: model:alfia.access.profile,name:alfia_security.profile_finance_controller
 msgid "Finance controller"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_alfia_site_setup__site_name
+msgid "For example: Barn C (yearlings)."
 msgstr ""
 
 #. module: alfia_security
@@ -423,6 +483,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__id
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_sod_mixin__id
 #: model:ir.model.fields,field_description:alfia_security.field_ir_access__id
 #: model:ir.model.fields,field_description:alfia_security.field_ir_model_data__id
@@ -439,6 +500,11 @@ msgid "ID"
 msgstr ""
 
 #. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__parent_location_id
+msgid "Inside"
+msgstr ""
+
+#. module: alfia_security
 #: model:ir.model,name:alfia_security.model_account_move
 msgid "Journal Entry"
 msgstr ""
@@ -452,6 +518,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__write_uid
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__write_uid
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__write_uid
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__write_uid
 msgid "Last Updated by"
 msgstr ""
 
@@ -459,6 +526,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__write_date
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__write_date
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__write_date
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -492,6 +560,12 @@ msgstr ""
 #: model:res.groups.privilege,placeholder:alfia_security.privilege_alfia_security
 #: model:res.groups.privilege,placeholder:alfia_security.privilege_alfia_stud
 msgid "No"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/site_setup.py:0
+msgid "Only a system administrator can add a site and its profiles."
 msgstr ""
 
 #. module: alfia_security
@@ -601,6 +675,17 @@ msgid "Profiles"
 msgstr ""
 
 #. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__created_profile_ids
+msgid "Profiles created"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/site_setup.py:0
+msgid "Profiles for %s"
+msgstr ""
+
+#. module: alfia_security
 #: model:ir.model,name:alfia_security.model_purchase_order
 msgid "Purchase Order"
 msgstr ""
@@ -629,6 +714,11 @@ msgstr ""
 #. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_access_group_id
 msgid "Restrict stock to group"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__template_ids
+msgid "Roles at this site"
 msgstr ""
 
 #. module: alfia_security
@@ -715,6 +805,11 @@ msgstr ""
 #: model:alfia.access.profile,name:alfia_security.profile_semen_custodian
 #: model:res.groups,name:alfia_security.group_alfia_semen_custodian
 msgid "Semen and embryo custodian"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__site_name
+msgid "Site name"
 msgstr ""
 
 #. module: alfia_security
@@ -851,6 +946,11 @@ msgstr ""
 #. module: alfia_security
 #: model:ir.model,name:alfia_security.model_stock_picking
 msgid "Transfer"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_alfia_site_setup__location_id
+msgid "Use a location that already exists instead of creating one."
 msgstr ""
 
 #. module: alfia_security

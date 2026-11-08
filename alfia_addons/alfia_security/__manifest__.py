@@ -29,6 +29,7 @@ Role-and-scope security for a stud farm
         'views/alfia_security_audit_views.xml',
         'views/res_company_views.xml',
         'views/menus.xml',
+        'views/site_setup_views.xml',
     ],
     'installable': True,
     'application': False,

@@ -49,13 +49,13 @@
     <record id="alfia_charge_plan_view_list" model="ir.ui.view">
         <field name="name">alfia.charge.plan.list</field>
         <field name="model">alfia.charge.plan</field>
-        <field name="arch" type="xml"><list><field name="name"/><field name="target_kind"/><field name="product_id"/><field name="price_unit"/><field name="interval"/><field name="next_date"/><field name="active"/></list></field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="target_kind"/><field name="product_id"/><field name="price_unit"/><field name="interval"/><field name="next_date"/><field name="state"/><field name="active"/></list></field>
     </record>
     <record id="alfia_charge_plan_view_form" model="ir.ui.view">
         <field name="name">alfia.charge.plan.form</field>
         <field name="model">alfia.charge.plan</field>
         <field name="arch" type="xml">
-            <form><header><button name="action_generate" string="Generate due charges now" type="object" class="btn-primary"/></header><sheet><group><group><field name="name"/><field name="active"/><field name="company_id"/><field name="target_kind"/><field name="horse_id"/><field name="location_id"/><field name="group_id"/><field name="partner_id"/></group><group><field name="product_id"/><field name="quantity"/><field name="price_unit"/><field name="interval"/><field name="next_date"/><field name="end_date"/><field name="auto_approve"/></group></group></sheet></form>
+            <form><header><button name="action_approve" string="Approve" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_generate" string="Generate due charges now" type="object" class="" invisible="state != 'approved'"/><button name="action_reset" string="Send back for approval" type="object" class="" invisible="state != 'approved'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="active"/><field name="company_id"/><field name="target_kind"/><field name="horse_id"/><field name="location_id"/><field name="group_id"/><field name="partner_id"/></group><group><field name="product_id"/><field name="quantity"/><field name="price_unit"/><field name="interval"/><field name="next_date"/><field name="end_date"/><field name="auto_approve"/><field name="approved_by_id"/></group></group></sheet></form>
         </field>
     </record>
     <record id="alfia_charge_plan_view_search" model="ir.ui.view">
@@ -308,7 +308,7 @@
         <field name="name">alfia.asset.form</field>
         <field name="model">alfia.asset</field>
         <field name="arch" type="xml">
-            <form><header><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="kind"/><field name="company_id"/><field name="reference"/><field name="responsible_id"/><field name="horse_id"/></group><group><field name="acquired"/><field name="value"/><field name="next_service"/><field name="state"/><field name="borrower_id"/><field name="active"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+            <form><header><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="kind"/><field name="company_id"/><field name="location_id"/><field name="reference"/><field name="responsible_id"/><field name="horse_id"/></group><group><field name="acquired"/><field name="value"/><field name="next_service"/><field name="state"/><field name="borrower_id"/><field name="active"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
         </field>
     </record>
     <record id="alfia_asset_view_search" model="ir.ui.view">

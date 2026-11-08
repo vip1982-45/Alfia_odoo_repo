@@ -6,6 +6,8 @@ from odoo.exceptions import UserError, ValidationError
 from .common import BILLING_MANAGERS, lock_after, require_any, sod_blocks
 
 MAX_PERIODS_PER_RUN = 60
+PLAN_TERMS = {'target_kind', 'horse_id', 'location_id', 'group_id', 'partner_id', 'product_id', 'quantity', 'price_unit', 'interval',
+              'end_date', 'auto_approve', 'company_id'}
 
 
 class AlfiaCharge(models.Model):
@@ -119,6 +121,9 @@ class AlfiaChargePlan(models.Model):
     next_date = fields.Date(required=True, default=fields.Date.context_today)
     end_date = fields.Date()
     auto_approve = fields.Boolean(help="Generated charges are approved at once instead of waiting for a manager.")
+    state = fields.Selection([('draft', 'To approve'), ('approved', 'Approved')], default='draft', required=True, copy=False,
+                             help="Only an approved plan generates charges. Changing what or whom it bills sends it back for approval.")
+    approved_by_id = fields.Many2one('res.users', readonly=True, copy=False)
 
     @api.constrains('target_kind', 'horse_id', 'location_id', 'group_id')
     def _check_target(self):
@@ -135,6 +140,8 @@ class AlfiaChargePlan(models.Model):
                 plan.horse_id.check_access('read')
             if plan.group_id:
                 plan.group_id.check_access('read')
+                for horse in plan.group_id.sudo().all_member_ids.filtered('location_id'):
+                    self.env.user._alfia_check_location(horse.location_id, self.env._("member %s of the group", horse.name))
             if plan.location_id:
                 self.env.user._alfia_check_location(plan.location_id, self.env._("recurring charge"))
 
@@ -145,10 +152,23 @@ class AlfiaChargePlan(models.Model):
         return plans
 
     def write(self, vals):
+        if PLAN_TERMS & set(vals) and not self.env.su and any(p.state == 'approved' for p in self):
+            # What a plan bills, to whom and how much was approved by someone; any change needs a new approval.
+            vals = dict(vals, state='draft', approved_by_id=False)
         res = super().write(vals)
         if {'horse_id', 'location_id', 'group_id', 'target_kind'} & set(vals):
             self._check_scope()
         return res
+
+    def action_approve(self):
+        require_any(self.env, BILLING_MANAGERS, self.env._("managers or accounting staff"))
+        for plan in self.filtered(lambda p: p.state == 'draft'):
+            if sod_blocks(plan):
+                raise UserError(self.env._("You set up the recurring charge %s, so someone else must approve it.", plan.name))
+            plan.write({'state': 'approved', 'approved_by_id': self.env.user.id})
+
+    def action_reset(self):
+        self.write({'state': 'draft', 'approved_by_id': False})
 
     def _target_horses(self):
         self.ensure_one()
@@ -164,7 +184,7 @@ class AlfiaChargePlan(models.Model):
         upto = upto or fields.Date.context_today(self)
         created = 0
         Charge = self.env['alfia.charge'].sudo()
-        for plan in self.filtered('active'):
+        for plan in self.filtered(lambda p: p.active and p.state == 'approved'):
             horses = plan._target_horses()
             vals_list, periods = [], 0
             # One query for the keys already generated, one create for the whole batch; a plan far behind catches up
@@ -193,4 +213,4 @@ class AlfiaChargePlan(models.Model):
 
     @api.model
     def _cron_generate(self):
-        self.search([('active', '=', True)]).action_generate()
+        self.search([('active', '=', True), ('state', '=', 'approved')]).action_generate()

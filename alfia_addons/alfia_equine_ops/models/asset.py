@@ -13,6 +13,7 @@ class AlfiaAsset(models.Model):
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company, required=True)
     reference = fields.Char(string='Plate / serial / shelf')
     responsible_id = fields.Many2one('res.users')
+    location_id = fields.Many2one('stock.location', string='Site', help="Leave empty for farm-wide assets everyone may see.")
     horse_id = fields.Many2one('alfia.horse', string='Related horse (trophy)')
     acquired = fields.Date()
     value = fields.Float()

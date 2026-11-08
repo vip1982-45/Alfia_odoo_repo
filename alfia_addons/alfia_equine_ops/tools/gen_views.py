@@ -18,11 +18,15 @@ SPEC = [
          buttons=[('action_approve', 'Approve', "state != 'draft'", 'btn-primary'), ('action_invoice', 'Create invoice', "state != 'approved'", 'btn-primary'), ('action_cancel', 'Cancel', "state in ('invoiced','cancelled')", '')],
          modes='list,form,pivot,graph', filters=[('draft', 'To approve', "[('state', '=', 'draft')]"), ('approved', 'Ready to invoice', "[('state', '=', 'approved')]")],
          access=([BM, TM, VM, ACC, AUD], [BM, TM, VM, ACC], [BM])),
-    dict(model='alfia.charge.plan', title='Recurring charges', menu='billing', list=['name', 'target_kind', 'product_id', 'price_unit', 'interval', 'next_date', 'active'],
-         form=['name', 'active', 'company_id', 'target_kind', 'horse_id', 'location_id', 'group_id', 'partner_id', 'product_id', 'quantity', 'price_unit', 'interval', 'next_date', 'end_date', 'auto_approve'],
-         header_buttons=[('action_generate', 'Generate due charges now', '', 'btn-primary')], search=['name'], access=([BM, TM, VM, ACC, AUD], [BM, TM, ACC], [BM])),
+    dict(model='alfia.charge.plan', title='Recurring charges', menu='billing', list=['name', 'target_kind', 'product_id', 'price_unit', 'interval', 'next_date', 'state', 'active'],
+         form=['name', 'active', 'company_id', 'target_kind', 'horse_id', 'location_id', 'group_id', 'partner_id', 'product_id', 'quantity', 'price_unit', 'interval', 'next_date', 'end_date', 'auto_approve', 'approved_by_id'],
+         status='state', buttons=[('action_approve', 'Approve', "state != 'draft'", 'btn-primary'), ('action_generate', 'Generate due charges now', "state != 'approved'", ''),
+                                  ('action_reset', 'Send back for approval', "state != 'approved'", '')],
+         search=['name'], access=([BM, TM, VM, ACC, AUD], [BM, TM, ACC], [BM]),
+         scope_domain="['|', '|', ('horse_id.location_id', 'child_of', user.alfia_location_ids.ids), ('location_id', 'child_of', user.alfia_location_ids.ids), ('create_uid', '=', user.id)] if user.alfia_scope_locations else []"),
     dict(model='alfia.horse.sale', title='Sales and gifts', menu='billing', list=['date', 'horse_id', 'kind', 'buyer_id', 'price', 'state'],
          form=['horse_id', 'kind', 'buyer_id', 'date', 'price', 'currency_id', 'created_by_id', 'approved_by_id', 'move_id', 'state'], long=['notes'], search=['horse_id', 'buyer_id'], chatter=True, status='state',
+         scope_domain="['|', ('horse_id.location_id', '=', False), ('horse_id.location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []",
          buttons=[('action_approve', 'Approve', "state != 'draft'", 'btn-primary'), ('action_complete', 'Complete', "state != 'approved'", 'btn-primary'), ('action_cancel', 'Cancel', "state in ('done','cancelled')", '')],
          access=([BM, TM, VM, ACC, AUD], [BM, TM, VM, ACC], [])),
     dict(model='alfia.breeding.contract', title='Breeding contracts', menu='breeding', list=['name', 'client_id', 'stallion_id', 'season', 'fee', 'outcome', 'state'],
@@ -55,7 +59,8 @@ SPEC = [
          buttons=[('action_check', 'Check rules', "state in ('approved','rejected')", ''), ('action_submit', 'Submit', "state != 'draft'", 'btn-primary'), ('action_vet_confirm', 'Vet confirms fitness', "state != 'pending'", ''),
                   ('action_approve', 'Approve', "state != 'pending'", 'btn-primary'), ('action_reject', 'Reject', "state in ('approved','rejected')", '')], access=(ALL_HORSE, [T, V], [TM])),
     dict(model='alfia.asset', title='Fleet, trophies, library', menu='facilities', list=['name', 'kind', 'reference', 'responsible_id', 'next_service', 'state'],
-         form=['name', 'kind', 'company_id', 'reference', 'responsible_id', 'horse_id', 'acquired', 'value', 'next_service', 'state', 'borrower_id', 'active'], long=['notes'], search=['name', 'reference'], chatter=True, status='state',
+         form=['name', 'kind', 'company_id', 'location_id', 'reference', 'responsible_id', 'horse_id', 'acquired', 'value', 'next_service', 'state', 'borrower_id', 'active'], long=['notes'], search=['name', 'reference'], chatter=True, status='state',
+         scope_domain="['|', ('location_id', '=', False), ('location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []",
          access=(ALL_HORSE, [TM, BM, S], [TM, BM])),
     dict(model='alfia.report.breeding', title='Breeding performance', menu='reports', list=['stallion_id', 'season', 'services', 'pregnancies', 'live_foals', 'pregnancy_rate'], form=None, search=['stallion_id', 'season'],
          scope='stallion_id', modes='list,pivot,graph', access=([BM, AUD], [], [])),
@@ -137,6 +142,8 @@ def main():
         rows.append([f'acc_{key}_system', f'{model}: system administrators', model, 'base.group_system', 'r' if not write else 'crud', ''])
         if s.get('scope'):
             rows.append([f'scope_{key}', f'Alfia site scope: {model}', model, '', 'crud', scope_domain(f"{s['scope']}.location_id")])
+        elif s.get('scope_domain'):
+            rows.append([f'scope_{key}', f'Alfia site scope: {model}', model, '', 'crud', s['scope_domain']])
     for g in (BM, TM, VM):
         rows.append([f'acc_import_{g.split("_")[-2]}', 'Import horses', 'alfia.horse.import', g, 'crud', ''])
     for g in (ACC, MED):

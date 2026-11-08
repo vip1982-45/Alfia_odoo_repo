@@ -1,7 +1,7 @@
 from odoo import Command, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
-from .common import BILLING_MANAGERS, lock_after, require_any
+from .common import BILLING_MANAGERS, lock_after, require_any, sod_blocks
 
 
 class AlfiaBreedingContract(models.Model):
@@ -58,7 +58,10 @@ class AlfiaBreedingContract(models.Model):
 
     def action_confirm(self):
         require_any(self.env, BILLING_MANAGERS, self.env._("managers"))
-        self.filtered(lambda r: r.state == 'draft').write({'state': 'confirmed'})
+        for rec in self.filtered(lambda r: r.state == 'draft'):
+            if sod_blocks(rec, rec.fee):
+                raise UserError(self.env._("You prepared contract %s, so someone else must confirm it.", rec.name))
+            rec.state = 'confirmed'
 
     def action_invoice(self):
         require_any(self.env, ('account.group_account_invoice', 'base.group_system'), self.env._("accounting staff"))

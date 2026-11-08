@@ -35,6 +35,8 @@ class AlfiaBreedingRule(models.Model):
     day_zero_notes = fields.Text(string='Conventions', help="Day-zero convention, month calculation, timezone and handling of past-due tasks, as signed off.")
     approved_by_id = fields.Many2one('res.users', readonly=True, copy=False)
     approved_date = fields.Datetime(readonly=True, copy=False)
+    drafted_by_id = fields.Many2one('res.users', string='Parameters set by', readonly=True, copy=False,
+                                    help="The last person who changed the schedule parameters. Someone else must approve them.")
 
     @api.constrains(*PARAMETERS)
     def _check_parameters(self):
@@ -79,6 +81,8 @@ class AlfiaBreedingRule(models.Model):
         for rule in self:
             if rule.state != 'draft':
                 raise UserError(self.env._("Only a draft rule set can be approved."))
+            if rule.drafted_by_id == self.env.user and self.env['alfia.sod.mixin']._alfia_sod_applies(None, rule.company_id):
+                raise UserError(self.env._("You set these schedule parameters, so another resident veterinarian must approve them."))
             others = self.search([('state', '=', 'approved'), ('company_id', '=', rule.company_id.id), ('id', '!=', rule.id)])
             others.write({'state': 'retired'})
             rule.write({'state': 'approved', 'approved_by_id': self.env.user.id, 'approved_date': fields.Datetime.now()})
@@ -86,11 +90,22 @@ class AlfiaBreedingRule(models.Model):
 
     def action_new_version(self):
         self.ensure_one()
-        return self.copy({'name': self.name, 'version': self.version + 1, 'state': 'draft'})
+        new = self.copy({'name': self.name, 'version': self.version + 1, 'state': 'draft'})
+        new.drafted_by_id = self.env.user
+        return new
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        rules = super().create(vals_list)
+        if not self.env.su:
+            rules.drafted_by_id = self.env.user
+        return rules
 
     def write(self, vals):
         if set(vals) & set(PARAMETERS) and any(r.state != 'draft' for r in self):
             raise UserError(self.env._("An approved rule set cannot be changed. Create a new version instead."))
+        if set(vals) & set(PARAMETERS) and not self.env.su:
+            vals = dict(vals, drafted_by_id=self.env.user.id)
         return super().write(vals)
 
     def season_contains(self, day):

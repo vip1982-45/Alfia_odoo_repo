@@ -83,7 +83,7 @@ SPEC = [
          scope=('stallion_id', 'tank_id'), chatter=True, status='state',
          buttons=[('action_release', 'Release batch', "state != 'draft'", 'btn-primary'), ('action_reject', 'Reject', "state != 'draft'", '')], access=([V, B, CUST, AUD], [V, B], [])),
     dict(model='alfia.breeding.rule', title='Breeding schedule rule sets', menu='config', list=['name', 'version', 'state', 'check_offsets', 'gestation_days', 'approved_by_id'],
-         form=['name', 'version', 'state', 'check_offsets', 'gestation_days', 'prep_days', 'vaccine_months', 'season_start_month', 'season_start_day', 'season_end_month', 'season_end_day', 'teasing_pregnant_until_day', 'approved_by_id', 'approved_date'],
+         form=['name', 'version', 'state', 'check_offsets', 'gestation_days', 'prep_days', 'vaccine_months', 'season_start_month', 'season_start_day', 'season_end_month', 'season_end_day', 'teasing_pregnant_until_day', 'drafted_by_id', 'approved_by_id', 'approved_date'],
          long=['day_zero_notes'], search=['name'], chatter=True, status='state',
          buttons=[('action_approve', 'Approve (resident vet)', "state != 'draft'", 'btn-primary'), ('action_new_version', 'New version', "state == 'draft'", '')], access=([V, B, AUD], [VM], [])),
     dict(model='alfia.teasing.symbol', title='Teasing chart symbols', menu='config', list=['sequence', 'code', 'name', 'is_heat'], form=['code', 'name', 'sequence', 'is_heat'], search=['name', 'code'], access=([V, B, S, AUD], [BM], [BM])),

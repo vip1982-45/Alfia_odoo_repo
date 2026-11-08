@@ -1,6 +1,3 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* alfia_security
 #
 msgid ""
 msgstr ""
@@ -79,6 +76,12 @@ msgstr ""
 "لا يمكن لملف الصلاحيات منح: %s. يمنح مسؤول النظام هذه الصلاحيات مباشرةً."
 
 #. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/site_setup.py:0
+msgid "A profile named %s already exists."
+msgstr "يوجد ملف صلاحيات باسم %s مسبقًا."
+
+#. module: alfia_security
 #: model:ir.model.constraint,message:alfia_security.constraint_alfia_access_profile_name_uniq
 msgid "A profile with this name already exists."
 msgstr "يوجد ملف صلاحيات بهذا الاسم بالفعل."
@@ -130,6 +133,17 @@ msgstr "الإجراء"
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__active
 msgid "Active"
 msgstr "نشط"
+
+#. module: alfia_security
+#: model:ir.actions.act_window,name:alfia_security.alfia_site_setup_action
+#: model:ir.ui.menu,name:alfia_security.menu_alfia_site_setup
+msgid "Add a site"
+msgstr "إضافة موقع"
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_alfia_site_setup
+msgid "Add a site with its access profiles"
+msgstr "إضافة موقع مع ملفات صلاحياته"
 
 #. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_res_users__alfia_is_auditor
@@ -260,6 +274,11 @@ msgid "Breeding staff"
 msgstr "موظفو التناسل"
 
 #. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_site_setup_view_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: alfia_security
 #: model:ir.model,name:alfia_security.model_res_company
 msgid "Company"
 msgstr "الشركة"
@@ -280,9 +299,15 @@ msgstr ""
 "نتيجة الجرد إلى الدفاتر."
 
 #. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_site_setup_view_form
+msgid "Create site and profiles"
+msgstr "إنشاء الموقع والملفات"
+
+#. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__create_uid
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__create_uid
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__create_uid
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__create_uid
 msgid "Created by"
 msgstr "أنشئ بواسطة"
 
@@ -290,8 +315,18 @@ msgstr "أنشئ بواسطة"
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__create_date
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__create_date
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__create_date
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__create_date
 msgid "Created on"
 msgstr "أنشئ في"
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_site_setup_view_form
+msgid ""
+"Creates the site and one access profile per role, limited to this site. Then"
+" give people these profiles from their user form."
+msgstr ""
+"ينشئ الموقع وملف صلاحيات لكل دور، مقصورًا على هذا الموقع. بعدها امنح الأشخاص"
+" هذه الملفات من نموذج المستخدم."
 
 #. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__date
@@ -346,6 +381,7 @@ msgstr "معتمِد الصرف: البيطري"
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_sod_mixin__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_ir_access__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_ir_model_data__display_name
@@ -378,6 +414,15 @@ msgid "Each approval must come from a different person."
 msgstr "يجب أن يصدر كل اعتماد عن شخص مختلف."
 
 #. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_alfia_site_setup__template_ids
+msgid ""
+"Each chosen profile is copied as '<role> – <site>' with this site as its "
+"only place of work."
+msgstr ""
+"يُنسخ كل ملف مختار باسم '<role> – <site>' ويكون هذا الموقع مكان العمل الوحيد"
+" فيه."
+
+#. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_effective_approver_group_ids
 msgid "Effective approver groups"
 msgstr "مجموعات المعتمِدين الفعلية"
@@ -398,14 +443,30 @@ msgid "Enforce segregation of duties"
 msgstr "فرض الفصل بين المهام"
 
 #. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/site_setup.py:0
+msgid "Enter the site name."
+msgstr "أدخل اسم الموقع."
+
+#. module: alfia_security
 #: model:res.groups,name:alfia_security.group_alfia_sod_exempt
 msgid "Exempt from segregation of duties (emergency use)"
 msgstr "معفى من الفصل بين المهام (للطوارئ)"
 
 #. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__location_id
+msgid "Existing location"
+msgstr "موقع قائم"
+
+#. module: alfia_security
 #: model:alfia.access.profile,name:alfia_security.profile_finance_controller
 msgid "Finance controller"
 msgstr "المراقب المالي"
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_alfia_site_setup__site_name
+msgid "For example: Barn C (yearlings)."
+msgstr "مثال: إسطبل ج (الحوليات)."
 
 #. module: alfia_security
 #: model_terms:ir.ui.view,arch_db:alfia_security.alfia_access_profile_view_form
@@ -439,6 +500,7 @@ msgstr "المجموعات الممنوحة من ملفات الصلاحيات"
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__id
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_sod_mixin__id
 #: model:ir.model.fields,field_description:alfia_security.field_ir_access__id
 #: model:ir.model.fields,field_description:alfia_security.field_ir_model_data__id
@@ -455,6 +517,11 @@ msgid "ID"
 msgstr "المعرّف"
 
 #. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__parent_location_id
+msgid "Inside"
+msgstr "ضمن"
+
+#. module: alfia_security
 #: model:ir.model,name:alfia_security.model_account_move
 msgid "Journal Entry"
 msgstr "قيد اليومية"
@@ -468,6 +535,7 @@ msgstr "دفاتر اليومية"
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__write_uid
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__write_uid
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__write_uid
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__write_uid
 msgid "Last Updated by"
 msgstr "آخر تحديث بواسطة"
 
@@ -475,6 +543,7 @@ msgstr "آخر تحديث بواسطة"
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__write_date
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__write_date
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__write_date
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__write_date
 msgid "Last Updated on"
 msgstr "آخر تحديث في"
 
@@ -509,6 +578,12 @@ msgstr "الاسم"
 #: model:res.groups.privilege,placeholder:alfia_security.privilege_alfia_stud
 msgid "No"
 msgstr "لا"
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/site_setup.py:0
+msgid "Only a system administrator can add a site and its profiles."
+msgstr "لا يضيف موقعًا وملفات صلاحياته إلا مدير النظام."
 
 #. module: alfia_security
 #. odoo-python
@@ -624,6 +699,17 @@ msgid "Profiles"
 msgstr "ملفات الصلاحيات"
 
 #. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__created_profile_ids
+msgid "Profiles created"
+msgstr "الملفات المُنشأة"
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/site_setup.py:0
+msgid "Profiles for %s"
+msgstr "ملفات صلاحيات %s"
+
+#. module: alfia_security
 #: model:ir.model,name:alfia_security.model_purchase_order
 msgid "Purchase Order"
 msgstr "أمر شراء"
@@ -653,6 +739,11 @@ msgstr "الطبيب البيطري المقيم"
 #: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_access_group_id
 msgid "Restrict stock to group"
 msgstr "قصر المخزون على مجموعة"
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__template_ids
+msgid "Roles at this site"
+msgstr "الأدوار في هذا الموقع"
 
 #. module: alfia_security
 #: model:alfia.access.profile,name:alfia_security.profile_ar_clerk
@@ -743,6 +834,11 @@ msgstr "حد الفصل بين المهام"
 #: model:res.groups,name:alfia_security.group_alfia_semen_custodian
 msgid "Semen and embryo custodian"
 msgstr "أمين عهدة السائل المنوي والأجنة"
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__site_name
+msgid "Site name"
+msgstr "اسم الموقع"
 
 #. module: alfia_security
 #: model:alfia.access.profile,name:alfia_security.profile_stable_staff
@@ -887,6 +983,11 @@ msgstr "موظفو التدريب"
 #: model:ir.model,name:alfia_security.model_stock_picking
 msgid "Transfer"
 msgstr "التحويل"
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_alfia_site_setup__location_id
+msgid "Use a location that already exists instead of creating one."
+msgstr "استخدم موقعًا موجودًا بدل إنشاء موقع جديد."
 
 #. module: alfia_security
 #: model:ir.model,name:alfia_security.model_res_users

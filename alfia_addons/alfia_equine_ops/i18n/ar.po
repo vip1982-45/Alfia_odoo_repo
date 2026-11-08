@@ -1,6 +1,3 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* alfia_equine_ops
 #
 msgid ""
 msgstr ""
@@ -160,6 +157,7 @@ msgid "An invoiced contract cannot be cancelled."
 msgstr "لا يمكن إلغاء عقد تمت فوترته."
 
 #. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_charge_plan_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_charge_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_event_entry_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_horse_sale_view_form
@@ -174,12 +172,14 @@ msgstr "اعتمد عملية البيع أولاً."
 
 #. module: alfia_equine_ops
 #: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge__state__approved
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge_plan__state__approved
 #: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_event_entry__state__approved
 #: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_sale__state__approved
 msgid "Approved"
 msgstr "معتمد"
 
 #. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__approved_by_id
 #: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__approved_by_id
 msgid "Approved By"
 msgstr "اعتمده"
@@ -1055,6 +1055,11 @@ msgid "Last Updated on"
 msgstr "آخر تحديث في"
 
 #. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_asset__location_id
+msgid "Leave empty for farm-wide assets everyone may see."
+msgstr "اتركه فارغًا للأصول العامة في المربط التي يراها الجميع."
+
+#. module: alfia_equine_ops
 #: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_asset__kind__library
 msgid "Library item"
 msgstr "مادة من المكتبة"
@@ -1328,6 +1333,15 @@ msgstr "لا يمكن فوترة إلا عقد مؤكَّد لم تتم فوتر
 #: code:addons/alfia_equine_ops/models/sale.py:0
 msgid "Only a draft can be approved."
 msgstr "لا يمكن اعتماد إلا المسودة."
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_charge_plan__state
+msgid ""
+"Only an approved plan generates charges. Changing what or whom it bills "
+"sends it back for approval."
+msgstr ""
+"لا تُنشئ الرسومَ إلا الخطةُ المعتمدة. أي تغيير فيما تفوتره أو لمن تفوتره "
+"يعيدها إلى الاعتماد."
 
 #. module: alfia_equine_ops
 #. odoo-python
@@ -1649,6 +1663,11 @@ msgid "Season"
 msgstr "الموسم"
 
 #. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_charge_plan_view_form
+msgid "Send back for approval"
+msgstr "إعادة إلى الاعتماد"
+
+#. module: alfia_equine_ops
 #: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__product_id
 #: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__product_id
 msgid "Service"
@@ -1668,6 +1687,11 @@ msgstr "الجنس"
 #: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_horse_group_view_form
 msgid "Show members"
 msgstr "عرض الأعضاء"
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__location_id
+msgid "Site"
+msgstr "الموقع"
 
 #. module: alfia_equine_ops
 #: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_import__skip_existing
@@ -1707,6 +1731,7 @@ msgstr "بدء الفوترة"
 #: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__state
 #: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__state
 #: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__state
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__state
 #: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__state
 #: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__state
 #: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__state
@@ -1841,6 +1866,7 @@ msgstr "هذا الحصان مسجّل في الفعالية بالفعل."
 
 #. module: alfia_equine_ops
 #: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge__state__draft
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge_plan__state__draft
 #: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_charge_view_search
 msgid "To approve"
 msgstr "بانتظار الاعتماد"
@@ -1927,15 +1953,35 @@ msgstr "يمكنك إرجاع ما لا يزيد عن الكمية التي لا
 
 #. module: alfia_equine_ops
 #. odoo-python
+#: code:addons/alfia_equine_ops/models/care.py:0
+msgid ""
+"You entered the boarding agreement for %s, so someone else must start its "
+"billing."
+msgstr "أنت من أدخل اتفاقية إيواء %s، لذا يجب أن يبدأ فوترتها شخص آخر."
+
+#. module: alfia_equine_ops
+#. odoo-python
 #: code:addons/alfia_equine_ops/models/billing.py:0
 msgid "You entered the charge for %s, so someone else must approve it."
 msgstr "أنت من أدخل الرسم عن %s، لذا يجب أن يعتمده شخص آخر."
 
 #. module: alfia_equine_ops
 #. odoo-python
+#: code:addons/alfia_equine_ops/models/contract.py:0
+msgid "You prepared contract %s, so someone else must confirm it."
+msgstr "أنت من أعدّ العقد %s، لذا يجب أن يؤكده شخص آخر."
+
+#. module: alfia_equine_ops
+#. odoo-python
 #: code:addons/alfia_equine_ops/models/sale.py:0
 msgid "You prepared this sale, so someone else must approve it."
 msgstr "أنت من أعدّ عملية البيع هذه، لذا يجب أن يعتمدها شخص آخر."
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "You set up the recurring charge %s, so someone else must approve it."
+msgstr "أنت من أعدّ الرسوم الدورية %s، لذا يجب أن يعتمدها شخص آخر."
 
 #. module: alfia_equine_ops
 #. odoo-python
@@ -1954,6 +2000,7 @@ msgstr "المديرين"
 #. module: alfia_equine_ops
 #. odoo-python
 #: code:addons/alfia_equine_ops/models/billing.py:0
+#: code:addons/alfia_equine_ops/models/care.py:0
 msgid "managers or accounting staff"
 msgstr "المديرين أو موظفي المحاسبة"
 
@@ -1962,6 +2009,12 @@ msgstr "المديرين أو موظفي المحاسبة"
 #: code:addons/alfia_equine_ops/models/medicine.py:0
 msgid "medicine store"
 msgstr "مخزن الأدوية"
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "member %s of the group"
+msgstr "العضو %s في المجموعة"
 
 #. module: alfia_equine_ops
 #. odoo-python

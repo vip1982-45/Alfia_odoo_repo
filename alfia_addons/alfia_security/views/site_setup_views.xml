@@ -1,0 +1,29 @@
+<odoo>
+    <record id="alfia_site_setup_view_form" model="ir.ui.view">
+        <field name="name">alfia.site.setup.form</field>
+        <field name="model">alfia.site.setup</field>
+        <field name="arch" type="xml">
+            <form>
+                <p class="text-muted">Creates the site and one access profile per role, limited to this site. Then give people these profiles from their user form.</p>
+                <group>
+                    <field name="site_name"/>
+                    <field name="parent_location_id"/>
+                    <field name="location_id"/>
+                    <field name="template_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button name="action_create" type="object" string="Create site and profiles" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_site_setup_action" model="ir.actions.act_window">
+        <field name="name">Add a site</field>
+        <field name="res_model">alfia.site.setup</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_alfia_site_setup" name="Add a site" parent="menu_alfia_security" sequence="15" action="alfia_site_setup_action"
+              groups="base.group_system"/>
+</odoo>

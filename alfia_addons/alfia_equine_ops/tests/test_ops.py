@@ -44,6 +44,7 @@ class TestOps(OpsCase):
         today = self._today()
         plan = self.env['alfia.charge.plan'].create({'name': 'Barn A fee', 'target_kind': 'location', 'location_id': self.barn_a.id,
                                                       'product_id': self.service.id, 'next_date': today, 'auto_approve': True})
+        plan.action_approve()
         self.assertEqual(plan.action_generate(), 2)
         self.assertEqual(plan.next_date, today + relativedelta(months=1))
         plan.next_date = today
@@ -163,7 +164,9 @@ class TestOps(OpsCase):
         contract = self.env['alfia.breeding.contract'].with_user(self.breed_mgr).create({
             'client_id': self.client.id, 'stallion_id': self.stallion.id, 'mare_id': self.mare.id, 'season': '2026', 'product_id': self.service.id, 'fee': 3000, 'pregnancy_id': pregnancy.id})
         self.assertTrue(contract.name.startswith('BC/'))
-        contract.action_confirm()
+        with self.assertRaises(UserError):
+            contract.action_confirm()                           # the manager who prepared it cannot confirm it
+        contract.with_user(self.accountant).action_confirm()
         with self.assertRaises(AccessError):
             contract.with_user(self.breed_mgr).action_invoice()
         contract.with_user(self.accountant).action_invoice()
@@ -283,6 +286,7 @@ class TestOpsHardening(OpsCase):
         old = self._today() - relativedelta(years=10)
         plan = self.env['alfia.charge.plan'].create({'name': 'Old', 'target_kind': 'horse', 'horse_id': self.mare.id, 'product_id': self.service.id,
                                                      'next_date': old, 'interval': 'weekly'})
+        plan.action_approve()
         from odoo.addons.alfia_equine_ops.models.billing import MAX_PERIODS_PER_RUN
         self.assertEqual(plan.action_generate(), MAX_PERIODS_PER_RUN, "a plan far behind catches up in bounded steps")
         self.assertEqual(plan.next_date, old + relativedelta(weeks=MAX_PERIODS_PER_RUN))
@@ -336,3 +340,149 @@ class TestOpsDisplayNames(OpsCase):
         far.with_user(self.train_mgr).action_approve()
         with self.assertRaises(AccessError):
             far.with_user(rvet).action_complete()       # a horse outside their sites
+
+
+@tagged('post_install', '-at_install', 'alfia_equine_ops')
+class TestAccessByStableAndFunction(OpsCase):
+    """A new stable added through the site wizard: its staff see only that stable, only their function, and no one
+    completes a money or schedule decision alone."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        env = cls.env
+        sysadmin = cls._user('sysadm', [])
+        sysadmin.write({'group_ids': [Command.link(env.ref('base.group_system').id)]})
+        cls.officer = cls._user('officerc', [])
+        cls.officer.write({'group_ids': [Command.link(env.ref('alfia_security.group_alfia_security_officer').id)]})
+        templates = env.ref('alfia_security.profile_stable_staff') | env.ref('alfia_security.profile_vet_staff') | env.ref('alfia_security.profile_breeding_manager')
+        wizard = env['alfia.site.setup'].with_user(sysadmin).create({'site_name': 'Barn C', 'parent_location_id': cls.wh.view_location_id.id,
+                                                                     'template_ids': [Command.set(templates.ids)]})
+        wizard.action_create()
+        cls.profiles = wizard.created_profile_ids
+        cls.barn_c = cls.profiles[:1].location_ids
+        cls.colt = env['alfia.horse'].create({'name': 'Barn C colt', 'sex': 'male', 'initial_location_id': cls.barn_c.id})
+        cls.c_mare = env['alfia.horse'].create({'name': 'Barn C mare', 'sex': 'female', 'initial_location_id': cls.barn_c.id})
+        Users = env['res.users'].with_user(cls.officer).with_context(no_reset_password=True)
+
+        def person(login, template):
+            profile = cls.profiles.filtered(lambda p: p.name == f"{template.name} – Barn C")
+            return Users.create({'name': login, 'login': f'{login}@c.local', 'alfia_profile_ids': [Command.set(profile.ids)]})
+        cls.groom_c = person('groomc', env.ref('alfia_security.profile_stable_staff'))
+        cls.vet_c = person('vetc', env.ref('alfia_security.profile_vet_staff'))
+        cls.bm_c = person('bmc', env.ref('alfia_security.profile_breeding_manager'))
+        # Records at both stables, created by the system.
+        Health = env['alfia.health.record']
+        cls.h_c = Health.create({'horse_id': cls.colt.id, 'title': 'C flu', 'type': 'vaccine'})
+        cls.h_a = Health.create({'horse_id': cls.mare.id, 'title': 'A flu', 'type': 'vaccine'})
+        cls.charge_a = env['alfia.charge'].create({'horse_id': cls.mare.id, 'product_id': cls.service.id})
+        cls.sale_a = env['alfia.horse.sale'].create({'horse_id': cls.mare2.id, 'buyer_id': cls.buyer.id, 'price': 100})
+        cls.plan_a = env['alfia.charge.plan'].create({'name': 'A board', 'target_kind': 'location', 'location_id': cls.barn_a.id, 'product_id': cls.service.id})
+        env['alfia.asset'].create({'name': 'Barn A wheelbarrow', 'kind': 'equipment', 'location_id': cls.barn_a.id})
+        env['alfia.asset'].create({'name': 'Farm tractor', 'kind': 'vehicle'})
+
+    def test_site_wizard_is_for_administrators_only(self):
+        with self.assertRaises(AccessError):
+            self.env['alfia.site.setup'].with_user(self.officer).create({'site_name': 'Barn D', 'template_ids': [Command.set(self.profiles[:1].ids)]}).action_create()
+        self.assertEqual(len(self.profiles), 3)
+        self.assertTrue(all(p.location_ids == self.barn_c for p in self.profiles))
+        self.assertTrue(self.env['alfia.security.audit'].search_count([('action', '=', 'site.create')]))
+
+    def test_staff_see_only_their_stable(self):
+        for user in (self.groom_c, self.vet_c, self.bm_c):
+            on_farm = self.env['alfia.horse'].with_user(user).search([('on_site', '=', True)])
+            self.assertEqual(on_farm, self.colt | self.c_mare, user.login)
+            with self.assertRaises(AccessError):
+                self.mare.with_user(user).read(['name'])        # a horse on the farm, in another stable
+
+    def test_function_segregation(self):
+        Health = self.env['alfia.health.record']
+        self.assertEqual(Health.with_user(self.vet_c).search([('id', 'in', (self.h_a | self.h_c).ids)]), self.h_c)
+        with self.assertRaises(AccessError):
+            Health.with_user(self.groom_c).search([])                    # grooms do not read medical records
+        with self.assertRaises(AccessError):
+            Health.with_user(self.vet_c).create({'horse_id': self.mare.id, 'title': 'not my stable', 'type': 'vaccine'})
+        with self.assertRaises(AccessError):
+            self.env['alfia.charge'].with_user(self.vet_c).search([])    # staff vets do not see billing
+
+    def test_money_records_follow_the_stable(self):
+        self.assertFalse(self.env['alfia.charge'].with_user(self.bm_c).search([('id', '=', self.charge_a.id)]))
+        self.assertFalse(self.env['alfia.horse.sale'].with_user(self.bm_c).search([('id', '=', self.sale_a.id)]))
+        self.assertFalse(self.env['alfia.charge.plan'].with_user(self.bm_c).search([('id', '=', self.plan_a.id)]))
+        assets = self.env['alfia.asset'].with_user(self.groom_c).search([]).mapped('name')
+        self.assertIn('Farm tractor', assets)
+        self.assertNotIn('Barn A wheelbarrow', assets)
+        with self.assertRaises(AccessError):
+            self.env['alfia.charge.plan'].with_user(self.bm_c).create({'name': 'A fees', 'target_kind': 'location', 'location_id': self.barn_a.id, 'product_id': self.service.id})
+
+    def test_every_horse_record_type_is_limited_to_the_stable(self):
+        """Generic check over every horse-linked model: whatever a Barn C user can see belongs to Barn C (or to a horse
+        that is no longer on the farm, or is stored in a Barn C tank)."""
+        self.env['alfia.task']._alfia_upsert('c:test', self.colt, self._today(), 'C item', 'other')
+        self.env['alfia.task']._alfia_upsert('a:test', self.mare, self._today(), 'A item', 'other')
+        horse_fields = ('horse_id', 'mare_id', 'stallion_id', 'donor_id')
+        checked = 0
+        for model_name in sorted(m for m in self.env.registry if m.startswith('alfia.')):
+            Model = self.env[model_name]
+            if Model._abstract or Model._transient or model_name == 'alfia.horse':
+                continue
+            fields_ = [f for f in horse_fields if f in Model._fields]
+            if not fields_:
+                continue
+            for user in (self.groom_c, self.vet_c, self.bm_c):
+                if not Model.with_user(user).has_access('read'):
+                    continue
+                for rec in Model.with_user(user).search([]).sudo():
+                    horses = rec[fields_[0]]
+                    for horse in horses:
+                        stored_here = 'tank_id' in rec._fields and rec.tank_id and rec.tank_id in self.env['stock.location'].search([('id', 'child_of', self.barn_c.id)])
+                        in_scope = (not horse.location_id) or horse.location_id in self.env['stock.location'].search([('id', 'child_of', self.barn_c.id)])
+                        self.assertTrue(in_scope or stored_here, f"{user.login} sees {model_name} {rec.id} of {horse.name} at {horse.location_id.display_name}")
+                    checked += 1
+        self.assertGreater(checked, 0)
+
+
+@tagged('post_install', '-at_install', 'alfia_equine_ops')
+class TestSegregationOfDuties(OpsCase):
+    """No one completes a money or schedule decision alone."""
+
+    def test_recurring_charge_needs_a_second_person(self):
+        plan = self.env['alfia.charge.plan'].with_user(self.breed_mgr).create(
+            {'name': 'Board', 'target_kind': 'horse', 'horse_id': self.mare.id, 'product_id': self.service.id, 'auto_approve': True})
+        self.assertEqual(plan.action_generate(), 0, "an unapproved plan bills nothing")
+        with self.assertRaises(UserError):
+            plan.with_user(self.breed_mgr).action_approve()
+        plan.with_user(self.train_mgr).action_approve()
+        self.assertEqual(plan.state, 'approved')
+        plan.with_user(self.breed_mgr).write({'price_unit': 1.0})
+        self.assertEqual(plan.state, 'draft', "changing what a plan bills sends it back for approval")
+
+    def test_boarding_billing_needs_a_second_person(self):
+        stay = self.env['alfia.boarding'].with_user(self.breed_mgr).create({'horse_id': self.mare.id, 'client_id': self.client.id,
+                                                                             'product_id': self.service.id, 'rate': 10})
+        with self.assertRaises(UserError):
+            stay.with_user(self.breed_mgr).action_start()
+        stay.with_user(self.train_mgr).action_start()
+        self.assertEqual(stay.plan_id.state, 'approved')
+
+    def test_breeding_rules_need_a_second_vet(self):
+        rule = self.env['alfia.breeding.rule'].with_user(self.vet_mgr).create({'name': 'Draft by A'})
+        other = self._user('vetmgr2', ['vet_manager'])
+        with self.assertRaises(UserError):
+            rule.with_user(self.vet_mgr).action_approve()
+        rule.with_user(other).action_approve()
+        self.assertEqual(rule.approved_by_id, other)
+
+    def test_contract_needs_a_second_person(self):
+        contract = self.env['alfia.breeding.contract'].with_user(self.breed_mgr).create(
+            {'client_id': self.client.id, 'stallion_id': self.stallion.id, 'season': '2027', 'product_id': self.service.id, 'fee': 1000})
+        with self.assertRaises(UserError):
+            contract.with_user(self.breed_mgr).action_confirm()
+        contract.with_user(self.accountant).action_confirm()
+        self.assertEqual(contract.state, 'confirmed')
+
+    def test_the_exemption_is_explicit_and_audited_through_groups(self):
+        exempt = self._user('exempt', ['breeding_manager', 'sod_exempt'])
+        plan = self.env['alfia.charge.plan'].with_user(exempt).create({'name': 'Emergency', 'target_kind': 'horse', 'horse_id': self.mare.id, 'product_id': self.service.id})
+        plan.with_user(exempt).action_approve()
+        self.assertEqual(plan.state, 'approved', "only members of the explicit emergency group may approve their own work")
