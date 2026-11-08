@@ -9,3 +9,4 @@ from . import product_category
 from . import stock
 from . import purchase
 from . import account
+from . import admin_guard

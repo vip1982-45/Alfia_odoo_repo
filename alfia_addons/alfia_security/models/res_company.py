@@ -1,4 +1,5 @@
 from odoo import fields, models
+from odoo.exceptions import AccessError
 
 
 class ResCompany(models.Model):
@@ -13,6 +14,8 @@ class ResCompany(models.Model):
 
     def write(self, vals):
         if any(f in vals for f in ('alfia_sod_enabled', 'alfia_sod_threshold')):
+            if not (self.env.su or self.env.user.has_group('base.group_system')):
+                raise AccessError(self.env._("Only a system administrator can change segregation of duties."))
             for company in self:
                 self.env['alfia.security.audit']._alfia_log(
                     'company.sod', self._name, company.name,

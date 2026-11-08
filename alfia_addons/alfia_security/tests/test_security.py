@@ -467,3 +467,65 @@ class TestProfilesAndEscalation(AlfiaSecurityCase):
     def test_hardening_defaults(self):
         self.assertGreaterEqual(self.env['ir.config_parameter'].sudo().get_int('auth_password_policy.minlength'), 12)
         self.assertEqual(self.env.ref('base.group_user').lock_timeout_inactivity, 30)
+
+
+@tagged('post_install', '-at_install', 'alfia_security')
+class TestNoEscalation(AlfiaSecurityCase):
+    """A security officer manages people, never the access control itself."""
+
+    def test_officer_cannot_take_admin_rights(self):
+        off = self.env(user=self.officer)
+        system = self.env.ref('base.group_system')
+        attempts = [
+            lambda: off.ref('base.group_system').write({'user_ids': [Command.link(self.officer.id)]}),
+            lambda: off.ref('alfia_security.group_alfia_security_officer').write({'implied_ids': [Command.link(system.id)]}),
+            lambda: off['res.groups'].create({'name': 'Mine'}),
+            lambda: off['ir.access'].search([('name', '=', 'Alfia site scope: quants')]).unlink(),
+            lambda: off['ir.access'].create({'name': 'x', 'model_id': self.env['ir.model']._get('alfia.security.audit').id,
+                                             'group_id': self.env.ref('base.group_user').id, 'operation': 'r'}),
+            lambda: off['ir.model.data'].search([('module', '=', 'alfia_security'), ('name', '=', 'group_alfia_all_locations')]).write(
+                {'res_id': self.env.ref('base.group_user').id}),
+            lambda: off.company.write({'alfia_sod_enabled': False}),
+            lambda: self.sysadmin.with_user(self.officer).write({'password': 'officer-chosen-password'}),
+            lambda: self.sysadmin.with_user(self.officer).write({'login': 'takeover@test.local'}),
+        ]
+        for attempt in attempts:
+            with self.subTest(attempt=attempt), self.assertRaises(AccessError):
+                attempt()
+        self.assertFalse(self.officer.has_group('base.group_system'))
+        self.assertFalse(self.officer.has_group('base.group_erp_manager'))
+
+    def test_officer_still_manages_ordinary_users(self):
+        new = self.env['res.users'].with_user(self.officer).with_context(no_reset_password=True).create(
+            {'name': 'Groom', 'login': 'groom@test.local', 'alfia_profile_ids': [Command.set([self.p_barn_a.id])]})
+        self.assertTrue(new.has_group('stock.group_stock_user'))
+        new.with_user(self.officer).write({'active': False})
+        self.assertFalse(new.active)
+
+    def test_admin_still_manages_access(self):
+        self.env.ref('alfia_security.group_alfia_stable_user').with_user(self.sysadmin).write({'comment': 'grooms'})
+        self.env.company.with_user(self.sysadmin).write({'alfia_sod_threshold': 100.0})
+        self.assertEqual(self.env.company.alfia_sod_threshold, 100.0)
+
+    def test_location_scope_helper(self):
+        groom = self._make_user('groomscope', profiles=[self.p_barn_a])
+        self.assertTrue(groom._alfia_check_location(self.barn_a))
+        with self.assertRaises(AccessError):
+            groom._alfia_check_location(self.barn_b)
+        self.assertTrue(self.sysadmin._alfia_check_location(self.barn_b))
+
+    def test_controlled_stock_leaving_by_any_operation_needs_approval(self):
+        internal_type = self.wh.int_type_id
+        loss = self.env['stock.location'].search([('usage', '=', 'inventory'), ('company_id', 'in', (False, self.company.id))], limit=1)
+        picking = self.env['stock.picking'].create({
+            'picking_type_id': internal_type.id, 'location_id': self.tank_1.id, 'location_dest_id': loss.id,
+            'move_ids': [Command.create({'product_id': self.semen.id, 'product_uom_qty': 1, 'location_id': self.tank_1.id, 'location_dest_id': loss.id})]})
+        self.assertEqual(picking.alfia_required_group_ids, self.g_adm_appr | self.g_vet_appr)
+
+    def test_scrapping_controlled_stock_needs_an_approver(self):
+        custodian = self._make_user('scrapcust', profiles=[self.p_custodian])
+        scrap_loc = self.env['stock.location'].search([('usage', '=', 'inventory'), ('company_id', 'in', (False, self.company.id))], limit=1)
+        move = self.env['stock.move'].create({'product_id': self.semen.id, 'product_uom_qty': 1, 'quantity': 1, 'uom_id': self.semen.uom_id.id,
+                                              'location_id': self.tank_1.id, 'location_dest_id': scrap_loc.id})
+        with self.assertRaises(AccessError):
+            move.with_user(custodian)._action_scrap()

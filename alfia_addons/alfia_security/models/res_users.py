@@ -51,6 +51,28 @@ class ResUsers(models.Model):
             for key, group in bypass.items():
                 user[f'alfia_scope_{key}'] = internal and not (group and group in groups)
 
+    def _alfia_check_location(self, location, what=None):
+        """Raise unless this user may work in `location` (scope bypass, or the location is inside their allowed sites).
+
+        For code that moves stock with sudo on the user's behalf, where the record rules would not be applied."""
+        self.ensure_one()
+        if not location or not self.alfia_scope_locations:
+            return True
+        allowed = self.env['stock.location'].sudo().search_count(
+            [('id', '=', location.id), ('id', 'child_of', self.alfia_location_ids.ids)]) if self.alfia_location_ids else 0
+        if not allowed:
+            raise AccessError(self.env._("%(place)s is outside the sites you may work in%(what)s.", place=location.display_name,
+                                         what=(f" ({what})" if what else '')))
+        return True
+
+    @api.model
+    def _has_field_access(self, field, operation):
+        # Odoo lets only its "Access Rights" group write user fields. Security officers manage accounts without that group;
+        # _alfia_guard still stops them from touching groups, administrators, other officers and their own access.
+        if operation == 'write' and not self.env.su and self.env.user.has_group('alfia_security.group_alfia_security_officer'):
+            return models.Model._has_field_access(self, field, operation)
+        return super()._has_field_access(field, operation)
+
     # ------------------------------------------------------------------ guard against escalation
     @api.model
     def _alfia_group_ids_after(self, current, commands):
@@ -78,11 +100,15 @@ class ResUsers(models.Model):
         env = self.env
         if env.su or env.context.get('alfia_sync'):
             return
-        touched = [f for f in GUARDED + SYSTEM_MANAGED if f in vals]
-        if not touched:
-            return
         actor = env.user
         if actor.has_group('base.group_system'):
+            return
+        if not creating:
+            for user in self:
+                if user != actor and (user.has_group('base.group_system') or user.has_group('alfia_security.group_alfia_security_officer')):
+                    raise AccessError(env._("Only a system administrator can change the account of %s.", user.name))
+        touched = [f for f in GUARDED + SYSTEM_MANAGED if f in vals]
+        if not touched:
             return
         officer = actor.has_group('alfia_security.group_alfia_security_officer')
         if any(f in vals for f in SYSTEM_MANAGED):

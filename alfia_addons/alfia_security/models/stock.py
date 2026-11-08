@@ -26,11 +26,15 @@ class StockPicking(models.Model):
     alfia_required_group_ids = fields.Many2many('res.groups', compute='_compute_alfia_required_groups', string='Required approvals')
     alfia_missing_group_ids = fields.Many2many('res.groups', compute='_compute_alfia_required_groups', string='Missing approvals')
 
-    @api.depends('move_ids.product_id.categ_id', 'picking_type_code', 'alfia_approval_ids.group_id')
+    @api.depends('move_ids.product_id.categ_id', 'move_ids.location_dest_id.usage', 'picking_type_code', 'alfia_approval_ids.group_id')
     def _compute_alfia_required_groups(self):
         for picking in self:
             required = self.env['res.groups']
-            if picking.picking_type_code == 'outgoing':
+            # Controlled stock leaving the farm's own locations (to a customer, a supplier, a loss or production) needs the
+            # approvals, whatever the operation type is called.
+            leaves = picking.picking_type_code == 'outgoing' or any(
+                m.location_dest_id.usage not in ('internal', 'transit', 'view') for m in picking.move_ids)
+            if leaves:
                 for categ in picking.move_ids.product_id.categ_id:
                     required |= categ._alfia_dual_config()
             picking.alfia_required_group_ids = required
@@ -92,6 +96,15 @@ class StockMove(models.Model):
             self._alfia_invalidate_approvals()
         return super().write(vals)
 
+    def _action_scrap(self):
+        """Writing off controlled stock (semen, embryos, medicine...) is an inventory adjustment: approvers only."""
+        if not self.env.su and not self.env.user.has_group('alfia_security.group_alfia_stock_adjust_approver'):
+            controlled = self.filtered(lambda m: m.product_id.categ_id.alfia_effective_group_id or m.product_id.categ_id.alfia_effective_approver_group_ids)
+            if controlled:
+                raise AccessError(self.env._("Only inventory-adjustment approvers can scrap controlled stock (%s).",
+                                             ', '.join(controlled.product_id.mapped('display_name'))))
+        return super()._action_scrap()
+
 
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
@@ -119,3 +132,4 @@ class StockQuant(models.Model):
         if not self.env.su and not self.env.user.has_group('alfia_security.group_alfia_stock_adjust_approver'):
             raise AccessError(self.env._("Counting is open to stock staff, but only inventory-adjustment approvers can apply a count to the books."))
         return super().action_apply_inventory(date=date)
+

@@ -8,13 +8,19 @@ Written for Odoo 20, where access rules are one model, `ir.access` (group rows g
 * **Access profile** = functions (groups) + where the person works (stock locations, warehouses, accounting journals).
   "Breeding staff – Stud A", "Semen custodian – tank room", "AP clerk – purchase journal" are profiles.
 * **Three separate duties.** System administrators *design* profiles. Security officers *assign* them and create users, but
-  cannot edit groups directly, change their own access, touch administrators, or make a profile. Auditors read the trail.
+  cannot edit groups directly, change their own access, touch administrators or other officers, or make a profile.
+  Auditors read the trail. Officers do **not** hold Odoo's *Access Rights* group (which can edit groups, access rules,
+  external identifiers and any user's password); groups, access rules, external identifiers and the segregation-of-duties
+  setting can be changed by system administrators only, whoever else holds that group.
 * **Default deny.** A user with no scope sees nothing in scoped models. Roles that must see everything get a scope-bypass
   group (`All sites`, `All warehouses`, `All journals`); system administrators have all three.
 * **Controlled stock.** Set *Restrict stock to group* on a product category (sub-categories inherit): only that group sees
   the stock, moves, lots and transfers of those products. Switch on *Dual approval before dispatch* and pick approver
   groups: an outgoing transfer then needs one approval from each, by different people, and the person dispatching
-  cannot be an approver. Changing the transfer after approval clears the approvals. Approvers get read-only sight of the transfer.
+  cannot be an approver. The same applies to any transfer that takes the stock out of the farm's own locations (to a
+  customer, supplier, loss or production location), whatever its operation type. Scrapping controlled stock needs an
+  inventory-adjustment approver. Changing the transfer after approval clears the approvals. Approvers get read-only
+  sight of the transfer.
 * **Segregation of duties** (company setting, with an optional amount threshold):
   the creator of a purchase order cannot approve it; the entrant of a vendor bill cannot post it; the creator of an outgoing
   payment cannot confirm it; counting stock and applying the count to the books are different rights.
@@ -38,5 +44,7 @@ Written for Odoo 20, where access rules are one model, `ir.access` (group rows g
 * A purchasing or sales user with no warehouse scope, or an accountant with no journal scope, sees nothing until a profile gives one.
 * The equine functional groups (breeding, training, veterinary, stable) exist but protect no models until the equine
   application is added.
+* Code that moves stock with system rights on a person's behalf (semen release, medicine issue) checks the person's site
+  scope itself with `res.users._alfia_check_location`; use it in any new code of that kind.
 * Single sign-on with Microsoft Entra ID is possible with Odoo's `auth_oauth` and is not configured here.
 * Odoo's own test suites were not re-run with this module installed.

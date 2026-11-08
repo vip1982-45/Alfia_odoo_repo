@@ -1,6 +1,8 @@
 <odoo>
     <menuitem id="menu_alfia_security" name="Alfia Security" parent="base.menu_administration" sequence="5"
               groups="base.group_system,alfia_security.group_alfia_security_officer,alfia_security.group_alfia_security_auditor"/>
+    <menuitem id="menu_alfia_users" name="Users" parent="menu_alfia_security" sequence="5" action="base.action_res_users"
+              groups="base.group_system,alfia_security.group_alfia_security_officer"/>
     <menuitem id="menu_alfia_access_profiles" name="Access profiles" parent="menu_alfia_security" sequence="10"
               action="alfia_access_profile_action"
               groups="base.group_system,alfia_security.group_alfia_security_officer,alfia_security.group_alfia_security_auditor"/>
