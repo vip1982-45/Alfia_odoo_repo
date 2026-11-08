@@ -491,7 +491,9 @@ class TestSegregation(EquineCase):
             h_b.with_user(vet_a).read(['title'])
         self.assertFalse(self.env['alfia.task'].with_user(vet_a).search([('horse_id', '=', self.far_mare.id)]))
         unplaced = self.env['alfia.horse'].create({'name': 'Unplaced', 'sex': 'male'})
-        self.assertNotIn(unplaced, self.env['alfia.horse'].with_user(vet_a).search([]), "a horse with no location is visible to nobody who is scoped")
+        # A horse that is not on the farm (an ancestor, a sold horse) can be read, so pedigrees open, but not changed.
+        self.assertIn(unplaced, self.env['alfia.horse'].with_user(vet_a).search([]))
+        self.assertFalse(self.env['alfia.health.record'].with_user(vet_a).search([('horse_id', '=', unplaced.id)]))
         self.assertIn(unplaced, self.env['alfia.horse'].with_user(self.vet).search([]))       # global roles see it
         # moving the horse moves it between scopes immediately
         self.env['alfia.horse.movement'].create({'horse_id': self.far_mare.id, 'kind': 'internal', 'location_to_id': self.barn_a.id}).action_done()
@@ -566,3 +568,46 @@ class TestHardening(EquineCase):
         with self.assertRaises(AccessError):
             col.with_user(vet_b).action_release()
         self.assertEqual(col.state, 'draft')
+
+
+@tagged('post_install', '-at_install', 'alfia_equine')
+class TestDisplayNames(EquineCase):
+
+    def test_records_without_a_name_field_read_as_text(self):
+        svc = self.env['alfia.breeding.service'].create({'mare_id': self.mare.id, 'stallion_id': self.stallion.id, 'date': OVULATION})
+        self.assertEqual(svc.display_name, f"Cleopatra × Carlomagno – {OVULATION}")
+        self.assertIn('Cleopatra', self.mare.movement_ids[:1].display_name)
+        for model in ('alfia.ovulation', 'alfia.teasing', 'alfia.horse.ownership', 'alfia.horse.status.log', 'alfia.treatment.dose'):
+            self.assertNotIn(',', self.env[model].search([], limit=1).display_name or '', model)
+
+
+@tagged('post_install', '-at_install', 'alfia_equine')
+class TestTankScope(EquineCase):
+
+    def test_custodian_sees_batches_stored_in_their_tank_room(self):
+        profile = self.env['alfia.access.profile'].create({'name': 'Eq tank custodian', 'location_ids': [Command.set([self.tank.id])],
+            'group_ids': [Command.set([self.env.ref('alfia_security.group_alfia_semen_custodian').id])]})
+        cust = self.env['res.users'].with_context(no_reset_password=True).create(
+            {'name': 'tankcust', 'login': 'tankcust@eq.local', 'alfia_profile_ids': [Command.set([profile.id])]})
+        other_stallion = self.env['alfia.horse'].create({'name': 'Away stallion', 'sex': 'male', 'initial_location_id': self.barn_b.id})
+        in_tank = self.env['alfia.semen.collection'].create({'stallion_id': other_stallion.id, 'tank_id': self.tank.id})
+        elsewhere = self.env['alfia.semen.collection'].create({'stallion_id': other_stallion.id, 'tank_id': self.barn_b.id})
+        seen = self.env['alfia.semen.collection'].with_user(cust).search([('id', 'in', (in_tank | elsewhere).ids)])
+        self.assertEqual(seen, in_tank)
+        data = seen.read(['name', 'stallion_id', 'state'])
+        self.assertEqual(data[0]['stallion_id'][1], 'Away stallion')
+
+    def test_scoped_staff_can_read_off_farm_ancestors_but_not_change_them(self):
+        profile = self.env['alfia.access.profile'].create({'name': 'Eq BM barn A', 'location_ids': [Command.set([self.barn_a.id])],
+            'group_ids': [Command.set([self.env.ref('alfia_security.group_alfia_breeding_manager').id])]})
+        bm = self.env['res.users'].with_context(no_reset_password=True).create(
+            {'name': 'bma', 'login': 'bma@eq.local', 'alfia_profile_ids': [Command.set([profile.id])]})
+        ancestor = self.env['alfia.horse'].create({'name': 'Old sire (ref.)', 'sex': 'male', 'status': 'reference'})
+        self.mare.sire_id = ancestor
+        data = self.mare.with_user(bm).read(['name', 'sire_id', 'pedigree_html', 'inbreeding'])
+        self.assertEqual(data[0]['sire_id'][1], 'Old sire (ref.)')
+        self.assertTrue(ancestor.with_user(bm).read(['name']))
+        with self.assertRaises(AccessError):
+            ancestor.with_user(bm).write({'name': 'Renamed'})
+        with self.assertRaises(AccessError):
+            self.far_mare.with_user(bm).read(['name'])      # on the farm but in another barn: still hidden

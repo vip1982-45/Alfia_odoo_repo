@@ -16,7 +16,7 @@ SPEC = [
          form=['name', 'horse_id', 'kind', 'due_date', 'urgent', 'assigned_user_id', 'assigned_group_id', 'state'], long=['notes'], search=['name', 'horse_id'],
          scope='horse_id', chatter=True, status='state',
          buttons=[('action_done', 'Mark done', "state in ('done','cancelled')", 'btn-primary'), ('action_defer', 'Defer', "state != 'todo'", ''), ('action_cancel', 'Cancel', "state in ('done','cancelled')", '')],
-         access=([V, B, T, S, AUD], [V, B, T, S], [BM]),
+         access=([V, B, T, S, AUD], [V, B, T, S], [BM]), context="{'search_default_todo': 1}",
          filters=[('todo', 'To do', "[('state', '=', 'todo')]"), ('overdue', 'Overdue', "[('overdue', '=', True)]"), ('urgent', 'Urgent', "[('urgent', '=', True)]")]),
     dict(model='alfia.health.record', title='Health records', menu='health', list=['date', 'horse_id', 'type', 'title', 'vet_id', 'next_due', 'cost'],
          form=['horse_id', 'date', 'type', 'title', 'vet_id', 'cost', 'next_due'], long=['description'], search=['title', 'horse_id'], scope='horse_id', access=([V, B, AUD], [V], [VM])),
@@ -74,11 +74,11 @@ SPEC = [
          form=['pregnancy_id', 'date', 'outcome', 'foal_sex', 'foal_name', 'complications', 'state', 'foal_id'], long=['notes'], search=['mare_id', 'foal_name'], scope='mare_id', chatter=True, status='state',
          buttons=[('action_vet_confirm', 'Vet confirms birth', "state != 'draft'", 'btn-primary'), ('action_complete', 'Complete foal identity', "state != 'vet_confirmed'", 'btn-primary')], access=([V, B, S, AUD], [S, V, B], [BM])),
     dict(model='alfia.embryo', title='Embryos', menu='breeding', list=['name', 'donor_id', 'sire_id', 'flush_date', 'grade', 'state', 'tank_id'], form=['name', 'donor_id', 'sire_id', 'flush_date', 'stage', 'grade', 'state', 'tank_id', 'pregnancy_id'],
-         long=['notes'], search=['name', 'donor_id'], scope='donor_id', chatter=True, status='state',
+         long=['notes'], search=['name', 'donor_id'], scope=('donor_id', 'tank_id'), chatter=True, status='state',
          buttons=[('action_store', 'Freeze / store', "state != 'collected'", ''), ('action_discard', 'Discard', "state in ('transferred','discarded')", '')], access=([V, B, AUD], [V, B], [BM])),
     dict(model='alfia.semen.collection', title='Semen collections', menu='breeding', list=['date', 'name', 'stallion_id', 'doses', 'motility', 'concentration', 'tank_id', 'state'],
          form=['stallion_id', 'date', 'volume_ml', 'concentration', 'motility', 'morphology', 'doses', 'product_id', 'tank_id', 'state', 'lot_id', 'released_by_id'], long=['notes'], search=['name', 'stallion_id'],
-         scope='stallion_id', chatter=True, status='state',
+         scope=('stallion_id', 'tank_id'), chatter=True, status='state',
          buttons=[('action_release', 'Release batch', "state != 'draft'", 'btn-primary'), ('action_reject', 'Reject', "state != 'draft'", '')], access=([V, B, CUST, AUD], [V, B], [])),
     dict(model='alfia.breeding.rule', title='Breeding schedule rule sets', menu='config', list=['name', 'version', 'state', 'check_offsets', 'gestation_days', 'approved_by_id'],
          form=['name', 'version', 'state', 'check_offsets', 'gestation_days', 'prep_days', 'vaccine_months', 'season_start_month', 'season_start_day', 'season_end_month', 'season_end_day', 'teasing_pregnant_until_day', 'approved_by_id', 'approved_date'],
@@ -96,7 +96,10 @@ HORSE_READ = [V, B, T, S, AUD]
 
 
 def scope_domain(path):
-    return f"[('{path}', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+    """`path` is one location path, or a tuple of them: the record is in scope when any of them is in the user's sites."""
+    paths = path if isinstance(path, tuple) else (path,)
+    terms = ["'|'"] * (len(paths) - 1) + [f"('{p}', 'child_of', user.alfia_location_ids.ids)" for p in paths]
+    return f"[{', '.join(terms)}] if user.alfia_scope_locations else []"
 
 
 def view_xml(s):
@@ -115,6 +118,7 @@ def view_xml(s):
     chatter = '<chatter/>' if s.get('chatter') else ''
     extra = s.get('extra_form', '')
     search_fields = ''.join(f'<field name="{f}"/>' for f in s.get('search', []))
+    ctx = f'\n        <field name="context">{escape(s["context"])}</field>' if s.get('context') else ''
     filters = ''.join(f'<filter name="{n}" string="{escape(l)}" domain="{escape(d)}"/>' for n, l, d in s.get('filters', []))
     return f'''
     <record id="{key}_view_list" model="ir.ui.view">
@@ -137,7 +141,7 @@ def view_xml(s):
     <record id="{key}_action" model="ir.actions.act_window">
         <field name="name">{escape(t)}</field>
         <field name="res_model">{m}</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,form</field>{ctx}
     </record>'''
 
 
@@ -178,8 +182,21 @@ def main():
             add(f'acc_{key}_{g.split(".")[-1]}', f'{model}: {g.split(".")[-1]}', model, g, ops)
         add(f'acc_{key}_system', f'{model}: system administrators', model, 'base.group_system', 'crud')
         if scope:
-            path = 'location_id' if scope == 'LOCATION' else HORSE_PATH.get(scope, scope + '.location_id')
-            add(f'scope_{key}', f'Alfia site scope: {model}', model, '', 'crud', scope_domain(path))
+            if scope == 'LOCATION':
+                path = 'location_id'
+            elif isinstance(scope, tuple):
+                # A horse path, or a storage location field (tank_id) used as it is.
+                path = tuple(HORSE_PATH.get(f, f if f.endswith('tank_id') else f + '.location_id') for f in scope)
+            else:
+                path = HORSE_PATH.get(scope, scope + '.location_id')
+            if scope == 'LOCATION':
+                # Horses not on the farm (reference ancestors, sold or departed) carry no site: everyone who reads horses may
+                # read them, so pedigrees always open; changing a horse still needs it to be in one of the user's sites.
+                add(f'scope_{key}', f'Alfia site scope: {model} (changes)', model, '', 'cud', scope_domain(path))
+                add(f'scope_{key}_read', f'Alfia site scope: {model} (reading)', model, '', 'r',
+                    "['|', ('location_id', '=', False), ('location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []")
+            else:
+                add(f'scope_{key}', f'Alfia site scope: {model}', model, '', 'crud', scope_domain(path))
     for g, gk in ((BM, 'bm'), (VM, 'vm'), (TM, 'tm')):
         add(f'acc_merge_{gk}', 'Merge horses', 'alfia.horse.merge', g, 'crud')
     open('security/ir.access.csv', 'w', newline='').writelines(csv_lines(rows))

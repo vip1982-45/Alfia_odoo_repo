@@ -313,3 +313,13 @@ class TestOpsHardening(OpsCase):
         big = base64.b64encode(b"name,sex\n" + b"x,F\n" * (MAX_BYTES // 4 + 1)).decode()
         with self.assertRaises(UserError):
             self.env['alfia.horse.import'].create({'file': big}).action_import()
+
+
+@tagged('post_install', '-at_install', 'alfia_equine_ops')
+class TestOpsDisplayNames(OpsCase):
+
+    def test_operations_records_read_as_text(self):
+        charge = self.env['alfia.charge'].create({'horse_id': self.mare.id, 'product_id': self.service.id, 'name': 'Board'})
+        self.assertTrue(charge.display_name.startswith('Cleopatra – Board'))
+        q = self.env['alfia.quarantine'].create({'horse_id': self.mare.id, 'planned_end': self._today() + relativedelta(days=3), 'reason': 'Arrival'})
+        self.assertTrue(q.display_name.startswith('Cleopatra – Arrival'))

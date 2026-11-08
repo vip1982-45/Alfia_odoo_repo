@@ -164,13 +164,13 @@ acc_alfia_embryo_group_alfia_breeding_user,alfia.embryo: group_alfia_breeding_us
 acc_alfia_embryo_group_alfia_security_auditor,alfia.embryo: group_alfia_security_auditor,alfia.embryo,alfia_security.group_alfia_security_auditor,r,
 acc_alfia_embryo_group_alfia_breeding_manager,alfia.embryo: group_alfia_breeding_manager,alfia.embryo,alfia_security.group_alfia_breeding_manager,rd,
 acc_alfia_embryo_system,alfia.embryo: system administrators,alfia.embryo,base.group_system,crud,
-scope_alfia_embryo,Alfia site scope: alfia.embryo,alfia.embryo,,crud,"[('donor_id.location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+scope_alfia_embryo,Alfia site scope: alfia.embryo,alfia.embryo,,crud,"['|', ('donor_id.location_id', 'child_of', user.alfia_location_ids.ids), ('tank_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
 acc_alfia_semen_collection_group_alfia_vet_user,alfia.semen.collection: group_alfia_vet_user,alfia.semen.collection,alfia_security.group_alfia_vet_user,cru,
 acc_alfia_semen_collection_group_alfia_breeding_user,alfia.semen.collection: group_alfia_breeding_user,alfia.semen.collection,alfia_security.group_alfia_breeding_user,cru,
 acc_alfia_semen_collection_group_alfia_semen_custodian,alfia.semen.collection: group_alfia_semen_custodian,alfia.semen.collection,alfia_security.group_alfia_semen_custodian,r,
 acc_alfia_semen_collection_group_alfia_security_auditor,alfia.semen.collection: group_alfia_security_auditor,alfia.semen.collection,alfia_security.group_alfia_security_auditor,r,
 acc_alfia_semen_collection_system,alfia.semen.collection: system administrators,alfia.semen.collection,base.group_system,crud,
-scope_alfia_semen_collection,Alfia site scope: alfia.semen.collection,alfia.semen.collection,,crud,"[('stallion_id.location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+scope_alfia_semen_collection,Alfia site scope: alfia.semen.collection,alfia.semen.collection,,crud,"['|', ('stallion_id.location_id', 'child_of', user.alfia_location_ids.ids), ('tank_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
 acc_alfia_breeding_rule_group_alfia_vet_user,alfia.breeding.rule: group_alfia_vet_user,alfia.breeding.rule,alfia_security.group_alfia_vet_user,r,
 acc_alfia_breeding_rule_group_alfia_breeding_user,alfia.breeding.rule: group_alfia_breeding_user,alfia.breeding.rule,alfia_security.group_alfia_breeding_user,r,
 acc_alfia_breeding_rule_group_alfia_security_auditor,alfia.breeding.rule: group_alfia_security_auditor,alfia.breeding.rule,alfia_security.group_alfia_security_auditor,r,
@@ -217,7 +217,8 @@ acc_alfia_horse_group_alfia_breeding_manager,alfia.horse: group_alfia_breeding_m
 acc_alfia_horse_group_alfia_training_manager,alfia.horse: group_alfia_training_manager,alfia.horse,alfia_security.group_alfia_training_manager,cru,
 acc_alfia_horse_group_alfia_vet_manager,alfia.horse: group_alfia_vet_manager,alfia.horse,alfia_security.group_alfia_vet_manager,cru,
 acc_alfia_horse_system,alfia.horse: system administrators,alfia.horse,base.group_system,crud,
-scope_alfia_horse,Alfia site scope: alfia.horse,alfia.horse,,crud,"[('location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+scope_alfia_horse,Alfia site scope: alfia.horse (changes),alfia.horse,,cud,"[('location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+scope_alfia_horse_read,Alfia site scope: alfia.horse (reading),alfia.horse,,r,"['|', ('location_id', '=', False), ('location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
 acc_merge_bm,Merge horses,alfia.horse.merge,alfia_security.group_alfia_breeding_manager,crud,
 acc_merge_vm,Merge horses,alfia.horse.merge,alfia_security.group_alfia_vet_manager,crud,
 acc_merge_tm,Merge horses,alfia.horse.merge,alfia_security.group_alfia_training_manager,crud,

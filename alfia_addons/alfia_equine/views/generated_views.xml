@@ -21,6 +21,7 @@
         <field name="name">Work items</field>
         <field name="res_model">alfia.task</field>
         <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_todo': 1}</field>
     </record>
 
     <record id="alfia_health_record_view_list" model="ir.ui.view">

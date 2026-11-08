@@ -1,0 +1,335 @@
+"""Fill an empty Alfia database with a demonstration stud farm, for end-user evaluation.
+
+Run once, in an Odoo shell, on a database where alfia_equine_ops is installed and nothing else was entered:
+
+    python3 odoo-bin shell -c odoo.conf -d alfia_demo < demo/seed_demo.py
+
+Every name, number and person here is invented. All demo accounts share one password (DEMO_PASSWORD below);
+change it, or delete the accounts, before the system holds real data.
+"""
+import logging
+
+from dateutil.relativedelta import relativedelta
+
+from odoo import Command, fields
+
+_logger = logging.getLogger('alfia.demo')
+DEMO_PASSWORD = 'AlfiaDemo-2026'
+E = env(context=dict(env.context, lang='en_US', tz='Asia/Qatar'))  # noqa: F821 - history and messages are written in English
+ref = E.ref
+TODAY = fields.Date.context_today(E['res.users'])
+
+
+def d(days):
+    return TODAY + relativedelta(days=days)
+
+
+if E['alfia.horse'].search_count([]):
+    raise SystemExit("This database already has horses; the demo is seeded only into an empty database.")
+
+# English is the working language; Arabic is added alongside (with its translations) and can be chosen in each
+# person's preferences.
+E['res.lang']._activate_and_install_lang('ar_001')
+E['ir.module.module'].search([('state', '=', 'installed')])._update_translations(['ar_001'])
+company = E.company
+company.write({'name': 'Alfia Stud Farm (Demo)', 'email': 'stud@example.com', 'phone': '+974 0000 0000', 'city': 'Doha'})
+qar = E['res.currency'].with_context(active_test=False).search([('name', '=', 'QAR')], limit=1)
+if qar and not E['account.move'].search_count([]):
+    qar.active = True
+    company.currency_id = qar
+
+# ------------------------------------------------------------------ sites
+wh = E['stock.warehouse'].search([('company_id', '=', company.id)], limit=1)
+wh.write({'name': 'Stud A', 'code': 'STA'})
+Loc = E['stock.location']
+root = wh.view_location_id
+
+
+def loc(name, parent=None):
+    return Loc.create({'name': name, 'location_id': (parent or root).id, 'usage': 'internal'})
+
+
+barn_a, barn_b = loc('Barn A (mares)'), loc('Barn B (stallions)')
+foaling, quarantine = loc('Foaling unit'), loc('Quarantine stalls')
+yard = loc('Training yard')
+tank_room = loc('Semen tank room')
+tank_1 = loc('Tank 1', tank_room)
+med_store, feed_store = loc('Medicine store'), loc('Feed store')
+
+# ------------------------------------------------------------------ people
+P = E['res.partner']
+alfia = P.create({'name': 'Alfia Holding', 'is_company': True, 'email': 'owner@example.com'})
+client_1 = P.create({'name': 'Al Rayyan Equestrian (client)', 'is_company': True, 'email': 'rayyan@example.com'})
+client_2 = P.create({'name': 'Sheikha N. (private client)', 'email': 'client2@example.com'})
+buyer = P.create({'name': 'Desert Rose Arabians (buyer)', 'is_company': True, 'email': 'buyer@example.com'})
+vendor_feed = P.create({'name': 'Gulf Feed Supplies', 'is_company': True, 'supplier_rank': 1, 'email': 'feed@example.com'})
+vendor_vet = P.create({'name': 'VetPharm Trading', 'is_company': True, 'supplier_rank': 1, 'email': 'pharma@example.com'})
+dr_ext = P.create({'name': 'Dr. Visiting Vet (external)'})
+farrier = P.create({'name': 'Farrier Services Co.'})
+rider = P.create({'name': 'Rider One'})
+
+# Starter profiles get the sites they work in.
+prof = lambda x: ref(f'alfia_security.profile_{x}')  # noqa: E731
+everywhere = [barn_a, barn_b, foaling, quarantine, yard]
+prof('stable_staff').location_ids = [Command.set([barn_a.id])]
+for name in ('breeding_staff', 'breeding_manager', 'vet_staff', 'resident_vet'):
+    prof(name).location_ids = [Command.set([l.id for l in everywhere + [tank_room, med_store]])]
+for name in ('training_staff', 'training_manager'):
+    prof(name).location_ids = [Command.set([barn_b.id, yard.id])]
+prof('semen_custodian').location_ids = [Command.set([tank_room.id])]
+prof('dispatch_admin_approver').location_ids = [Command.set([tank_room.id])]
+for name in ('storekeeper', 'stock_controller', 'procurement_officer', 'procurement_approver'):
+    prof(name).write({'location_ids': [Command.set([feed_store.id, med_store.id])], 'warehouse_ids': [Command.set([wh.id])]})
+Profile = E['alfia.access.profile']
+med_profile = Profile.create({'name': 'Medicine custodian – medicine store', 'location_ids': [Command.set([med_store.id] + [l.id for l in everywhere])],
+                              'group_ids': [Command.set([ref('alfia_security.group_alfia_medicine_custodian').id, ref('alfia_security.group_alfia_vet_user').id])]})
+vet_approver = Profile.create({'name': 'Dispatch approver (veterinary)', 'location_ids': [Command.set([tank_room.id])],
+                               'group_ids': [Command.set([ref('alfia_security.group_alfia_dispatch_vet_approver').id])]})
+groom_b = Profile.create({'name': 'Stable staff – Barn B', 'location_ids': [Command.set([barn_b.id])],
+                          'group_ids': [Command.set(prof('stable_staff').group_ids.ids)]})
+journals = E['account.journal'].search([('company_id', '=', company.id)])
+all_sites = ref('alfia_security.group_alfia_all_locations')
+for name in ('ap_clerk', 'ar_clerk', 'accountant', 'finance_controller'):
+    if not prof(name).journal_ids:
+        prof(name).journal_ids = [Command.set(journals.ids)]
+# Billing covers every horse, so finance roles are not limited to sites (the site scope still applies to everyone else).
+for name in ('ar_clerk', 'accountant', 'finance_controller'):
+    prof(name).group_ids = [Command.link(all_sites.id)]
+
+Users = E['res.users'].with_context(no_reset_password=True)
+USERS = [
+    # login, name, profiles, extra groups (granted directly by the administrator)
+    ('officer', 'Security Officer', [], ['alfia_security.group_alfia_security_officer']),
+    ('auditor', 'Internal Auditor', [prof('auditor')], ['alfia_security.group_alfia_security_auditor']),
+    ('resident.vet', 'Dr. Resident Vet', [prof('resident_vet')], []),
+    ('vet', 'Dr. Staff Vet', [prof('vet_staff')], []),
+    ('breeding.manager', 'Breeding Manager', [prof('breeding_manager')], []),
+    ('breeding', 'Breeding Assistant', [prof('breeding_staff')], []),
+    ('groom.a', 'Groom – Barn A', [prof('stable_staff')], []),
+    ('groom.b', 'Groom – Barn B', [groom_b], []),
+    ('trainer', 'Trainer', [prof('training_staff')], []),
+    ('training.manager', 'Training & Competition Manager', [prof('training_manager')], []),
+    ('semen.custodian', 'Semen Custodian', [prof('semen_custodian')], []),
+    ('medicine.custodian', 'Medicine Custodian', [med_profile], []),
+    ('approver.admin', 'Dispatch Approver (Admin)', [prof('dispatch_admin_approver')], []),
+    ('approver.vet', 'Dispatch Approver (Vet)', [vet_approver], []),
+    ('storekeeper', 'Storekeeper', [prof('storekeeper')], []),
+    ('buyer', 'Procurement Officer', [prof('procurement_officer')], []),
+    ('purchase.approver', 'Procurement Approver', [prof('procurement_approver')], []),
+    ('accountant', 'Accountant', [prof('accountant')], []),
+    ('finance', 'Finance Controller', [prof('finance_controller')], []),
+]
+users = {}
+for login, name, profiles, groups in USERS:
+    users[login] = Users.create({
+        'name': name, 'login': login, 'email': f'{login}@example.com', 'password': DEMO_PASSWORD, 'lang': 'en_US', 'tz': 'Asia/Qatar',
+        'group_ids': [Command.link(ref('base.group_user').id)] + [Command.link(ref(g).id) for g in groups],
+        'alfia_profile_ids': [Command.set([p.id for p in profiles])]})
+admin = ref('base.user_admin')
+admin.write({'password': DEMO_PASSWORD, 'name': 'System Administrator', 'lang': 'en_US', 'tz': 'Asia/Qatar'})
+admin.group_ids = [Command.link(ref('alfia_security.group_alfia_semen_custodian').id)]   # sees controlled stock in the demo
+
+# ------------------------------------------------------------------ horses and pedigrees
+Horse = E['alfia.horse']
+
+
+def horse(name, sex, born=None, loc_=None, **kw):
+    vals = {'name': name, 'sex': sex, 'birthdate': born, 'breed': kw.pop('breed', 'Arabian'), **kw}
+    if loc_:
+        vals['initial_location_id'] = loc_.id
+    return Horse.create(vals)
+
+
+# Reference ancestors (not on the farm).
+gs1 = horse('Desert Storm (ref.)', 'male', '1998-03-02', status='reference', color='Grey')
+gd1 = horse('Moon Pearl (ref.)', 'female', '2000-04-11', status='reference', color='Bay')
+gs2 = horse('Royal Falcon (ref.)', 'male', '1999-02-20', status='reference', color='Chestnut')
+gd2 = horse('Sahara Bloom (ref.)', 'female', '2001-05-05', status='reference', color='Grey')
+
+stallions = [
+    horse('Al Majd', 'male', '2012-03-10', barn_b, sire_id=gs1.id, dam_id=gd1.id, color='Grey', reg_id='QAT-ST-1012', microchip='634000000001001'),
+    horse('Najm Al Shamal', 'male', '2014-02-17', barn_b, sire_id=gs2.id, dam_id=gd2.id, color='Bay', reg_id='QAT-ST-1014', microchip='634000000001002'),
+    horse('Saif Al Arab', 'male', '2016-04-01', barn_b, sire_id=gs1.id, dam_id=gd2.id, color='Chestnut', reg_id='QAT-ST-1016', microchip='634000000001003'),
+]
+mare_names = ['Layla', 'Noor', 'Reem', 'Jawaher', 'Hessa', 'Maha', 'Shaikha', 'Dana', 'Lulwa', 'Mozah', 'Ghalia', 'Sara']
+mares = []
+for n, name in enumerate(mare_names):
+    mares.append(horse(name, 'female', f'{2009 + n % 8}-0{1 + n % 8}-1{n % 9}', barn_a, sire_id=(gs1 if n % 2 else gs2).id,
+                       dam_id=(gd1 if n % 3 else gd2).id, color=('Grey', 'Bay', 'Chestnut')[n % 3], reg_id=f'QAT-MR-2{n:03d}',
+                       microchip=f'63400000000{2000 + n}', invoice_to_id=(client_1 if n in (9, 10) else alfia).id))
+young = [
+    horse('Fajr', 'female', '2023-02-14', barn_a, sire_id=stallions[0].id, dam_id=mares[0].id, color='Grey'),
+    horse('Badr', 'male', '2023-03-03', yard, sire_id=stallions[1].id, dam_id=mares[1].id, color='Bay'),
+    horse('Wasm', 'male', '2024-01-28', yard, sire_id=stallions[2].id, dam_id=mares[2].id, color='Chestnut'),
+    horse('Hala', 'female', '2024-02-09', barn_a, sire_id=stallions[0].id, dam_id=mares[3].id, color='Grey'),
+]
+geldings = [horse('Sultan', 'gelding', '2015-05-05', yard, color='Bay'), horse('Rakan', 'gelding', '2017-06-06', yard, color='Grey')]
+new_arrival = horse('Zahra (new arrival)', 'female', '2019-03-03', quarantine, color='Bay', invoice_to_id=client_2.id)
+all_horses = stallions + mares + young + geldings + [new_arrival]
+
+Own = E['alfia.horse.ownership']
+for h in stallions + mares[:9] + young + geldings:
+    Own.create({'horse_id': h.id, 'partner_id': alfia.id, 'date_from': h.birthdate or '2015-01-01', 'reason': 'Bred / purchased'})
+for h in mares[9:]:
+    Own.create({'horse_id': h.id, 'partner_id': client_1.id, 'date_from': '2022-01-01', 'reason': 'Client mare'})
+Own.create({'horse_id': new_arrival.id, 'partner_id': client_2.id, 'date_from': d(-5), 'reason': 'Client mare'})
+
+# ------------------------------------------------------------------ health and care
+Health = E['alfia.health.record']
+for i, h in enumerate(all_horses):
+    Health.create({'horse_id': h.id, 'date': d(-150 - i), 'type': 'vaccine', 'title': 'Equine influenza + tetanus', 'vet_id': dr_ext.id,
+                   'cost': 180, 'next_due': d(30 - i * 3)})
+    Health.create({'horse_id': h.id, 'date': d(-60 - i), 'type': 'deworming', 'title': 'Ivermectin', 'next_due': d(25 - i)})
+E['alfia.vet.visit'].create({'horse_id': mares[4].id, 'date': d(-3), 'vet_id': dr_ext.id, 'reason': 'Mild lameness, left fore',
+                             'diagnosis': 'Bruised sole', 'treatment_given': 'Poultice, box rest', 'cost': 450, 'follow_up': d(4)})
+treat = E['alfia.treatment'].create({'horse_id': geldings[0].id, 'drug': 'Phenylbutazone', 'dose': '2 g', 'route': 'oral', 'frequency': 'Once daily',
+                                     'start_date': d(-2), 'end_date': d(3), 'withdrawal_days': 7})
+E['alfia.treatment.dose'].create({'treatment_id': treat.id, 'horse_id': geldings[0].id, 'dose_given': '2 g'})
+E['alfia.lab.test'].create({'horse_id': stallions[0].id, 'date': d(-2), 'test': 'Complete blood count', 'lab': 'Doha Equine Lab', 'result': 'WBC 8.1',
+                            'reference_range': '5.5-12.5'})
+E['alfia.odontology'].create({'horse_id': mares[2].id, 'date': d(-200), 'floated': True, 'next_date': d(10), 'cost': 300})
+E['alfia.farrier.visit'].create({'horse_id': geldings[1].id, 'date': d(-35), 'farrier_id': farrier.id, 'cost': 250, 'next_date': d(7)})
+for k in range(6):
+    E['alfia.measurement'].create({'horse_id': young[0].id, 'date': d(-150 + k * 30), 'weight': 300 + k * 18, 'height': 135 + k * 2})
+    E['alfia.temperature'].create({'horse_id': new_arrival.id, 'taken_at': fields.Datetime.now() - relativedelta(hours=12 * k),
+                                   'temperature': 37.6 + (0.4 if k == 2 else 0), 'pulse': 38, 'respiration': 12})
+E['alfia.horse.note'].create({'horse_id': mares[5].id, 'content': 'Shy with new handlers; approach from the left.'})
+
+# Quarantine of the new arrival (active), with its release review on the vet's list.
+E['alfia.quarantine'].create({'horse_id': new_arrival.id, 'start_date': d(-5), 'planned_end': d(16), 'reason': 'New arrival from abroad',
+                              'isolation_location_id': quarantine.id})
+
+# Feed plans
+Product = E['product.product']
+oats = Product.create({'name': 'Oats (kg)', 'type': 'consu', 'is_storable': True, 'standard_price': 2.1, 'list_price': 3})
+hay = Product.create({'name': 'Timothy hay (kg)', 'type': 'consu', 'is_storable': True, 'standard_price': 1.4, 'list_price': 2})
+alfalfa = Product.create({'name': 'Alfalfa (kg)', 'type': 'consu', 'is_storable': True, 'standard_price': 1.8, 'list_price': 2.5})
+for h in mares + stallions:
+    E['alfia.diet'].create({'horse_id': h.id, 'name': 'Winter ration', 'date_from': d(-30), 'line_ids': [
+        Command.create({'product_id': hay.id, 'qty_per_meal': 4, 'meals_per_day': 2}),
+        Command.create({'product_id': (oats if h.sex == 'male' else alfalfa).id, 'qty_per_meal': 1.5, 'meals_per_day': 2})]})
+
+# ------------------------------------------------------------------ breeding season
+rule = ref('alfia_equine.rule_default')
+rule.with_user(users['resident.vet']).action_approve()
+Svc, Ov = E['alfia.breeding.service'], E['alfia.ovulation']
+heat = ref('alfia_equine.symbol_strong_heat')
+for n, mare in enumerate(mares[:8]):
+    served = d(-240 + n * 12)
+    svc = Svc.create({'mare_id': mare.id, 'stallion_id': stallions[n % 3].id, 'date': served, 'method': ('natural', 'ai_fresh', 'ai_frozen')[n % 3]})
+    svc.action_done()
+    ov = Ov.create({'mare_id': mare.id, 'date': served + relativedelta(days=1), 'service_id': svc.id})
+    ov.with_user(users['vet']).action_confirm()
+    preg = ov.pregnancy_id
+    if n == 6:
+        E['alfia.pregnancy.check'].with_user(users['vet']).create({'pregnancy_id': preg.id, 'date': served + relativedelta(days=15), 'result': 'negative'})
+        continue
+    E['alfia.pregnancy.check'].with_user(users['vet']).create({'pregnancy_id': preg.id, 'date': served + relativedelta(days=15), 'result': 'positive'})
+    # Past checks done, so the workboard shows what is really due now.
+    preg.task_ids.filtered(lambda t: t.due_date < d(-2) and t.state == 'todo').write({'state': 'done', 'done_by_id': users['vet'].id})
+for mare in mares[8:11]:
+    E['alfia.teasing'].create({'mare_id': mare.id, 'date': d(-1), 'symbol_id': heat.id})
+    E['alfia.reproductive.exam'].create({'mare_id': mare.id, 'date': d(-1), 'left_follicle_mm': 38, 'right_follicle_mm': 12,
+                                         'next_action': 'Breed tomorrow'})
+# Last season's foal born last week: recorded by stable staff, awaiting the vet.
+old_preg_svc = Svc.create({'mare_id': mares[11].id, 'stallion_id': stallions[0].id, 'date': d(-350), 'method': 'natural'})
+old_preg_svc.action_done()
+ov = Ov.create({'mare_id': mares[11].id, 'date': d(-349), 'service_id': old_preg_svc.id})
+ov.with_user(users['vet']).action_confirm()
+E['alfia.pregnancy.check'].with_user(users['vet']).create({'pregnancy_id': ov.pregnancy_id.id, 'date': d(-334), 'result': 'positive'})
+ov.pregnancy_id.task_ids.filtered(lambda t: t.state == 'todo').write({'state': 'done'})
+E['alfia.foaling'].with_user(users['groom.a']).create({'pregnancy_id': ov.pregnancy_id.id, 'date': d(-6), 'outcome': 'live', 'foal_sex': 'filly',
+                                                       'foal_name': 'Amal'})
+
+# Semen collections: one released into Tank 1, one waiting for the vet.
+Sem = E['alfia.semen.collection']
+col = Sem.create({'stallion_id': stallions[0].id, 'date': d(-20), 'volume_ml': 60, 'concentration': 210, 'motility': 72, 'morphology': 68,
+                  'doses': 20, 'tank_id': tank_1.id})
+col.with_user(users['vet']).action_release()
+Sem.create({'stallion_id': stallions[1].id, 'date': d(-1), 'volume_ml': 55, 'concentration': 190, 'motility': 65, 'morphology': 60,
+            'doses': 15, 'tank_id': tank_1.id})
+E['alfia.embryo'].create({'donor_id': mares[3].id, 'sire_id': stallions[2].id, 'flush_date': d(-10), 'grade': '1', 'stage': 'Blastocyst',
+                          'tank_id': tank_1.id}).action_store()
+
+# A semen dispatch to a client, waiting for its two approvals.
+customers = ref('stock.stock_location_customers')
+dispatch = E['stock.picking'].create({
+    'picking_type_id': wh.out_type_id.id, 'partner_id': client_1.id, 'location_id': tank_1.id, 'location_dest_id': customers.id, 'origin': 'Semen order demo',
+    'move_ids': [Command.create({'product_id': col.product_id.id, 'product_uom_qty': 2, 'location_id': tank_1.id, 'location_dest_id': customers.id})]})
+dispatch.action_confirm()
+dispatch.action_assign()
+
+# ------------------------------------------------------------------ training and competition
+for h in young[1:3] + geldings:
+    for k in range(5):
+        E['alfia.training.session'].create({'horse_id': h.id, 'date': d(-k * 2), 'program': 'Endurance base', 'gait': ('trot', 'canter')[k % 2],
+                                            'distance_km': 8 + k, 'duration_min': 45, 'effort': 5 + k % 3, 'rest_day': False})
+Clear = E['alfia.clearance']
+for h in geldings:
+    Clear.create({'horse_id': h.id, 'kind': 'fitness'}).with_user(users['vet']).action_clear()
+rule_entry = E['alfia.restriction.rule'].create({'name': 'Endurance 80 km: age 6+, fit, no withdrawal', 'min_age_years': 6})
+event = E['alfia.event'].create({'name': 'Doha Endurance Cup 80 km', 'date_start': d(12), 'venue': 'Doha', 'discipline': 'Endurance',
+                                 'rule_id': rule_entry.id})
+for h in geldings + [young[1]]:
+    E['alfia.event.entry'].create({'event_id': event.id, 'horse_id': h.id, 'rider_id': rider.id}).action_submit()
+E['alfia.competition'].create({'horse_id': geldings[1].id, 'date': d(-40), 'event': 'Mesaieed 40 km', 'discipline': 'Endurance', 'result': '2nd',
+                               'prize_money': 15000})
+
+# ------------------------------------------------------------------ billing and contracts
+board = Product.create({'name': 'Full board (month)', 'type': 'service', 'list_price': 3500})
+vet_fee = Product.create({'name': 'Veterinary service', 'type': 'service', 'list_price': 450})
+nomination = Product.create({'name': 'Stallion nomination fee', 'type': 'service', 'list_price': 25000})
+group_client = E['alfia.horse.group'].create({'name': 'Client mares', 'member_ids': [Command.set([m.id for m in mares[9:]] + [new_arrival.id])]})
+E['alfia.horse.group'].create({'name': 'Mares in Barn A (dynamic)', 'sex': 'female', 'location_id': barn_a.id})
+E['alfia.horse.group'].create({'name': 'Pregnant mares (dynamic)', 'reproductive_state': 'pregnant'})
+plan = E['alfia.charge.plan'].create({'name': 'Client mares – full board', 'target_kind': 'group', 'group_id': group_client.id,
+                                      'product_id': board.id, 'interval': 'monthly', 'next_date': d(-60), 'auto_approve': True})
+plan.action_generate()
+E['alfia.charge'].create({'horse_id': mares[4].id, 'product_id': vet_fee.id, 'name': 'Lameness visit', 'date': d(-3)})
+stay = E['alfia.boarding'].create({'horse_id': new_arrival.id, 'client_id': client_2.id, 'product_id': board.id, 'rate': 4200, 'start_date': d(-5),
+                                   'location_id': quarantine.id})
+stay.action_start()
+approved = E['alfia.charge'].search([('state', '=', 'approved'), ('date', '<', d(-25))])
+approved.with_user(users['accountant']).action_invoice()
+
+contract = E['alfia.breeding.contract'].create({'client_id': client_1.id, 'stallion_id': stallions[0].id, 'mare_id': mares[9].id, 'season': '2027',
+                                                'product_id': nomination.id, 'fee': 25000, 'live_foal_guarantee': True})
+contract.action_confirm()
+contract.with_user(users['accountant']).action_invoice()
+E['alfia.breeding.contract'].create({'client_id': client_2.id, 'stallion_id': stallions[1].id, 'season': '2027', 'product_id': nomination.id, 'fee': 18000})
+E['alfia.horse.sale'].with_user(users['breeding.manager']).create({'horse_id': young[3].id, 'buyer_id': buyer.id, 'price': 180000,
+                                                                   'notes': 'Offer received at the autumn sale.'})
+
+# ------------------------------------------------------------------ stock, procurement and sales (ERP basics)
+medicine_categ = E['product.category'].create({'name': 'Veterinary medicine', 'alfia_access_group_id': ref('alfia_security.group_alfia_medicine_custodian').id})
+penicillin = Product.create({'name': 'Procaine penicillin 100 ml', 'type': 'consu', 'is_storable': True, 'categ_id': medicine_categ.id, 'standard_price': 95})
+bute = Product.create({'name': 'Phenylbutazone paste', 'type': 'consu', 'is_storable': True, 'categ_id': medicine_categ.id, 'standard_price': 40})
+Quant = E['stock.quant']
+for product, qty, where in ((oats, 1200, feed_store), (hay, 4000, feed_store), (alfalfa, 900, feed_store), (penicillin, 24, med_store), (bute, 30, med_store)):
+    Quant._update_available_quantity(product, where, qty)
+issue = E['alfia.medicine.issue'].create({'horse_id': geldings[0].id, 'product_id': bute.id, 'quantity': 2, 'location_id': med_store.id, 'treatment_id': treat.id})
+issue.with_user(users['medicine.custodian']).action_issue()
+E['alfia.medicine.issue'].create({'horse_id': mares[4].id, 'product_id': penicillin.id, 'quantity': 1, 'location_id': med_store.id})
+
+PO = E['purchase.order']
+po = PO.with_user(users['buyer']).create({'partner_id': vendor_feed.id, 'picking_type_id': wh.in_type_id.id, 'order_line': [
+    Command.create({'product_id': hay.id, 'product_qty': 2000, 'price_unit': 1.35}),
+    Command.create({'product_id': oats.id, 'product_qty': 500, 'price_unit': 2.0})]})
+po.with_user(users['buyer']).button_confirm()     # segregation of duties: waits for the procurement approver
+PO.with_user(users['buyer']).create({'partner_id': vendor_vet.id, 'picking_type_id': wh.in_type_id.id, 'order_line': [
+    Command.create({'product_id': penicillin.id, 'product_qty': 12, 'price_unit': 92})]})
+so = E['sale.order'].create({'partner_id': client_1.id, 'warehouse_id': wh.id, 'order_line': [
+    Command.create({'product_id': vet_fee.id, 'product_uom_qty': 2, 'price_unit': 450})]})
+so.action_confirm()
+
+# ------------------------------------------------------------------ facilities
+Asset = E['alfia.asset']
+Asset.create({'name': '6-horse trailer', 'kind': 'vehicle', 'reference': 'QA 123456', 'next_service': d(9), 'responsible_id': users['trainer'].id})
+Asset.create({'name': 'Horse ambulance', 'kind': 'vehicle', 'reference': 'QA 654321', 'next_service': d(40)})
+Asset.create({'name': 'Doha Cup 2025 trophy', 'kind': 'trophy', 'horse_id': geldings[1].id, 'acquired': '2025-02-01'})
+Asset.create({'name': 'Arabian Stud Book vol. 12', 'kind': 'library', 'reference': 'Shelf B-3', 'state': 'in_use', 'borrower_id': alfia.id})
+Asset.create({'name': 'Portable ultrasound', 'kind': 'equipment', 'reference': 'SN-US-2291', 'responsible_id': users['vet'].id, 'value': 85000})
+
+E.flush_all()
+E.cr.commit()
+print(f"Demo farm ready: {Horse.search_count([])} horses, {len(USERS) + 1} accounts (password {DEMO_PASSWORD!r}).")

@@ -3,6 +3,7 @@
     'version': '20.0.1.0.0',
     'category': 'Services',
     'summary': 'Billing, horse sales, boarding, feed, quarantine, medicine issue, breeding contracts, event entries, facilities, reports',
+    'description': 'Billing, horse sales, boarding, feed, quarantine, medicine, contracts, events, facilities and reports. See README.md.',
     'author': 'Alfia',
     'license': 'LGPL-3',
     'depends': ['alfia_equine', 'account', 'sale_management'],
