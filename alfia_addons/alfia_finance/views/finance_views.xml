@@ -1,0 +1,131 @@
+<odoo>
+    <!-- Trial balance: posted journal items by account. -->
+    <record id="alfia_trial_balance_pivot" model="ir.ui.view">
+        <field name="name">alfia.trial.balance.pivot</field>
+        <field name="model">account.move.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Trial balance" disable_linking="0">
+                <field name="account_id" type="row"/>
+                <field name="debit" type="measure"/>
+                <field name="credit" type="measure"/>
+                <field name="balance" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="alfia_trial_balance_action" model="ir.actions.act_window">
+        <field name="name">Trial balance</field>
+        <field name="res_model">account.move.line</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="view_id" ref="alfia_trial_balance_pivot"/>
+        <field name="domain">[('parent_state', '=', 'posted'), ('display_type', 'not in', ('line_section', 'line_note'))]</field>
+        <field name="context">{'search_default_group_by_account': 0}</field>
+    </record>
+
+    <!-- General ledger: every posted item, grouped by account, with dates and partners. -->
+    <record id="alfia_general_ledger_list" model="ir.ui.view">
+        <field name="name">alfia.general.ledger.list</field>
+        <field name="model">account.move.line</field>
+        <field name="arch" type="xml">
+            <list string="General ledger" create="0" edit="0" default_order="account_id, date, id">
+                <field name="date"/>
+                <field name="move_id"/>
+                <field name="journal_id"/>
+                <field name="account_id"/>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <field name="analytic_distribution" widget="analytic_distribution" optional="show"/>
+                <field name="debit" sum="Total"/>
+                <field name="credit" sum="Total"/>
+                <field name="balance" sum="Total"/>
+                <field name="company_currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_general_ledger_action" model="ir.actions.act_window">
+        <field name="name">General ledger</field>
+        <field name="res_model">account.move.line</field>
+        <field name="view_mode">list,pivot</field>
+        <field name="view_id" ref="alfia_general_ledger_list"/>
+        <field name="domain">[('parent_state', '=', 'posted'), ('display_type', 'not in', ('line_section', 'line_note'))]</field>
+        <field name="context">{'group_by': ['account_id']}</field>
+    </record>
+
+    <!-- Profit and loss / balance sheet: posted items by account, filtered by account type. -->
+    <record id="alfia_profit_loss_action" model="ir.actions.act_window">
+        <field name="name">Profit and loss</field>
+        <field name="res_model">account.move.line</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="view_id" ref="alfia_trial_balance_pivot"/>
+        <field name="domain">[('parent_state', '=', 'posted'), ('account_id.account_type', 'in', ('income', 'income_other', 'expense', 'expense_depreciation', 'expense_direct_cost', 'expense_other'))]</field>
+    </record>
+    <record id="alfia_balance_sheet_action" model="ir.actions.act_window">
+        <field name="name">Balance sheet</field>
+        <field name="res_model">account.move.line</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="view_id" ref="alfia_trial_balance_pivot"/>
+        <field name="domain">[('parent_state', '=', 'posted'), ('account_id.account_type', 'not in', ('income', 'income_other', 'expense', 'expense_depreciation', 'expense_direct_cost', 'expense_other'))]</field>
+    </record>
+
+    <!-- Aged receivables and payables. -->
+    <record id="alfia_aged_balance_pivot" model="ir.ui.view">
+        <field name="name">alfia.aged.balance.pivot</field>
+        <field name="model">alfia.aged.balance</field>
+        <field name="arch" type="xml">
+            <pivot string="Aged balances">
+                <field name="partner_id" type="row"/>
+                <field name="bucket" type="col"/>
+                <field name="amount_residual" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="alfia_aged_balance_list" model="ir.ui.view">
+        <field name="name">alfia.aged.balance.list</field>
+        <field name="model">alfia.aged.balance</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="partner_id"/><field name="move_id"/><field name="date"/><field name="date_maturity"/>
+                <field name="days_overdue"/><field name="bucket"/><field name="amount_residual" sum="Total"/><field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_aged_balance_search" model="ir.ui.view">
+        <field name="name">alfia.aged.balance.search</field>
+        <field name="model">alfia.aged.balance</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <filter name="overdue" string="Overdue" domain="[('days_overdue', '>', 0)]"/>
+            </search>
+        </field>
+    </record>
+    <record id="alfia_aged_receivable_action" model="ir.actions.act_window">
+        <field name="name">Aged receivables</field>
+        <field name="res_model">alfia.aged.balance</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="domain">[('kind', '=', 'receivable')]</field>
+    </record>
+    <record id="alfia_aged_payable_action" model="ir.actions.act_window">
+        <field name="name">Aged payables</field>
+        <field name="res_model">alfia.aged.balance</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="domain">[('kind', '=', 'payable')]</field>
+    </record>
+
+    <!-- Cost and income per horse (analytic). The plan's column is only known at run time, so a server action builds the view. -->
+    <record id="alfia_horse_costs_server" model="ir.actions.server">
+        <field name="name">Costs and income per horse</field>
+        <field name="model_id" ref="alfia_equine.model_alfia_horse"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_alfia_horse_costs()</field>
+    </record>
+
+    <menuitem id="menu_alfia_trial_balance" name="Trial balance" parent="account.account_reports_legal_statements_menu" action="alfia_trial_balance_action" sequence="10"/>
+    <menuitem id="menu_alfia_general_ledger" name="General ledger" parent="account.account_reports_legal_statements_menu" action="alfia_general_ledger_action" sequence="20"/>
+    <menuitem id="menu_alfia_profit_loss" name="Profit and loss" parent="account.account_reports_legal_statements_menu" action="alfia_profit_loss_action" sequence="30"/>
+    <menuitem id="menu_alfia_balance_sheet" name="Balance sheet" parent="account.account_reports_legal_statements_menu" action="alfia_balance_sheet_action" sequence="40"/>
+    <menuitem id="menu_alfia_aged_receivable" name="Aged receivables" parent="account.account_reports_partners_reports_menu" action="alfia_aged_receivable_action" sequence="10"/>
+    <menuitem id="menu_alfia_aged_payable" name="Aged payables" parent="account.account_reports_partners_reports_menu" action="alfia_aged_payable_action" sequence="20"/>
+    <menuitem id="menu_alfia_horse_costs" name="Costs and income per horse" parent="account.account_reports_management_menu" action="alfia_horse_costs_server" sequence="10"/>
+    <menuitem id="menu_alfia_horse_costs_stud" name="Costs and income per horse" parent="alfia_equine_ops.menu_ops_reports" action="alfia_horse_costs_server" sequence="50"
+              groups="account.group_account_readonly,account.group_account_invoice"/>
+</odoo>

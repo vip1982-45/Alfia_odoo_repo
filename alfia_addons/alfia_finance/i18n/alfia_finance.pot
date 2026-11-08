@@ -1,0 +1,234 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* alfia_finance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-08 22:53+0000\n"
+"PO-Revision-Date: 2026-11-08 22:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: alfia_finance
+#: model:ir.model.fields.selection,name:alfia_finance.selection__alfia_aged_balance__bucket__1_30
+msgid "1–30 days"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields.selection,name:alfia_finance.selection__alfia_aged_balance__bucket__2_60
+msgid "31–60 days"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields.selection,name:alfia_finance.selection__alfia_aged_balance__bucket__3_90
+msgid "61–90 days"
+msgstr ""
+
+#. module: alfia_finance
+#: model_terms:ir.ui.view,arch_db:alfia_finance.alfia_aged_balance_pivot
+msgid "Aged balances"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.actions.act_window,name:alfia_finance.alfia_aged_payable_action
+#: model:ir.ui.menu,name:alfia_finance.menu_alfia_aged_payable
+msgid "Aged payables"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.actions.act_window,name:alfia_finance.alfia_aged_receivable_action
+#: model:ir.ui.menu,name:alfia_finance.menu_alfia_aged_receivable
+msgid "Aged receivables"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model,name:alfia_finance.model_alfia_aged_balance
+msgid "Aged receivables and payables"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.module.module,shortdesc:base.module_alfia_finance
+msgid "Alfia Finance and Supply Chain"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.actions.act_window,name:alfia_finance.alfia_balance_sheet_action
+#: model:ir.ui.menu,name:alfia_finance.menu_alfia_balance_sheet
+msgid "Balance sheet"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model,name:alfia_finance.model_alfia_charge
+msgid "Charge to invoice"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model,name:alfia_finance.model_res_company
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__company_id
+msgid "Company"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_horse__analytic_account_id
+msgid "Cost centre"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,help:alfia_finance.field_alfia_horse__analytic_account_id
+msgid ""
+"Costs and income allocated to this horse (invoices, bills, stock issues)."
+msgstr ""
+
+#. module: alfia_finance
+#. odoo-python
+#: code:addons/alfia_finance/models/horse.py:0
+#: model:ir.actions.server,name:alfia_finance.alfia_horse_costs_server
+#: model:ir.ui.menu,name:alfia_finance.menu_alfia_horse_costs
+#: model:ir.ui.menu,name:alfia_finance.menu_alfia_horse_costs_stud
+msgid "Costs and income per horse"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__date
+msgid "Date"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__days_overdue
+msgid "Days Overdue"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__display_name
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_charge__display_name
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_horse__display_name
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_medicine_issue__display_name
+#: model:ir.model.fields,field_description:alfia_finance.field_res_company__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__move_id
+msgid "Document"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__date_maturity
+msgid "Due date"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.module.module,description:base.module_alfia_finance
+msgid ""
+"Finance reports Odoo Community lacks, cost allocation per horse, and a stud-"
+"ready warehouse and valuation setup. See README.md."
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.actions.act_window,name:alfia_finance.alfia_general_ledger_action
+#: model:ir.ui.menu,name:alfia_finance.menu_alfia_general_ledger
+#: model_terms:ir.ui.view,arch_db:alfia_finance.alfia_general_ledger_list
+msgid "General ledger"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model,name:alfia_finance.model_alfia_horse
+msgid "Horse"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__id
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_charge__id
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_horse__id
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_medicine_issue__id
+#: model:ir.model.fields,field_description:alfia_finance.field_res_company__id
+msgid "ID"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__journal_id
+msgid "Journal"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__kind
+msgid "Kind"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model,name:alfia_finance.model_alfia_medicine_issue
+msgid "Medicine issue"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields.selection,name:alfia_finance.selection__alfia_aged_balance__bucket__0_current
+msgid "Not yet due"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__amount_residual
+msgid "Open amount"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields.selection,name:alfia_finance.selection__alfia_aged_balance__bucket__4_older
+msgid "Over 90 days"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__bucket
+#: model_terms:ir.ui.view,arch_db:alfia_finance.alfia_aged_balance_search
+msgid "Overdue"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__partner_id
+msgid "Partner"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields.selection,name:alfia_finance.selection__alfia_aged_balance__kind__payable
+msgid "Payable"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.actions.act_window,name:alfia_finance.alfia_profit_loss_action
+#: model:ir.ui.menu,name:alfia_finance.menu_alfia_profit_loss
+msgid "Profit and loss"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.model.fields.selection,name:alfia_finance.selection__alfia_aged_balance__kind__receivable
+msgid "Receivable"
+msgstr ""
+
+#. module: alfia_finance
+#: model_terms:ir.ui.view,arch_db:alfia_finance.alfia_aged_balance_list
+#: model_terms:ir.ui.view,arch_db:alfia_finance.alfia_general_ledger_list
+msgid "Total"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.actions.act_window,name:alfia_finance.alfia_trial_balance_action
+#: model:ir.ui.menu,name:alfia_finance.menu_alfia_trial_balance
+#: model_terms:ir.ui.view,arch_db:alfia_finance.alfia_trial_balance_pivot
+msgid "Trial balance"
+msgstr ""
+
+#. module: alfia_finance
+#: model:ir.module.module,summary:base.module_alfia_finance
+msgid ""
+"Trial balance, general ledger, aged balances, horse cost allocation, "
+"perpetual stock valuation, pick-and-ship warehouse"
+msgstr ""

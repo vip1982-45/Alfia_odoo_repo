@@ -80,6 +80,12 @@ class AlfiaCharge(models.Model):
             raise UserError(self.env._("An invoiced charge cannot be cancelled. Issue a credit note instead."))
         self.write({'state': 'cancelled'})
 
+    def _alfia_invoice_line_vals(self):
+        """The invoice line for this charge. Extended by alfia_finance to allocate it to the horse."""
+        self.ensure_one()
+        return {'product_id': self.product_id.id, 'name': f"{self.horse_id.name} – {self.name or self.product_id.display_name} ({self.date})",
+                'quantity': self.quantity, 'price_unit': self.price_unit}
+
     def action_invoice(self):
         """One invoice per customer for the approved charges in `self`. Charges already invoiced are skipped, so repeating
         the action never creates a second invoice line for the same charge."""
@@ -91,9 +97,7 @@ class AlfiaCharge(models.Model):
                 raise UserError(self.env._("Choose who to bill for %s.", charges[0].horse_id.name))
             move = self.env['account.move'].with_company(company).create({
                 'move_type': 'out_invoice', 'partner_id': partner.id, 'company_id': company.id, 'invoice_date': fields.Date.context_today(self),
-                'invoice_line_ids': [Command.create({
-                    'product_id': c.product_id.id, 'name': f"{c.horse_id.name} – {c.name or c.product_id.display_name} ({c.date})",
-                    'quantity': c.quantity, 'price_unit': c.price_unit}) for c in charges]})
+                'invoice_line_ids': [Command.create(c._alfia_invoice_line_vals()) for c in charges]})
             charges.write({'state': 'invoiced', 'move_id': move.id})
             invoices |= move
         if not invoices:

@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+acc_aged_readonly,Aged balances: accounting read-only,alfia.aged.balance,account.group_account_readonly,r,
+acc_aged_invoice,Aged balances: invoicing,alfia.aged.balance,account.group_account_invoice,r,
+acc_aged_auditor,Aged balances: security auditor,alfia.aged.balance,alfia_security.group_alfia_security_auditor,r,
+scope_aged_journal,Alfia journal scope: aged balances,alfia.aged.balance,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
