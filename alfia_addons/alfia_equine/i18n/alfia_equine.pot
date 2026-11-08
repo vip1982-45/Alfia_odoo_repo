@@ -1,0 +1,3619 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* alfia_equine
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-08 21:38+0000\n"
+"PO-Revision-Date: 2026-11-08 21:38+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "%(owner)s already owns %(horse)s in that period."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid ""
+"%(reason)s %(count)d pending work item(s) were cancelled; results and "
+"history are kept."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "%(type)s due: %(title)s"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "%s cannot be its own ancestor."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "%s is not on site, so it cannot be moved internally."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "'%s' must be a comma-separated list of whole numbers."
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "<span class=\"o_stat_text\">Farrier</span>"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "<span class=\"o_stat_text\">Health</span>"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "<span class=\"o_stat_text\">Pregnancies</span>"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "<span class=\"o_stat_text\">Semen</span>"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "<span class=\"o_stat_text\">Temperature</span>"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "<span class=\"o_stat_text\">Training</span>"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "<span class=\"o_stat_text\">Treatments</span>"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "<span class=\"o_stat_text\">Weight</span>"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "<span class=\"o_stat_text\">Work items</span>"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "A %s needs a destination location."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.constraint,message:alfia_equine.constraint_alfia_foaling_one_per_pregnancy
+msgid "A birth is already recorded for this pregnancy."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid ""
+"A completed movement cannot be cancelled. Record a new movement to correct "
+"it."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid ""
+"A completed movement cannot be changed. Record a new movement to correct it."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid ""
+"A confirmed ovulation date is corrected with 'Correct date', which keeps the"
+" history."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "A released batch is stock and cannot be deleted."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.constraint,message:alfia_equine.constraint_alfia_horse_ownership_share_range
+msgid "A share must be between 0 and 100%."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "A temperature of %s °C is not plausible. Check the reading."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "A transferred embryo cannot be discarded."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_breeding_service__method__ai_cooled
+msgid "AI - cooled"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_breeding_service__method__ai_fresh
+msgid "AI - fresh"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_breeding_service__method__ai_frozen
+msgid "AI - frozen"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_foaling__outcome__aborted
+msgid "Aborted"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__active
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__status__active
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_status_log__status__active
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_search
+msgid "Active"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__active_pregnancy_id
+msgid "Active Pregnancy"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_plans_ids
+msgid "Activity Plans"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__age_text
+msgid "Age Text"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.module.module,shortdesc:base.module_alfia_equine
+msgid "Alfia Equine"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__alias
+msgid "Alias"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "An approved rule set cannot be changed. Create a new version instead."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid ""
+"An inconclusive result needs the next check date. The vet chooses it; no "
+"interval is assumed."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.constraint,message:alfia_equine.constraint_alfia_horse_microchip_uniq
+msgid ""
+"Another horse already has this microchip number. Resolve the duplicate "
+"(Merge) instead of creating a second record."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid ""
+"Apparent heat observed by %s. The vet was alerted. The pregnancy remains "
+"open until a vet confirms the result."
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_breeding_rule_view_form
+msgid "Approve (resident vet)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_breeding_rule__state__approved
+msgid "Approved"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__approved_by_id
+msgid "Approved By"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__approved_date
+msgid "Approved Date"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Approved by %s. It now drives new pregnancies."
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_search
+msgid "Archived"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_movement__kind__arrival
+msgid "Arrival"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__initial_location_id
+msgid "Arrival location"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_scoring
+msgid "Assessment"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_scoring_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_scoring
+msgid "Assessments"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__assessor_id
+msgid "Assessor"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__assigned_group_id
+msgid "Assigned function"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__assigned_user_id
+msgid "Assigned to"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__association
+msgid "Association"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_lab_test__state__new
+msgid "Awaiting review"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__lf_shoe__barefoot
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__lh_shoe__barefoot
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__rf_shoe__barefoot
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__rh_shoe__barefoot
+msgid "Barefoot"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__lot_id
+msgid "Batch"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__date
+msgid "Birth date"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__birthdate
+msgid "Birthdate"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__body_part
+msgid "Body Part"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__reproductive_state__bred
+msgid "Bred"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_search
+msgid "Bred or pregnant"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_pregnancy__state__bred
+msgid "Bred, awaiting result"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__breed
+msgid "Breed"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__breeder_id
+msgid "Breeder"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_breeding
+msgid "Breeding"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_breeding_rule
+msgid "Breeding schedule rule set"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_breeding_rule_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_breeding_rule
+msgid "Breeding schedule rule sets"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_breeding_service
+msgid "Breeding service (attempt)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_diag_image__modality__ct
+msgid "CT"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_breeding_service_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_merge_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_movement_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_task_view_form
+msgid "Cancel"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_breeding_service__state__cancelled
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_movement__state__cancelled
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_training_session__gait__canter
+msgid "Canter"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__carrier_mare_id
+msgid "Carrier (recipient) mare"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__mare_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__mare_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__mare_id
+msgid "Carrier mare"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__category
+msgid "Category"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__cervix
+msgid "Cervix"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__check_ids
+msgid "Check"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Check days must be positive, ascending and without repeats."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_health_record__type__checkup
+msgid "Check-up"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Choose the semen product and the tank location."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/wizard.py:0
+msgid "Choose two different horses."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Choose where the embryo is stored."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__class_name
+msgid "Class / level"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_clearance_view_form
+msgid "Clear"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_clearance__state__cleared
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__eligibility_state__cleared
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__fitness_state__cleared
+msgid "Cleared"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_clearance__kind__fitness
+msgid "Clinical fitness (vet)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_reproductive_exam__cervix__closed
+msgid "Closed"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing_symbol__code
+msgid "Code"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_embryo__state__collected
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_semen_collection__state__draft
+msgid "Collected"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__color
+msgid "Color"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_foaling__foal_sex__colt
+msgid "Colt"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__comments
+msgid "Comments"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_note__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_record__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__company_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__company_id
+msgid "Company"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_competition
+msgid "Competition result"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_competition_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_competition
+msgid "Competitions"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_movement_view_form
+msgid "Complete"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_foaling_view_form
+msgid "Complete foal identity"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/task.py:0
+msgid "Completed work cannot be reopened."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/task.py:0
+msgid "Completed work is kept as a record and cannot be deleted."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/task.py:0
+msgid "Completed work is never cancelled."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__complications
+msgid "Complications"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__concentration
+msgid "Concentration (M/ml)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_config
+msgid "Configuration"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__confirmed_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__confirmed_by_id
+msgid "Confirmed By"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__confirmed_date
+msgid "Confirmed Date"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_foaling__state__vet_confirmed
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_ovulation__state__confirmed
+msgid "Confirmed by vet"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_pregnancy__state__pregnant
+msgid "Confirmed pregnant"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__conformation
+msgid "Conformation"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_note__content
+msgid "Content"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__day_zero_notes
+msgid "Conventions"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__lf_shoe__corrective
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__lh_shoe__corrective
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__rf_shoe__corrective
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__rh_shoe__corrective
+msgid "Corrective shoe"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__cost
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__cost
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__cost
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__cost
+msgid "Cost"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_merge__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_note__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_status_log__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing_symbol__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_merge__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_note__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_status_log__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing_symbol__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__location_id
+msgid "Current location"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__owner_ids
+msgid "Current owners"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_care
+msgid "Daily care"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_work
+msgid "Daily work"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__dam_name
+msgid "Dam (name, if not in the system)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_note__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_status_log__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__date
+msgid "Date"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Date corrected from %(old)s to %(new)s by %(user)s: %(reason)s"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_rule__day_zero_notes
+msgid ""
+"Day-zero convention, month calculation, timezone and handling of past-due "
+"tasks, as signed off."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__days_after_ovulation
+msgid "Days After Ovulation"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__day_count
+msgid "Days since ovulation"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__status__dead
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_status_log__status__dead
+msgid "Dead"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__decided_by_id
+msgid "Decided By"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_task_view_form
+msgid "Defer"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__state__deferred
+msgid "Deferred"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__kind__dental
+msgid "Dental check"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "Dental check due"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_odontology
+msgid "Dental exam"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_odontology_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_odontology
+msgid "Dental exams"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__vet_id
+msgid "Dentist / vet"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_movement__kind__departure
+msgid "Departure"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__description
+msgid "Description"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_health_record__type__deworming
+msgid "Deworming"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__diagnosis
+msgid "Diagnosis"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_diag_image
+msgid "Diagnostic image"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_diag_image_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_diag_image
+msgid "Diagnostic images"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_embryo_view_form
+msgid "Discard"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_embryo__state__discarded
+msgid "Discarded"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__discipline
+msgid "Discipline"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_display_mixin__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_merge__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_note__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_record__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_status_log__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing_symbol__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__distance_km
+msgid "Distance (km)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_breeding_service__state__done
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_movement__state__done
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__state__done
+msgid "Done"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__done_by_id
+msgid "Done By"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__done_date
+msgid "Done Date"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__donor_id
+msgid "Donor mare (genetic dam)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__dose_given
+msgid "Dose Given"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_treatment_dose
+msgid "Dose administered"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__dose_ids
+msgid "Doses actually given"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_treatment_dose_action
+msgid "Doses given"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__doses
+msgid "Doses produced"
+msgstr ""
+
+#. module: alfia_equine
+#: model:alfia.teasing.symbol,name:alfia_equine.symbol_doubtful
+msgid "Doubtful"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_breeding_rule__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__drug
+msgid "Drug / treatment"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__due_date
+msgid "Due Date"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_merge__duplicate_id
+msgid "Duplicate (will be archived)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__duration_min
+msgid "Duration (min)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__effort
+msgid "Effort (1-10)"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "Effort is a score from 1 to 10."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__eligibility_state
+msgid "Eligibility State"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_embryo
+msgid "Embryo"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid ""
+"Embryo %(code)s from donor %(donor)s transferred to carrier %(carrier)s."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__name
+msgid "Embryo code"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.constraint,message:alfia_equine.constraint_alfia_embryo_name_uniq
+msgid "Embryo codes must be unique."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_breeding_service__method__embryo
+msgid "Embryo transfer"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_embryo_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_embryo
+msgid "Embryos"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__end_date
+msgid "End Date"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_diag_image__modality__endoscopy
+msgid "Endoscopy"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Enter a reason for the correction."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Enter at least one pregnancy check day."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid ""
+"Enter doses, concentration and motility before the batch can be released."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Enter the foal's name and sex."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_training_session__entry_mode__manual
+msgid "Entered by hand"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__entry_mode
+msgid "Entry Mode"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__event
+msgid "Event"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_clearance__kind__eligibility
+msgid "Event eligibility (competition manager)"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_merge_view_form
+msgid ""
+"Every record of the duplicate (health, breeding, ownership, tasks, movements…) moves to the horse you keep. Identifiers the kept horse lacks\n"
+"                    are taken from the duplicate, and the duplicate is archived."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__kind__exam
+msgid "Examination"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__vet_id
+msgid "Examined by"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__expected_foaling
+msgid "Expected Foaling"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__gestation_days
+msgid "Expected foaling: days after ovulation"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__extractions
+msgid "Extractions"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__fei
+msgid "FEI no."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__partner_id
+msgid "Farm / counterpart"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_farrier_visit_action
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__farrier_id
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__kind__farrier
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_farrier_visit
+msgid "Farrier"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_farrier_visit
+msgid "Farrier visit"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "Farrier visit due"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__sex__female
+msgid "Female"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_foaling__foal_sex__filly
+msgid "Filly"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__findings
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__findings
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__findings
+msgid "Findings"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__findings
+msgid "Findings (cracks, bruising, abscess, soreness)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__fitness_state
+msgid "Fitness State"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_clearance_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_clearance
+msgid "Fitness and eligibility"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_clearance
+msgid "Fitness or eligibility decision"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__flush_date
+msgid "Flush Date"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__foal_id
+msgid "Foal"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__foal_name
+msgid "Foal Name"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__foal_sex
+msgid "Foal Sex"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_pregnancy__state__foaled
+msgid "Foaled"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_foaling
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__foaling_ids
+msgid "Foaling"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__kind__foaling_prep
+msgid "Foaling preparation"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__prep_days
+msgid "Foaling preparation reminder: days before"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_foaling_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_foaling
+msgid "Foalings"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Follicle sizes cannot be negative."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__follow_up
+msgid "Follow Up"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_embryo_view_form
+msgid "Freeze / store"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__frequency
+msgid "Frequency"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__location_from_id
+msgid "From"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_training_session__entry_mode__device
+msgid "From a device"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_embryo__state__stored
+msgid "Frozen in storage"
+msgstr ""
+
+#. module: alfia_equine
+#: model:product.template,name:alfia_equine.product_frozen_semen_product_template
+msgid "Frozen semen dose"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__gait
+msgid "Gait"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_training_session__gait__gallop
+msgid "Gallop"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__sex__gelding
+msgid "Gelding"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__dam_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__genetic_dam_id
+msgid "Genetic dam"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid ""
+"Gestation length and the preparation reminder do not make sense together."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__status__gifted
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_status_log__status__gifted
+msgid "Gifted"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__girth
+msgid "Girth (cm)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__given_at
+msgid "Given At"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__given_by_id
+msgid "Given By"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__given_count
+msgid "Given Count"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__grade
+msgid "Grade"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__has_message
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__has_message
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__has_message
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__has_message
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__has_message
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__has_message
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__has_message
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__has_message
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__health_record_ids
+msgid "Health Record"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_health
+msgid "Health and veterinary"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__kind__health_due
+msgid "Health care due"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_health_record
+msgid "Health record"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_health_record_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_health_record
+msgid "Health records"
+msgstr ""
+
+#. module: alfia_equine
+#: model:alfia.teasing.symbol,name:alfia_equine.symbol_heat
+msgid "Heat"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__kind__heat_alert
+msgid "Heat in pregnant mare"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_teasing_view_search
+msgid "Heat observed"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Heat observed in pregnant mare %s: vet to examine"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__height
+msgid "Height (cm)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_horse
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_note__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_record__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_status_log__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__horse_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__horse_id
+msgid "Horse"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_horse_movement
+msgid "Horse movement"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "Horse name"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_horse_note
+msgid "Horse note"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_horse_ownership
+msgid "Horse ownership (effective-dated)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_horse_record
+msgid "Horse record"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_horse_status_log
+msgid "Horse status history"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_merge__keep_id
+msgid "Horse to keep"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__horse_weight
+msgid "Horse weight (kg)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_horse_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_horses
+msgid "Horses"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.module.module,summary:base.module_alfia_equine
+msgid ""
+"Horses, pedigree, health, breeding schedule, foaling, semen and work items "
+"for a stud farm"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.module.module,description:base.module_alfia_equine
+msgid ""
+"Horses, pedigree, health, breeding schedule, foaling, semen and work items "
+"for a stud farm. See README.md."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_display_mixin__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_merge__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_note__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_record__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_status_log__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing_symbol__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__id
+msgid "ID"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_treatment__route__im
+msgid "IM"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_treatment__route__iv
+msgid "IV"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "Identity"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_foaling__state__completed
+msgid "Identity completed"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Identity completed by %s."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_rule__message_needaction
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_service__message_needaction
+#: model:ir.model.fields,help:alfia_equine.field_alfia_embryo__message_needaction
+#: model:ir.model.fields,help:alfia_equine.field_alfia_foaling__message_needaction
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse__message_needaction
+#: model:ir.model.fields,help:alfia_equine.field_alfia_ovulation__message_needaction
+#: model:ir.model.fields,help:alfia_equine.field_alfia_pregnancy__message_needaction
+#: model:ir.model.fields,help:alfia_equine.field_alfia_semen_collection__message_needaction
+#: model:ir.model.fields,help:alfia_equine.field_alfia_task__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_rule__message_has_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_rule__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_service__message_has_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_service__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_embryo__message_has_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_embryo__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_foaling__message_has_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_foaling__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse__message_has_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_ovulation__message_has_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_ovulation__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_pregnancy__message_has_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_pregnancy__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_semen_collection__message_has_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_semen_collection__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_task__message_has_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_task__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_health_record__type__illness
+msgid "Illness"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__image_1920
+msgid "Image 1920"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__attachment_ids
+msgid "Images / reports"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__inbreeding
+msgid "Inbreeding coefficient (%)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_pregnancy_check__result__inconclusive
+msgid "Inconclusive"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_health_record__type__injury
+msgid "Injury"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__insurance_contact
+msgid "Insurance Contact"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__insurance_policy
+msgid "Insurance Policy"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_movement__kind__internal
+msgid "Internal move"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__invoice_to_id
+msgid "Invoice to"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__key
+msgid "Key"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__kind
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__kind
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__kind
+msgid "Kind"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__lab
+msgid "Laboratory"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_lab_test
+msgid "Laboratory test"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_lab_test_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_lab_test
+msgid "Laboratory tests"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_merge__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_note__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_status_log__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing_symbol__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_merge__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_note__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_status_log__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing_symbol__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__lf_shoe
+msgid "Left fore"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__lh_shoe
+msgid "Left hind"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__left_follicle_mm
+msgid "Left ovary: largest follicle (mm)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_foaling__outcome__live
+msgid "Live foal"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__location
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_search
+msgid "Location"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_pregnancy__state__lost
+msgid "Lost"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_diag_image__modality__mri
+msgid "MRI"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__sex__male
+msgid "Male"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__mare_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__mare_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__mare_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__mare_id
+msgid "Mare"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_search
+msgid "Mares"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_breeding_service_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_task_view_form
+msgid "Mark done"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__markings
+msgid "Markings"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "Markings and notes"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse__activity_type_icon
+msgid "Material Symbols icon e.g. checklist"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__materials
+msgid "Materials"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__is_heat
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing_symbol__is_heat
+msgid "Means the mare is in heat"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "Measurements cannot be negative."
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_merge_view_form
+msgid "Merge"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_horse_merge
+msgid "Merge duplicate horses"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "Merge duplicate…"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/wizard.py:0
+msgid ""
+"Merged duplicate %(dup)s into this record (%(n)d linked record(s) moved) by "
+"%(user)s."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__method
+msgid "Method"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__microchip
+msgid "Microchip"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__missed
+msgid "Missed"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__modality
+msgid "Modality"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__motility
+msgid "Motility (%)"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Motility and morphology are percentages from 0 to 100."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__movement
+msgid "Movement"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_horse_movement_action
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__movement_ids
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_horse_movement
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "Movements"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing_symbol__name
+msgid "Name"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_breeding_service__method__natural
+msgid "Natural cover"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_pregnancy_check__result__negative
+msgid "Negative"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Negative result confirmed by %s."
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_breeding_rule_view_form
+msgid "New version"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__next_action
+msgid "Next Action"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__next_due
+msgid "Next Due"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__next_health_due
+msgid "Next Health Due"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__next_date
+msgid "Next check"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__next_check_date
+msgid "Next check (chosen by the vet)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__next_date
+msgid "Next visit"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid ""
+"No approved breeding schedule exists. A resident veterinarian must approve a"
+" rule set before work is scheduled from it."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__morphology
+msgid "Normal morphology (%)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_pregnancy__state__negative
+msgid "Not pregnant"
+msgstr ""
+
+#. module: alfia_equine
+#: model:alfia.teasing.symbol,name:alfia_equine.symbol_not_receptive
+msgid "Not receptive"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_horse_note_action
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__notes
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__notes
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_horse_note
+msgid "Notes"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__number
+msgid "Number"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_rule__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_service__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_embryo__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_foaling__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_ovulation__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_pregnancy__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_semen_collection__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_task__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_rule__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_service__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_embryo__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_foaling__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_ovulation__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_pregnancy__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_semen_collection__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_task__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__observer_id
+msgid "Observer"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__offspring_count
+msgid "Offspring Count"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__on_site
+msgid "On Site"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_search
+msgid "On site"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "Only %s can decide this."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Only %s can do this."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Only a collected batch can be released."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Only a draft rule set can be approved."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "Only a planned movement can be completed."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Only a recorded birth can be confirmed."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "Only veterinary staff can review laboratory results."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_reproductive_exam__cervix__open
+msgid "Open"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__reproductive_state__open
+msgid "Open (barren)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_treatment__route__oral
+msgid "Oral"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_diag_image__modality__other
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_health_record__type__other
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__kind__other
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_training_session__gait__other
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_treatment__route__other
+msgid "Other"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__outcome
+msgid "Outcome"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__score
+msgid "Overall score"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__overdue
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_task_view_search
+msgid "Overdue"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_ovulation
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__ovulation_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__ovulation_id
+msgid "Ovulation"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__ovulation_date
+msgid "Ovulation Date"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__date
+msgid "Ovulation date"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid ""
+"Ovulation date corrected. %d pending work item(s) were re-dated; completed "
+"work was kept."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Ovulation is recorded for mares."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_ovulation_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_ovulation
+msgid "Ovulations"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__partner_id
+msgid "Owner"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__date_from
+msgid "Owner from"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__date_to
+msgid "Owner until"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_horse_ownership_action
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "Ownership"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__ownership_ids
+msgid "Ownership history"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "Ownership shares of %s add up to more than 100%% in that period."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__passport
+msgid "Passport no."
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "Pedigree"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__pedigree_html
+msgid "Pedigree Html"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_clearance__state__pending
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__eligibility_state__pending
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__fitness_state__pending
+msgid "Pending"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "People"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__result
+msgid "Placing / result"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_breeding_service__state__planned
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_movement__state__planned
+msgid "Planned"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_pregnancy_check__result__positive
+msgid "Positive"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_pregnancy_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_pregnancy
+msgid "Pregnancies"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__pregnancy_ids
+msgid "Pregnancies carried"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_pregnancy
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__pregnancy_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__pregnancy_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__pregnancy_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__pregnancy_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__pregnancy_id
+msgid "Pregnancy"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__kind__pregnancy_check
+msgid "Pregnancy check"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__check_offsets
+msgid "Pregnancy check days after ovulation"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_pregnancy_check
+msgid "Pregnancy check result"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Pregnancy check, day %d"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_pregnancy_check_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_pregnancy_check
+msgid "Pregnancy checks"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_pregnancy_check__result__loss
+msgid "Pregnancy loss"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Pregnancy loss confirmed by %s."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__kind__pregnancy_vaccine
+msgid "Pregnancy vaccination"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__vaccine_months
+msgid "Pregnancy vaccination months"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Pregnancy vaccination, month %d"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__reproductive_state__pregnant
+msgid "Pregnant"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__vet_id
+msgid "Prescribed by"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__dose
+msgid "Prescribed dose"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__prize_money
+msgid "Prize Money"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__program
+msgid "Program / discipline"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__pulse
+msgid "Pulse (bpm)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse_ownership__reason
+msgid "Purchase, gift, inheritance, correction…"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Quantities cannot be negative."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Re-check after inconclusive result"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_display_mixin
+msgid "Readable record names"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__reason
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__reason
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_status_log__reason
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__reason
+msgid "Reason"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "Record created"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_ovulation__state__draft
+msgid "Recorded"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__recorded_by_id
+msgid "Recorded By"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_note__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_record__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__vet_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__recorded_by_id
+msgid "Recorded by"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_foaling__state__draft
+msgid "Recorded by stable staff"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__reference_range
+msgid "Reference Range"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__status__reference
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_status_log__status__reference
+msgid "Reference only"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__reg_id
+msgid "Registration / studbook ID"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_semen_collection_view_form
+msgid "Reject"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_semen_collection__state__rejected
+msgid "Rejected"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_reproductive_exam__cervix__relaxed
+msgid "Relaxed"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_semen_collection_view_form
+msgid "Release batch"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__released_by_id
+msgid "Released By"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_semen_collection__state__released
+msgid "Released for use"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__reproductive_state
+msgid "Reproductive State"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_reproductive_exam
+msgid "Reproductive examination"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_reproductive_exam_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_reproductive_exam
+msgid "Reproductive exams"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__lf_shoe__reset
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__lh_shoe__reset
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__rf_shoe__reset
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__rh_shoe__reset
+msgid "Reset"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__respiration
+msgid "Respiration (/min)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__responsible_id
+msgid "Responsible"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__rest_day
+msgid "Rest Day"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_clearance_view_form
+msgid "Restrict"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_clearance__state__restricted
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__eligibility_state__restricted
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__fitness_state__restricted
+msgid "Restricted"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__restricted_until
+msgid "Restricted Until"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__result
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__result
+msgid "Result"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_breeding_rule__state__retired
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__status__retired
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_status_log__status__retired
+msgid "Retired"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__reviewed_by_id
+msgid "Reviewed By"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__reviewed_date
+msgid "Reviewed Date"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_lab_test__state__reviewed
+msgid "Reviewed by vet"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__rider_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__rider_id
+msgid "Rider"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__rf_shoe
+msgid "Right fore"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__rh_shoe
+msgid "Right hind"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__right_follicle_mm
+msgid "Right ovary: largest follicle (mm)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__route
+msgid "Route"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__rule_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__rule_id
+msgid "Rule set used"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_treatment__route__sc
+msgid "SC"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy_check__task_id
+msgid "Scheduled check"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__score
+msgid "Score"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__season
+msgid "Season"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__season_end_day
+msgid "Season End Day"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__season_end_month
+msgid "Season End Month"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__season_start_day
+msgid "Season Start Day"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__season_start_month
+msgid "Season Start Month"
+msgstr ""
+
+#. module: alfia_equine
+#: model:product.category,name:alfia_equine.category_semen
+msgid "Semen and embryos"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__semen_lot_id
+msgid "Semen batch"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_semen_collection
+msgid "Semen collection"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_semen_collection_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_semen_collection
+msgid "Semen collections"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__product_id
+msgid "Semen product"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing_symbol__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__service_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__service_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__service_id
+msgid "Service"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__date
+msgid "Service date"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_breeding_service_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_breeding_service
+msgid "Services"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__sex
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_search
+msgid "Sex"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_ownership__share
+msgid "Share (%)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__lf_shoe__shod
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__lh_shoe__shod
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__rf_shoe__shod
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__rh_shoe__shod
+msgid "Shod"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_task__urgent
+msgid "Shown first on the workboard."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__sibling_count
+msgid "Sibling Count"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__sire_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__sire_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__sire_id
+msgid "Sire"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__sire_name
+msgid "Sire (name, if not in the system)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse__status__sold
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_horse_status_log__status__sold
+msgid "Sold"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_task__key
+msgid "Stable identity so the same rule never creates the same task twice."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__stage
+msgid "Stage"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__stallion_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__stallion_id
+msgid "Stallion"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__stallion_name
+msgid "Stallion (external)"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_search
+msgid "Stallions"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__start_date
+msgid "Start Date"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__state
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__state
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__state
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__state
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__state
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__state
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__state
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__state
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__state
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__state
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__state
+msgid "State"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__status
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_status_log__status
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_search
+msgid "Status"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_horse_status_log_action
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__status_log_ids
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "Status history"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "Status history cannot be deleted."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "Status history cannot be edited."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_foaling__outcome__stillborn
+msgid "Stillborn"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__tank_id
+msgid "Storage location"
+msgstr ""
+
+#. module: alfia_equine
+#: model:alfia.teasing.symbol,name:alfia_equine.symbol_strong_heat
+msgid "Strong heat (receptive)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_equine_root
+msgid "Stud"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_health_record__type__surgery
+msgid "Surgery"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_training_session__gait__swim
+msgid "Swimming"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_teasing__symbol_id
+msgid "Symbol"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.constraint,message:alfia_equine.constraint_alfia_teasing_symbol_code_uniq
+msgid "Symbol codes must be unique."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__taken_at
+msgid "Taken At"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__tank_id
+msgid "Tank / storage location"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__task_ids
+msgid "Task"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__teasing_pregnant_until_day
+msgid "Tease pregnant mares until day"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__kind__teasing
+msgid "Teasing"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__teasing_due
+msgid "Teasing Due"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_teasing_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_teasing
+msgid "Teasing chart"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_teasing_symbol
+msgid "Teasing chart symbol"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_teasing_symbol_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_teasing_symbol
+msgid "Teasing chart symbols"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Teasing is recorded for mares."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_teasing
+msgid "Teasing observation"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_odontology__floated
+msgid "Teeth floated"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_scoring__temperament
+msgid "Temperament"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_temperature_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_temperature
+msgid "Temperature"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_temperature__temperature
+msgid "Temperature (°C)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_temperature
+msgid "Temperature and vitals"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__test
+msgid "Test"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_pregnancy__genetic_dam_id
+msgid ""
+"The biological mother. Differs from the carrier mare after an embryo "
+"transfer."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "The birthdate of %s is in the future."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "The carrier mare of %s must be a mare."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "The dam of %s must be a mare."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "The date was removed from the source record."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_treatment_dose__missed
+msgid "The dose was due but not given."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "The genetic dam must be a mare."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "The mare of a service must be a mare."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse__carrier_mare_id
+msgid ""
+"The mare that carried the foal when it was born from a transferred embryo."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "The next check must be after this one."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "The next due date is before the record date."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "The ownership of %s ends before it starts."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "The pregnancy ended in abortion."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "The recipient must be a different mare from the donor."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "The recipient's pregnancy is not active."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "The season dates are not valid."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "The sire of %s must be a stallion."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "The stallion of a service must be a stallion."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/wizard.py:0
+msgid ""
+"The two horses have different sexes. Check that they really are the same "
+"animal."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "The vet must confirm the birth before its identity is completed."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_diag_image__modality__thermography
+msgid "Thermography"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "This embryo is %s and cannot be transferred."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "This pregnancy is already %s; results can no longer be added."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.constraint,message:alfia_equine.constraint_alfia_task_key_uniq
+msgid "This work item already exists."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/task.py:0
+msgid "This work item is already %s."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__title
+msgid "Title"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_movement__location_to_id
+msgid "To"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__state__todo
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_task_view_search
+msgid "To do"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_search
+msgid "To tease today"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_view_form
+msgid "Today"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_treatment__route__topical
+msgid "Topical"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__trainer_id
+msgid "Trainer"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_training
+msgid "Training and competition"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_training_session
+msgid "Training session"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_training_session_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_training_session
+msgid "Training sessions"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_embryo__state__transferred
+msgid "Transferred"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__treatment_id
+msgid "Treatment"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_treatment
+msgid "Treatment (prescription)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__treatment_given
+msgid "Treatment Given"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_treatment_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_treatment
+msgid "Treatments"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__lf_shoe__trim
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__lh_shoe__trim
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__rf_shoe__trim
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_farrier_visit__rh_shoe__trim
+msgid "Trimmed"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_training_session__gait__trot
+msgid "Trot"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__type
+msgid "Type"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__ueln
+msgid "UELN"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_diag_image__modality__ultrasound
+msgid "Ultrasound"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "Unknown record type."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/task.py:0
+msgid "Unsupported search on 'overdue'."
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Unsupported search on 'to tease today'."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__urgent
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_task_view_search
+msgid "Urgent"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse_status_log__user_id
+msgid "User"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_reproductive_exam__edema
+msgid "Uterine edema"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_health_record__type__vaccine
+msgid "Vaccination"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Vaccination months must be positive."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__version
+msgid "Version"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__vet_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__vet_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__vet_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__vet_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__vet_id
+msgid "Vet"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_foaling_view_form
+msgid "Vet confirms birth"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_ovulation_view_form
+msgid "Vet confirms ovulation"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_task__kind__vet_follow_up
+msgid "Vet follow-up"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "Vet follow-up: %s"
+msgstr ""
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_lab_test_view_form
+msgid "Vet review"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_vet_visit
+msgid "Vet visit"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_vet_visit_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_vet_visit
+msgid "Vet visits"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__volume_ml
+msgid "Volume (ml)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_training_session__gait__walk
+msgid "Walk"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_measurement__weight
+msgid "Weight (kg)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_measurement_action
+#: model:ir.model,name:alfia_equine.model_alfia_measurement
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_measurement
+msgid "Weight and height"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_horse__initial_location_id
+msgid ""
+"Where the horse is placed when the record is created (records its arrival)."
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__withdrawal_until
+msgid "Withdrawal Until"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__withdrawal_days
+msgid "Withdrawal period (days)"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_task
+msgid "Work item"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.actions.act_window,name:alfia_equine.alfia_task_action
+#: model:ir.ui.menu,name:alfia_equine.menu_alfia_task
+msgid "Work items"
+msgstr ""
+
+#. module: alfia_equine
+#: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_diag_image__modality__xray
+msgid "X-ray"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "a training or competition manager"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "current place of %s"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid "destination"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "semen tank"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "the breeding manager"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "the resident veterinarian"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid "veterinary staff"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "veterinary staff (staff observations never close a pregnancy)"
+msgstr ""
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+#, python-format
+msgid "%(years)sY %(months)sM %(days)sD"
+msgstr ""

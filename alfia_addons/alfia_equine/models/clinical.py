@@ -57,7 +57,7 @@ class AlfiaHealthRecord(models.Model):
     def _alfia_task_specs(self):
         self.ensure_one()
         return [{'key': 'next_due', 'date': self.next_due, 'kind': 'health_due',
-                 'name': self.env._("%(type)s due: %(title)s", type=dict(self._fields['type'].selection)[self.type], title=self.title)}]
+                 'name': self.env._("%(type)s due: %(title)s", type=dict(self._fields['type']._description_selection(self.env))[self.type], title=self.title)}]
 
     @api.constrains('date', 'next_due')
     def _check_dates(self):

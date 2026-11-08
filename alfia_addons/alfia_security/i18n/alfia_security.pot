@@ -1,0 +1,962 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* alfia_security
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-08 21:38+0000\n"
+"PO-Revision-Date: 2026-11-08 21:38+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: alfia_security
+#: model:ir.module.module,description:base.module_alfia_security
+msgid ""
+"\n"
+"Role-and-scope security for a stud farm\n"
+"=======================================\n"
+"* Access profiles bundle functional groups with the sites (stock locations), warehouses and journals a user may work in.\n"
+"* Scope is enforced by the server on every read and write, not by the menus.\n"
+"* Product categories (semen, embryos, medicine...) can be restricted to one group, with optional dual approval before dispatch.\n"
+"* Segregation of duties for purchase approval, vendor bills, outbound payments and inventory adjustments.\n"
+"* Profile design (system administrators) and profile assignment (security officers) are separate duties; neither can escalate itself.\n"
+"* Immutable audit trail of every security-relevant change.\n"
+"* Enables two-factor authentication, a password policy and session time-out.\n"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid ""
+"%(picking)s contains controlled stock and cannot be dispatched yet. Missing "
+"approvals: %(missing)s."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/res_users.py:0
+msgid "%(place)s is outside the sites you may work in%(what)s."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid "%s does not need dispatch approval."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid "%s is already closed."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/alfia_access_profile.py:0
+msgid ""
+"A profile cannot grant: %s. These rights are given directly by a system "
+"administrator."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.constraint,message:alfia_security.constraint_alfia_access_profile_name_uniq
+msgid "A profile with this name already exists."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_ir_access
+msgid "Access"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_res_groups
+msgid "Access Groups"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_alfia_access_profile
+msgid "Access profile"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.actions.act_window,name:alfia_security.alfia_access_profile_action
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__alfia_profile_ids
+#: model:ir.ui.menu,name:alfia_security.menu_alfia_access_profiles
+msgid "Access profiles"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_accountant
+msgid "Accountant"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_alfia_access_profile__journal_ids
+msgid "Accounting entries, payments and statements of these journals."
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_ap_clerk
+msgid "Accounts payable clerk"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__action
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_security_audit_view_search
+msgid "Action"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__active
+msgid "Active"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__alfia_is_auditor
+msgid "Alfia Is Auditor"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__alfia_is_internal
+msgid "Alfia Is Internal"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__alfia_scope_journals
+msgid "Alfia Scope Journals"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__alfia_scope_locations
+msgid "Alfia Scope Locations"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__alfia_scope_warehouses
+msgid "Alfia Scope Warehouses"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.module.module,shortdesc:base.module_alfia_security
+#: model:ir.ui.menu,name:alfia_security.menu_alfia_security
+msgid "Alfia Security"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.module.category,name:alfia_security.module_category_alfia
+msgid "Alfia Stud"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_res_users_view_form
+msgid "Alfia access"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_all_journals
+msgid "All accounting journals"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_all_locations
+msgid "All sites and stock locations"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_all_warehouses
+msgid "All warehouses (purchasing and sales)"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__alfia_journal_ids
+msgid "Allowed journals"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__alfia_location_ids
+msgid "Allowed stock locations"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__alfia_warehouse_ids
+msgid "Allowed warehouses"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid ""
+"An approver cannot also dispatch %s. Another person must validate the "
+"transfer."
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_stock_picking_view_form
+msgid "Approve dispatch"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_stock_adjust_approver
+msgid "Approve inventory adjustments"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_approver_group_ids
+msgid "Approver groups"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_access_profile_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_access_profile_view_search
+msgid "Archived"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/alfia_access_profile.py:0
+msgid "Assign profiles from the user's own form."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.ui.menu,name:alfia_security.menu_alfia_security_audit
+msgid "Audit trail"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_auditor
+msgid "Auditor (read-only)"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_breeding_manager
+#: model:res.groups,name:alfia_security.group_alfia_breeding_manager
+msgid "Breeding manager"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_breeding_staff
+#: model:res.groups,name:alfia_security.group_alfia_breeding_user
+msgid "Breeding staff"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_res_company
+msgid "Company"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups.privilege,name:alfia_security.privilege_alfia_inventory
+msgid "Controlled inventory"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid ""
+"Counting is open to stock staff, but only inventory-adjustment approvers can"
+" apply a count to the books."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__create_uid
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__create_uid
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__create_date
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__create_date
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__date
+msgid "Date"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__description
+msgid "Description"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__details
+msgid "Details"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_alfia_picking_approval
+msgid "Dispatch approval"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_stock_picking__alfia_approval_ids
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_stock_picking_view_form
+msgid "Dispatch approvals"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid "Dispatch approved by %(user)s as %(group)s."
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_dispatch_admin_approver
+msgid "Dispatch approver (administration)"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_dispatch_admin_approver
+msgid "Dispatch approver: administration"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_dispatch_vet_approver
+msgid "Dispatch approver: veterinary"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_account_move__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_account_payment__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_sod_mixin__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_ir_access__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_ir_model_data__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_product_category__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_res_company__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_res_groups__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_stock_move__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_stock_quant__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__actor_id
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_security_audit_view_search
+msgid "Done by"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_dual_approval
+msgid "Dual approval before dispatch"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.constraint,message:alfia_security.constraint_alfia_picking_approval_one_per_user
+msgid "Each approval must come from a different person."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_effective_approver_group_ids
+msgid "Effective approver groups"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_effective_group_id
+msgid "Effective restriction"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_res_users_view_form
+msgid "Effective scope (from profiles)"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_res_company__alfia_sod_enabled
+msgid "Enforce segregation of duties"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_sod_exempt
+msgid "Exempt from segregation of duties (emergency use)"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_finance_controller
+msgid "Finance controller"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_access_profile_view_form
+msgid "Functions"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__group_ids
+msgid "Functions (groups)"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__group_id
+msgid "Group"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/res_users.py:0
+msgid "Groups cannot be edited directly. Assign an access profile instead."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__alfia_managed_group_ids
+msgid "Groups granted by profiles"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_account_move__id
+#: model:ir.model.fields,field_description:alfia_security.field_account_payment__id
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__id
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__id
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__id
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_sod_mixin__id
+#: model:ir.model.fields,field_description:alfia_security.field_ir_access__id
+#: model:ir.model.fields,field_description:alfia_security.field_ir_model_data__id
+#: model:ir.model.fields,field_description:alfia_security.field_product_category__id
+#: model:ir.model.fields,field_description:alfia_security.field_purchase_order__id
+#: model:ir.model.fields,field_description:alfia_security.field_res_company__id
+#: model:ir.model.fields,field_description:alfia_security.field_res_groups__id
+#: model:ir.model.fields,field_description:alfia_security.field_res_users__id
+#: model:ir.model.fields,field_description:alfia_security.field_stock_move__id
+#: model:ir.model.fields,field_description:alfia_security.field_stock_move_line__id
+#: model:ir.model.fields,field_description:alfia_security.field_stock_picking__id
+#: model:ir.model.fields,field_description:alfia_security.field_stock_quant__id
+msgid "ID"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__journal_ids
+msgid "Journals"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__write_uid
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__write_uid
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__write_date
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__write_date
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__actor_login
+msgid "Login at the time"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_medicine_custodian
+msgid "Medicine store custodian"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_stock_picking__alfia_missing_group_ids
+msgid "Missing approvals"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_ir_model_data
+msgid "Model Data"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__name
+msgid "Name"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups.privilege,placeholder:alfia_security.privilege_alfia_inventory
+#: model:res.groups.privilege,placeholder:alfia_security.privilege_alfia_security
+#: model:res.groups.privilege,placeholder:alfia_security.privilege_alfia_stud
+msgid "No"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/admin_guard.py:0
+msgid "Only a system administrator can change %s."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/res_company.py:0
+msgid "Only a system administrator can change segregation of duties."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/res_users.py:0
+msgid "Only a system administrator can change the access of %s."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/res_users.py:0
+msgid "Only a system administrator can change the account of %s."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_res_company__alfia_sod_threshold
+msgid ""
+"Only amounts from this value up need a second person. Zero means every "
+"amount."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid "Only inventory-adjustment approvers can scrap controlled stock (%s)."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_product_category__alfia_access_group_id
+msgid ""
+"Only members of this group can see or move stock, lots and transfers of "
+"products in this category (and its sub-categories). Leave empty for ordinary"
+" stock."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/product_category.py:0
+msgid ""
+"Only security officers and system administrators can change stock "
+"restrictions."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/res_users.py:0
+msgid "Only security officers can assign access profiles."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_product_category__alfia_dual_approval
+msgid ""
+"Outgoing transfers containing these products need an approval from every "
+"group below, each by a different person."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_account_payment
+msgid "Payment"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__picking_id
+msgid "Picking"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.actions.act_window,name:alfia_security.alfia_users_without_mfa_action
+msgid "Privileged users without two-factor"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_procurement_approver
+msgid "Procurement approver"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_procurement_officer
+msgid "Procurement officer"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_product_category
+msgid "Product Category"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_res_users_view_form
+msgid "Profiles"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_purchase_order
+msgid "Purchase Order"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_alfia_access_profile__warehouse_ids
+msgid "Purchase and sales orders of these warehouses."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_stock_quant
+msgid "Quant"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_stock_picking__alfia_required_group_ids
+msgid "Required approvals"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_resident_vet
+#: model:res.groups,name:alfia_security.group_alfia_vet_manager
+msgid "Resident veterinarian"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_access_group_id
+msgid "Restrict stock to group"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_ar_clerk
+msgid "Sales and receivables clerk"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups.privilege,name:alfia_security.privilege_alfia_security
+msgid "Security"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.actions.act_window,name:alfia_security.alfia_security_audit_action
+#: model:ir.model,name:alfia_security.model_alfia_security_audit
+msgid "Security audit trail"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_security_auditor
+msgid "Security auditor (read-only)"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_security_officer
+msgid "Security officer (assign profiles, create users)"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/product_category.py:0
+msgid ""
+"Security officers can only change the stock restriction fields of a "
+"category."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.module.module,summary:base.module_alfia_security
+msgid ""
+"Segregated accounts by site, function and sensitive stock, with segregation "
+"of duties and audit"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_res_company_view_form
+msgid "Segregation of duties"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_alfia_sod_mixin
+msgid "Segregation of duties helper"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/purchase.py:0
+msgid ""
+"Segregation of duties: you created %s, so another authorised person must "
+"approve it."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/account.py:0
+msgid ""
+"Segregation of duties: you created this outgoing payment, so another person "
+"must confirm it."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/account.py:0
+msgid ""
+"Segregation of duties: you entered this vendor bill, so another person must "
+"post it."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_res_company__alfia_sod_threshold
+msgid "Segregation threshold"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_semen_custodian
+#: model:res.groups,name:alfia_security.group_alfia_semen_custodian
+msgid "Semen and embryo custodian"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_stable_staff
+#: model:res.groups,name:alfia_security.group_alfia_stable_user
+msgid "Stable staff (grooms, foremen)"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_product_category_view_form
+msgid "Stock control"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_stock_controller
+msgid "Stock controller"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__location_ids
+msgid "Stock locations"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_storekeeper
+msgid "Storekeeper"
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups.privilege,name:alfia_security.privilege_alfia_stud
+msgid "Stud operations"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__target_ref
+msgid "Target"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__target_model
+msgid "Target Model"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_access_profile_view_form
+msgid ""
+"The groups a user receives. Profiles cannot grant administrator rights."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_res_company__alfia_sod_enabled
+msgid ""
+"The person who creates a purchase order, vendor bill or outbound payment "
+"cannot also approve or post it."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/alfia_security_audit.py:0
+msgid "The security audit trail cannot be deleted."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/alfia_security_audit.py:0
+msgid "The security audit trail cannot be modified."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid ""
+"The transfer changed after it was approved. Approvals were cleared and must "
+"be given again."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_alfia_access_profile__location_ids
+msgid ""
+"The user may only see and move stock in these locations and everything below"
+" them."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/res_users.py:0
+msgid ""
+"These fields are calculated from access profiles and cannot be edited "
+"directly."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.constraint,message:alfia_security.constraint_alfia_picking_approval_one_per_group
+msgid "This approval is already recorded."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_product_category__alfia_effective_approver_group_ids
+msgid ""
+"This category's own approver groups when dual approval is on, otherwise the "
+"nearest parent's."
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_product_category__alfia_effective_group_id
+msgid "This category's own restriction, or the nearest parent's."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/alfia_access_profile.py:0
+msgid ""
+"This profile is still assigned to users. Remove it from them (or archive it)"
+" first."
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_training_manager
+#: model:res.groups,name:alfia_security.group_alfia_training_manager
+msgid "Training manager"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_training_staff
+#: model:res.groups,name:alfia_security.group_alfia_training_user
+msgid "Training staff"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_res_users
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__user_id
+msgid "User"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__user_count
+msgid "User Count"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__user_ids
+#: model:ir.ui.menu,name:alfia_security.menu_alfia_users
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_access_profile_view_form
+msgid "Users"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.ui.menu,name:alfia_security.menu_alfia_users_without_mfa
+msgid "Users without two-factor"
+msgstr ""
+
+#. module: alfia_security
+#: model:alfia.access.profile,name:alfia_security.profile_vet_staff
+#: model:res.groups,name:alfia_security.group_alfia_vet_user
+msgid "Veterinary staff"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__warehouse_ids
+msgid "Warehouses"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_access_profile_view_form
+msgid "What this profile is for"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_security_audit_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_security_audit_view_list
+msgid "When"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_res_company_view_form
+msgid ""
+"When enabled, the person who creates a purchase order, vendor bill or outgoing payment\n"
+"                        cannot approve or post it, and the person who approves a controlled-stock dispatch cannot dispatch it."
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_access_profile_view_form
+msgid "Where they may work"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid ""
+"You are not an approver for the missing approvals of %s, or they are already"
+" given."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/res_users.py:0
+msgid "You cannot change your own access profiles."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid ""
+"You have already approved %s. The other approval must come from a different "
+"person."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid "You requested this transfer, so someone else must approve it."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/admin_guard.py:0
+msgid "access rules"
+msgstr ""
+
+#. module: alfia_security
+#: model_terms:ir.ui.view,arch_db:alfia_security.alfia_access_profile_view_form
+msgid "e.g. Breeding staff, Stud site A"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/admin_guard.py:0
+msgid "external identifiers"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/admin_guard.py:0
+msgid "groups"
+msgstr ""

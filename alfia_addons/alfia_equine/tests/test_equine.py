@@ -643,3 +643,13 @@ class TestScopedCreation(EquineCase):
         foaling.with_user(self.vet).action_vet_confirm()
         foaling.with_user(bm).action_complete()
         self.assertEqual(foaling.foal_id.location_id, self.barn_a)
+
+
+@tagged('post_install', '-at_install', 'alfia_equine')
+class TestArabicNames(EquineCase):
+
+    def test_arabic_readers_see_the_arabic_name_first(self):
+        self.mare.alias = 'كليوباترا'
+        self.assertEqual(self.mare.with_context(lang='ar_001').display_name, 'كليوباترا · Cleopatra')
+        self.assertEqual(self.mare.with_context(lang='en_US').display_name, 'Cleopatra')
+        self.assertEqual(self.stallion.with_context(lang='ar_001').display_name, 'Carlomagno', "no Arabic name: the studbook name alone")

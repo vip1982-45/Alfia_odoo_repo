@@ -27,7 +27,7 @@ class AlfiaRestrictionRule(models.Model):
         self.ensure_one()
         out = []
         if self.sex and horse.sex != self.sex:
-            out.append(self.env._("Only %s horses may enter.", dict(self._fields['sex'].selection)[self.sex].lower()))
+            out.append(self.env._("Only %s horses may enter.", dict(self._fields['sex']._description_selection(self.env))[self.sex].lower()))
         if (self.min_age_years or self.max_age_years) and not horse.birthdate:
             out.append(self.env._("The birthdate is unknown, so the age rule cannot be checked."))
         elif horse.birthdate:

@@ -15,7 +15,7 @@ from odoo import Command, fields
 
 _logger = logging.getLogger('alfia.demo')
 DEMO_PASSWORD = 'AlfiaDemo-2026'
-E = env(context=dict(env.context, lang='en_US', tz='Asia/Qatar'))  # noqa: F821 - history and messages are written in English
+E = env(context=dict(env.context, lang='ar_001', tz='Asia/Qatar'))  # noqa: F821 - generated work items and history are written in Arabic
 ref = E.ref
 TODAY = fields.Date.context_today(E['res.users'])
 
@@ -30,9 +30,10 @@ if E['alfia.horse'].search_count([]):
 # English is the working language; Arabic is added alongside (with its translations) and can be chosen in each
 # person's preferences.
 E['res.lang']._activate_and_install_lang('ar_001')
+E['ir.default'].set('res.partner', 'lang', 'ar_001')
 E['ir.module.module'].search([('state', '=', 'installed')])._update_translations(['ar_001'])
 company = E.company
-company.write({'name': 'Alfia Stud Farm (Demo)', 'email': 'stud@example.com', 'phone': '+974 0000 0000', 'city': 'Doha'})
+company.write({'name': 'مربط ألفية · Alfia Stud Farm (Demo)', 'email': 'stud@example.com', 'phone': '+974 0000 0000', 'city': 'Doha'})
 qar = E['res.currency'].with_context(active_test=False).search([('name', '=', 'QAR')], limit=1)
 if qar and not E['account.move'].search_count([]):
     qar.active = True
@@ -40,7 +41,7 @@ if qar and not E['account.move'].search_count([]):
 
 # ------------------------------------------------------------------ sites
 wh = E['stock.warehouse'].search([('company_id', '=', company.id)], limit=1)
-wh.write({'name': 'Stud A', 'code': 'STA'})
+wh.write({'name': 'المربط أ · Stud A', 'code': 'STA'})
 Loc = E['stock.location']
 root = wh.view_location_id
 
@@ -49,24 +50,24 @@ def loc(name, parent=None):
     return Loc.create({'name': name, 'location_id': (parent or root).id, 'usage': 'internal'})
 
 
-barn_a, barn_b = loc('Barn A (mares)'), loc('Barn B (stallions)')
-foaling, quarantine = loc('Foaling unit'), loc('Quarantine stalls')
-yard = loc('Training yard')
-tank_room = loc('Semen tank room')
-tank_1 = loc('Tank 1', tank_room)
-med_store, feed_store = loc('Medicine store'), loc('Feed store')
+barn_a, barn_b = loc('إسطبل أ (الأفراس) · Barn A (mares)'), loc('إسطبل ب (الفحول) · Barn B (stallions)')
+foaling, quarantine = loc('وحدة الولادة · Foaling unit'), loc('إسطبلات الحجر الصحي · Quarantine stalls')
+yard = loc('ساحة التدريب · Training yard')
+tank_room = loc('غرفة خزانات السائل المنوي · Semen tank room')
+tank_1 = loc('الخزان 1 · Tank 1', tank_room)
+med_store, feed_store = loc('مخزن الأدوية · Medicine store'), loc('مخزن الأعلاف · Feed store')
 
 # ------------------------------------------------------------------ people
 P = E['res.partner']
-alfia = P.create({'name': 'Alfia Holding', 'is_company': True, 'email': 'owner@example.com'})
-client_1 = P.create({'name': 'Al Rayyan Equestrian (client)', 'is_company': True, 'email': 'rayyan@example.com'})
-client_2 = P.create({'name': 'Sheikha N. (private client)', 'email': 'client2@example.com'})
-buyer = P.create({'name': 'Desert Rose Arabians (buyer)', 'is_company': True, 'email': 'buyer@example.com'})
-vendor_feed = P.create({'name': 'Gulf Feed Supplies', 'is_company': True, 'supplier_rank': 1, 'email': 'feed@example.com'})
-vendor_vet = P.create({'name': 'VetPharm Trading', 'is_company': True, 'supplier_rank': 1, 'email': 'pharma@example.com'})
-dr_ext = P.create({'name': 'Dr. Visiting Vet (external)'})
-farrier = P.create({'name': 'Farrier Services Co.'})
-rider = P.create({'name': 'Rider One'})
+alfia = P.create({'name': 'ألفية القابضة · Alfia Holding', 'is_company': True, 'email': 'owner@example.com'})
+client_1 = P.create({'name': 'الريان للفروسية · Al Rayyan Equestrian (client)', 'is_company': True, 'email': 'rayyan@example.com'})
+client_2 = P.create({'name': 'الشيخة ن. (عميلة خاصة) · Sheikha N. (private client)', 'email': 'client2@example.com'})
+buyer = P.create({'name': 'وردة الصحراء للخيل العربية · Desert Rose Arabians (buyer)', 'is_company': True, 'email': 'buyer@example.com'})
+vendor_feed = P.create({'name': 'الخليج لتوريد الأعلاف · Gulf Feed Supplies', 'is_company': True, 'supplier_rank': 1, 'email': 'feed@example.com'})
+vendor_vet = P.create({'name': 'فيت فارم للتجارة · VetPharm Trading', 'is_company': True, 'supplier_rank': 1, 'email': 'pharma@example.com'})
+dr_ext = P.create({'name': 'د. طبيب بيطري زائر (خارجي)'})
+farrier = P.create({'name': 'شركة خدمات البيطرة'})
+rider = P.create({'name': 'الفارس الأول'})
 
 # Starter profiles get the sites they work in.
 prof = lambda x: ref(f'alfia_security.profile_{x}')  # noqa: E731
@@ -99,34 +100,34 @@ for name in ('ar_clerk', 'accountant', 'finance_controller'):
 Users = E['res.users'].with_context(no_reset_password=True)
 USERS = [
     # login, name, profiles, extra groups (granted directly by the administrator)
-    ('officer', 'Security Officer', [], ['alfia_security.group_alfia_security_officer']),
-    ('auditor', 'Internal Auditor', [prof('auditor')], ['alfia_security.group_alfia_security_auditor']),
-    ('resident.vet', 'Dr. Resident Vet', [prof('resident_vet')], []),
-    ('vet', 'Dr. Staff Vet', [prof('vet_staff')], []),
-    ('breeding.manager', 'Breeding Manager', [prof('breeding_manager')], []),
-    ('breeding', 'Breeding Assistant', [prof('breeding_staff')], []),
-    ('groom.a', 'Groom – Barn A', [prof('stable_staff')], []),
-    ('groom.b', 'Groom – Barn B', [groom_b], []),
-    ('trainer', 'Trainer', [prof('training_staff')], []),
-    ('training.manager', 'Training & Competition Manager', [prof('training_manager')], []),
-    ('semen.custodian', 'Semen Custodian', [prof('semen_custodian')], []),
-    ('medicine.custodian', 'Medicine Custodian', [med_profile], []),
-    ('approver.admin', 'Dispatch Approver (Admin)', [prof('dispatch_admin_approver')], []),
-    ('approver.vet', 'Dispatch Approver (Vet)', [vet_approver], []),
-    ('storekeeper', 'Storekeeper', [prof('storekeeper')], []),
-    ('buyer', 'Procurement Officer', [prof('procurement_officer')], []),
-    ('purchase.approver', 'Procurement Approver', [prof('procurement_approver')], []),
-    ('accountant', 'Accountant', [prof('accountant')], []),
-    ('finance', 'Finance Controller', [prof('finance_controller')], []),
+    ('officer', 'مسؤول الأمن', [], ['alfia_security.group_alfia_security_officer']),
+    ('auditor', 'المدقق الداخلي', [prof('auditor')], ['alfia_security.group_alfia_security_auditor']),
+    ('resident.vet', 'د. الطبيب البيطري المقيم', [prof('resident_vet')], []),
+    ('vet', 'د. الطبيب البيطري', [prof('vet_staff')], []),
+    ('breeding.manager', 'مدير التناسل', [prof('breeding_manager')], []),
+    ('breeding', 'مساعد التناسل', [prof('breeding_staff')], []),
+    ('groom.a', 'سائس – إسطبل أ', [prof('stable_staff')], []),
+    ('groom.b', 'سائس – إسطبل ب', [groom_b], []),
+    ('trainer', 'المدرب', [prof('training_staff')], []),
+    ('training.manager', 'مدير التدريب والمنافسات', [prof('training_manager')], []),
+    ('semen.custodian', 'أمين عهدة السائل المنوي', [prof('semen_custodian')], []),
+    ('medicine.custodian', 'أمين مخزن الأدوية', [med_profile], []),
+    ('approver.admin', 'معتمِد الصرف (إداري)', [prof('dispatch_admin_approver')], []),
+    ('approver.vet', 'معتمِد الصرف (بيطري)', [vet_approver], []),
+    ('storekeeper', 'أمين المخزن', [prof('storekeeper')], []),
+    ('buyer', 'مسؤول المشتريات', [prof('procurement_officer')], []),
+    ('purchase.approver', 'معتمِد المشتريات', [prof('procurement_approver')], []),
+    ('accountant', 'المحاسب', [prof('accountant')], []),
+    ('finance', 'المراقب المالي', [prof('finance_controller')], []),
 ]
 users = {}
 for login, name, profiles, groups in USERS:
     users[login] = Users.create({
-        'name': name, 'login': login, 'email': f'{login}@example.com', 'password': DEMO_PASSWORD, 'lang': 'en_US', 'tz': 'Asia/Qatar',
+        'name': name, 'login': login, 'email': f'{login}@example.com', 'password': DEMO_PASSWORD, 'lang': 'ar_001', 'tz': 'Asia/Qatar',
         'group_ids': [Command.link(ref('base.group_user').id)] + [Command.link(ref(g).id) for g in groups],
         'alfia_profile_ids': [Command.set([p.id for p in profiles])]})
 admin = ref('base.user_admin')
-admin.write({'password': DEMO_PASSWORD, 'name': 'System Administrator', 'lang': 'en_US', 'tz': 'Asia/Qatar'})
+admin.write({'password': DEMO_PASSWORD, 'name': 'مدير النظام', 'lang': 'ar_001', 'tz': 'Asia/Qatar'})
 admin.group_ids = [Command.link(ref('alfia_security.group_alfia_semen_custodian').id)]   # sees controlled stock in the demo
 
 # ------------------------------------------------------------------ horses and pedigrees
@@ -134,58 +135,58 @@ Horse = E['alfia.horse']
 
 
 def horse(name, sex, born=None, loc_=None, **kw):
-    vals = {'name': name, 'sex': sex, 'birthdate': born, 'breed': kw.pop('breed', 'Arabian'), **kw}
+    vals = {'name': name, 'sex': sex, 'birthdate': born, 'breed': kw.pop('breed', 'عربي أصيل'), **kw}
     if loc_:
         vals['initial_location_id'] = loc_.id
     return Horse.create(vals)
 
 
 # Reference ancestors (not on the farm).
-gs1 = horse('Desert Storm (ref.)', 'male', '1998-03-02', status='reference', color='Grey')
-gd1 = horse('Moon Pearl (ref.)', 'female', '2000-04-11', status='reference', color='Bay')
-gs2 = horse('Royal Falcon (ref.)', 'male', '1999-02-20', status='reference', color='Chestnut')
-gd2 = horse('Sahara Bloom (ref.)', 'female', '2001-05-05', status='reference', color='Grey')
+gs1 = horse('Desert Storm (ref.)', 'male', '1998-03-02', status='reference', color='أشهب')
+gd1 = horse('Moon Pearl (ref.)', 'female', '2000-04-11', status='reference', color='كميت')
+gs2 = horse('Royal Falcon (ref.)', 'male', '1999-02-20', status='reference', color='أشقر')
+gd2 = horse('Sahara Bloom (ref.)', 'female', '2001-05-05', status='reference', color='أشهب')
 
 stallions = [
-    horse('Al Majd', 'male', '2012-03-10', barn_b, sire_id=gs1.id, dam_id=gd1.id, color='Grey', reg_id='QAT-ST-1012', microchip='634000000001001'),
-    horse('Najm Al Shamal', 'male', '2014-02-17', barn_b, sire_id=gs2.id, dam_id=gd2.id, color='Bay', reg_id='QAT-ST-1014', microchip='634000000001002'),
-    horse('Saif Al Arab', 'male', '2016-04-01', barn_b, sire_id=gs1.id, dam_id=gd2.id, color='Chestnut', reg_id='QAT-ST-1016', microchip='634000000001003'),
+    horse('Al Majd', 'male', '2012-03-10', barn_b, sire_id=gs1.id, dam_id=gd1.id, color='أشهب', reg_id='QAT-ST-1012', microchip='634000000001001'),
+    horse('Najm Al Shamal', 'male', '2014-02-17', barn_b, sire_id=gs2.id, dam_id=gd2.id, color='كميت', reg_id='QAT-ST-1014', microchip='634000000001002'),
+    horse('Saif Al Arab', 'male', '2016-04-01', barn_b, sire_id=gs1.id, dam_id=gd2.id, color='أشقر', reg_id='QAT-ST-1016', microchip='634000000001003'),
 ]
 mare_names = ['Layla', 'Noor', 'Reem', 'Jawaher', 'Hessa', 'Maha', 'Shaikha', 'Dana', 'Lulwa', 'Mozah', 'Ghalia', 'Sara']
 mares = []
 for n, name in enumerate(mare_names):
     mares.append(horse(name, 'female', f'{2009 + n % 8}-0{1 + n % 8}-1{n % 9}', barn_a, sire_id=(gs1 if n % 2 else gs2).id,
-                       dam_id=(gd1 if n % 3 else gd2).id, color=('Grey', 'Bay', 'Chestnut')[n % 3], reg_id=f'QAT-MR-2{n:03d}',
+                       dam_id=(gd1 if n % 3 else gd2).id, color=('أشهب', 'كميت', 'أشقر')[n % 3], reg_id=f'QAT-MR-2{n:03d}',
                        microchip=f'63400000000{2000 + n}', invoice_to_id=(client_1 if n in (9, 10) else alfia).id))
 young = [
-    horse('Fajr', 'female', '2023-02-14', barn_a, sire_id=stallions[0].id, dam_id=mares[0].id, color='Grey'),
-    horse('Badr', 'male', '2023-03-03', yard, sire_id=stallions[1].id, dam_id=mares[1].id, color='Bay'),
-    horse('Wasm', 'male', '2024-01-28', yard, sire_id=stallions[2].id, dam_id=mares[2].id, color='Chestnut'),
-    horse('Hala', 'female', '2024-02-09', barn_a, sire_id=stallions[0].id, dam_id=mares[3].id, color='Grey'),
+    horse('Fajr', 'female', '2023-02-14', barn_a, sire_id=stallions[0].id, dam_id=mares[0].id, color='أشهب'),
+    horse('Badr', 'male', '2023-03-03', yard, sire_id=stallions[1].id, dam_id=mares[1].id, color='كميت'),
+    horse('Wasm', 'male', '2024-01-28', yard, sire_id=stallions[2].id, dam_id=mares[2].id, color='أشقر'),
+    horse('Hala', 'female', '2024-02-09', barn_a, sire_id=stallions[0].id, dam_id=mares[3].id, color='أشهب'),
 ]
-geldings = [horse('Sultan', 'gelding', '2015-05-05', yard, color='Bay'), horse('Rakan', 'gelding', '2017-06-06', yard, color='Grey')]
-new_arrival = horse('Zahra (new arrival)', 'female', '2019-03-03', quarantine, color='Bay', invoice_to_id=client_2.id)
+geldings = [horse('Sultan', 'gelding', '2015-05-05', yard, color='كميت'), horse('Rakan', 'gelding', '2017-06-06', yard, color='أشهب')]
+new_arrival = horse('Zahra (new arrival)', 'female', '2019-03-03', quarantine, color='كميت', invoice_to_id=client_2.id)
 all_horses = stallions + mares + young + geldings + [new_arrival]
 
 Own = E['alfia.horse.ownership']
 for h in stallions + mares[:9] + young + geldings:
-    Own.create({'horse_id': h.id, 'partner_id': alfia.id, 'date_from': h.birthdate or '2015-01-01', 'reason': 'Bred / purchased'})
+    Own.create({'horse_id': h.id, 'partner_id': alfia.id, 'date_from': h.birthdate or '2015-01-01', 'reason': 'مولود في المربط / مشترى'})
 for h in mares[9:]:
-    Own.create({'horse_id': h.id, 'partner_id': client_1.id, 'date_from': '2022-01-01', 'reason': 'Client mare'})
-Own.create({'horse_id': new_arrival.id, 'partner_id': client_2.id, 'date_from': d(-5), 'reason': 'Client mare'})
+    Own.create({'horse_id': h.id, 'partner_id': client_1.id, 'date_from': '2022-01-01', 'reason': 'فرس عميل'})
+Own.create({'horse_id': new_arrival.id, 'partner_id': client_2.id, 'date_from': d(-5), 'reason': 'فرس عميل'})
 
 # ------------------------------------------------------------------ health and care
 Health = E['alfia.health.record']
 for i, h in enumerate(all_horses):
-    Health.create({'horse_id': h.id, 'date': d(-150 - i), 'type': 'vaccine', 'title': 'Equine influenza + tetanus', 'vet_id': dr_ext.id,
+    Health.create({'horse_id': h.id, 'date': d(-150 - i), 'type': 'vaccine', 'title': 'إنفلونزا الخيول + الكزاز', 'vet_id': dr_ext.id,
                    'cost': 180, 'next_due': d(30 - i * 3)})
-    Health.create({'horse_id': h.id, 'date': d(-60 - i), 'type': 'deworming', 'title': 'Ivermectin', 'next_due': d(25 - i)})
-E['alfia.vet.visit'].create({'horse_id': mares[4].id, 'date': d(-3), 'vet_id': dr_ext.id, 'reason': 'Mild lameness, left fore',
-                             'diagnosis': 'Bruised sole', 'treatment_given': 'Poultice, box rest', 'cost': 450, 'follow_up': d(4)})
-treat = E['alfia.treatment'].create({'horse_id': geldings[0].id, 'drug': 'Phenylbutazone', 'dose': '2 g', 'route': 'oral', 'frequency': 'Once daily',
+    Health.create({'horse_id': h.id, 'date': d(-60 - i), 'type': 'deworming', 'title': 'إيفرمكتين', 'next_due': d(25 - i)})
+E['alfia.vet.visit'].create({'horse_id': mares[4].id, 'date': d(-3), 'vet_id': dr_ext.id, 'reason': 'عرج خفيف، القائمة الأمامية اليسرى',
+                             'diagnosis': 'كدمة في نعل الحافر', 'treatment_given': 'كمادة، راحة في الإسطبل', 'cost': 450, 'follow_up': d(4)})
+treat = E['alfia.treatment'].create({'horse_id': geldings[0].id, 'drug': 'فينيل بيوتازون', 'dose': '2 g', 'route': 'oral', 'frequency': 'مرة يوميًا',
                                      'start_date': d(-2), 'end_date': d(3), 'withdrawal_days': 7})
 E['alfia.treatment.dose'].create({'treatment_id': treat.id, 'horse_id': geldings[0].id, 'dose_given': '2 g'})
-E['alfia.lab.test'].create({'horse_id': stallions[0].id, 'date': d(-2), 'test': 'Complete blood count', 'lab': 'Doha Equine Lab', 'result': 'WBC 8.1',
+E['alfia.lab.test'].create({'horse_id': stallions[0].id, 'date': d(-2), 'test': 'تعداد الدم الكامل', 'lab': 'مختبر الدوحة للخيول', 'result': 'WBC 8.1',
                             'reference_range': '5.5-12.5'})
 E['alfia.odontology'].create({'horse_id': mares[2].id, 'date': d(-200), 'floated': True, 'next_date': d(10), 'cost': 300})
 E['alfia.farrier.visit'].create({'horse_id': geldings[1].id, 'date': d(-35), 'farrier_id': farrier.id, 'cost': 250, 'next_date': d(7)})
@@ -193,10 +194,10 @@ for k in range(6):
     E['alfia.measurement'].create({'horse_id': young[0].id, 'date': d(-150 + k * 30), 'weight': 300 + k * 18, 'height': 135 + k * 2})
     E['alfia.temperature'].create({'horse_id': new_arrival.id, 'taken_at': fields.Datetime.now() - relativedelta(hours=12 * k),
                                    'temperature': 37.6 + (0.4 if k == 2 else 0), 'pulse': 38, 'respiration': 12})
-E['alfia.horse.note'].create({'horse_id': mares[5].id, 'content': 'Shy with new handlers; approach from the left.'})
+E['alfia.horse.note'].create({'horse_id': mares[5].id, 'content': 'خجولة مع السياس الجدد؛ يُقترب منها من اليسار.'})
 
 # Quarantine of the new arrival (active), with its release review on the vet's list.
-E['alfia.quarantine'].create({'horse_id': new_arrival.id, 'start_date': d(-5), 'planned_end': d(16), 'reason': 'New arrival from abroad',
+E['alfia.quarantine'].create({'horse_id': new_arrival.id, 'start_date': d(-5), 'planned_end': d(16), 'reason': 'وصول جديد من الخارج',
                               'isolation_location_id': quarantine.id})
 
 # Feed plans
@@ -205,7 +206,7 @@ oats = Product.create({'name': 'Oats (kg)', 'type': 'consu', 'is_storable': True
 hay = Product.create({'name': 'Timothy hay (kg)', 'type': 'consu', 'is_storable': True, 'standard_price': 1.4, 'list_price': 2})
 alfalfa = Product.create({'name': 'Alfalfa (kg)', 'type': 'consu', 'is_storable': True, 'standard_price': 1.8, 'list_price': 2.5})
 for h in mares + stallions:
-    E['alfia.diet'].create({'horse_id': h.id, 'name': 'Winter ration', 'date_from': d(-30), 'line_ids': [
+    E['alfia.diet'].create({'horse_id': h.id, 'name': 'عليقة الشتاء', 'date_from': d(-30), 'line_ids': [
         Command.create({'product_id': hay.id, 'qty_per_meal': 4, 'meals_per_day': 2}),
         Command.create({'product_id': (oats if h.sex == 'male' else alfalfa).id, 'qty_per_meal': 1.5, 'meals_per_day': 2})]})
 
@@ -230,7 +231,7 @@ for n, mare in enumerate(mares[:8]):
 for mare in mares[8:11]:
     E['alfia.teasing'].create({'mare_id': mare.id, 'date': d(-1), 'symbol_id': heat.id})
     E['alfia.reproductive.exam'].create({'mare_id': mare.id, 'date': d(-1), 'left_follicle_mm': 38, 'right_follicle_mm': 12,
-                                         'next_action': 'Breed tomorrow'})
+                                         'next_action': 'التلقيح غدًا'})
 # Last season's foal born last week: recorded by stable staff, awaiting the vet.
 old_preg_svc = Svc.create({'mare_id': mares[11].id, 'stallion_id': stallions[0].id, 'date': d(-350), 'method': 'natural'})
 old_preg_svc.action_done()
@@ -248,13 +249,13 @@ col = Sem.create({'stallion_id': stallions[0].id, 'date': d(-20), 'volume_ml': 6
 col.with_user(users['vet']).action_release()
 Sem.create({'stallion_id': stallions[1].id, 'date': d(-1), 'volume_ml': 55, 'concentration': 190, 'motility': 65, 'morphology': 60,
             'doses': 15, 'tank_id': tank_1.id})
-E['alfia.embryo'].create({'donor_id': mares[3].id, 'sire_id': stallions[2].id, 'flush_date': d(-10), 'grade': '1', 'stage': 'Blastocyst',
+E['alfia.embryo'].create({'donor_id': mares[3].id, 'sire_id': stallions[2].id, 'flush_date': d(-10), 'grade': '1', 'stage': 'كيسة أريمية',
                           'tank_id': tank_1.id}).action_store()
 
 # A semen dispatch to a client, waiting for its two approvals.
 customers = ref('stock.stock_location_customers')
 dispatch = E['stock.picking'].create({
-    'picking_type_id': wh.out_type_id.id, 'partner_id': client_1.id, 'location_id': tank_1.id, 'location_dest_id': customers.id, 'origin': 'Semen order demo',
+    'picking_type_id': wh.out_type_id.id, 'partner_id': client_1.id, 'location_id': tank_1.id, 'location_dest_id': customers.id, 'origin': 'طلب سائل منوي',
     'move_ids': [Command.create({'product_id': col.product_id.id, 'product_uom_qty': 2, 'location_id': tank_1.id, 'location_dest_id': customers.id})]})
 dispatch.action_confirm()
 dispatch.action_assign()
@@ -262,30 +263,30 @@ dispatch.action_assign()
 # ------------------------------------------------------------------ training and competition
 for h in young[1:3] + geldings:
     for k in range(5):
-        E['alfia.training.session'].create({'horse_id': h.id, 'date': d(-k * 2), 'program': 'Endurance base', 'gait': ('trot', 'canter')[k % 2],
+        E['alfia.training.session'].create({'horse_id': h.id, 'date': d(-k * 2), 'program': 'أساس القدرة والتحمل', 'gait': ('trot', 'canter')[k % 2],
                                             'distance_km': 8 + k, 'duration_min': 45, 'effort': 5 + k % 3, 'rest_day': False})
 Clear = E['alfia.clearance']
 for h in geldings:
     Clear.create({'horse_id': h.id, 'kind': 'fitness'}).with_user(users['vet']).action_clear()
-rule_entry = E['alfia.restriction.rule'].create({'name': 'Endurance 80 km: age 6+, fit, no withdrawal', 'min_age_years': 6})
-event = E['alfia.event'].create({'name': 'Doha Endurance Cup 80 km', 'date_start': d(12), 'venue': 'Doha', 'discipline': 'Endurance',
+rule_entry = E['alfia.restriction.rule'].create({'name': 'قدرة وتحمل 80 كم: عمر 6 سنوات فأكثر، لياقة مجازة، دون فترة سحب', 'min_age_years': 6})
+event = E['alfia.event'].create({'name': 'كأس الدوحة للقدرة والتحمل 80 كم · Doha Endurance Cup 80 km', 'date_start': d(12), 'venue': 'الدوحة', 'discipline': 'القدرة والتحمل',
                                  'rule_id': rule_entry.id})
 for h in geldings + [young[1]]:
     E['alfia.event.entry'].create({'event_id': event.id, 'horse_id': h.id, 'rider_id': rider.id}).action_submit()
-E['alfia.competition'].create({'horse_id': geldings[1].id, 'date': d(-40), 'event': 'Mesaieed 40 km', 'discipline': 'Endurance', 'result': '2nd',
+E['alfia.competition'].create({'horse_id': geldings[1].id, 'date': d(-40), 'event': 'مسيعيد 40 كم', 'discipline': 'القدرة والتحمل', 'result': 'الثاني',
                                'prize_money': 15000})
 
 # ------------------------------------------------------------------ billing and contracts
 board = Product.create({'name': 'Full board (month)', 'type': 'service', 'list_price': 3500})
 vet_fee = Product.create({'name': 'Veterinary service', 'type': 'service', 'list_price': 450})
 nomination = Product.create({'name': 'Stallion nomination fee', 'type': 'service', 'list_price': 25000})
-group_client = E['alfia.horse.group'].create({'name': 'Client mares', 'member_ids': [Command.set([m.id for m in mares[9:]] + [new_arrival.id])]})
-E['alfia.horse.group'].create({'name': 'Mares in Barn A (dynamic)', 'sex': 'female', 'location_id': barn_a.id})
-E['alfia.horse.group'].create({'name': 'Pregnant mares (dynamic)', 'reproductive_state': 'pregnant'})
-plan = E['alfia.charge.plan'].create({'name': 'Client mares – full board', 'target_kind': 'group', 'group_id': group_client.id,
+group_client = E['alfia.horse.group'].create({'name': 'أفراس العملاء', 'member_ids': [Command.set([m.id for m in mares[9:]] + [new_arrival.id])]})
+E['alfia.horse.group'].create({'name': 'أفراس إسطبل أ (تلقائية)', 'sex': 'female', 'location_id': barn_a.id})
+E['alfia.horse.group'].create({'name': 'الأفراس العشار (تلقائية)', 'reproductive_state': 'pregnant'})
+plan = E['alfia.charge.plan'].create({'name': 'أفراس العملاء – إيواء كامل', 'target_kind': 'group', 'group_id': group_client.id,
                                       'product_id': board.id, 'interval': 'monthly', 'next_date': d(-60), 'auto_approve': True})
 plan.action_generate()
-E['alfia.charge'].create({'horse_id': mares[4].id, 'product_id': vet_fee.id, 'name': 'Lameness visit', 'date': d(-3)})
+E['alfia.charge'].create({'horse_id': mares[4].id, 'product_id': vet_fee.id, 'name': 'زيارة العرج · Lameness visit', 'date': d(-3)})
 stay = E['alfia.boarding'].create({'horse_id': new_arrival.id, 'client_id': client_2.id, 'product_id': board.id, 'rate': 4200, 'start_date': d(-5),
                                    'location_id': quarantine.id})
 stay.action_start()
@@ -298,7 +299,7 @@ contract.action_confirm()
 contract.with_user(users['accountant']).action_invoice()
 E['alfia.breeding.contract'].create({'client_id': client_2.id, 'stallion_id': stallions[1].id, 'season': '2027', 'product_id': nomination.id, 'fee': 18000})
 E['alfia.horse.sale'].with_user(users['breeding.manager']).create({'horse_id': young[3].id, 'buyer_id': buyer.id, 'price': 180000,
-                                                                   'notes': 'Offer received at the autumn sale.'})
+                                                                   'notes': 'عرض وصل في مزاد الخريف.'})
 
 # ------------------------------------------------------------------ stock, procurement and sales (ERP basics)
 medicine_categ = E['product.category'].create({'name': 'Veterinary medicine', 'alfia_access_group_id': ref('alfia_security.group_alfia_medicine_custodian').id})
@@ -324,11 +325,33 @@ so.action_confirm()
 
 # ------------------------------------------------------------------ facilities
 Asset = E['alfia.asset']
-Asset.create({'name': '6-horse trailer', 'kind': 'vehicle', 'reference': 'QA 123456', 'next_service': d(9), 'responsible_id': users['trainer'].id})
-Asset.create({'name': 'Horse ambulance', 'kind': 'vehicle', 'reference': 'QA 654321', 'next_service': d(40)})
-Asset.create({'name': 'Doha Cup 2025 trophy', 'kind': 'trophy', 'horse_id': geldings[1].id, 'acquired': '2025-02-01'})
-Asset.create({'name': 'Arabian Stud Book vol. 12', 'kind': 'library', 'reference': 'Shelf B-3', 'state': 'in_use', 'borrower_id': alfia.id})
-Asset.create({'name': 'Portable ultrasound', 'kind': 'equipment', 'reference': 'SN-US-2291', 'responsible_id': users['vet'].id, 'value': 85000})
+Asset.create({'name': 'مقطورة خيل لستة خيول', 'kind': 'vehicle', 'reference': 'QA 123456', 'next_service': d(9), 'responsible_id': users['trainer'].id})
+Asset.create({'name': 'سيارة إسعاف الخيول', 'kind': 'vehicle', 'reference': 'QA 654321', 'next_service': d(40)})
+Asset.create({'name': 'كأس الدوحة 2025', 'kind': 'trophy', 'horse_id': geldings[1].id, 'acquired': '2025-02-01'})
+Asset.create({'name': 'سجل أنساب الخيل العربية، المجلد 12', 'kind': 'library', 'reference': 'Shelf B-3', 'state': 'in_use', 'borrower_id': alfia.id})
+Asset.create({'name': 'جهاز موجات فوق صوتية محمول', 'kind': 'equipment', 'reference': 'SN-US-2291', 'responsible_id': users['vet'].id, 'value': 85000})
+
+AR_HORSES = {
+    'Desert Storm (ref.)': 'عاصفة الصحراء', 'Moon Pearl (ref.)': 'لؤلؤة القمر', 'Royal Falcon (ref.)': 'الصقر الملكي',
+    'Sahara Bloom (ref.)': 'زهرة الصحراء', 'Al Majd': 'المجد', 'Najm Al Shamal': 'نجم الشمال', 'Saif Al Arab': 'سيف العرب',
+    'Layla': 'ليلى', 'Noor': 'نور', 'Reem': 'ريم', 'Jawaher': 'جواهر', 'Hessa': 'حصة', 'Maha': 'مها', 'Shaikha': 'شيخة',
+    'Dana': 'دانة', 'Lulwa': 'لولوة', 'Mozah': 'موزة', 'Ghalia': 'غالية', 'Sara': 'سارة', 'Fajr': 'فجر', 'Badr': 'بدر',
+    'Wasm': 'وسم', 'Hala': 'هلا', 'Sultan': 'سلطان', 'Rakan': 'راكان', 'Zahra (new arrival)': 'زهرة (وصول جديد)', 'Amal': 'أمل',
+}
+for h in Horse.with_context(active_test=False).search([]):
+    if h.name in AR_HORSES and not h.alias:
+        h.alias = AR_HORSES[h.name]
+AR_PRODUCTS = {
+    oats: 'شوفان (كغ)', hay: 'تبن التيموثي (كغ)', alfalfa: 'برسيم حجازي (كغ)', board: 'إيواء كامل (شهري)',
+    vet_fee: 'خدمة بيطرية', nomination: 'رسوم حجز الفحل', penicillin: 'بنسلين بروكائين 100 مل', bute: 'معجون فينيل بيوتازون',
+}
+for product, name in AR_PRODUCTS.items():
+    product.product_tmpl_id.with_context(lang='ar_001').name = name
+col.product_id.product_tmpl_id.with_context(lang='ar_001').name = 'جرعة سائل منوي مجمّد'
+medicine_categ.with_context(lang='ar_001').name = 'أدوية بيطرية'
+for profile, name in ((med_profile, 'أمين مخزن الأدوية – مخزن الأدوية'), (vet_approver, 'معتمِد الصرف (البيطري)'),
+                      (groom_b, 'موظفو الإسطبل – إسطبل ب')):
+    profile.with_context(lang='ar_001').name = name
 
 E.flush_all()
 E.cr.commit()

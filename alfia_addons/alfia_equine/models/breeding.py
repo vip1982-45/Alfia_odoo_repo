@@ -445,7 +445,7 @@ class AlfiaPregnancyCheck(models.Model):
         self.ensure_one()
         pregnancy = self.pregnancy_id
         if pregnancy.state not in ('bred', 'pregnant'):
-            raise UserError(self.env._("This pregnancy is already %s; results can no longer be added.", dict(pregnancy._fields['state'].selection)[pregnancy.state].lower()))
+            raise UserError(self.env._("This pregnancy is already %s; results can no longer be added.", dict(pregnancy._fields['state']._description_selection(pregnancy.env))[pregnancy.state].lower()))
         if self.task_id and self.task_id.state in ('todo', 'deferred'):
             self.task_id.action_done()
         if self.result == 'positive':
@@ -558,7 +558,7 @@ class AlfiaEmbryo(models.Model):
         _require_group(self.env, 'alfia_security.group_alfia_vet_user', self.env._("veterinary staff"))
         for rec in self:
             if rec.state not in ('collected', 'stored'):
-                raise UserError(self.env._("This embryo is %s and cannot be transferred.", dict(rec._fields['state'].selection)[rec.state].lower()))
+                raise UserError(self.env._("This embryo is %s and cannot be transferred.", dict(rec._fields['state']._description_selection(rec.env))[rec.state].lower()))
             if pregnancy.state not in ('bred', 'pregnant'):
                 raise UserError(self.env._("The recipient's pregnancy is not active."))
             if pregnancy.mare_id == rec.donor_id:

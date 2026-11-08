@@ -75,7 +75,15 @@ class AlfiaHorse(models.Model):
                 horse.age_text = False
                 continue
             delta = relativedelta(today, horse.birthdate)
-            horse.age_text = f"{delta.years}Y {delta.months}M {delta.days}D"
+            horse.age_text = self.env._("%(years)sY %(months)sM %(days)sD", years=delta.years, months=delta.months, days=delta.days)
+
+    @api.depends('name', 'alias')
+    @api.depends_context('lang')
+    def _compute_display_name(self):
+        # Arabic readers see the horse's Arabic name first; the studbook name stays beside it.
+        arabic = (self.env.lang or '').startswith('ar')
+        for horse in self:
+            horse.display_name = f"{horse.alias} · {horse.name}" if arabic and horse.alias and horse.name else (horse.name or '')
 
     @api.depends('ownership_ids.date_from', 'ownership_ids.date_to', 'ownership_ids.partner_id')
     def _compute_owner_ids(self):
@@ -340,7 +348,7 @@ class AlfiaHorseMovement(models.Model):
     def _check_destination(self):
         for move in self:
             if move.kind in ('arrival', 'internal') and not move.location_to_id:
-                raise ValidationError(self.env._("A %s needs a destination location.", dict(self._fields['kind'].selection)[move.kind].lower()))
+                raise ValidationError(self.env._("A %s needs a destination location.", dict(self._fields['kind']._description_selection(self.env))[move.kind].lower()))
 
     def action_done(self):
         for move in self:

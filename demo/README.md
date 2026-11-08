@@ -29,5 +29,15 @@ All accounts use the password `AlfiaDemo-2026`. Change it (or delete the account
 | storekeeper / buyer / purchase.approver | Stores and procurement | feed and medicine stores |
 | accountant / finance | Accounting | all journals and horses |
 
-English is the working language; Arabic is installed and can be chosen under each user's Preferences (Odoo's own
-screens are translated; the Alfia stud-farm screens are not yet).
+## Arabic
+
+The demo accounts open in Arabic, right to left; English is one setting away (avatar → Preferences → Language). Every
+Alfia screen is translated (`alfia_addons/*/i18n/ar.po`), horses carry their Arabic name beside the studbook name, and
+the demo data is in Arabic.
+
+Right-to-left layout needs the `rtlcss` tool on the server, which Odoo uses to build its right-to-left styles. Without it
+Arabic text still appears but screens stay left to right. Install it once (Node.js required):
+
+    npm install -g rtlcss@4.3.0
+
+`build_demo.sh` warns when it is missing.

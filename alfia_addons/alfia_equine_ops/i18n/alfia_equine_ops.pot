@@ -1,0 +1,1971 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* alfia_equine_ops
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-08 21:38+0000\n"
+"PO-Revision-Date: 2026-11-08 21:38+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid ""
+"%(horse)s cannot be approved:\n"
+"%(issues)s"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/common.py:0
+msgid "%s can no longer be changed. Cancel it and create a new one instead."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/care.py:0
+msgid "%s is already in quarantine."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/sale.py:0
+msgid "%s is not an active horse."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/sale.py:0
+msgid "A completed sale cannot be cancelled."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/contract.py:0
+msgid "A confirmed contract"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/contract.py:0
+msgid ""
+"A refund is due only under a live-foal guarantee when there is no live foal."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/sale.py:0
+msgid "A sale needs a price above zero; a gift has none."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__acquired
+msgid "Acquired"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__active
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__active
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__active
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__active
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_boarding__state__active
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_group__status__active
+msgid "Active"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__min_age_years
+msgid "Age from (years)"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__max_age_years
+msgid "Age to (years)"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.module.module,shortdesc:base.module_alfia_equine_ops
+msgid "Alfia Equine Operations"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.server,name:alfia_equine_ops.cron_generate_charges_ir_actions_server
+msgid "Alfia: generate recurring charges"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__amount
+msgid "Amount"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "An approved charge"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/sale.py:0
+msgid "An approved sale"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "An invoiced charge cannot be cancelled. Issue a credit note instead."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "An invoiced charge cannot be changed."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "An invoiced charge cannot be deleted."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/contract.py:0
+msgid "An invoiced contract cannot be cancelled."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_charge_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_event_entry_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_horse_sale_view_form
+msgid "Approve"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/sale.py:0
+msgid "Approve the sale first."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge__state__approved
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_event_entry__state__approved
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_sale__state__approved
+msgid "Approved"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__approved_by_id
+msgid "Approved By"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__auto_approve
+msgid "Auto Approve"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_asset__state__available
+msgid "Available"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__partner_id
+msgid "Bill to"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__partner_id
+msgid "Bill to (otherwise the horse's payer)"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_ops_billing
+msgid "Billing"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.module.module,summary:base.module_alfia_equine_ops
+msgid ""
+"Billing, horse sales, boarding, feed, quarantine, medicine issue, breeding "
+"contracts, event entries, facilities, reports"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.module.module,description:base.module_alfia_equine_ops
+msgid ""
+"Billing, horse sales, boarding, feed, quarantine, medicine, contracts, "
+"events, facilities and reports. See README.md."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_restriction_rule__forbid_withdrawal
+msgid "Block horses still in a medicine withdrawal period."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__product_id
+msgid "Board service"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/care.py:0
+msgid "Board: %s"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_boarding_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_boarding
+msgid "Boarding"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_boarding
+msgid "Boarding agreement"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__borrower_id
+msgid "Borrowed by"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_group__reproductive_state__bred
+msgid "Bred"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__breed
+msgid "Breed contains"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_breeding_contract
+msgid "Breeding contract"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_breeding_contract_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_breeding_contract
+msgid "Breeding contracts"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_report_breeding_action
+#: model:ir.model,name:alfia_equine_ops.model_alfia_report_breeding
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_report_breeding
+msgid "Breeding performance"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__buyer_id
+msgid "Buyer / recipient"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_breeding_contract_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_charge_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_horse_sale_view_form
+msgid "Cancel"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_breeding_contract__state__cancelled
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge__state__cancelled
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_sale__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_charge
+msgid "Charge to invoice"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_charge_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_charge
+msgid "Charges"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_event_entry_view_form
+msgid "Check rules"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "Choose what the plan applies to."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "Choose who to bill for %s."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__client_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__client_id
+msgid "Client"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_breeding_contract_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_horse_import_view_form
+msgid "Close"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_breeding_contract__state__closed
+msgid "Closed"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_horse_import_view_form
+msgid ""
+"Columns: name, sex (female/male/gelding), birthdate (YYYY-MM-DD), breed."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_report_breeding__company_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__company_id
+msgid "Company"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_event
+msgid "Competition event"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_horse_sale_view_form
+msgid "Complete"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_sale__state__done
+msgid "Completed"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_breeding_contract_view_form
+msgid "Confirm"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_breeding_contract__state__confirmed
+msgid "Confirmed"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_breeding_contract_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_charge_view_form
+msgid "Create invoice"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/wizard.py:0
+msgid "Created %(c)s, skipped %(s)s, failed %(f)s."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__created_by_id
+msgid "Created By"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_import__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__create_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_import__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__create_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__credit_note_id
+msgid "Credit Note"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__current
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_diet_view_search
+msgid "Current"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__daily_qty
+msgid "Daily Qty"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_diet_line_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_diet_line
+msgid "Daily feed needs"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__date
+msgid "Date"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__date_end
+msgid "Date End"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__date_from
+msgid "Date From"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__date_start
+msgid "Date Start"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__date_to
+msgid "Date To"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__decided_by_id
+msgid "Decided By"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__description
+msgid "Description"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__diet_id
+msgid "Diet"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__discipline
+msgid "Discipline"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_import__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_report_breeding__display_name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_boarding__state__draft
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_breeding_contract__state__draft
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_event_entry__state__draft
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_sale__state__draft
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_medicine_issue__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__end_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__end_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__end_date
+msgid "End Date"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_boarding_view_form
+msgid "End stay"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_boarding__state__ended
+msgid "Ended"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__entry_ids
+msgid "Entry"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__entry_count
+msgid "Entry Count"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_restriction_rule
+msgid "Entry restriction rule"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_restriction_rule_action
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__rule_id
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_restriction_rule
+msgid "Entry rules"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_asset__kind__equipment
+msgid "Equipment"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__event_id
+msgid "Event"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_event_entry_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_event_entry
+msgid "Event entries"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_event_entry
+msgid "Event entry"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_event_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_event
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_event_view_calendar
+msgid "Events"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge_plan__target_kind__location
+msgid "Every horse in a barn / location"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge_plan__target_kind__group
+msgid "Every horse in a group"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge_plan__interval__monthly
+msgid "Every month"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge_plan__interval__weekly
+msgid "Every week"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_ops_facilities
+msgid "Facilities"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_asset
+msgid "Farm asset"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__fee
+msgid "Fee"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.constraint,message:alfia_equine_ops.constraint_alfia_breeding_contract_fee_nonneg
+msgid "Fee and refund percentage must be valid."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__product_id
+msgid "Fee product"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__line_ids
+msgid "Feed"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__product_id
+msgid "Feed / supplement"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_diet
+msgid "Feed plan"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_diet_line
+msgid "Feed plan line"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_diet_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_diet
+msgid "Feed plans"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_group__sex__female
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_restriction_rule__sex__female
+msgid "Female"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_import__file
+msgid "File"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_import__filename
+msgid "Filename"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "Fitness restricted until %s."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__member_ids
+msgid "Fixed members"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_asset_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_asset
+msgid "Fleet, trophies, library"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__forbid_pregnant
+msgid "Forbid Pregnant"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__forbid_quarantine
+msgid "Forbid Quarantine"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__forbid_withdrawal
+msgid "Forbid Withdrawal"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_group__sex__gelding
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_restriction_rule__sex__gelding
+msgid "Gelding"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_charge_plan_view_form
+msgid "Generate due charges now"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_charge_plan__auto_approve
+msgid ""
+"Generated charges are approved at once instead of waiting for a manager."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_sale__kind__gift
+msgid "Gift"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__group_id
+msgid "Group"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__has_message
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__has_message
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__has_message
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__has_message
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__has_message
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__has_message
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__has_message
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__has_message
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__horse_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__horse_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__horse_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__horse_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__horse_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__horse_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__horse_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__horse_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__horse_id
+msgid "Horse"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_horse_group
+msgid "Horse group"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_horse_group_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_horse_group
+msgid "Horse groups"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:product.template,name:alfia_equine_ops.product_horse_sale_product_template
+msgid "Horse sale"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_horse_sale
+msgid "Horse sale or gift"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/sale.py:0
+msgid "Horse: %s"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_import__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_report_breeding__id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__id
+msgid "ID"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_asset__message_needaction
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_boarding__message_needaction
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_breeding_contract__message_needaction
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_charge__message_needaction
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_event__message_needaction
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_event_entry__message_needaction
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_horse_sale__message_needaction
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_medicine_issue__message_needaction
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_quarantine__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_asset__message_has_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_asset__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_boarding__message_has_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_boarding__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_breeding_contract__message_has_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_breeding_contract__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_charge__message_has_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_charge__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_event__message_has_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_event__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_event_entry__message_has_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_event_entry__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_horse_sale__message_has_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_horse_sale__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_medicine_issue__message_has_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_medicine_issue__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_quarantine__message_has_error
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_quarantine__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_horse_import_view_form
+msgid "Import"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_horse_import_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_horse_import
+msgid "Import horses"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_horse_import
+msgid "Import horses from CSV"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_asset__state__maintenance
+msgid "In maintenance"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_quarantine__state__active
+msgid "In quarantine"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_asset__state__in_use
+msgid "In use / on loan"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__interval
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__interval
+msgid "Interval"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__invoice_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__move_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__move_id
+msgid "Invoice"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_breeding_contract__state__invoiced
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge__state__invoiced
+msgid "Invoiced"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__isolation_location_id
+msgid "Isolation stall"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_medicine_issue_view_form
+msgid "Issue from stock"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_medicine_issue__state__issued
+msgid "Issued"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__issues
+msgid "Issues"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__key
+msgid "Key"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__kind
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__kind
+msgid "Kind"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_import__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__write_uid
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_import__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__write_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_asset__kind__library
+msgid "Library item"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__live_foal_guarantee
+msgid "Live Foal Guarantee"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_report_breeding__live_foals
+msgid "Live Foals"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_breeding_contract__outcome__live
+msgid "Live foal"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/contract.py:0
+msgid "Live-foal guarantee refund: %s"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__location_id
+msgid "Located in (or below)"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__location_id
+msgid "Location"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_group__sex__male
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_restriction_rule__sex__male
+msgid "Male"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__mare_id
+msgid "Mare"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__max_age_years
+msgid "Max Age Years"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__meals_per_day
+msgid "Meals Per Day"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__product_id
+msgid "Medicine"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_medicine_issue
+msgid "Medicine issue"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_medicine_issue_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_medicine_issue
+msgid "Medicine issues"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__member_count
+msgid "Member Count"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__all_member_ids
+msgid "Members"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__message_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__message_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__message_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__message_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__message_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__message_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__message_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__message_ids
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__min_age_years
+msgid "Min Age Years"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_boarding__interval__monthly
+msgid "Monthly"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__move_ids
+msgid "Move"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__name
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__name
+msgid "Name"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/contract.py:0
+msgid "New"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__next_date
+msgid "Next Date"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__next_service
+msgid "Next service / inspection"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "No current fitness clearance from the vet."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_breeding_contract__outcome__no_live
+msgid "No live foal"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/sale.py:0
+msgid "Note: the mare is in an open pregnancy."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__notes
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__notes
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet__notes
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__notes
+msgid "Notes"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_asset__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_boarding__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_breeding_contract__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_charge__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_event__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_event_entry__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_horse_sale__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_medicine_issue__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_quarantine__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_asset__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_boarding__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_breeding_contract__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_charge__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_event__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_event_entry__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_horse_sale__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_medicine_issue__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_quarantine__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge_plan__target_kind__horse
+msgid "One horse"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/medicine.py:0
+msgid "Only %(have)s of %(product)s is available there."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/common.py:0
+msgid "Only %s can do this."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "Only %s horses may enter."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "Only a competition manager can approve entries."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "Only a competition manager can reject entries."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/contract.py:0
+msgid "Only a confirmed, not yet invoiced contract can be invoiced."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/sale.py:0
+msgid "Only a draft can be approved."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/contract.py:0
+msgid "Only an invoiced contract that was not yet refunded can be refunded."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/medicine.py:0
+msgid "Only the medicine custodian can issue medicine."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/medicine.py:0
+msgid "Only the medicine custodian can take medicine back."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__sex
+msgid "Only this sex"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "Only veterinary staff can confirm fitness for an entry."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/care.py:0
+msgid "Only veterinary staff can release a horse from quarantine."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_breeding_contract__outcome__open
+msgid "Open"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_group__reproductive_state__open
+msgid "Open (barren)"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__outcome
+msgid "Outcome"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_event_entry__state__pending
+msgid "Pending review"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__plan_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__plan_id
+msgid "Plan"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__planned_end
+msgid "Planned End"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__reference
+msgid "Plate / serial / shelf"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_report_breeding__pregnancies
+msgid "Pregnancies"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_report_breeding__pregnancy_rate
+msgid "Pregnancies per service, in %."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__pregnancy_id
+msgid "Pregnancy"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_report_breeding__pregnancy_rate
+msgid "Pregnancy Rate"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_group__reproductive_state__pregnant
+msgid "Pregnant"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__price
+msgid "Price"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_event_entry__issues
+msgid "Problems found by the last check."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_diet_line__qty_per_meal
+msgid "Qty Per Meal"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.constraint,message:alfia_equine_ops.constraint_alfia_diet_line_positive
+msgid "Quantities and meals must be above zero."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__quantity
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__quantity
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__quantity
+msgid "Quantity"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "Quantity must be above zero and the price cannot be negative."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_quarantine_action
+#: model:ir.model,name:alfia_equine_ops.model_alfia_quarantine
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_quarantine
+msgid "Quarantine"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__rate
+msgid "Rate per period"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_charge_view_search
+msgid "Ready to invoice"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__reason
+msgid "Reason"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__recorded_by_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__recorded_by_id
+msgid "Recorded by"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model,name:alfia_equine_ops.model_alfia_charge_plan
+msgid "Recurring charge"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_charge_plan_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_charge_plan
+msgid "Recurring charges"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_group__status__reference
+msgid "Reference only"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_breeding_contract_view_form
+msgid "Refund (no live foal)"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__refund_percent
+msgid "Refund Percent"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_breeding_contract__state__refunded
+msgid "Refunded"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_event_entry_view_form
+msgid "Reject"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_event_entry__state__rejected
+msgid "Rejected"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__horse_id
+msgid "Related horse (trophy)"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_quarantine_view_form
+msgid "Release"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/care.py:0
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_quarantine__state__released
+msgid "Released"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__released_by_id
+msgid "Released By"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_ops_reports
+msgid "Reports"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__reproductive_state
+msgid "Reproductive State"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_restriction_rule__require_fitness
+msgid "Require Fitness"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__responsible_id
+msgid "Responsible"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_import__result
+msgid "Result"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_asset__state__retired
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_group__status__retired
+msgid "Retired"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_medicine_issue_view_form
+msgid "Return remaining"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_medicine_issue__state__returned
+msgid "Returned (partly or fully)"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__returned_qty
+msgid "Returned Qty"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/care.py:0
+msgid "Review quarantine release"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__rider_id
+msgid "Rider"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/wizard.py:0
+msgid "Row %(n)s: %(err)s"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_horse_import__skip_existing
+msgid "Rows whose name already exists are skipped instead of duplicated."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_horse_sale__kind__sale
+msgid "Sale"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.actions.act_window,name:alfia_equine_ops.alfia_horse_sale_action
+#: model:ir.ui.menu,name:alfia_equine_ops.menu_alfia_horse_sale
+msgid "Sales and gifts"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__season
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_report_breeding__season
+msgid "Season"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__product_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__product_id
+msgid "Service"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_report_breeding__services
+msgid "Services"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__sex
+msgid "Sex"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_horse_group_view_form
+msgid "Show members"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_import__skip_existing
+msgid "Skip Existing"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/sale.py:0
+msgid "Sold or gifted"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__location_id
+msgid "Stall / paddock"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__stallion_id
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_report_breeding__stallion_id
+msgid "Stallion"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__start_date
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__start_date
+msgid "Start Date"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_boarding_view_form
+msgid "Start billing"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__state
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_boarding__state
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_breeding_contract__state
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__state
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__state
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_sale__state
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__state
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_quarantine__state
+msgid "State"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_horse_group__status
+msgid "Status"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "Still in a medicine withdrawal period."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/wizard.py:0
+msgid "Stopped after %s rows; import the rest in another file."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_event_entry_view_form
+msgid "Submit"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__location_id
+msgid "Take from"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__target_kind
+msgid "Target Kind"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "The birthdate is unknown, so the age rule cannot be checked."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "The event ends before it starts."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/care.py:0
+msgid "The feed plan ends before it starts."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/wizard.py:0
+msgid "The file is larger than %s MB. Split it into smaller files."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/wizard.py:0
+msgid "The file is not a UTF-8 text file."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/wizard.py:0
+msgid "The first row must contain at least the columns: name, sex."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "The horse is in quarantine."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "The horse is not active."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,help:alfia_equine_ops.field_alfia_restriction_rule__require_fitness
+msgid "The horse needs a current 'cleared' fitness decision from the vet."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "The mare is pregnant."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/care.py:0
+msgid "The planned end is before the start."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.constraint,message:alfia_equine_ops.constraint_alfia_medicine_issue_qty_positive
+msgid "The quantity must be above zero."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/care.py:0
+msgid "The stay ends before it starts."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "The vet must confirm %s first."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.constraint,message:alfia_equine_ops.constraint_alfia_charge_key_uniq
+msgid "This charge was already generated."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.constraint,message:alfia_equine_ops.constraint_alfia_event_entry_entry_uniq
+msgid "This horse is already entered in the event."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_charge__state__draft
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_charge_view_search
+msgid "To approve"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "Too old (%(age).1f years; maximum %(max).1f)."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/event.py:0
+msgid "Too young (%(age).1f years; minimum %(min).1f)."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_medicine_issue__treatment_id
+msgid "Treatment"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_asset__kind__trophy
+msgid "Trophy"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge__price_unit
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_charge_plan__price_unit
+msgid "Unit price"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/care.py:0
+msgid "Unsupported search on current feed plans."
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_asset__value
+msgid "Value"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_asset__kind__vehicle
+msgid "Vehicle / trailer"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event__venue
+msgid "Venue"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__vet_id
+msgid "Vet"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields,field_description:alfia_equine_ops.field_alfia_event_entry__vet_confirmed
+msgid "Vet Confirmed"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_event_entry_view_form
+msgid "Vet confirms fitness"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model:ir.model.fields.selection,name:alfia_equine_ops.selection__alfia_boarding__interval__weekly
+msgid "Weekly"
+msgstr ""
+
+#. module: alfia_equine_ops
+#: model_terms:ir.ui.view,arch_db:alfia_equine_ops.alfia_task_view_calendar
+msgid "Work items"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/medicine.py:0
+msgid "You can return at most what is still out (%s)."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "You entered the charge for %s, so someone else must approve it."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/sale.py:0
+msgid "You prepared this sale, so someone else must approve it."
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+#: code:addons/alfia_equine_ops/models/contract.py:0
+msgid "accounting staff"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/contract.py:0
+#: code:addons/alfia_equine_ops/models/sale.py:0
+msgid "managers"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "managers or accounting staff"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/medicine.py:0
+msgid "medicine store"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/wizard.py:0
+msgid "name is empty"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/billing.py:0
+msgid "recurring charge"
+msgstr ""
+
+#. module: alfia_equine_ops
+#. odoo-python
+#: code:addons/alfia_equine_ops/models/wizard.py:0
+msgid "unknown sex '%s'"
+msgstr ""

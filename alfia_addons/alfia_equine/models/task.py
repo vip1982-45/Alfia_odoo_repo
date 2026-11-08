@@ -82,7 +82,7 @@ class AlfiaTask(models.Model):
     def action_done(self):
         for task in self:
             if task.state in ('done', 'cancelled'):
-                raise UserError(self.env._("This work item is already %s.", task.state))
+                raise UserError(self.env._("This work item is already %s.", dict(task._fields['state']._description_selection(task.env))[task.state].lower()))
         self.write({'state': 'done', 'done_by_id': self.env.user.id, 'done_date': fields.Datetime.now()})
 
     def action_cancel(self):

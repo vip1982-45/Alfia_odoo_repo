@@ -12,6 +12,11 @@ DB=${2:-alfia_demo}
 PY=${PYTHON:-python3}
 cd "$(dirname "$0")/.."
 
+if ! command -v rtlcss >/dev/null 2>&1; then
+  echo "WARNING: 'rtlcss' is not installed, so Arabic screens will be laid out left to right."
+  echo "         Install it once on the server (needs Node.js):  npm install -g rtlcss@4.3.0"
+fi
+
 $PY odoo-bin db -c "$CONF" drop "$DB" 2>/dev/null || true
 echo "Installing the Alfia modules into $DB (English; the seed adds Arabic)…"
 $PY odoo-bin -c "$CONF" -d "$DB" -i alfia_equine_ops --stop-after-init --log-level=warn

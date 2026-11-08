@@ -57,7 +57,7 @@ class AlfiaHorseSale(models.Model):
                 raise UserError(self.env._("%s is not an active horse.", horse.name))
             if horse.active_pregnancy_id and horse.active_pregnancy_id.state in ('bred', 'pregnant'):
                 sale.message_post(body=self.env._("Note: the mare is in an open pregnancy."))
-            reason = dict(self._fields['kind'].selection)[sale.kind]
+            reason = dict(self._fields['kind']._description_selection(self.env))[sale.kind]
             if horse.ownership_ids:
                 horse.ownership_ids.action_transfer_all(sale.buyer_id, sale.date, reason)
             else:
