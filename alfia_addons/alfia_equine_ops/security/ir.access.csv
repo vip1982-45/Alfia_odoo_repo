@@ -23,7 +23,7 @@ acc_alfia_charge_plan_group_alfia_security_auditor,alfia.charge.plan: group_alfi
 acc_alfia_charge_plan_system,alfia.charge.plan: system administrators,alfia.charge.plan,base.group_system,crud,
 acc_alfia_horse_sale_group_alfia_breeding_manager,alfia.horse.sale: group_alfia_breeding_manager,alfia.horse.sale,alfia_security.group_alfia_breeding_manager,cru,
 acc_alfia_horse_sale_group_alfia_training_manager,alfia.horse.sale: group_alfia_training_manager,alfia.horse.sale,alfia_security.group_alfia_training_manager,cru,
-acc_alfia_horse_sale_group_alfia_vet_manager,alfia.horse.sale: group_alfia_vet_manager,alfia.horse.sale,alfia_security.group_alfia_vet_manager,r,
+acc_alfia_horse_sale_group_alfia_vet_manager,alfia.horse.sale: group_alfia_vet_manager,alfia.horse.sale,alfia_security.group_alfia_vet_manager,cru,
 acc_alfia_horse_sale_group_account_invoice,alfia.horse.sale: group_account_invoice,alfia.horse.sale,account.group_account_invoice,cru,
 acc_alfia_horse_sale_group_alfia_security_auditor,alfia.horse.sale: group_alfia_security_auditor,alfia.horse.sale,alfia_security.group_alfia_security_auditor,r,
 acc_alfia_horse_sale_system,alfia.horse.sale: system administrators,alfia.horse.sale,base.group_system,crud,

@@ -49,6 +49,10 @@ class AlfiaHorseSale(models.Model):
             if sale.state != 'approved':
                 raise UserError(self.env._("Approve the sale first."))
             horse = sale.horse_id
+            # The approved sale is the authority for what follows; the manager completing it must be able to see the horse,
+            # and the ownership, movement and status changes are then made by the system on the sale's behalf.
+            horse.check_access('read')
+            horse = horse.sudo()
             if horse.status != 'active':
                 raise UserError(self.env._("%s is not an active horse.", horse.name))
             if horse.active_pregnancy_id and horse.active_pregnancy_id.state in ('bred', 'pregnant'):
@@ -57,9 +61,9 @@ class AlfiaHorseSale(models.Model):
             if horse.ownership_ids:
                 horse.ownership_ids.action_transfer_all(sale.buyer_id, sale.date, reason)
             else:
-                self.env['alfia.horse.ownership'].create({'horse_id': horse.id, 'partner_id': sale.buyer_id.id, 'date_from': sale.date, 'reason': reason})
+                self.env['alfia.horse.ownership'].sudo().create({'horse_id': horse.id, 'partner_id': sale.buyer_id.id, 'date_from': sale.date, 'reason': reason})
             if horse.on_site:
-                self.env['alfia.horse.movement'].create({'horse_id': horse.id, 'kind': 'departure', 'state': 'planned', 'partner_id': sale.buyer_id.id,
+                self.env['alfia.horse.movement'].sudo().create({'horse_id': horse.id, 'kind': 'departure', 'state': 'planned', 'partner_id': sale.buyer_id.id,
                                                          'reason': self.env._("Sold or gifted")}).action_done()
             horse.write({'status': 'sold' if sale.kind == 'sale' else 'gifted'})
             if sale.kind == 'sale':

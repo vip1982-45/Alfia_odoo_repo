@@ -7,6 +7,8 @@ from xml.sax.saxutils import escape
 G = 'alfia_security.group_alfia_'
 V, VM, B, BM, T, TM, S, AUD = (G + x for x in ('vet_user', 'vet_manager', 'breeding_user', 'breeding_manager', 'training_user', 'training_manager', 'stable_user', 'security_auditor'))
 CUST = G + 'semen_custodian'
+# Fields that are themselves stock locations (used as they are in a site-scope rule).
+DIRECT_LOCATION_FIELDS = {'tank_id', 'location_to_id'}
 HORSE_PATH = {'horse_id': 'horse_id.location_id', 'mare_id': 'mare_id.location_id', 'stallion_id': 'stallion_id.location_id', 'donor_id': 'donor_id.location_id'}
 
 # model: title, menu section, list, form, long (full-width fields), search, scope field, chatter, header buttons, access
@@ -88,7 +90,7 @@ SPEC = [
     dict(model='alfia.horse.ownership', title='Ownership', menu=None, list=['horse_id', 'partner_id', 'share', 'date_from', 'date_to', 'reason'], form=['horse_id', 'partner_id', 'share', 'date_from', 'date_to', 'reason'],
          search=['horse_id', 'partner_id'], scope='horse_id', access=([V, B, T, S, AUD], [BM, TM], [BM])),
     dict(model='alfia.horse.movement', title='Movements', menu='horses', list=['date', 'horse_id', 'kind', 'location_from_id', 'location_to_id', 'partner_id', 'state'],
-         form=['horse_id', 'kind', 'date', 'location_to_id', 'partner_id', 'responsible_id', 'reason', 'state'], search=['horse_id'], scope='horse_id', status='state',
+         form=['horse_id', 'kind', 'date', 'location_to_id', 'partner_id', 'responsible_id', 'reason', 'state'], search=['horse_id'], scope=('horse_id', 'location_to_id'), status='state',
          buttons=[('action_done', 'Complete', "state != 'planned'", 'btn-primary'), ('action_cancel', 'Cancel', "state != 'planned'", '')], access=([V, B, T, S, AUD], [S, BM, TM, VM], [])),
     dict(model='alfia.horse.status.log', title='Status history', menu=None, list=['date', 'horse_id', 'status', 'user_id', 'reason'], form=['horse_id', 'status', 'date'], search=['horse_id'], scope='horse_id', access=([V, B, T, S, AUD], [], [])),
 ]
@@ -186,13 +188,15 @@ def main():
                 path = 'location_id'
             elif isinstance(scope, tuple):
                 # A horse path, or a storage location field (tank_id) used as it is.
-                path = tuple(HORSE_PATH.get(f, f if f.endswith('tank_id') else f + '.location_id') for f in scope)
+                path = tuple(HORSE_PATH.get(f, f if f in DIRECT_LOCATION_FIELDS else f + '.location_id') for f in scope)
             else:
                 path = HORSE_PATH.get(scope, scope + '.location_id')
             if scope == 'LOCATION':
                 # Horses not on the farm (reference ancestors, sold or departed) carry no site: everyone who reads horses may
                 # read them, so pedigrees always open; changing a horse still needs it to be in one of the user's sites.
-                add(f'scope_{key}', f'Alfia site scope: {model} (changes)', model, '', 'cud', scope_domain(path))
+                # Creating is not limited (a new horse has no site until its arrival is recorded, and the arrival itself
+                # must go to one of the user's sites); updating and deleting need the horse to be in one of them.
+                add(f'scope_{key}', f'Alfia site scope: {model} (changes)', model, '', 'ud', scope_domain(path))
                 add(f'scope_{key}_read', f'Alfia site scope: {model} (reading)', model, '', 'r',
                     "['|', ('location_id', '=', False), ('location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []")
             else:

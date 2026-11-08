@@ -611,3 +611,35 @@ class TestTankScope(EquineCase):
             ancestor.with_user(bm).write({'name': 'Renamed'})
         with self.assertRaises(AccessError):
             self.far_mare.with_user(bm).read(['name'])      # on the farm but in another barn: still hidden
+
+
+@tagged('post_install', '-at_install', 'alfia_equine')
+class TestScopedCreation(EquineCase):
+
+    def _scoped(self, login, groups, locations):
+        profile = self.env['alfia.access.profile'].create({'name': f'Eq {login}', 'location_ids': [Command.set([l.id for l in locations])],
+            'group_ids': [Command.set([self.env.ref(f'alfia_security.group_alfia_{g}').id for g in groups])]})
+        return self.env['res.users'].with_context(no_reset_password=True).create(
+            {'name': login, 'login': f'{login}@eq.local', 'alfia_profile_ids': [Command.set([profile.id])]})
+
+    def test_scoped_manager_registers_a_horse_into_their_barn_only(self):
+        bm = self._scoped('bmscoped', ['breeding_manager'], [self.barn_a])
+        horse = self.env['alfia.horse'].with_user(bm).create({'name': 'Newcomer', 'sex': 'female', 'initial_location_id': self.barn_a.id})
+        self.assertEqual(horse.location_id, self.barn_a)
+        with self.assertRaises(AccessError):
+            self.env['alfia.horse'].with_user(bm).create({'name': 'Elsewhere', 'sex': 'female', 'initial_location_id': self.barn_b.id})
+
+    def test_nobody_pulls_a_horse_from_another_barn(self):
+        groom = self._scoped('groomscoped', ['stable_user'], [self.barn_a])
+        with self.assertRaises(AccessError):
+            self.env['alfia.horse.movement'].with_user(groom).create({'horse_id': self.far_mare.id, 'kind': 'internal', 'location_to_id': self.barn_a.id})
+        move = self.env['alfia.horse.movement'].with_user(groom).create({'horse_id': self.mare2.id, 'kind': 'internal', 'location_to_id': self.barn_a.id})
+        self.assertEqual(move.state, 'planned')
+
+    def test_scoped_manager_completes_a_foaling(self):
+        pregnancy = self._pregnancy()
+        bm = self._scoped('bmfoal', ['breeding_manager'], [self.barn_a])
+        foaling = self.env['alfia.foaling'].create({'pregnancy_id': pregnancy.id, 'outcome': 'live', 'foal_sex': 'filly', 'foal_name': 'Scoped foal'})
+        foaling.with_user(self.vet).action_vet_confirm()
+        foaling.with_user(bm).action_complete()
+        self.assertEqual(foaling.foal_id.location_id, self.barn_a)

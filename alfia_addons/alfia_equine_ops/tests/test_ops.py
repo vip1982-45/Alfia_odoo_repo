@@ -265,7 +265,7 @@ class TestOpsHardening(OpsCase):
         with self.assertRaises(UserError):
             sale.with_user(self.breed_mgr).write({'price': 1})
         with self.assertRaises(AccessError):
-            sale.with_user(self.accountant).action_complete()
+            sale.with_user(self.breeder).action_complete()      # staff, not a manager
         contract = self.env['alfia.breeding.contract'].create({'client_id': self.client.id, 'stallion_id': self.stallion.id, 'season': '2026',
                                                                'product_id': self.service.id, 'fee': 3000, 'live_foal_guarantee': False})
         contract.action_confirm()
@@ -323,3 +323,16 @@ class TestOpsDisplayNames(OpsCase):
         self.assertTrue(charge.display_name.startswith('Cleopatra – Board'))
         q = self.env['alfia.quarantine'].create({'horse_id': self.mare.id, 'planned_end': self._today() + relativedelta(days=3), 'reason': 'Arrival'})
         self.assertTrue(q.display_name.startswith('Cleopatra – Arrival'))
+
+    def test_any_manager_who_sees_the_horse_completes_an_approved_sale(self):
+        profile = self.env['alfia.access.profile'].create({'name': 'Ops resident vet A', 'location_ids': [Command.set([self.barn_a.id])],
+            'group_ids': [Command.set([self.env.ref('alfia_security.group_alfia_vet_manager').id])]})
+        rvet = self.env['res.users'].with_context(no_reset_password=True).create({'name': 'rv', 'login': 'rv@eq.local', 'alfia_profile_ids': [Command.set([profile.id])]})
+        sale = self.env['alfia.horse.sale'].with_user(self.breed_mgr).create({'horse_id': self.mare2.id, 'buyer_id': self.buyer.id, 'price': 900})
+        sale.with_user(rvet).action_approve()
+        sale.with_user(rvet).action_complete()
+        self.assertEqual((self.mare2.status, self.mare2.owner_ids, self.mare2.on_site), ('sold', self.buyer, False))
+        far = self.env['alfia.horse.sale'].with_user(self.breed_mgr).create({'horse_id': self.far_mare.id, 'buyer_id': self.buyer.id, 'price': 900})
+        far.with_user(self.train_mgr).action_approve()
+        with self.assertRaises(AccessError):
+            far.with_user(rvet).action_complete()       # a horse outside their sites

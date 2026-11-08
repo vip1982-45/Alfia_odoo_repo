@@ -24,7 +24,7 @@ SPEC = [
     dict(model='alfia.horse.sale', title='Sales and gifts', menu='billing', list=['date', 'horse_id', 'kind', 'buyer_id', 'price', 'state'],
          form=['horse_id', 'kind', 'buyer_id', 'date', 'price', 'currency_id', 'created_by_id', 'approved_by_id', 'move_id', 'state'], long=['notes'], search=['horse_id', 'buyer_id'], chatter=True, status='state',
          buttons=[('action_approve', 'Approve', "state != 'draft'", 'btn-primary'), ('action_complete', 'Complete', "state != 'approved'", 'btn-primary'), ('action_cancel', 'Cancel', "state in ('done','cancelled')", '')],
-         access=([BM, TM, VM, ACC, AUD], [BM, TM, ACC], [])),
+         access=([BM, TM, VM, ACC, AUD], [BM, TM, VM, ACC], [])),
     dict(model='alfia.breeding.contract', title='Breeding contracts', menu='breeding', list=['name', 'client_id', 'stallion_id', 'season', 'fee', 'outcome', 'state'],
          form=['name', 'client_id', 'stallion_id', 'mare_id', 'season', 'product_id', 'fee', 'live_foal_guarantee', 'refund_percent', 'pregnancy_id', 'outcome', 'invoice_id', 'credit_note_id', 'state'],
          search=['name', 'client_id', 'stallion_id'], scope='stallion_id', chatter=True, status='state',

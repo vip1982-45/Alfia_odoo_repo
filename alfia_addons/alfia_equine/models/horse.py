@@ -323,6 +323,19 @@ class AlfiaHorseMovement(models.Model):
     reason = fields.Char()
     company_id = fields.Many2one('res.company', related='horse_id.company_id', store=True)
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        moves = super().create(vals_list)
+        if not self.env.su:
+            for move in moves:
+                # The access rule lets people record moves *into* their sites; moving a horse that is on the farm also needs
+                # its current place to be one of theirs, so nobody can pull a horse into their scope from elsewhere.
+                if move.horse_id.location_id:
+                    self.env.user._alfia_check_location(move.horse_id.location_id, self.env._("current place of %s", move.horse_id.name))
+                if move.location_to_id:
+                    self.env.user._alfia_check_location(move.location_to_id, self.env._("destination"))
+        return moves
+
     @api.constrains('kind', 'location_to_id')
     def _check_destination(self):
         for move in self:
