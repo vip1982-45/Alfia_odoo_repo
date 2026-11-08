@@ -12,8 +12,7 @@ from psycopg2 import IntegrityError
 TODAY = fields.Date.context_today
 
 
-@tagged('post_install', '-at_install', 'alfia_equine_ops')
-class TestOps(EquineCase):
+class OpsCase(EquineCase):
 
     @classmethod
     def setUpClass(cls):
@@ -29,6 +28,10 @@ class TestOps(EquineCase):
 
     def _today(self):
         return fields.Date.context_today(self.env['alfia.charge'])
+
+
+@tagged('post_install', '-at_install', 'alfia_equine_ops')
+class TestOps(OpsCase):
 
     # --- groups
     def test_dynamic_group(self):
@@ -229,3 +232,84 @@ class TestOps(EquineCase):
 
 
 OVULATION_DATE = fields.Date.from_string('2026-03-02')
+
+
+@tagged('post_install', '-at_install', 'alfia_equine_ops')
+class TestOpsHardening(OpsCase):
+
+    def test_quarantine_release_leaves_other_quarantines_alone(self):
+        today = self._today()
+        Q = self.env['alfia.quarantine']
+        horses = self.env['alfia.horse'].create([{'name': f'Q{n}', 'sex': 'female', 'initial_location_id': self.barn_a.id} for n in range(12)])
+        records = Q.create([{'horse_id': h.id, 'planned_end': today + relativedelta(days=7), 'reason': 'arrival'} for h in horses])
+        first = records[0]
+        others = records.filtered(lambda q: str(q.id).startswith(str(first.id)) and q != first) or records[1:]
+        first.with_user(self.vet).action_release()
+        for q in others:
+            self.assertTrue(self.env['alfia.task'].search_count([('key', '=', f'quarantine:{q.id}'), ('state', '=', 'todo')]))
+
+    def test_approved_charge_amount_is_locked_and_creator_cannot_approve(self):
+        charge = self.env['alfia.charge'].with_user(self.breed_mgr).create({'horse_id': self.mare.id, 'product_id': self.service.id})
+        with self.assertRaises(UserError):
+            charge.with_user(self.breed_mgr).action_approve()
+        self.assertEqual(charge.price_unit, 100.0)
+        charge.with_user(self.train_mgr).action_approve()
+        with self.assertRaises(UserError):
+            charge.with_user(self.train_mgr).write({'price_unit': 1.0})
+        charge.with_user(self.accountant).action_invoice()
+        self.assertEqual(self.env['alfia.charge'].browse(charge.id).move_id.amount_untaxed, 100.0)
+
+    def test_approved_sale_and_confirmed_contract_are_locked(self):
+        sale = self.env['alfia.horse.sale'].with_user(self.breed_mgr).create({'horse_id': self.mare2.id, 'buyer_id': self.buyer.id, 'price': 5000})
+        sale.with_user(self.train_mgr).action_approve()
+        with self.assertRaises(UserError):
+            sale.with_user(self.breed_mgr).write({'price': 1})
+        with self.assertRaises(AccessError):
+            sale.with_user(self.accountant).action_complete()
+        contract = self.env['alfia.breeding.contract'].create({'client_id': self.client.id, 'stallion_id': self.stallion.id, 'season': '2026',
+                                                               'product_id': self.service.id, 'fee': 3000, 'live_foal_guarantee': False})
+        contract.action_confirm()
+        with self.assertRaises(UserError):
+            contract.with_user(self.breed_mgr).write({'live_foal_guarantee': True})
+        with self.assertRaises(UserError):
+            contract.with_user(self.breed_mgr).write({'fee': 1})
+
+    def test_plan_scope_and_catch_up_cap(self):
+        scoped = self._user('scopedplan', ['breeding_manager'], scoped=True)
+        profile = self.env['alfia.access.profile'].create({'name': 'Ops barn B', 'location_ids': [Command.set([self.barn_b.id])]})
+        scoped.with_context(alfia_sync=True).sudo().write({'alfia_profile_ids': [Command.set([profile.id])]})
+        with self.assertRaises(AccessError):
+            self.env['alfia.charge.plan'].with_user(scoped).create({'name': 'A fees', 'target_kind': 'location', 'location_id': self.barn_a.id, 'product_id': self.service.id})
+        old = self._today() - relativedelta(years=10)
+        plan = self.env['alfia.charge.plan'].create({'name': 'Old', 'target_kind': 'horse', 'horse_id': self.mare.id, 'product_id': self.service.id,
+                                                     'next_date': old, 'interval': 'weekly'})
+        from odoo.addons.alfia_equine_ops.models.billing import MAX_PERIODS_PER_RUN
+        self.assertEqual(plan.action_generate(), MAX_PERIODS_PER_RUN, "a plan far behind catches up in bounded steps")
+        self.assertEqual(plan.next_date, old + relativedelta(weeks=MAX_PERIODS_PER_RUN))
+
+    def test_medicine_store_outside_scope(self):
+        profile = self.env['alfia.access.profile'].create({'name': 'Ops med B', 'location_ids': [Command.set([self.barn_b.id])],
+            'group_ids': [Command.set([self.env.ref('alfia_security.group_alfia_medicine_custodian').id, self.env.ref('alfia_security.group_alfia_vet_user').id])]})
+        cust_b = self.env['res.users'].with_context(no_reset_password=True).create({'name': 'custb', 'login': 'custb@eq.local', 'alfia_profile_ids': [Command.set([profile.id])]})
+        med = self.env['product.product'].create({'name': 'Bute', 'type': 'consu', 'is_storable': True})
+        self.env['stock.quant']._update_available_quantity(med, self.barn_a, 10.0)
+        issue = self.env['alfia.medicine.issue'].create({'horse_id': self.far_mare.id, 'product_id': med.id, 'quantity': 1, 'location_id': self.barn_a.id})
+        with self.assertRaises(AccessError):
+            issue.with_user(cust_b).action_issue()
+
+    def test_report_counts_each_service_once(self):
+        pregnancy = self._pregnancy()
+        service = self.env['alfia.breeding.service'].create({'mare_id': self.mare.id, 'stallion_id': self.stallion.id, 'method': 'natural', 'date': OVULATION_DATE})
+        service.action_done()
+        pregnancy.write({'service_id': service.id, 'state': 'pregnant'})
+        second = self._pregnancy(self.mare2)
+        second.write({'service_id': service.id, 'state': 'pregnant'})
+        self.env.flush_all()
+        row = self.env['alfia.report.breeding'].search([('stallion_id', '=', self.stallion.id)])
+        self.assertEqual((row.services, row.pregnancies), (1, 2))
+
+    def test_import_rejects_oversized_files(self):
+        from odoo.addons.alfia_equine_ops.models.wizard import MAX_BYTES
+        big = base64.b64encode(b"name,sex\n" + b"x,F\n" * (MAX_BYTES // 4 + 1)).decode()
+        with self.assertRaises(UserError):
+            self.env['alfia.horse.import'].create({'file': big}).action_import()

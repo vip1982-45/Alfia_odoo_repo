@@ -3,7 +3,9 @@ from dateutil.relativedelta import relativedelta
 from odoo import Command, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
-from .common import BILLING_MANAGERS, require_any
+from .common import BILLING_MANAGERS, lock_after, require_any, sod_blocks
+
+MAX_PERIODS_PER_RUN = 60
 
 
 class AlfiaCharge(models.Model):
@@ -55,6 +57,8 @@ class AlfiaCharge(models.Model):
     def write(self, vals):
         if any(c.state == 'invoiced' for c in self) and set(vals) - {'state', 'move_id'}:
             raise UserError(self.env._("An invoiced charge cannot be changed."))
+        # What a manager approved is what gets invoiced.
+        lock_after(self, vals, ('approved',), ('state', 'move_id'), self.env._("An approved charge"))
         return super().write(vals)
 
     def unlink(self):
@@ -64,7 +68,10 @@ class AlfiaCharge(models.Model):
 
     def action_approve(self):
         require_any(self.env, BILLING_MANAGERS, self.env._("managers or accounting staff"))
-        self.filtered(lambda c: c.state == 'draft').write({'state': 'approved'})
+        for charge in self.filtered(lambda c: c.state == 'draft'):
+            if sod_blocks(charge, charge.amount):
+                raise UserError(self.env._("You entered the charge for %s, so someone else must approve it.", charge.horse_id.name))
+            charge.state = 'approved'
 
     def action_cancel(self):
         if any(c.state == 'invoiced' for c in self):
@@ -119,6 +126,30 @@ class AlfiaChargePlan(models.Model):
             if not {'horse': plan.horse_id, 'location': plan.location_id, 'group': plan.group_id}[plan.target_kind]:
                 raise ValidationError(self.env._("Choose what the plan applies to."))
 
+    def _check_scope(self):
+        """Plans generate charges with system rights, so the person who sets one up must be able to see what it targets."""
+        if self.env.su:
+            return
+        for plan in self:
+            if plan.horse_id:
+                plan.horse_id.check_access('read')
+            if plan.group_id:
+                plan.group_id.check_access('read')
+            if plan.location_id:
+                self.env.user._alfia_check_location(plan.location_id, self.env._("recurring charge"))
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        plans = super().create(vals_list)
+        plans._check_scope()
+        return plans
+
+    def write(self, vals):
+        res = super().write(vals)
+        if {'horse_id', 'location_id', 'group_id', 'target_kind'} & set(vals):
+            self._check_scope()
+        return res
+
     def _target_horses(self):
         self.ensure_one()
         Horse = self.env['alfia.horse'].sudo()
@@ -134,18 +165,30 @@ class AlfiaChargePlan(models.Model):
         created = 0
         Charge = self.env['alfia.charge'].sudo()
         for plan in self.filtered('active'):
-            while plan.next_date <= upto and (not plan.end_date or plan.next_date <= plan.end_date):
-                for horse in plan._target_horses():
-                    key = f"plan:{plan.id}:{horse.id}:{plan.next_date}"
-                    if Charge.search_count([('key', '=', key)]):
+            horses = plan._target_horses()
+            vals_list, periods = [], 0
+            # One query for the keys already generated, one create for the whole batch; a plan far behind catches up
+            # MAX_PERIODS_PER_RUN periods per run instead of creating years of charges at once.
+            existing = set(Charge.search([('plan_id', '=', plan.id)]).mapped('key'))
+            date = plan.next_date
+            while date <= upto and (not plan.end_date or date <= plan.end_date) and periods < MAX_PERIODS_PER_RUN:
+                for horse in horses:
+                    key = f"plan:{plan.id}:{horse.id}:{date}"
+                    if key in existing:
                         continue
-                    Charge.create({
+                    existing.add(key)
+                    vals_list.append({
                         'horse_id': horse.id, 'product_id': plan.product_id.id, 'quantity': plan.quantity, 'name': plan.name,
-                        'price_unit': plan.price_unit or plan.product_id.lst_price, 'date': plan.next_date, 'plan_id': plan.id, 'key': key,
+                        'price_unit': plan.price_unit or plan.product_id.lst_price, 'date': date, 'plan_id': plan.id, 'key': key,
                         'company_id': plan.company_id.id, 'partner_id': plan.partner_id.id or horse.invoice_to_id.id or horse.owner_ids[:1].id,
                         'state': 'approved' if plan.auto_approve else 'draft'})
-                    created += 1
-                plan.next_date = plan.next_date + (relativedelta(weeks=1) if plan.interval == 'weekly' else relativedelta(months=1))
+                date += relativedelta(weeks=1) if plan.interval == 'weekly' else relativedelta(months=1)
+                periods += 1
+            if vals_list:
+                Charge.create(vals_list)
+                created += len(vals_list)
+            if date != plan.next_date:
+                plan.sudo().next_date = date
         return created
 
     @api.model

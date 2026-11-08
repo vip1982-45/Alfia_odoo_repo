@@ -37,6 +37,7 @@ class AlfiaMedicineIssue(models.Model):
         if not (self.env.su or self.env.user.has_group(G + 'medicine_custodian')):
             raise UserError(self.env._("Only the medicine custodian can issue medicine."))
         for rec in self.filtered(lambda r: r.state == 'draft'):
+            self.env.user._alfia_check_location(rec.location_id, self.env._("medicine store"))
             available = rec.product_id.with_context(location=rec.location_id.id).qty_available
             if available < rec.quantity:
                 raise UserError(self.env._("Only %(have)s of %(product)s is available there.", have=available, product=rec.product_id.display_name))

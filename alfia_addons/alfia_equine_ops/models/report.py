@@ -20,12 +20,12 @@ class AlfiaReportBreeding(models.Model):
         tools.drop_view_if_exists(self.env.cr, self._table)
         self.env.cr.execute(f"""
             CREATE VIEW {self._table} AS (
-                SELECT row_number() OVER () AS id, s.stallion_id, s.season, h.company_id,
-                       COUNT(s.id) AS services,
-                       COUNT(p.id) FILTER (WHERE p.state IN ('pregnant', 'foaled')) AS pregnancies,
-                       COUNT(f.id) FILTER (WHERE f.outcome = 'live') AS live_foals,
-                       CASE WHEN COUNT(s.id) = 0 THEN 0
-                            ELSE 100.0 * COUNT(p.id) FILTER (WHERE p.state IN ('pregnant', 'foaled')) / COUNT(s.id) END AS pregnancy_rate
+                SELECT MIN(s.id) AS id, s.stallion_id, s.season, h.company_id,
+                       COUNT(DISTINCT s.id) AS services,
+                       COUNT(DISTINCT p.id) FILTER (WHERE p.state IN ('pregnant', 'foaled')) AS pregnancies,
+                       COUNT(DISTINCT f.id) FILTER (WHERE f.outcome = 'live') AS live_foals,
+                       CASE WHEN COUNT(DISTINCT s.id) = 0 THEN 0
+                            ELSE 100.0 * COUNT(DISTINCT p.id) FILTER (WHERE p.state IN ('pregnant', 'foaled')) / COUNT(DISTINCT s.id) END AS pregnancy_rate
                   FROM alfia_breeding_service s
                   JOIN alfia_horse h ON h.id = s.stallion_id
              LEFT JOIN alfia_pregnancy p ON p.service_id = s.id

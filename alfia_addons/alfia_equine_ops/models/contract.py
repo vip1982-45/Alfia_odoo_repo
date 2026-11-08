@@ -1,7 +1,7 @@
 from odoo import Command, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
-from .common import BILLING_MANAGERS, require_any
+from .common import BILLING_MANAGERS, lock_after, require_any
 
 
 class AlfiaBreedingContract(models.Model):
@@ -49,6 +49,12 @@ class AlfiaBreedingContract(models.Model):
                 rec.outcome = 'live'
             else:
                 rec.outcome = 'open'
+
+    def write(self, vals):
+        # Fee and guarantee are fixed once confirmed; only the outcome link and the accounting documents move on.
+        lock_after(self, vals, ('confirmed', 'invoiced', 'refunded', 'closed'), ('state', 'invoice_id', 'credit_note_id', 'pregnancy_id', 'mare_id'),
+                   self.env._("A confirmed contract"))
+        return super().write(vals)
 
     def action_confirm(self):
         require_any(self.env, BILLING_MANAGERS, self.env._("managers"))

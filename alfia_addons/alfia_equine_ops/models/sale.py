@@ -1,7 +1,7 @@
 from odoo import Command, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
-from .common import BILLING_MANAGERS, require_any
+from .common import BILLING_MANAGERS, lock_after, require_any
 
 
 class AlfiaHorseSale(models.Model):
@@ -39,7 +39,12 @@ class AlfiaHorseSale(models.Model):
                 raise UserError(self.env._("You prepared this sale, so someone else must approve it."))
             sale.write({'state': 'approved', 'approved_by_id': self.env.user.id})
 
+    def write(self, vals):
+        lock_after(self, vals, ('approved', 'done'), ('state', 'move_id', 'notes'), self.env._("An approved sale"))
+        return super().write(vals)
+
     def action_complete(self):
+        require_any(self.env, BILLING_MANAGERS, self.env._("managers"))
         for sale in self:
             if sale.state != 'approved':
                 raise UserError(self.env._("Approve the sale first."))

@@ -17,6 +17,11 @@ Builds on `alfia_equine` and Odoo accounting/sales. Every screen sits under the 
 | Reports | Breeding performance by stallion and season (SQL view with pivot/graph), charges pivot/graph, calendar of work items and events. |
 | Horse import | CSV (name, sex, birthdate, breed); bad rows are reported, good rows are kept. |
 
+Controls: what was approved is what is invoiced (approved charges, sales and confirmed contracts are locked); the person who
+entered a charge or prepared a sale does not approve it (segregation of duties, company setting); recurring plans can only
+target horses and barns their author can see, and catch up at most 60 periods per run; medicine is issued only from stores in
+the custodian's sites; imports are limited to 5 MB and 20,000 rows.
+
 Not included: payroll/WPS (Enterprise-only), integrations with outside systems, mobile notifications.
 
 Regenerate views, menus and access rows with `python3 tools/gen_views.py`.

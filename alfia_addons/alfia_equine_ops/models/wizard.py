@@ -2,6 +2,9 @@ import csv
 import io
 
 from odoo import fields, models
+
+MAX_BYTES = 5 * 1024 * 1024
+MAX_ROWS = 20000
 from odoo.exceptions import UserError
 
 
@@ -19,8 +22,11 @@ class AlfiaHorseImport(models.TransientModel):
 
     def action_import(self):
         self.ensure_one()
+        raw = bytes(self.file or b'')
+        if len(raw) > MAX_BYTES:
+            raise UserError(self.env._("The file is larger than %s MB. Split it into smaller files.", MAX_BYTES // (1024 * 1024)))
         try:
-            text = bytes(self.file).decode('utf-8-sig')
+            text = raw.decode('utf-8-sig')
         except Exception:
             raise UserError(self.env._("The file is not a UTF-8 text file."))
         reader = csv.DictReader(io.StringIO(text))
@@ -30,6 +36,9 @@ class AlfiaHorseImport(models.TransientModel):
         Horse = self.env['alfia.horse']
         created, skipped, errors = 0, 0, []
         for n, raw in enumerate(reader, start=2):
+            if n - 1 > MAX_ROWS:
+                errors.append(self.env._("Stopped after %s rows; import the rest in another file.", MAX_ROWS))
+                break
             row = {(k or '').strip().lower(): (v or '').strip() for k, v in raw.items()}
             try:
                 if not row.get('name'):
