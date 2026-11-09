@@ -1,0 +1,12 @@
+<odoo>
+    <record id="group_alfia_all_departments" model="res.groups">
+        <field name="name">All departments (HR)</field>
+        <field name="comment">HR staff in this group see every department; others see only the departments of their access profiles.</field>
+    </record>
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_alfia_all_departments'))]"/>
+    </record>
+    <record id="hr.group_hr_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_alfia_all_departments'))]"/>
+    </record>
+</odoo>

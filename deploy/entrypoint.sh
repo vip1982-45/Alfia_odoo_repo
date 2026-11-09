@@ -33,8 +33,8 @@ if ! python deploy/dbcheck.py exists "$DB_NAME"; then
   echo "First start: installing the Alfia modules (several minutes)…"
   python odoo-bin -c "$CONF" -d "$DB_NAME" -i base --stop-after-init --log-level=warn || true
   python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < demo/set_country.py || true
-  python odoo-bin -c "$CONF" -d "$DB_NAME" -i alfia_finance --stop-after-init --log-level=warn || true
-  if ! python deploy/dbcheck.py installed "$DB_NAME" alfia_finance; then
+  python odoo-bin -c "$CONF" -d "$DB_NAME" -i alfia_hr --stop-after-init --log-level=warn || true
+  if ! python deploy/dbcheck.py installed "$DB_NAME" alfia_hr; then
     echo "ERROR: installing the Alfia modules failed (see the messages above). Removing the half-built database so the next start retries." >&2
     python deploy/dbcheck.py drop "$DB_NAME"
     exit 1

@@ -336,6 +336,104 @@ Asset.create({'name': 'كأس الدوحة 2025', 'kind': 'trophy', 'horse_id': 
 Asset.create({'name': 'سجل أنساب الخيل العربية، المجلد 12', 'kind': 'library', 'reference': 'Shelf B-3', 'state': 'in_use', 'borrower_id': alfia.id})
 Asset.create({'name': 'جهاز موجات فوق صوتية محمول', 'kind': 'equipment', 'reference': 'SN-US-2291', 'responsible_id': users['vet'].id, 'value': 85000})
 
+# ------------------------------------------------------------------ people (HR), when alfia_hr is installed
+if 'hr.employee' in E and E.ref('alfia_hr.dept_stud_operations', raise_if_not_found=False):
+    Dept = E['hr.department']
+    ops = ref('alfia_hr.dept_stud_operations')
+    dept_a = Dept.create({'name': 'إسطبل أ · Barn A', 'parent_id': ops.id})
+    dept_b = Dept.create({'name': 'إسطبل ب · Barn B', 'parent_id': ops.id})
+    vet_dept, breed_dept, train_dept = ref('alfia_hr.dept_veterinary'), ref('alfia_hr.dept_breeding'), ref('alfia_hr.dept_training')
+    fin_dept, stores_dept, mgmt = ref('alfia_hr.dept_finance'), ref('alfia_hr.dept_stores'), ref('alfia_hr.dept_management')
+    # Access profiles also limit HR to departments.
+    prof('stable_staff').department_ids = [Command.set([dept_a.id])]
+    groom_b.department_ids = [Command.set([dept_b.id])]
+    line_mgr = ref('alfia_hr.profile_line_manager')
+    stud_line = Profile.create({'name': 'Line manager – stud operations', 'group_ids': [Command.set(line_mgr.group_ids.ids)],
+                                'department_ids': [Command.set([ops.id])]})
+    for login, profiles in (('hr.officer', [ref('alfia_hr.profile_hr_officer')]), ('hr.manager', [ref('alfia_hr.profile_hr_manager')])):
+        users[login] = Users.create({'name': {'hr.officer': 'مسؤول الموارد البشرية', 'hr.manager': 'مدير الموارد البشرية'}[login], 'login': login,
+                                     'email': f'{login}@example.com', 'password': DEMO_PASSWORD, 'lang': 'ar_001', 'tz': 'Asia/Qatar',
+                                     'group_ids': [Command.link(ref('base.group_user').id)], 'alfia_profile_ids': [Command.set([p.id for p in profiles])]})
+    ref('alfia_hr.profile_hr_officer').department_ids = [Command.set([ops.id, stores_dept.id])]
+    users['breeding.manager'].alfia_profile_ids = [Command.link(stud_line.id)]
+    users['resident.vet'].alfia_profile_ids = [Command.link(stud_line.id)]
+
+    Emp = E['hr.employee'].with_context(alfia_no_onboarding=True)
+    def emp(name, login, dept, job, manager=None, qid=None):
+        vals = {'name': name, 'department_id': dept.id, 'job_id': ref(f'alfia_hr.{job}').id, 'work_email': f'{login or "staff"}@example.com',
+                'parent_id': manager.id if manager else False, 'alfia_qid_expiry': qid or d(300), 'alfia_passport_expiry': d(700),
+                'alfia_health_card_expiry': d(200)}
+        if login:
+            vals['user_id'] = users[login].id
+        e = Emp.create(vals)
+        e.version_id.write({'date_version': d(-400), 'contract_date_start': d(-400)})
+        if manager and manager.user_id:
+            e.write({'leave_manager_id': manager.user_id.id, 'expense_manager_id': manager.user_id.id})
+        return e
+    e_hrm = emp('مدير الموارد البشرية', 'hr.manager', mgmt, 'job_stable_manager')
+    e_hro = emp('مسؤول الموارد البشرية', 'hr.officer', mgmt, 'job_stable_manager', e_hrm)
+    e_bm = emp('مدير التناسل', 'breeding.manager', breed_dept, 'job_breeding_manager', e_hrm)
+    e_rv = emp('د. الطبيب البيطري المقيم', 'resident.vet', vet_dept, 'job_vet', e_hrm)
+    e_vet = emp('د. الطبيب البيطري', 'vet', vet_dept, 'job_vet', e_rv, qid=d(18))
+    e_ga = emp('سائس – إسطبل أ', 'groom.a', dept_a, 'job_groom', e_bm)
+    e_gb = emp('سائس – إسطبل ب', 'groom.b', dept_b, 'job_groom', e_bm)
+    e_tm = emp('مدير التدريب والمنافسات', 'training.manager', train_dept, 'job_trainer', e_hrm)
+    e_tr = emp('المدرب', 'trainer', train_dept, 'job_trainer', e_tm)
+    e_sk = emp('أمين المخزن', 'storekeeper', stores_dept, 'job_storekeeper', e_hrm)
+    e_acc = emp('المحاسب', 'accountant', fin_dept, 'job_accountant', e_hrm)
+    for name in ('سائس ٣ · Groom 3', 'سائس ٤ · Groom 4'):
+        emp(name, None, dept_a, 'job_groom', e_bm)
+    # A driver with a login, for evaluators to try offboarding (their access is removed when they leave).
+    users['driver'] = Users.create({'name': 'سائق · Driver', 'login': 'driver', 'email': 'driver@example.com', 'password': DEMO_PASSWORD,
+                                    'lang': 'ar_001', 'tz': 'Asia/Qatar', 'group_ids': [Command.link(ref('base.group_user').id)],
+                                    'alfia_profile_ids': [Command.set([prof('stable_staff').id])]})
+    emp('سائق · Driver', 'driver', ops, 'job_driver', e_bm, qid=d(9))
+
+    # Annual leave balances, approved by HR.
+    annual = ref('alfia_hr.leave_annual')
+    for e in E['hr.employee'].search([('department_id', '!=', False)]):
+        allocation = E['hr.leave.allocation'].create({'name': 'الإجازة السنوية 2026 · Annual leave 2026', 'employee_id': e.id,
+                                                      'work_entry_type_id': annual.id, 'number_of_days': 21, 'date_from': d(-300)})
+        # The HR manager does not approve their own allocation: the administrator does.
+        (allocation if e == e_hrm else allocation.with_user(users['hr.manager'])).action_approve()
+
+    def workday(start):
+        day = start
+        while day.weekday() >= 4:
+            day += relativedelta(days=1)
+        return day
+    Leave = E['hr.leave']
+    Leave.with_user(users['groom.a']).create({'employee_id': e_ga.id, 'work_entry_type_id': annual.id, 'name': 'زيارة الأهل · Family visit',
+                                              'request_date_from': workday(d(10)), 'request_date_to': workday(d(10)) + relativedelta(days=2)})
+    tr_leave = Leave.with_user(users['trainer']).create({'employee_id': e_tr.id, 'work_entry_type_id': annual.id, 'name': 'إجازة · Leave',
+                                                         'request_date_from': workday(d(20)), 'request_date_to': workday(d(20))})
+    tr_leave.with_user(users['training.manager']).action_approve()        # waits for HR's second approval
+    sick = Leave.with_user(users['vet']).create({'employee_id': e_vet.id, 'work_entry_type_id': ref('alfia_hr.leave_sick').id,
+                                                 'request_date_from': workday(d(-8)), 'request_date_to': workday(d(-8))})
+    sick.with_user(users['hr.officer']).action_approve()
+
+    # Reimbursements: one waiting for the manager, one in draft.
+    Expense = E['hr.expense']
+    vet_exp = Expense.with_user(users['vet']).create({'name': 'وقود لنقل حصان · Fuel for horse transport', 'employee_id': e_vet.id,
+                                                      'product_id': ref('alfia_hr.expense_fuel').id, 'total_amount_currency': 180.0,
+                                                      'payment_mode': 'own_account',
+                                                      'analytic_distribution': {str(mares[4].analytic_account_id.id): 100}})
+    vet_exp.with_user(users['vet']).action_submit()
+    Expense.with_user(users['groom.b']).create({'name': 'بدل يومي – كأس الدوحة · Per diem – Doha Cup', 'employee_id': e_gb.id,
+                                                'product_id': ref('alfia_hr.expense_per_diem').id, 'total_amount_currency': 150.0,
+                                                'payment_mode': 'own_account'})
+
+    # A new hire whose onboarding plan has started, and applicants for the next groom.
+    E['hr.employee'].with_user(users['hr.officer']).create({'name': 'سائس جديد · New groom', 'department_id': dept_a.id,
+                                                            'job_id': ref('alfia_hr.job_groom').id, 'parent_id': e_bm.id})
+    for name, email in (('Applicant One', 'applicant1@example.com'), ('Applicant Two', 'applicant2@example.com')):
+        E['hr.applicant'].create({'partner_name': name, 'email_from': email, 'job_id': ref('alfia_hr.job_groom').id})
+
+    # Attendance yesterday for the Barn A groom.
+    from datetime import datetime, time, timedelta
+    y = datetime.combine(TODAY - timedelta(days=1), time(4, 0))     # 07:00 Doha time
+    E['hr.attendance'].create({'employee_id': e_ga.id, 'check_in': y, 'check_out': y + timedelta(hours=9)})
+
 AR_HORSES = {
     'Desert Storm (ref.)': 'عاصفة الصحراء', 'Moon Pearl (ref.)': 'لؤلؤة القمر', 'Royal Falcon (ref.)': 'الصقر الملكي',
     'Sahara Bloom (ref.)': 'زهرة الصحراء', 'Al Majd': 'المجد', 'Najm Al Shamal': 'نجم الشمال', 'Saif Al Arab': 'سيف العرب',
@@ -360,4 +458,4 @@ for profile, name in ((med_profile, 'أمين مخزن الأدوية – مخز
 
 E.flush_all()
 E.cr.commit()
-print(f"Demo farm ready: {Horse.search_count([])} horses, {len(USERS) + 1} accounts.")
+print(f"Demo farm ready: {Horse.search_count([])} horses, {len(users) + 1} accounts.")

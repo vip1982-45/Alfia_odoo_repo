@@ -1271,7 +1271,7 @@ msgstr ""
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
 msgid "Cancel End of Collaboration"
-msgstr ""
+msgstr "إلغاء إنهاء الخدمة"
 
 #. module: hr
 #. odoo-python
@@ -2586,7 +2586,7 @@ msgstr "تاريخ انتهاء الفترة التجريبية (إذا وجدت
 #: model:ir.actions.server,name:hr.action_hr_employee_departure
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
 msgid "End of Collaboration"
-msgstr ""
+msgstr "إنهاء الخدمة"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__trial_date_end

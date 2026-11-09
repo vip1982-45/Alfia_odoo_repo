@@ -28,6 +28,8 @@ All accounts use the password `AlfiaDemo-2026`. Change it (or delete the account
 | approver.admin / approver.vet | Dispatch approvers | the semen dispatch awaiting approval |
 | storekeeper / buyer / purchase.approver | Stores and procurement | feed and medicine stores |
 | accountant / finance | Accounting | all journals and horses |
+| driver | Driver (for trying offboarding: its access is removed when the departure is applied) | Barn A |
+| hr.officer / hr.manager | HR officer (stud operations and stores) / HR manager (all departments) | employees, time off, reimbursements |
 
 ## Arabic
 

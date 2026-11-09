@@ -1,0 +1,19 @@
+<odoo>
+    <data noupdate="1">
+        <record id="profile_hr_officer" model="alfia.access.profile">
+            <field name="name">HR officer</field>
+            <field name="description">Employees, time off, reimbursements, attendance and recruitment of the departments listed here.</field>
+            <field name="group_ids" eval="[(6, 0, [ref('hr.group_hr_user'), ref('hr_holidays.group_hr_holidays_user'), ref('hr_expense.group_hr_expense_team_approver'), ref('hr_attendance.group_hr_attendance_officer'), ref('hr_recruitment.group_hr_recruitment_user')])]"/>
+        </record>
+        <record id="profile_hr_manager" model="alfia.access.profile">
+            <field name="name">HR manager</field>
+            <field name="description">All HR, every department.</field>
+            <field name="group_ids" eval="[(6, 0, [ref('hr.group_hr_manager'), ref('hr_holidays.group_hr_holidays_manager'), ref('hr_expense.group_hr_expense_manager'), ref('hr_attendance.group_hr_attendance_manager'), ref('hr_recruitment.group_hr_recruitment_manager')])]"/>
+        </record>
+        <record id="profile_line_manager" model="alfia.access.profile">
+            <field name="name">Line manager (team approvals)</field>
+            <field name="description">Approves the time off and reimbursements of the team in the departments listed here.</field>
+            <field name="group_ids" eval="[(6, 0, [ref('hr_holidays.group_hr_holidays_responsible'), ref('hr_expense.group_hr_expense_team_approver')])]"/>
+        </record>
+    </data>
+</odoo>

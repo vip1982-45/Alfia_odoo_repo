@@ -1,0 +1,405 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* alfia_hr
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-09 08:39+0000\n"
+"PO-Revision-Date: 2026-11-09 08:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/employee.py:0
+msgid "%(doc)s of %(name)s expires on %(date)s"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model,name:alfia_hr.model_alfia_access_profile
+msgid "Access profile"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_accountant
+msgid "Accountant"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model,name:alfia_hr.model_alfia_site_setup
+msgid "Add a site with its access profiles"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.work.entry.type,description:alfia_hr.leave_sick
+msgid ""
+"After three months of service, with a medical certificate: two weeks full "
+"pay, then four weeks half pay, then unpaid (Art. 82)."
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.module.module,shortdesc:base.module_alfia_hr
+msgid "Alfia HR"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.actions.server,name:alfia_hr.cron_alfia_document_expiry_ir_actions_server
+msgid "Alfia HR: remind HR of expiring Qatar IDs, passports and health cards"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_res_users__alfia_scope_departments
+msgid "Alfia Scope Departments"
+msgstr ""
+
+#. module: alfia_hr
+#: model:res.groups,name:alfia_hr.group_alfia_all_departments
+msgid "All departments (HR)"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_res_users__alfia_department_ids
+msgid "Allowed departments"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.work.entry.type,name:alfia_hr.leave_annual
+msgid "Annual leave"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.department,name:alfia_hr.dept_breeding
+msgid "Breeding"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_breeding_manager
+msgid "Breeding manager"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.work.entry.type,name:alfia_hr.leave_compassionate
+msgid "Compassionate leave"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_alfia_site_setup__department_parent_id
+msgid "Department under"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_alfia_access_profile__department_ids
+msgid "Departments"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_alfia_access_profile__display_name
+#: model:ir.model.fields,field_description:alfia_hr.field_alfia_site_setup__display_name
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_expense__display_name
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_leave__display_name
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_leave_allocation__display_name
+#: model:ir.model.fields,field_description:alfia_hr.field_res_users__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_driver
+msgid "Driver"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model,name:alfia_hr.model_hr_employee
+msgid "Employee"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.module.module,summary:base.module_alfia_hr
+msgid ""
+"Employees, Qatar time off, onboarding and offboarding, reimbursements, "
+"attendance, recruitment and skills for the stud"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model,name:alfia_hr.model_hr_expense
+msgid "Expense"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_farrier
+msgid "Farrier"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.work.entry.type,description:alfia_hr.leave_maternity
+msgid "Fifty days with full pay after one year of service (Art. 96)."
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.department,name:alfia_hr.dept_finance
+msgid "Finance and administration"
+msgstr ""
+
+#. module: alfia_hr
+#: model:product.template,name:alfia_hr.expense_fuel_product_template
+msgid "Fuel"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_groom
+msgid "Groom"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.module.module,description:base.module_alfia_hr
+msgid ""
+"HR for the stud farm on Odoo Community HR apps, with Qatar leave rules, "
+"access removal on departure, document-expiry reminders, segregation of "
+"duties and HR access by department. See README.md."
+msgstr ""
+
+#. module: alfia_hr
+#: model:alfia.access.profile,name:alfia_hr.profile_hr_manager
+msgid "HR manager"
+msgstr ""
+
+#. module: alfia_hr
+#: model:alfia.access.profile,name:alfia_hr.profile_hr_officer
+msgid "HR officer"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,help:alfia_hr.field_alfia_access_profile__department_ids
+msgid "HR records of these departments (and their sub-departments)."
+msgstr ""
+
+#. module: alfia_hr
+#: model:res.groups,comment:alfia_hr.group_alfia_all_departments
+msgid ""
+"HR staff in this group see every department; others see only the departments"
+" of their access profiles."
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.work.entry.type,name:alfia_hr.leave_hajj
+msgid "Hajj leave"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_head_groom
+msgid "Head groom"
+msgstr ""
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/employee.py:0
+msgid "Health card"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__alfia_health_card_expiry
+msgid "Health card expiry"
+msgstr ""
+
+#. module: alfia_hr
+#: model:product.template,name:alfia_hr.expense_horse_transport_product_template
+msgid "Horse transport"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_alfia_access_profile__id
+#: model:ir.model.fields,field_description:alfia_hr.field_alfia_site_setup__id
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__id
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_expense__id
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_leave__id
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_leave_allocation__id
+#: model:ir.model.fields,field_description:alfia_hr.field_res_users__id
+msgid "ID"
+msgstr ""
+
+#. module: alfia_hr
+#: model:alfia.access.profile,name:alfia_hr.profile_line_manager
+msgid "Line manager (team approvals)"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.department,name:alfia_hr.dept_management
+msgid "Management"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.work.entry.type,name:alfia_hr.leave_maternity
+msgid "Maternity leave"
+msgstr ""
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/employee.py:0
+msgid "Passport"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__alfia_passport_expiry
+msgid "Passport expiry"
+msgstr ""
+
+#. module: alfia_hr
+#: model:product.template,name:alfia_hr.expense_per_diem_product_template
+msgid "Per diem (events and shows)"
+msgstr ""
+
+#. module: alfia_hr
+#: model:product.template,name:alfia_hr.expense_phone_product_template
+msgid "Phone and internet"
+msgstr ""
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/employee.py:0
+msgid "Qatar ID"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__alfia_qid_expiry
+msgid "Qatar ID expiry"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_rider
+msgid "Rider"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.work.entry.type,name:alfia_hr.leave_sick
+msgid "Sick leave"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_stable_manager
+msgid "Stable manager"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_storekeeper
+msgid "Storekeeper"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.department,name:alfia_hr.dept_stores
+msgid "Stores and procurement"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.department,name:alfia_hr.dept_stud_operations
+msgid "Stud operations"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__alfia_access_revoked
+msgid "System access removed"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,help:alfia_hr.field_alfia_site_setup__department_parent_id
+msgid ""
+"The site's own department is created here; its profiles see the site's "
+"people."
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.work.entry.type,description:alfia_hr.leave_annual
+msgid ""
+"Three weeks a year for less than five years of service, four weeks from five"
+" years (Art. 79)."
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model,name:alfia_hr.model_hr_leave
+msgid "Time Off"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model,name:alfia_hr.model_hr_leave_allocation
+msgid "Time Off Allocation"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_trainer
+msgid "Trainer"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.department,name:alfia_hr.dept_training
+msgid "Training and competition"
+msgstr ""
+
+#. module: alfia_hr
+#: model:product.template,name:alfia_hr.expense_travel_product_template
+msgid "Travel (tickets, taxis)"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.work.entry.type,name:alfia_hr.leave_unpaid
+msgid "Unpaid leave"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.work.entry.type,description:alfia_hr.leave_hajj
+msgid "Unpaid, up to twenty days, once during the employment (Art. 81)."
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.work.entry.type,description:alfia_hr.leave_compassionate
+msgid "Up to three days on the death of a close family member (stud policy)."
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model,name:alfia_hr.model_res_users
+msgid "User"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_vet
+msgid "Veterinarian"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.department,name:alfia_hr.dept_veterinary
+msgid "Veterinary"
+msgstr ""
+
+#. module: alfia_hr
+#: model:product.template,name:alfia_hr.expense_vet_supplies_product_template
+msgid "Veterinary supplies bought personally"
+msgstr ""
+
+#. module: alfia_hr
+#: model:hr.job,name:alfia_hr.job_vet_tech
+msgid "Veterinary technician"
+msgstr ""
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/approvals.py:0
+msgid "You cannot approve your own expense. Another approver must do it."
+msgstr ""
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/approvals.py:0
+msgid "You cannot approve your own time off. Another approver must do it."
+msgstr ""
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/approvals.py:0
+msgid ""
+"You cannot approve your own time-off allocation. Another approver must do "
+"it."
+msgstr ""

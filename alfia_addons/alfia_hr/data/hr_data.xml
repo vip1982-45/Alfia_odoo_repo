@@ -1,0 +1,166 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Departments: one per stable and function. "Add a site" creates more. -->
+        <record id="dept_management" model="hr.department"><field name="name">Management</field></record>
+        <record id="dept_stud_operations" model="hr.department"><field name="name">Stud operations</field></record>
+        <record id="dept_veterinary" model="hr.department"><field name="name">Veterinary</field><field name="parent_id" ref="dept_stud_operations"/></record>
+        <record id="dept_breeding" model="hr.department"><field name="name">Breeding</field><field name="parent_id" ref="dept_stud_operations"/></record>
+        <record id="dept_training" model="hr.department"><field name="name">Training and competition</field><field name="parent_id" ref="dept_stud_operations"/></record>
+        <record id="dept_finance" model="hr.department"><field name="name">Finance and administration</field></record>
+        <record id="dept_stores" model="hr.department"><field name="name">Stores and procurement</field></record>
+
+        <!-- Job positions of a stud farm -->
+        <record id="job_groom" model="hr.job"><field name="name">Groom</field><field name="department_id" ref="dept_stud_operations"/></record>
+        <record id="job_head_groom" model="hr.job"><field name="name">Head groom</field><field name="department_id" ref="dept_stud_operations"/></record>
+        <record id="job_stable_manager" model="hr.job"><field name="name">Stable manager</field><field name="department_id" ref="dept_stud_operations"/></record>
+        <record id="job_vet" model="hr.job"><field name="name">Veterinarian</field><field name="department_id" ref="dept_veterinary"/></record>
+        <record id="job_vet_tech" model="hr.job"><field name="name">Veterinary technician</field><field name="department_id" ref="dept_veterinary"/></record>
+        <record id="job_breeding_manager" model="hr.job"><field name="name">Breeding manager</field><field name="department_id" ref="dept_breeding"/></record>
+        <record id="job_rider" model="hr.job"><field name="name">Rider</field><field name="department_id" ref="dept_training"/></record>
+        <record id="job_trainer" model="hr.job"><field name="name">Trainer</field><field name="department_id" ref="dept_training"/></record>
+        <record id="job_farrier" model="hr.job"><field name="name">Farrier</field><field name="department_id" ref="dept_stud_operations"/></record>
+        <record id="job_storekeeper" model="hr.job"><field name="name">Storekeeper</field><field name="department_id" ref="dept_stores"/></record>
+        <record id="job_accountant" model="hr.job"><field name="name">Accountant</field><field name="department_id" ref="dept_finance"/></record>
+        <record id="job_driver" model="hr.job"><field name="name">Driver</field><field name="department_id" ref="dept_stud_operations"/></record>
+
+        <!-- Time off under the Qatar Labour Law (Law No. 14 of 2004). Check the figures with your HR adviser. -->
+        <record id="leave_annual" model="hr.work.entry.type">
+            <field name="name">Annual leave</field><field name="code">QAANNUAL</field>
+            <field name="requires_allocation" eval="True"/><field name="leave_validation_type">both</field>
+            <field name="allocation_validation_type">hr</field><field name="request_unit">day</field>
+            <field name="description">Three weeks a year for less than five years of service, four weeks from five years (Art. 79).</field>
+        </record>
+        <record id="leave_sick" model="hr.work.entry.type">
+            <field name="name">Sick leave</field><field name="code">QASICK</field>
+            <field name="requires_allocation" eval="False"/><field name="leave_validation_type">hr</field>
+            <field name="request_unit">day</field><field name="support_document" eval="True"/>
+            <field name="description">After three months of service, with a medical certificate: two weeks full pay, then four weeks half pay, then unpaid (Art. 82).</field>
+        </record>
+        <record id="leave_hajj" model="hr.work.entry.type">
+            <field name="name">Hajj leave</field><field name="code">QAHAJJ</field>
+            <field name="requires_allocation" eval="False"/><field name="leave_validation_type">both</field>
+            <field name="request_unit">day</field><field name="unpaid" eval="True"/>
+            <field name="description">Unpaid, up to twenty days, once during the employment (Art. 81).</field>
+        </record>
+        <record id="leave_maternity" model="hr.work.entry.type">
+            <field name="name">Maternity leave</field><field name="code">QAMATERN</field>
+            <field name="requires_allocation" eval="False"/><field name="leave_validation_type">hr</field>
+            <field name="request_unit">day</field><field name="support_document" eval="True"/>
+            <field name="description">Fifty days with full pay after one year of service (Art. 96).</field>
+        </record>
+        <record id="leave_compassionate" model="hr.work.entry.type">
+            <field name="name">Compassionate leave</field><field name="code">QACOMP</field>
+            <field name="requires_allocation" eval="False"/><field name="leave_validation_type">manager</field>
+            <field name="request_unit">day</field>
+            <field name="description">Up to three days on the death of a close family member (stud policy).</field>
+        </record>
+        <record id="leave_unpaid" model="hr.work.entry.type">
+            <field name="name">Unpaid leave</field><field name="code">QAUNPAID</field>
+            <field name="requires_allocation" eval="False"/><field name="leave_validation_type">both</field>
+            <field name="request_unit">day</field><field name="unpaid" eval="True"/>
+        </record>
+
+        <!-- Qatar public holidays with fixed dates. Eid al-Fitr and Eid al-Adha follow the moon sighting: add them each year. -->
+        <record id="holiday_national_day_2026" model="resource.calendar.leaves">
+            <field name="name">Qatar National Day</field>
+            <field name="date_from" eval="'2026-12-18 00:00:00'"/><field name="date_to" eval="'2026-12-18 23:59:59'"/>
+        </record>
+        <record id="holiday_sport_day_2027" model="resource.calendar.leaves">
+            <field name="name">National Sport Day</field>
+            <field name="date_from" eval="'2027-02-09 00:00:00'"/><field name="date_to" eval="'2027-02-09 23:59:59'"/>
+        </record>
+
+        <!-- Reimbursement categories -->
+        <record id="expense_fuel" model="product.product"><field name="name">Fuel</field><field name="type">service</field><field name="can_be_expensed" eval="True"/><field name="standard_price">0</field></record>
+        <record id="expense_travel" model="product.product"><field name="name">Travel (tickets, taxis)</field><field name="type">service</field><field name="can_be_expensed" eval="True"/></record>
+        <record id="expense_per_diem" model="product.product"><field name="name">Per diem (events and shows)</field><field name="type">service</field><field name="can_be_expensed" eval="True"/><field name="standard_price">150</field></record>
+        <record id="expense_vet_supplies" model="product.product"><field name="name">Veterinary supplies bought personally</field><field name="type">service</field><field name="can_be_expensed" eval="True"/></record>
+        <record id="expense_horse_transport" model="product.product"><field name="name">Horse transport</field><field name="type">service</field><field name="can_be_expensed" eval="True"/></record>
+        <record id="expense_phone" model="product.product"><field name="name">Phone and internet</field><field name="type">service</field><field name="can_be_expensed" eval="True"/></record>
+
+        <!-- Onboarding and offboarding: started automatically when an employee is created or archived. -->
+        <record id="plan_onboarding" model="mail.activity.plan">
+            <field name="name">تهيئة الموظف الجديد · Stud onboarding</field>
+            <field name="res_model">hr.employee</field>
+        </record>
+        <record id="plan_onboarding_docs" model="mail.activity.plan.template">
+            <field name="plan_id" ref="plan_onboarding"/><field name="sequence">10</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="summary">اجمع نسخ البطاقة الشخصية القطرية والجواز والتأشيرة والبطاقة الصحية وأدخل تواريخ انتهائها · Collect copies of Qatar ID, passport, visa and health card; enter their expiry dates</field>
+            <field name="responsible_type">on_demand</field><field name="delay_count">0</field><field name="delay_from">after_plan_date</field>
+        </record>
+        <record id="plan_onboarding_access" model="mail.activity.plan.template">
+            <field name="plan_id" ref="plan_onboarding"/><field name="sequence">20</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="summary">اطلب من مسؤول الأمن حساب مستخدم بملف صلاحيات الوظيفة والموقع · Ask the security officer for a user account with the access profile of the job and site</field>
+            <field name="responsible_type">on_demand</field><field name="delay_count">1</field><field name="delay_from">after_plan_date</field>
+        </record>
+        <record id="plan_onboarding_induction" model="mail.activity.plan.template">
+            <field name="plan_id" ref="plan_onboarding"/><field name="sequence">30</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="summary">تعريف بالسلامة في الموقع والتعامل مع الخيول · Site safety and horse-handling induction</field>
+            <field name="responsible_type">manager</field><field name="delay_count">2</field><field name="delay_from">after_plan_date</field>
+        </record>
+        <record id="plan_onboarding_kit" model="mail.activity.plan.template">
+            <field name="plan_id" ref="plan_onboarding"/><field name="sequence">40</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="summary">تسليم الزي ومعدات الحماية والمفاتيح (وتسجيلها على الموظف) · Issue uniform, protective equipment and keys (record them on the employee)</field>
+            <field name="responsible_type">manager</field><field name="delay_count">2</field><field name="delay_from">after_plan_date</field>
+        </record>
+        <record id="plan_onboarding_policies" model="mail.activity.plan.template">
+            <field name="plan_id" ref="plan_onboarding"/><field name="sequence">50</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="summary">قراءة سياسات المربط والتوقيع عليها (رفاهية الخيل، الأمن الحيوي، السرية) · Read and sign the stud policies (horse welfare, biosecurity, confidentiality)</field>
+            <field name="responsible_type">employee</field><field name="delay_count">3</field><field name="delay_from">after_plan_date</field>
+        </record>
+        <record id="plan_onboarding_probation" model="mail.activity.plan.template">
+            <field name="plan_id" ref="plan_onboarding"/><field name="sequence">60</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="summary">مراجعة فترة التجربة · Probation review</field>
+            <field name="responsible_type">manager</field><field name="delay_count">3</field><field name="delay_unit">months</field><field name="delay_from">after_plan_date</field>
+        </record>
+
+        <record id="plan_offboarding" model="mail.activity.plan">
+            <field name="name">إنهاء خدمة الموظف · Stud offboarding</field>
+            <field name="res_model">hr.employee</field>
+        </record>
+        <record id="plan_offboarding_access" model="mail.activity.plan.template">
+            <field name="plan_id" ref="plan_offboarding"/><field name="sequence">10</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="summary">تأكد من إلغاء صلاحيات النظام (يتم تلقائيًا عند أرشفة الموظف) · Check that system access was removed (done automatically when the employee is archived)</field>
+            <field name="responsible_type">on_demand</field><field name="delay_count">0</field><field name="delay_from">after_plan_date</field>
+        </record>
+        <record id="plan_offboarding_assets" model="mail.activity.plan.template">
+            <field name="plan_id" ref="plan_offboarding"/><field name="sequence">20</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="summary">استلام المفاتيح والزي والهاتف والمركبة والمعدات · Collect keys, uniform, phone, vehicle and equipment</field>
+            <field name="responsible_type">manager</field><field name="delay_count">0</field><field name="delay_from">after_plan_date</field>
+        </record>
+        <record id="plan_offboarding_settlement" model="mail.activity.plan.template">
+            <field name="plan_id" ref="plan_offboarding"/><field name="sequence">30</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="summary">التسوية النهائية: الراتب المستحق ورصيد الإجازات ومكافأة نهاية الخدمة (ثلاثة أسابيع من الأجر الأساسي على الأقل عن كل سنة) · Final settlement: unpaid salary, leave balance and end-of-service gratuity (at least three weeks' basic pay per year of service)</field>
+            <field name="responsible_type">on_demand</field><field name="delay_count">3</field><field name="delay_from">after_plan_date</field>
+        </record>
+        <record id="plan_offboarding_interview" model="mail.activity.plan.template">
+            <field name="plan_id" ref="plan_offboarding"/><field name="sequence">40</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="summary">مقابلة نهاية الخدمة · Exit interview</field>
+            <field name="responsible_type">manager</field><field name="delay_count">1</field><field name="delay_from">after_plan_date</field>
+        </record>
+        <record id="plan_offboarding_visa" model="mail.activity.plan.template">
+            <field name="plan_id" ref="plan_offboarding"/><field name="sequence">50</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="summary">إلغاء الإقامة أو نقل الكفالة · Cancel the residence permit or transfer sponsorship</field>
+            <field name="responsible_type">on_demand</field><field name="delay_count">7</field><field name="delay_from">after_plan_date</field>
+        </record>
+    </data>
+
+    <record id="cron_alfia_document_expiry" model="ir.cron">
+        <field name="name">Alfia HR: remind HR of expiring Qatar IDs, passports and health cards</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_alfia_document_expiry()</field>
+        <field name="interval_number">1</field><field name="interval_type">days</field>
+    </record>
+</odoo>

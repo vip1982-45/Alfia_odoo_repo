@@ -22,7 +22,7 @@ echo "Creating $DB for a company in Qatar (so the Qatar chart of accounts is use
 $PY odoo-bin -c "$CONF" -d "$DB" -i base --stop-after-init --log-level=warn
 $PY odoo-bin shell -c "$CONF" -d "$DB" --log-level=error < demo/set_country.py
 echo "Installing the Alfia modules (English; the seed adds Arabic)…"
-$PY odoo-bin -c "$CONF" -d "$DB" -i alfia_finance --stop-after-init --log-level=warn
+$PY odoo-bin -c "$CONF" -d "$DB" -i alfia_hr --stop-after-init --log-level=warn
 echo "Loading the demonstration farm…"
 $PY odoo-bin shell -c "$CONF" -d "$DB" --log-level=error < demo/seed_demo.py
 echo "Done. Start the server with:"
