@@ -33,7 +33,7 @@ the `admin` account uses `ADMIN_PASSWORD` and should stay with the project team.
 | See what is happening | `docker compose logs -f odoo` |
 | Stop / start | `docker compose stop` / `docker compose start` |
 | Back up the database | `docker compose exec db pg_dump -U odoo alfia_demo > alfia_demo_$(date +%F).sql` |
-| Update to a newer version of the code | `git pull && docker compose up -d --build` then `docker compose exec odoo python odoo-bin -c /var/lib/alfia/odoo.conf -d alfia_demo -u alfia_security,alfia_equine,alfia_equine_ops,alfia_finance --stop-after-init` and `docker compose restart odoo` |
+| Update to a newer version of the code | `git pull && docker compose up -d --build` then `docker compose exec odoo python odoo-bin -c /var/lib/alfia/odoo.conf -d alfia_demo -u alfia_security,alfia_equine,alfia_equine_ops,alfia_finance,alfia_hr --stop-after-init` and `docker compose restart odoo` |
 | Start the demo again from scratch | `docker compose down -v && docker compose up -d` (deletes everything evaluators entered) |
 
 ## Security of the demo server
