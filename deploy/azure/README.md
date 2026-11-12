@@ -33,7 +33,7 @@ branch `claude/alfia-hardening`.
    Note the **Application (client) ID** and **Directory (tenant) ID**.
 2. In that app: **Certificates & secrets** > **Federated credentials** > **Add credential** >
    scenario **GitHub Actions deploying Azure resources**: organization `vip1982-45`, repository
-   `alfia_odoo_repo`, entity **Branch**, branch `claude/alfia-hardening`, name `alfia-trial`.
+   `Alfia_odoo_repo` (capital A, exactly as GitHub shows it: Azure compares it letter by letter), entity **Branch**, branch `claude/alfia-hardening`, name `alfia-trial`.
 3. Subscription `alfia-platform-nonprod` > **Access control (IAM)** > **Add role assignment** > **Owner**
    (Privileged administrator roles tab) > members: `alfia-trial-deployer` > Conditions: **Allow user to assign
    all roles except privileged administrative roles** > Review + assign.
