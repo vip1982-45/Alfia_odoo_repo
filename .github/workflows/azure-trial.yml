@@ -35,6 +35,11 @@ jobs:
             echo "ready=yes" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Show the identity GitHub presents to Azure
+        run: |
+          T=$(curl -sf -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=api://AzureADTokenExchange" | python3 -c 'import json,sys; print(json.load(sys.stdin)["value"])')
+          echo "$T" | cut -d. -f2 | tr '_-' '/+' | python3 -c 'import base64,json,sys; s=sys.stdin.read().strip(); c=json.loads(base64.b64decode(s+"="*(-len(s)%4))); print("Subject:", c["sub"]); print("Issuer:", c["iss"])'
+
       - name: Sign in to Azure
         if: steps.cfg.outputs.ready == 'yes'
         uses: azure/login@v2
