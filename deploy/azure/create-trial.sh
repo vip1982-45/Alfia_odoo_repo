@@ -40,7 +40,24 @@ VNET="vnet-${APP}-${ENV}"; SUBNET="snet-app"; NSG="nsg-${APP}-${ENV}"
 PIP="pip-${APP}-${ENV}"; VM="vm-${APP}-${ENV}"; RSV="rsv-${APP}-${ENV}"
 echo "Subscription $SUB_ID, resource group $RG in $LOCATION"
 
+# The region must exist for this subscription; otherwise list the nearby ones and stop.
+if [[ -z "$(az account list-locations --query "[?name=='$LOCATION'].name" -o tsv)" ]]; then
+  echo "Region '$LOCATION' is not available to this subscription. Regions in the Middle East:" >&2
+  az account list-locations --query "[?metadata.geographyGroup=='Middle East'].{name:name, display:displayName}" -o table >&2
+  exit 1
+fi
+
 echo "1/9 Resource group"
+OLD_LOC=$(az group show -n "$RG" --query location -o tsv 2>/dev/null || true)
+if [[ -n "$OLD_LOC" && "$OLD_LOC" != "$LOCATION" ]]; then
+  # A group left in another region by an earlier run: remove it only if it holds nothing but network parts.
+  OTHER=$(az resource list -g "$RG" --query "[?!(type=='Microsoft.Network/networkSecurityGroups' || type=='Microsoft.Network/virtualNetworks' || type=='Microsoft.Network/publicIPAddresses')].name" -o tsv)
+  if [[ -n "$OTHER" ]]; then
+    echo "$RG is in $OLD_LOC and holds more than network parts ($OTHER); move or delete it by hand first." >&2; exit 1
+  fi
+  echo "   Removing the earlier, empty $RG in $OLD_LOC"
+  az group delete -n "$RG" --yes -o none
+fi
 az group create -n "$RG" -l "$LOCATION" --tags "${TAGS[@]}" -o none
 
 echo "2/9 Network: firewall rules, virtual network, public address"
