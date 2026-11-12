@@ -80,13 +80,21 @@ def free(name):
 regional = free("cores")
 for size in sys.argv[3:]:
     s = skus.get(size)
-    if not s or any(r.get("reasonCode") == "NotAvailableForSubscription" for r in s.get("restrictions", [])):
-        print(f"  {size}: not offered here", file=sys.stderr); continue
+    if not s:
+        print(f"  {size}: not in this region", file=sys.stderr); continue
+    # Only a whole-region restriction rules a size out; a zone restriction does not (no zone is asked for).
+    if any(r.get("type") == "Location" for r in s.get("restrictions", [])):
+        print(f"  {size}: not offered to this subscription here", file=sys.stderr); continue
     cpus = int(next((c["value"] for c in s.get("capabilities", []) if c["name"] == "vCPUs"), 0))
     fam = s.get("family", "")
     print(f"  {size}: family {fam}, free {free(fam)} of {cpus} needed, region free {regional}", file=sys.stderr)
     if cpus and free(fam) >= cpus and regional >= cpus:
         print(size); break
+else:
+    print("  Quota in this region (family: free of limit):", file=sys.stderr)
+    for k, u in sorted(usage.items()):
+        if int(u["limit"]):
+            print(f"    {k}: {int(u['limit']) - int(u['currentValue'])} of {u['limit']}", file=sys.stderr)
 PY
 )
   rm -f "$SKUS" "$USAGE"
