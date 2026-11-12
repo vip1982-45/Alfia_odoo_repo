@@ -15,7 +15,7 @@ WEB_CIDRS="${WEB_CIDRS:-0.0.0.0/32}"                      # office / VPN public 
 ADMIN_CIDRS="${ADMIN_CIDRS:-}"                            # IT addresses allowed to use SSH (empty = no SSH; use Run Command)
 SSH_PUBLIC_KEY_FILE="${SSH_PUBLIC_KEY_FILE:-$HOME/.ssh/id_ed25519.pub}"   # missing = a key is generated and kept in Key Vault
 DNS_LABEL="${DNS_LABEL:-alfia-stud-trial}"                # gives https://<label>.qatarcentral.cloudapp.azure.com ; must be unique
-VM_SIZE="${VM_SIZE:-Standard_D4s_v5}"                     # 4 vCPU, 16 GB RAM
+VM_SIZES="${VM_SIZES:-Standard_D4s_v5 Standard_D4as_v5 Standard_D4s_v4 Standard_D4as_v4 Standard_D4ds_v5 Standard_D4s_v3 Standard_B4ms Standard_E2s_v5}"  # first with free quota wins (4 vCPU / 16 GB, or 2 vCPU / 16 GB)
 TEAM_GROUP_ID="${TEAM_GROUP_ID:-}"                        # optional: object id of the Entra group that may manage this app
 # -----------------------------------------------------------------------------------------------------
 
@@ -63,6 +63,40 @@ az network public-ip create -g "$RG" -n "$PIP" -l "$LOCATION" --sku Standard --a
   --dns-name "$DNS_LABEL" --tags "${TAGS[@]}" -o none
 
 echo "3/9 Virtual machine (Ubuntu 24.04 with Docker)"
+if az vm show -g "$RG" -n "$VM" -o none 2>/dev/null; then
+  VM_SIZE=$(az vm show -g "$RG" -n "$VM" --query hardwareProfile.vmSize -o tsv)
+else
+  # New subscriptions often have no quota for some server families: take the first size that is offered here and fits.
+  SKUS=$(mktemp); USAGE=$(mktemp)
+  az vm list-skus -l "$LOCATION" --resource-type virtualMachines --all -o json > "$SKUS"
+  az vm list-usage -l "$LOCATION" -o json > "$USAGE"
+  VM_SIZE=$(python3 - "$SKUS" "$USAGE" $VM_SIZES <<'PY'
+import json, sys
+skus = {s["name"]: s for s in json.load(open(sys.argv[1]))}
+usage = {u["name"]["value"]: u for u in json.load(open(sys.argv[2]))}
+def free(name):
+    u = usage.get(name)
+    return int(u["limit"]) - int(u["currentValue"]) if u else 0
+regional = free("cores")
+for size in sys.argv[3:]:
+    s = skus.get(size)
+    if not s or any(r.get("reasonCode") == "NotAvailableForSubscription" for r in s.get("restrictions", [])):
+        print(f"  {size}: not offered here", file=sys.stderr); continue
+    cpus = int(next((c["value"] for c in s.get("capabilities", []) if c["name"] == "vCPUs"), 0))
+    fam = s.get("family", "")
+    print(f"  {size}: family {fam}, free {free(fam)} of {cpus} needed, region free {regional}", file=sys.stderr)
+    if cpus and free(fam) >= cpus and regional >= cpus:
+        print(size); break
+PY
+)
+  rm -f "$SKUS" "$USAGE"
+  if [[ -z "$VM_SIZE" ]]; then
+    echo "No server size has free quota in $LOCATION. In the portal: Quotas > Compute > $LOCATION," >&2
+    echo "request 4 vCPUs for 'Standard DSv5 Family vCPUs' (and 'Total Regional vCPUs' if it is 0), then run again." >&2
+    exit 1
+  fi
+  echo "   Using $VM_SIZE"
+fi
 CLOUD_INIT=$(mktemp)
 cat > "$CLOUD_INIT" <<CLOUD
 #cloud-config
