@@ -4,29 +4,32 @@
 # Safe to run again: existing resources are kept and updated, passwords already in Key Vault are kept.
 set -euo pipefail
 
-# ---------- Edit these values ----------
-SUBSCRIPTION="alfia-platform-nonprod"      # subscription name or id
-LOCATION="qatarcentral"                    # keep the data in Qatar
-APP="alfia"
-ENV="trial"
-OWNER="it-operations"                      # team that owns these resources (tag)
-COSTCENTER="stud-farm"                     # cost centre code (tag)
-WEB_CIDRS="0.0.0.0/32"                     # office / VPN public ranges allowed to open the system, space separated
-ADMIN_CIDRS="0.0.0.0/32"                   # IT addresses allowed to connect with SSH, space separated
-SSH_PUBLIC_KEY_FILE="$HOME/.ssh/id_ed25519.pub"
-DNS_LABEL="alfia-stud-trial"               # gives https://<label>.qatarcentral.cloudapp.azure.com ; must be unique
-VM_SIZE="Standard_D4s_v5"                  # 4 vCPU, 16 GB RAM
-TEAM_GROUP_ID=""                           # optional: object id of the Entra group that may manage this app
-# ---------------------------------------
+# ---------- Edit these values (or set them in the environment, as the GitHub workflow does) ----------
+SUBSCRIPTION="${SUBSCRIPTION:-alfia-platform-nonprod}"   # subscription name or id
+LOCATION="${LOCATION:-qatarcentral}"                      # keep the data in Qatar
+APP="${APP:-alfia}"
+ENV="${ENV:-trial}"
+OWNER="${OWNER:-it-operations}"                           # team that owns these resources (tag)
+COSTCENTER="${COSTCENTER:-stud-farm}"                     # cost centre code (tag)
+WEB_CIDRS="${WEB_CIDRS:-0.0.0.0/32}"                      # office / VPN public ranges allowed to open the system, space separated
+ADMIN_CIDRS="${ADMIN_CIDRS:-}"                            # IT addresses allowed to use SSH (empty = no SSH; use Run Command)
+SSH_PUBLIC_KEY_FILE="${SSH_PUBLIC_KEY_FILE:-$HOME/.ssh/id_ed25519.pub}"   # missing = a key is generated and kept in Key Vault
+DNS_LABEL="${DNS_LABEL:-alfia-stud-trial}"                # gives https://<label>.qatarcentral.cloudapp.azure.com ; must be unique
+VM_SIZE="${VM_SIZE:-Standard_D4s_v5}"                     # 4 vCPU, 16 GB RAM
+TEAM_GROUP_ID="${TEAM_GROUP_ID:-}"                        # optional: object id of the Entra group that may manage this app
+# -----------------------------------------------------------------------------------------------------
 
 RG="rg-${APP}-${ENV}"
 ADMIN_USER="alfiaadmin"
 TAGS=(app="$APP" env="$ENV" owner="$OWNER" costcenter="$COSTCENTER")
 
-if [[ "$WEB_CIDRS" == "0.0.0.0/32" || "$ADMIN_CIDRS" == "0.0.0.0/32" ]]; then
-  echo "Edit WEB_CIDRS and ADMIN_CIDRS at the top of this script first (your office / VPN addresses)." >&2; exit 1
+if [[ -z "$WEB_CIDRS" || "$WEB_CIDRS" == "0.0.0.0/32" ]]; then
+  echo "Set WEB_CIDRS first (your office / VPN public addresses)." >&2; exit 1
 fi
-[[ -f "$SSH_PUBLIC_KEY_FILE" ]] || { echo "No SSH public key at $SSH_PUBLIC_KEY_FILE (create one with: ssh-keygen -t ed25519)" >&2; exit 1; }
+KEY_DIR=""
+if [[ ! -f "$SSH_PUBLIC_KEY_FILE" ]]; then   # no key given: make one; its private half is kept in Key Vault below
+  KEY_DIR=$(mktemp -d); ssh-keygen -q -t ed25519 -N "" -C "alfiaadmin@vm-alfia" -f "$KEY_DIR/id"; SSH_PUBLIC_KEY_FILE="$KEY_DIR/id.pub"
+fi
 
 az account set --subscription "$SUBSCRIPTION"
 SUB_ID=$(az account show --query id -o tsv)
@@ -48,9 +51,11 @@ az network nsg rule create -g "$RG" --nsg-name "$NSG" -n allow-https --priority 
 # Port 80 stays open to the internet only so the free HTTPS certificate can be issued and renewed; it just redirects to 443.
 az network nsg rule create -g "$RG" --nsg-name "$NSG" -n allow-http-certificate --priority 110 --direction Inbound --access Allow \
   --protocol Tcp --destination-port-ranges 80 --source-address-prefixes Internet -o none
-# shellcheck disable=SC2086
-az network nsg rule create -g "$RG" --nsg-name "$NSG" -n allow-ssh-it --priority 120 --direction Inbound --access Allow \
-  --protocol Tcp --destination-port-ranges 22 --source-address-prefixes $ADMIN_CIDRS -o none
+if [[ -n "$ADMIN_CIDRS" ]]; then
+  # shellcheck disable=SC2086
+  az network nsg rule create -g "$RG" --nsg-name "$NSG" -n allow-ssh-it --priority 120 --direction Inbound --access Allow \
+    --protocol Tcp --destination-port-ranges 22 --source-address-prefixes $ADMIN_CIDRS -o none
+fi
 az network vnet create -g "$RG" -n "$VNET" -l "$LOCATION" --address-prefixes 10.20.0.0/16 \
   --subnet-name "$SUBNET" --subnet-prefixes 10.20.1.0/24 --tags "${TAGS[@]}" -o none
 az network vnet subnet update -g "$RG" --vnet-name "$VNET" -n "$SUBNET" --network-security-group "$NSG" -o none
@@ -81,8 +86,11 @@ echo "4/9 Key Vault with generated passwords"
 az keyvault show -g "$RG" -n "$KV" -o none 2>/dev/null \
   || az keyvault create -g "$RG" -n "$KV" -l "$LOCATION" --enable-rbac-authorization true --tags "${TAGS[@]}" -o none
 KV_ID=$(az keyvault show -g "$RG" -n "$KV" --query id -o tsv)
-ME=$(az ad signed-in-user show --query id -o tsv)
-az role assignment create --assignee-object-id "$ME" --assignee-principal-type User \
+# Who is running this (a person, or the GitHub workflow's identity): read from the sign-in token, no directory lookup needed.
+ME=$(az account get-access-token --query accessToken -o tsv | cut -d. -f2 | tr '_-' '/+' \
+  | python3 -c 'import base64,json,sys; s=sys.stdin.read().strip(); print(json.loads(base64.b64decode(s+"="*(-len(s)%4)))["oid"])')
+[[ "$(az account show --query user.type -o tsv)" == "servicePrincipal" ]] && ME_TYPE=ServicePrincipal || ME_TYPE=User
+az role assignment create --assignee-object-id "$ME" --assignee-principal-type "$ME_TYPE" \
   --role "Key Vault Secrets Officer" --scope "$KV_ID" -o none 2>/dev/null || true
 az role assignment create --assignee-object-id "$VM_IDENTITY" --assignee-principal-type ServicePrincipal \
   --role "Key Vault Secrets User" --scope "$KV_ID" -o none 2>/dev/null || true
@@ -95,19 +103,30 @@ for name in db-password master-password demo-password admin-password; do
   done
 done
 
+if [[ -n "$KEY_DIR" ]]; then
+  az keyvault secret show --vault-name "$KV" -n vm-ssh-private-key -o none 2>/dev/null \
+    || az keyvault secret set --vault-name "$KV" -n vm-ssh-private-key --file "$KEY_DIR/id" -o none
+  rm -rf "$KEY_DIR"
+fi
+
 echo "5/9 Storage account for nightly database copies (kept 30 days)"
 az storage account create -g "$RG" -n "$ST" -l "$LOCATION" --sku Standard_LRS --kind StorageV2 \
   --min-tls-version TLS1_2 --allow-blob-public-access false --allow-shared-key-access false --tags "${TAGS[@]}" -o none
 az storage container-rm create --storage-account "$ST" -n db-backups -o none 2>/dev/null || true
+az storage container-rm create --storage-account "$ST" -n releases -o none 2>/dev/null || true
 ST_ID=$(az storage account show -g "$RG" -n "$ST" --query id -o tsv)
 POLICY=$(mktemp)
 cat > "$POLICY" <<'JSON'
-{"rules":[{"enabled":true,"name":"delete-after-30-days","type":"Lifecycle","definition":{"actions":{"baseBlob":{"delete":{"daysAfterModificationGreaterThan":30}}},"filters":{"blobTypes":["blockBlob"],"prefixMatch":["db-backups/"]}}}]}
+{"rules":[{"enabled":true,"name":"delete-after-30-days","type":"Lifecycle","definition":{"actions":{"baseBlob":{"delete":{"daysAfterModificationGreaterThan":30}}},"filters":{"blobTypes":["blockBlob"],"prefixMatch":["db-backups/","releases/"]}}}]}
 JSON
 az storage account management-policy create -g "$RG" --account-name "$ST" --policy "@$POLICY" -o none
 rm -f "$POLICY"
 az role assignment create --assignee-object-id "$VM_IDENTITY" --assignee-principal-type ServicePrincipal \
   --role "Storage Blob Data Contributor" --scope "$ST_ID/blobServices/default/containers/db-backups" -o none 2>/dev/null || true
+az role assignment create --assignee-object-id "$VM_IDENTITY" --assignee-principal-type ServicePrincipal \
+  --role "Storage Blob Data Reader" --scope "$ST_ID/blobServices/default/containers/releases" -o none 2>/dev/null || true
+az role assignment create --assignee-object-id "$ME" --assignee-principal-type "$ME_TYPE" \
+  --role "Storage Blob Data Contributor" --scope "$ST_ID/blobServices/default/containers/releases" -o none 2>/dev/null || true
 
 echo "6/9 Daily backup of the whole server (kept 30 days)"
 az backup vault create -g "$RG" -n "$RSV" -l "$LOCATION" --tags "${TAGS[@]}" -o none
@@ -137,5 +156,8 @@ Key Vault      : $KV   (passwords: db-password, master-password, demo-password, 
 Storage        : $ST   (container db-backups)
 Backup vault   : $RSV
 
-Next: follow "Install the system on the server" in deploy/azure/README.md.
+Next: follow "Install the system on the server" in deploy/azure/README.md (or install-on-vm.sh does it for you).
 SUMMARY
+if [[ -n "${GITHUB_ENV:-}" ]]; then   # hand the names to the next workflow step
+  { echo "RG=$RG"; echo "VM=$VM"; echo "KV=$KV"; echo "ST=$ST"; echo "FQDN=$FQDN"; } >> "$GITHUB_ENV"
+fi

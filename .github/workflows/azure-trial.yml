@@ -1,0 +1,54 @@
+name: Azure trial
+
+# Creates or updates the Alfia trial in Azure. It signs in with a federated identity (no password or
+# secret is stored anywhere): Azure trusts only this repository's branch claude/alfia-hardening.
+on:
+  push:
+    branches: [claude/alfia-hardening]
+    paths: [deploy/azure/trial.env]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: azure-trial
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read settings
+        id: cfg
+        run: |
+          grep -E '^[A-Z_]+=' deploy/azure/trial.env >> "$GITHUB_ENV"
+          val() { grep -E "^$1=" deploy/azure/trial.env | head -1 | cut -d= -f2-; }
+          if [ -z "$(val AZURE_CLIENT_ID)" ] || [ -z "$(val AZURE_TENANT_ID)" ] || [ -z "$(val AZURE_SUBSCRIPTION_ID)" ] || [ -z "$(val WEB_CIDRS)" ]; then
+            echo "::notice::deploy/azure/trial.env is not filled in yet; nothing to do."
+            echo "ready=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Sign in to Azure
+        if: steps.cfg.outputs.ready == 'yes'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Create the Azure resources
+        if: steps.cfg.outputs.ready == 'yes'
+        env:
+          SUBSCRIPTION: ${{ env.AZURE_SUBSCRIPTION_ID }}
+        run: bash deploy/azure/create-trial.sh
+
+      - name: Install the system on the server
+        if: steps.cfg.outputs.ready == 'yes'
+        run: bash deploy/azure/install-on-vm.sh

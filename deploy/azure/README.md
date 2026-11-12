@@ -22,6 +22,30 @@ All of it goes in **`rg-alfia-trial`**, in **Qatar Central**, tagged `app=alfia 
 Nobody needs a storage key or password file: the server signs in to Key Vault and Storage with its own
 Azure identity (managed identity), and only to this app's vault and backup container.
 
+## Option A: let GitHub do it (no password or secret anywhere)
+
+The workflow `.github/workflows/azure-trial.yml` runs both scripts below for you: `create-trial.sh` makes the
+resources, `install-on-vm.sh` uploads the code through the storage account and installs it with Azure Run
+Command (no SSH needed). It signs in with a federated identity that Azure trusts only for this repository's
+branch `claude/alfia-hardening`.
+
+1. Entra ID > **App registrations** > **New registration**: name `alfia-trial-deployer`, single tenant.
+   Note the **Application (client) ID** and **Directory (tenant) ID**.
+2. In that app: **Certificates & secrets** > **Federated credentials** > **Add credential** >
+   scenario **GitHub Actions deploying Azure resources**: organization `vip1982-45`, repository
+   `alfia_odoo_repo`, entity **Branch**, branch `claude/alfia-hardening`, name `alfia-trial`.
+3. Subscription `alfia-platform-nonprod` > **Access control (IAM)** > **Add role assignment** > **Owner**
+   (Privileged administrator roles tab) > members: `alfia-trial-deployer` > Conditions: **Allow user to assign
+   all roles except privileged administrative roles** > Review + assign.
+4. Fill in `deploy/azure/trial.env` (client id, tenant id, subscription id, office/VPN addresses) on branch
+   `claude/alfia-hardening` and push: the workflow starts. Its summary shows the address and the checks.
+
+Run it again any time (Actions > Azure trial > Run workflow, once the workflow is on the default branch, or
+another change to `trial.env`) to install the latest code; data and passwords are kept.
+When the trial is over, remove the role assignment or delete the app registration.
+
+## Option B: run it yourself in Cloud Shell
+
 ## 1. Before you start (once)
 
 - You have the **Owner** role on the subscription (needed to give the server and the team their permissions).
