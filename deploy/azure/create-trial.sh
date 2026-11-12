@@ -40,11 +40,30 @@ VNET="vnet-${APP}-${ENV}"; SUBNET="snet-app"; NSG="nsg-${APP}-${ENV}"
 PIP="pip-${APP}-${ENV}"; VM="vm-${APP}-${ENV}"; RSV="rsv-${APP}-${ENV}"
 echo "Subscription $SUB_ID, resource group $RG in $LOCATION"
 
-# The region must exist for this subscription; otherwise list the nearby ones and stop.
+# The region must exist for this subscription. LOCATION may also be part of a name (e.g. "saudi"):
+# the regions this subscription can use, and those where it can create servers, are searched for it.
 if [[ -z "$(az account list-locations --query "[?name=='$LOCATION'].name" -o tsv)" ]]; then
-  echo "Region '$LOCATION' is not available to this subscription. Regions in the Middle East:" >&2
-  az account list-locations --query "[?metadata.geographyGroup=='Middle East'].{name:name, display:displayName}" -o table >&2
-  exit 1
+  LOCS=$(mktemp); VMLOCS=$(mktemp)
+  az account list-locations -o json > "$LOCS"
+  az provider show -n Microsoft.Compute --query "resourceTypes[?resourceType=='virtualMachines'].locations | [0]" -o json > "$VMLOCS"
+  FOUND=$(python3 - "$LOCS" "$VMLOCS" "$LOCATION" <<'PY'
+import json, sys
+locs = json.load(open(sys.argv[1])); vm = json.load(open(sys.argv[2])) or []; want = sys.argv[3].lower().replace(" ", "")
+names = {l["name"]: l.get("displayName", "") for l in locs}
+for d in vm:
+    names.setdefault(d.lower().replace(" ", ""), d)
+hits = sorted(n for n, d in names.items() if want in n or want in d.lower().replace(" ", ""))
+print("  Regions matching '%s': %s" % (sys.argv[3], ", ".join(f"{n} ({names[n]})" for n in hits) or "none"), file=sys.stderr)
+print("  Regions where this subscription can create servers: " + ", ".join(sorted(vm)), file=sys.stderr)
+if len(hits) == 1:
+    print(hits[0])
+PY
+)
+  rm -f "$LOCS" "$VMLOCS"
+  if [[ -z "$FOUND" ]]; then
+    echo "Region '$LOCATION' is not available to this subscription (see the lists above)." >&2; exit 1
+  fi
+  LOCATION="$FOUND"; echo "   Using region $LOCATION"
 fi
 
 echo "1/9 Resource group"
