@@ -63,7 +63,7 @@ ME=$(az account get-access-token --query accessToken -o tsv | cut -d. -f2 | tr '
 
 echo "2/10 Database (PostgreSQL Flexible Server), first region that accepts it: $REGIONS"
 # An existing database in the group is reused (its name carries the region it was made in).
-read -r PG LOC < <(az postgres flexible-server list -g "$RG" --query "[?state=='Ready'] | [0].[name, location]" -o tsv 2>/dev/null | tr -d '\r' || true) || true
+read -r PG LOC < <(az postgres flexible-server list -g "$RG" --query "[?state=='Ready'] | [0].join(' ', [name, location])" -o tsv 2>/dev/null | tr -d '\r' || true) || true
 LOC=$(printf '%s' "${LOC:-}" | tr -d ' ' | tr 'A-Z' 'a-z')
 NEW_PG=0
 if [[ -z "${PG:-}" ]]; then
@@ -82,7 +82,8 @@ if [[ -z "${PG:-}" ]]; then
   done
   [[ -n "${PG:-}" ]] || { echo "No region in '$REGIONS' accepted the database; see the messages above." >&2; exit 1; }
 fi
-echo "   database in $LOC; the app goes there too"
+[[ -n "$LOC" ]] || { echo "Could not read the database region." >&2; exit 1; }
+echo "   database $PG in $LOC; the app goes there too"
 az postgres flexible-server parameter set -g "$RG" -s "$PG" -n azure.extensions --value PG_TRGM,UNACCENT -o none
 PG_HOST=$(az postgres flexible-server show -g "$RG" -n "$PG" --query fullyQualifiedDomainName -o tsv)
 
