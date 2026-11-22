@@ -49,4 +49,9 @@ if ! python deploy/dbcheck.py exists "$DB_NAME"; then
     fi
   fi
 fi
+# INIT_ONLY=1 (a one-off job, e.g. on Azure Container Apps): build the database and stop, without serving.
+if [ "${INIT_ONLY:-0}" = "1" ]; then
+  echo "Initialisation finished."
+  exit 0
+fi
 exec python odoo-bin -c "$CONF"

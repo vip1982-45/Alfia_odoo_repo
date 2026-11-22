@@ -1,5 +1,12 @@
 # Alfia trial on Azure
 
+**Current setup: managed services, no virtual machine.** The GitHub workflow runs `create-trial-aca.sh`, which
+puts the trial on Azure Container Apps with a PostgreSQL Flexible Server, Azure Files for attachments, a
+Container Registry and Key Vault, all in `rg-alfia-trial`. It needs no server (vCPU) quota, which new
+subscriptions often have at zero. The database goes in the first region of `REGIONS` (in `trial.env`) that
+accepts it, and the app in the same region so pages stay fast. The server-based scripts below
+(`create-trial.sh`, `install-on-vm.sh`) remain for subscriptions that do have server quota.
+
 One script creates the trial's own resource group in the `alfia-platform-nonprod` subscription, with
 everything inside it, tagged so its cost shows on its own and locked against deletion. Then the system is
 installed on the server with the same Docker package as `deploy/`.

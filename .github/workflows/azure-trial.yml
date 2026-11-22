@@ -63,12 +63,10 @@ jobs:
           tenant-id: ${{ env.AZURE_TENANT_ID }}
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Create the Azure resources
+      # Managed services, no virtual machine (the subscriptions have no server quota):
+      # Container Apps + PostgreSQL Flexible Server + Azure Files + Container Registry + Key Vault.
+      - name: Build, create and install on Azure Container Apps
         if: steps.cfg.outputs.ready == 'yes'
         env:
           SUBSCRIPTION: ${{ env.AZURE_SUBSCRIPTION_ID }}
-        run: bash deploy/azure/create-trial.sh
-
-      - name: Install the system on the server
-        if: steps.cfg.outputs.ready == 'yes'
-        run: bash deploy/azure/install-on-vm.sh
+        run: bash deploy/azure/create-trial-aca.sh

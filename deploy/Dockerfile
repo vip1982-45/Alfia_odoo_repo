@@ -24,9 +24,10 @@ COPY alfia_addons alfia_addons
 COPY demo demo
 COPY deploy/entrypoint.sh deploy/dbcheck.py /opt/alfia/deploy/
 
+# A fixed user id (10001) lets mounted network shares be given to this user.
 # Translations: Arabic only (English is the source language). Keeps the image smaller.
 RUN find addons odoo/addons alfia_addons -path '*/i18n*/*.po' ! -name 'ar.po' -delete \
- && useradd --system --create-home --home-dir /var/lib/alfia alfia \
+ && useradd --system --uid 10001 --user-group --create-home --home-dir /var/lib/alfia alfia \
  && mkdir -p /var/lib/alfia/data && chown -R alfia /var/lib/alfia && chmod 755 /opt/alfia/deploy/entrypoint.sh
 
 USER alfia
