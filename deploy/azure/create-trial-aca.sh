@@ -56,6 +56,16 @@ for p in Microsoft.App Microsoft.ContainerRegistry Microsoft.DBforPostgreSQL Mic
   az provider register -n "$p" -o none 2>/dev/null || true
 done
 
+# GitHub's sign-in to Azure lasts about an hour; long waits renew it with a fresh GitHub token (no secret involved).
+relogin() {
+  [[ -n "${ACTIONS_ID_TOKEN_REQUEST_URL:-}" && -n "${AZURE_CLIENT_ID:-}" ]] || return 0
+  local t
+  t=$(curl -fsS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=api://AzureADTokenExchange" \
+      | python3 -c 'import json,sys; print(json.load(sys.stdin)["value"])') || return 1
+  az login --service-principal -u "$AZURE_CLIENT_ID" --tenant "$AZURE_TENANT_ID" --federated-token "$t" --allow-no-subscriptions -o none \
+    && az account set --subscription "$SUB_ID"
+}
+
 # Who is running this (a person or the workflow's identity), read from the sign-in token.
 ME=$(az account get-access-token --query accessToken -o tsv | cut -d. -f2 | tr '_-' '/+' \
   | python3 -c 'import base64,json,sys; s=sys.stdin.read().strip(); print(json.loads(base64.b64decode(s+"="*(-len(s)%4)))["oid"])')
@@ -224,10 +234,14 @@ fi
 EXEC=$(az containerapp job start -g "$RG" -n "$JOB" --query name -o tsv)
 echo "   job run $EXEC started"
 for i in $(seq 1 120); do
-  ST=$(az containerapp job execution show -g "$RG" -n "$JOB" --job-execution-name "$EXEC" --query properties.status -o tsv 2>/dev/null || echo Unknown)
+  (( i % 10 == 0 )) && relogin
+  ST=$(az containerapp job execution show -g "$RG" -n "$JOB" --job-execution-name "$EXEC" --query properties.status -o tsv 2>/dev/null) \
+    || { relogin; ST=$(az containerapp job execution show -g "$RG" -n "$JOB" --job-execution-name "$EXEC" --query properties.status -o tsv 2>&1 || true); }
+  (( i % 4 == 0 )) && echo "   $(date -u +%H:%M) job status: $ST"
   [[ "$ST" == "Succeeded" || "$ST" == "Failed" || "$ST" == "Stopped" || "$ST" == "Degraded" ]] && break
   sleep 45
 done
+relogin
 echo "   job run finished: $ST"
 LAW_CID=$(az monitor log-analytics workspace show -g "$RG" -n "$LAW" --query customerId -o tsv)
 az monitor log-analytics query -w "$LAW_CID" --analytics-query \
