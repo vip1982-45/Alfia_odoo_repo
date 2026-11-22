@@ -32,7 +32,16 @@ CAPP="ca-${APP}-${ENV}"; JOB="job-${APP}-init"
 DB_NAME=alfia_demo; PG_ADMIN=alfiaadmin
 echo "Subscription $SUB_ID, resource group $RG"
 
-retry() { local n=0; until "$@"; do n=$((n+1)); [[ $n -ge 10 ]] && return 1; sleep 20; done; }  # new role assignments take a minute
+# Retry while new role assignments take effect; show the last error if it never works.
+retry() {
+  local n=0 err; err=$(mktemp)
+  until "$@" 2>"$err"; do
+    n=$((n+1))
+    if [[ $n -ge 10 ]]; then echo "   failed after $n tries: $*" >&2; tail -5 "$err" >&2; rm -f "$err"; return 1; fi
+    sleep 20
+  done
+  rm -f "$err"
+}
 
 echo "1/10 Resource group"
 az group show -n "$RG" -o none 2>/dev/null || az group create -n "$RG" -l "$RG_LOCATION" -o none
@@ -82,8 +91,16 @@ az keyvault show -g "$RG" -n "$KV" -o none 2>/dev/null \
   || az keyvault create -g "$RG" -n "$KV" -l "$LOC" --enable-rbac-authorization true --tags "${TAGS[@]}" -o none
 KV_ID=$(az keyvault show -g "$RG" -n "$KV" --query id -o tsv)
 az role assignment create --assignee-object-id "$ME" --assignee-principal-type "$ME_TYPE" \
-  --role "Key Vault Secrets Officer" --scope "$KV_ID" -o none 2>/dev/null || true
-setsecret() { az keyvault secret set --vault-name "$KV" -n "$1" --value "$2" -o none 2>/dev/null; }
+  --role "Key Vault Secrets Officer" --scope "$KV_ID" -o none \
+  || echo "   (could not give this identity Secrets Officer on $KV; continuing in case it already has it)" >&2
+setsecret() { az keyvault secret set --vault-name "$KV" -n "$1" --value "$2" -o none; }
+if [[ $NEW_PG == 0 ]] && ! az keyvault secret show --vault-name "$KV" -n db-password -o none 2>/dev/null; then
+  # The database exists but its password was never saved (an earlier run stopped): give it a new one.
+  PG_PASSWORD="$(openssl rand -base64 30 | tr -d '/+=' | cut -c1-28)Aa1"
+  echo "   resetting the database password (it was not saved by an earlier run)"
+  az postgres flexible-server update -g "$RG" -n "$PG" --admin-password "$PG_PASSWORD" -o none
+  NEW_PG=1
+fi
 if [[ $NEW_PG == 1 ]]; then retry setsecret db-password "$PG_PASSWORD"; fi
 for name in master-password demo-password admin-password; do
   az keyvault secret show --vault-name "$KV" -n "$name" -o none 2>/dev/null \
