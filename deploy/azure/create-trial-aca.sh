@@ -14,7 +14,7 @@ COSTCENTER="${COSTCENTER:-stud-farm}"
 WEB_CIDRS="${WEB_CIDRS:-}"                         # office / VPN public ranges allowed to open the system, space separated
 REGIONS="${REGIONS:-uaenorth qatarcentral northeurope}"   # tried in order for the database; the app goes in the same region
 RG_LOCATION="${RG_LOCATION:-uaenorth}"             # only used if the resource group does not exist yet
-PG_SKU="${PG_SKU:-Standard_B2s}"                   # 2 vCore burstable, 4 GB
+PG_SKUS="${PG_SKUS:-Standard_B2s Standard_B2ms}"     # burstable sizes tried in order (2 vCore, 4 or 8 GB)
 IMAGE_TAG="${IMAGE_TAG:-$(git rev-parse --short HEAD)}"
 
 [[ -n "$WEB_CIDRS" ]] || { echo "Set WEB_CIDRS (your office / VPN public addresses)." >&2; exit 1; }
@@ -25,7 +25,6 @@ az account set --subscription "$SUBSCRIPTION"
 SUB_ID=$(az account show --query id -o tsv)
 SUFFIX=$(printf '%s' "$SUB_ID$RG" | sha256sum | cut -c1-6)
 KV="kv-${APP}-${ENV}-${SUFFIX}"
-PG="psql-${APP}-${ENV}-${SUFFIX}"
 ACR="acr${APP}${ENV}${SUFFIX}"
 STF="st${APP}files${SUFFIX}"
 LAW="law-${APP}-${ENV}"; CAE="cae-${APP}-${ENV}"; UAMI="id-${APP}-${ENV}"
@@ -54,19 +53,25 @@ ME=$(az account get-access-token --query accessToken -o tsv | cut -d. -f2 | tr '
 [[ "$(az account show --query user.type -o tsv)" == "servicePrincipal" ]] && ME_TYPE=ServicePrincipal || ME_TYPE=User
 
 echo "2/10 Database (PostgreSQL Flexible Server), first region that accepts it: $REGIONS"
-LOC=$(az postgres flexible-server show -g "$RG" -n "$PG" --query location -o tsv 2>/dev/null | tr -d ' ' | tr 'A-Z' 'a-z' || true)
+# An existing database in the group is reused (its name carries the region it was made in).
+read -r PG LOC < <(az postgres flexible-server list -g "$RG" --query "[?state=='Ready'] | [0].[name, location]" -o tsv 2>/dev/null | tr -d '\r' || true) || true
+LOC=$(printf '%s' "${LOC:-}" | tr -d ' ' | tr 'A-Z' 'a-z')
 NEW_PG=0
-if [[ -z "$LOC" ]]; then
+if [[ -z "${PG:-}" ]]; then
   PG_PASSWORD="$(openssl rand -base64 30 | tr -d '/+=' | cut -c1-28)Aa1"
   for r in $REGIONS; do
-    echo "   trying $r"
-    if az postgres flexible-server create -g "$RG" -n "$PG" -l "$r" --tier Burstable --sku-name "$PG_SKU" \
-         --storage-size 32 --version 16 --admin-user "$PG_ADMIN" --admin-password "$PG_PASSWORD" \
-         --public-access 0.0.0.0 --tags "${TAGS[@]}" --yes -o none; then
-      LOC="$r"; NEW_PG=1; break
-    fi
+    for sku in $PG_SKUS; do
+      # A failed attempt keeps its name reserved for a while, so every region and size gets its own name.
+      name="psql-${APP}-${ENV}-${SUFFIX}-${r}-$(printf '%s' "$sku" | tr 'A-Z_' 'a-z-' | sed 's/standard-//')"
+      echo "   trying $r, size $sku"
+      if az postgres flexible-server create -g "$RG" -n "$name" -l "$r" --tier Burstable --sku-name "$sku" \
+           --storage-size 32 --version 16 --admin-user "$PG_ADMIN" --admin-password "$PG_PASSWORD" \
+           --public-access 0.0.0.0 --tags "${TAGS[@]}" --yes -o none; then
+        PG="$name"; LOC="$r"; NEW_PG=1; break 2
+      fi
+    done
   done
-  [[ -n "$LOC" ]] || { echo "No region in '$REGIONS' accepted the database; see the messages above." >&2; exit 1; }
+  [[ -n "${PG:-}" ]] || { echo "No region in '$REGIONS' accepted the database; see the messages above." >&2; exit 1; }
 fi
 echo "   database in $LOC; the app goes there too"
 az postgres flexible-server parameter set -g "$RG" -s "$PG" -n azure.extensions --value PG_TRGM,UNACCENT -o none
