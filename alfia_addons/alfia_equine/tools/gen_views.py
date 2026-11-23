@@ -60,20 +60,20 @@ SPEC = [
          search=['mare_id'], scope='mare_id', access=([V, B, S, AUD], [S, B, V], [BM]),
          filters=[('heat', 'Heat observed', "[('is_heat', '=', True)]")]),
     dict(model='alfia.breeding.service', title='Services', menu='breeding', list=['date', 'mare_id', 'stallion_id', 'stallion_name', 'method', 'season', 'state'],
-         form=['mare_id', 'stallion_id', 'stallion_name', 'date', 'method', 'semen_lot_id', 'state'], long=['notes'], search=['mare_id', 'stallion_id'], scope='mare_id', chatter=True, status='state',
+         form=['mare_id', 'stallion_id', 'stallion_name', 'date', 'method', 'semen_lot_id', 'state'], long=['notes'], search=['mare_id', 'stallion_id'], scope='mare_id', chatter=True, status='state', locked=['state'],
          buttons=[('action_done', 'Mark done', "state != 'planned'", 'btn-primary'), ('action_cancel', 'Cancel', "state != 'planned'", '')], access=([V, B, S, AUD], [B, V], [BM])),
     dict(model='alfia.ovulation', title='Ovulations', menu='breeding', list=['date', 'mare_id', 'service_id', 'state', 'pregnancy_id'], form=['mare_id', 'service_id', 'date', 'state', 'confirmed_by_id', 'pregnancy_id'],
          long=['notes'], search=['mare_id'], scope='mare_id', chatter=True, status='state', buttons=[('action_confirm', 'Vet confirms ovulation', "state == 'confirmed'", 'btn-primary')], access=([V, B, AUD], [V, B], [BM])),
     dict(model='alfia.reproductive.exam', title='Reproductive exams', menu='breeding', list=['date', 'mare_id', 'left_follicle_mm', 'right_follicle_mm', 'edema', 'cervix', 'next_action'],
          form=['mare_id', 'date', 'left_follicle_mm', 'right_follicle_mm', 'edema', 'cervix', 'service_id', 'next_action'], long=['findings'], search=['mare_id'], scope='mare_id', access=([V, B, AUD], [V], [VM])),
     dict(model='alfia.pregnancy', title='Pregnancies', menu='breeding', list=['ovulation_date', 'mare_id', 'genetic_dam_id', 'sire_id', 'expected_foaling', 'state', 'day_count'],
-         form=['mare_id', 'genetic_dam_id', 'sire_id', 'service_id', 'ovulation_date', 'rule_id', 'expected_foaling', 'state'], search=['mare_id'], scope='mare_id', chatter=True, status='state',
+         form=['mare_id', 'genetic_dam_id', 'sire_id', 'service_id', 'ovulation_date', 'rule_id', 'expected_foaling', 'state'], search=['mare_id'], scope='mare_id', chatter=True, status='state', locked=['state'],
          extra_form='<field name="check_ids"><list><field name="date"/><field name="days_after_ovulation"/><field name="result"/><field name="next_check_date"/><field name="vet_id"/></list></field><field name="task_ids"><list><field name="due_date"/><field name="name"/><field name="state"/></list></field>',
          access=([V, B, S, AUD], [V, B], [])),
     dict(model='alfia.pregnancy.check', title='Pregnancy checks', menu='breeding', list=['date', 'mare_id', 'days_after_ovulation', 'result', 'next_check_date', 'vet_id'],
          form=['pregnancy_id', 'task_id', 'date', 'result', 'next_check_date'], long=['notes'], search=['mare_id'], scope='mare_id', access=([V, B, S, AUD], [V], [])),
     dict(model='alfia.foaling', title='Foalings', menu='breeding', list=['date', 'mare_id', 'outcome', 'foal_name', 'state', 'foal_id'],
-         form=['pregnancy_id', 'date', 'outcome', 'foal_sex', 'foal_name', 'complications', 'state', 'foal_id'], long=['notes'], search=['mare_id', 'foal_name'], scope='mare_id', chatter=True, status='state',
+         form=['pregnancy_id', 'date', 'outcome', 'foal_sex', 'foal_name', 'complications', 'state', 'foal_id'], long=['notes'], search=['mare_id', 'foal_name'], scope='mare_id', chatter=True, status='state', locked=['state'],
          buttons=[('action_vet_confirm', 'Vet confirms birth', "state != 'draft'", 'btn-primary'), ('action_complete', 'Complete foal identity', "state != 'vet_confirmed'", 'btn-primary')], access=([V, B, S, AUD], [S, V, B], [BM])),
     dict(model='alfia.embryo', title='Embryos', menu='breeding', list=['name', 'donor_id', 'sire_id', 'flush_date', 'grade', 'state', 'tank_id'], form=['name', 'donor_id', 'sire_id', 'flush_date', 'stage', 'grade', 'state', 'tank_id', 'pregnancy_id'],
          long=['notes'], search=['name', 'donor_id'], scope=('donor_id', 'tank_id'), chatter=True, status='state',
@@ -109,8 +109,10 @@ def view_xml(s):
     key = m.replace('.', '_')
     lst = ''.join(f'<field name="{f}"/>' for f in s['list'])
     half = (len(s['form']) + 1) // 2
-    left = ''.join(f'<field name="{f}"/>' for f in s['form'][:half])
-    right = ''.join(f'<field name="{f}"/>' for f in s['form'][half:])
+    locked = set(s.get('locked', ()))   # shown, but moved on only by the header buttons / the workflow
+    fld = lambda f: f'<field name="{f}" readonly="1"/>' if f in locked else f'<field name="{f}"/>'
+    left = ''.join(fld(f) for f in s['form'][:half])
+    right = ''.join(fld(f) for f in s['form'][half:])
     longs = ''.join(f'<field name="{f}"/>' for f in s.get('long', []))
     header = ''
     if s.get('buttons') or s.get('status'):

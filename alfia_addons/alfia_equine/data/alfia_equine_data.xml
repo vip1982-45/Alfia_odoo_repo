@@ -1,5 +1,10 @@
 <odoo>
     <data noupdate="1">
+        <!-- Where a frozen dose goes when it is used for an insemination (see alfia.breeding.service._alfia_use_dose). -->
+        <record id="stock_location_semen_used" model="stock.location">
+            <field name="name">مستخدم في التلقيح · Used in breeding</field>
+            <field name="usage">inventory</field>
+        </record>
         <record id="seq_embryo" model="ir.sequence">
             <field name="name">Embryo code</field>
             <field name="code">alfia.embryo</field>

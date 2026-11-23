@@ -171,6 +171,9 @@ class TestOps(OpsCase):
             contract.with_user(self.breed_mgr).action_invoice()
         contract.with_user(self.accountant).action_invoice()
         self.assertEqual(contract.invoice_id.amount_untaxed, 3000)
+        self.assertEqual(contract.state, 'confirmed', "a draft invoice does not make the contract invoiced")
+        contract.invoice_id.with_user(self.accountant).action_post()
+        self.assertEqual(contract.state, 'invoiced')
         with self.assertRaises(UserError):
             contract.with_user(self.accountant).action_refund()  # pregnancy still open
         pregnancy.state = 'lost'

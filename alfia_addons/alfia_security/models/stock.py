@@ -105,6 +105,32 @@ class StockMove(models.Model):
                                              ', '.join(controlled.product_id.mapped('display_name'))))
         return super()._action_scrap()
 
+    def _action_done(self, cancel_backorder=False):
+        """Lot-tracked and controlled stock never goes below zero: a transfer that takes a lot from a place it is
+        not (or takes more than is there) is refused, with where that lot really is."""
+        done = super()._action_done(cancel_backorder=cancel_backorder)
+        lines = done.move_line_ids.filtered(lambda ml: ml.location_id.usage == 'internal' and (
+            ml.product_id.tracking != 'none' or ml.product_id.categ_id.alfia_effective_group_id
+            or ml.product_id.categ_id.alfia_effective_approver_group_ids))
+        Quant = self.env['stock.quant'].sudo()
+        problems = []
+        for ml in lines:
+            short = Quant.search([('product_id', '=', ml.product_id.id), ('location_id', '=', ml.location_id.id),
+                                  ('lot_id', '=', ml.lot_id.id or False), ('quantity', '<', 0)], limit=1)
+            if not short:
+                continue
+            elsewhere = Quant.search([('product_id', '=', ml.product_id.id), ('lot_id', '=', ml.lot_id.id or False),
+                                      ('location_id.usage', '=', 'internal'), ('quantity', '>', 0)])
+            where = ', '.join(f"{q.location_id.complete_name} ({q.quantity:g})" for q in elsewhere) or self.env._("nowhere in stock")
+            problems.append(self.env._("%(product)s%(lot)s is not available in %(loc)s; it is in: %(where)s",
+                                       product=ml.product_id.display_name,
+                                       lot=f" / {ml.lot_id.name}" if ml.lot_id else '',
+                                       loc=ml.location_id.complete_name, where=where))
+        if problems:
+            raise UserError(self.env._("This transfer would make stock negative, which is not allowed for tracked or "
+                                       "controlled items. Pick from where the stock is:\n%s", '\n'.join(dict.fromkeys(problems))))
+        return done
+
 
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'

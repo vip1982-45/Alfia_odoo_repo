@@ -529,7 +529,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/mail/models/mail_thread.py:0
 msgid "%s created"
-msgstr "%s تم إنشائها"
+msgstr "تم إنشاء %s"
 
 #. module: mail
 #. odoo-javascript

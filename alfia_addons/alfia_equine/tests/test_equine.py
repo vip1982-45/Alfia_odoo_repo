@@ -448,6 +448,60 @@ class TestSemen(EquineCase):
         with self.assertRaises(UserError):
             picking.with_user(custodian).button_validate()
 
+    def test_a_frozen_insemination_uses_one_dose(self):
+        col = self._collection()
+        col.with_user(self.vet).action_release()
+        svc = self.env['alfia.breeding.service'].create({'mare_id': self.mare.id, 'stallion_id': self.stallion.id, 'date': OVULATION,
+                                                        'method': 'ai_frozen', 'semen_lot_id': col.lot_id.id})
+        svc.action_done()
+        self.assertEqual(svc.state, 'done')
+        quant = self.env['stock.quant'].search([('lot_id', '=', col.lot_id.id), ('location_id', '=', self.tank.id)])
+        self.assertEqual(quant.quantity, 9)
+        used = self.env.ref('alfia_equine.stock_location_semen_used')
+        self.assertEqual(self.env['stock.quant'].search([('lot_id', '=', col.lot_id.id), ('location_id', '=', used.id)]).quantity, 1)
+        with self.assertRaises(UserError):
+            svc.action_cancel()                                    # a completed service stays completed
+
+    def test_a_frozen_insemination_needs_a_dose_in_stock(self):
+        col = self._collection(doses=1)
+        col.with_user(self.vet).action_release()
+        first = self.env['alfia.breeding.service'].create({'mare_id': self.mare.id, 'stallion_id': self.stallion.id, 'date': OVULATION,
+                                                          'method': 'ai_frozen', 'semen_lot_id': col.lot_id.id})
+        first.action_done()
+        second = self.env['alfia.breeding.service'].create({'mare_id': self.mare2.id, 'stallion_id': self.stallion.id, 'date': OVULATION,
+                                                           'method': 'ai_frozen', 'semen_lot_id': col.lot_id.id})
+        with self.assertRaises(UserError):
+            second.action_done()
+        self.assertEqual(second.state, 'planned')
+
+    def test_status_moves_only_through_the_workflow(self):
+        svc = self.env['alfia.breeding.service'].with_user(self.breed_mgr).create(
+            {'mare_id': self.mare.id, 'stallion_id': self.stallion.id, 'date': OVULATION, 'method': 'natural'})
+        with self.assertRaises(UserError):
+            svc.with_user(self.breed_mgr).write({'state': 'done'})
+        with self.assertRaises(UserError):
+            self.env['alfia.breeding.service'].with_user(self.breed_mgr).create(
+                {'mare_id': self.mare.id, 'stallion_id': self.stallion.id, 'date': OVULATION, 'state': 'done'})
+        preg = self._pregnancy()
+        with self.assertRaises(UserError):
+            preg.with_user(self.vet_mgr).write({'state': 'foaled'})  # foaled only by completing a foaling with its foal
+        foaling = self.env['alfia.foaling'].create({'pregnancy_id': preg.id, 'outcome': 'live', 'foal_sex': 'filly', 'foal_name': 'Lock test'})
+        with self.assertRaises(UserError):
+            foaling.with_user(self.vet_mgr).write({'state': 'done'})
+
+    def test_tracked_stock_never_goes_negative(self):
+        col = self._collection()
+        col.with_user(self.vet).action_release()
+        customers = self.env.ref('stock.stock_location_customers')
+        move = self.env['stock.move'].create({'product_id': col.product_id.id, 'product_uom_qty': 1, 'uom_id': col.product_id.uom_id.id,
+                                              'location_id': self.barn_a.id, 'location_dest_id': customers.id})
+        move._action_confirm()
+        move.write({'move_line_ids': [Command.create({'product_id': col.product_id.id, 'lot_id': col.lot_id.id, 'quantity': 1,
+                                                      'location_id': self.barn_a.id, 'location_dest_id': customers.id, 'picked': True})]})
+        move.picked = True
+        with self.assertRaisesRegex(UserError, 'Eq Tank room'):
+            move._action_done()
+
 
 @tagged('post_install', '-at_install', 'alfia_equine')
 class TestSegregation(EquineCase):

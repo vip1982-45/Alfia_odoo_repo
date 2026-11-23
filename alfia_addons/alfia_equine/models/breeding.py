@@ -3,6 +3,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import Command, api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 
+FLOW = 'alfia_breeding_flow'  # set by the methods that move a record on; direct status edits are refused
 PARAMETERS = ('check_offsets', 'gestation_days', 'prep_days', 'vaccine_months', 'season_start_month', 'season_start_day',
               'season_end_month', 'season_end_day', 'teasing_pregnant_until_day')
 
@@ -256,11 +257,54 @@ class AlfiaBreedingService(models.Model):
             if rec.stallion_id and rec.stallion_id.sex != 'male':
                 raise ValidationError(self.env._("The stallion of a service must be a stallion."))
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        if not self.env.su and any(v.get('state', 'planned') != 'planned' for v in vals_list):
+            raise UserError(self.env._("A service is recorded as planned and then marked done or cancelled."))
+        return super().create(vals_list)
+
+    def write(self, vals):
+        if 'state' in vals and not self.env.su and not self.env.context.get(FLOW):
+            raise UserError(self.env._("Use 'Mark done' or 'Cancel': a service's status is not edited by hand."))
+        return super().write(vals)
+
     def action_done(self):
-        self.state = 'done'
+        for rec in self:
+            if rec.state != 'planned':
+                raise UserError(self.env._("Only a planned service can be marked done."))
+            if rec.method == 'ai_frozen' and rec.semen_lot_id:
+                rec._alfia_use_dose()
+        self.with_context(**{FLOW: True}).write({'state': 'done'})
 
     def action_cancel(self):
-        self.state = 'cancelled'
+        if any(r.state == 'done' for r in self):
+            raise UserError(self.env._("A completed service is not cancelled."))
+        self.with_context(**{FLOW: True}).write({'state': 'cancelled'})
+
+    def _alfia_use_dose(self):
+        """A frozen insemination uses one dose of the linked semen batch: it leaves the tank it is stored in
+        for 'Used in breeding', so stock on hand always matches what is really in the tanks."""
+        self.ensure_one()
+        lot = self.semen_lot_id
+        quants = self.env['stock.quant'].sudo().search(
+            [('lot_id', '=', lot.id), ('location_id.usage', '=', 'internal'), ('quantity', '>', 0)], order='quantity desc')
+        quant = next((q for q in quants if q.quantity - q.reserved_quantity >= 1), False)
+        if not quant:
+            raise UserError(self.env._("No free dose of semen batch %s is in stock (doses reserved for a dispatch are not used).", lot.name))
+        used = self.env.ref('alfia_equine.stock_location_semen_used')
+        move = self.env['stock.move'].sudo().create({
+            'product_id': lot.product_id.id, 'product_uom_qty': 1, 'uom_id': lot.product_id.uom_id.id,
+            'location_id': quant.location_id.id, 'location_dest_id': used.id, 'company_id': quant.company_id.id or self.company_id.id,
+            'origin': self.env._("Service of %(mare)s on %(date)s", mare=self.mare_id.name, date=self.date),
+        })
+        move._action_confirm()
+        move.write({'move_line_ids': [Command.create({
+            'product_id': lot.product_id.id, 'lot_id': lot.id, 'quantity': 1, 'uom_id': lot.product_id.uom_id.id,
+            'location_id': quant.location_id.id, 'location_dest_id': used.id, 'picked': True})]})
+        move.picked = True
+        move._action_done()
+        self.message_post(body=self.env._("One dose of batch %(lot)s was taken from %(where)s for this service.",
+                                          lot=lot.name, where=quant.location_id.display_name))
 
 
 class AlfiaOvulation(models.Model):
@@ -393,6 +437,18 @@ class AlfiaPregnancy(models.Model):
             if rec.genetic_dam_id and rec.genetic_dam_id.sex != 'female':
                 raise ValidationError(self.env._("The genetic dam must be a mare."))
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        if not self.env.su and not self.env.context.get(FLOW) and any(v.get('state', 'bred') != 'bred' for v in vals_list):
+            raise UserError(self.env._("A new pregnancy starts as 'Bred, awaiting result'; the vet's checks move it on."))
+        return super().create(vals_list)
+
+    def write(self, vals):
+        if 'state' in vals and not self.env.su and not self.env.context.get(FLOW):
+            raise UserError(self.env._("A pregnancy's status follows the vet's checks and the foaling record; record a check "
+                                       "or a foaling instead of changing it by hand."))
+        return super().write(vals)
+
     def _generate_tasks(self):
         """Schedule every item of the rule set this pregnancy was created under. Safe to repeat: items are matched by key, so
         nothing is duplicated, pending items follow a corrected date, and completed or cancelled items are left alone."""
@@ -414,7 +470,7 @@ class AlfiaPregnancy(models.Model):
     def _close(self, state, reason):
         """End a pregnancy: the mare is open again, pending work is cancelled, history is kept."""
         for rec in self:
-            rec.state = state
+            rec.with_context(**{FLOW: True}).state = state
             cancelled = self.env['alfia.task']._alfia_cancel_pending(f"preg:{rec.id}:", reason)
             rec.message_post(body=self.env._("%(reason)s %(count)d pending work item(s) were cancelled; results and history are kept.", reason=reason, count=len(cancelled)))
 
@@ -464,7 +520,7 @@ class AlfiaPregnancyCheck(models.Model):
         if self.task_id and self.task_id.state in ('todo', 'deferred'):
             self.task_id.action_done()
         if self.result == 'positive':
-            pregnancy.state = 'pregnant'
+            pregnancy.with_context(**{FLOW: True}).state = 'pregnant'
         elif self.result == 'negative':
             pregnancy._close('negative', self.env._("Negative result confirmed by %s.", self.vet_id.name))
         elif self.result == 'loss':
@@ -499,12 +555,23 @@ class AlfiaFoaling(models.Model):
 
     _one_per_pregnancy = models.Constraint('unique(pregnancy_id)', 'A birth is already recorded for this pregnancy.')
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        if not self.env.su and any(v.get('state', 'draft') != 'draft' for v in vals_list):
+            raise UserError(self.env._("A birth is recorded first; the vet then confirms it and the breeding manager completes the foal's identity."))
+        return super().create(vals_list)
+
+    def write(self, vals):
+        if any(f in vals for f in ('state', 'foal_id', 'confirmed_by_id')) and not self.env.su and not self.env.context.get(FLOW):
+            raise UserError(self.env._("Use 'Vet confirms birth' and 'Complete foal identity': a birth's status is not edited by hand."))
+        return super().write(vals)
+
     def action_vet_confirm(self):
         _require_group(self.env, 'alfia_security.group_alfia_vet_user', self.env._("veterinary staff"))
         for rec in self:
             if rec.state != 'draft':
                 raise UserError(self.env._("Only a recorded birth can be confirmed."))
-            rec.write({'state': 'vet_confirmed', 'confirmed_by_id': self.env.user.id})
+            rec.with_context(**{FLOW: True}).write({'state': 'vet_confirmed', 'confirmed_by_id': self.env.user.id})
 
     def action_complete(self):
         _require_group(self.env, 'alfia_security.group_alfia_breeding_manager', self.env._("the breeding manager"))
@@ -523,13 +590,13 @@ class AlfiaFoaling(models.Model):
                     'name': rec.foal_name, 'sex': 'female' if rec.foal_sex == 'filly' else 'male', 'birthdate': rec.date,
                     'sire_id': preg.sire_id.id or False, 'dam_id': dam.id, 'carrier_mare_id': carrier.id if carrier != dam else False,
                     'breed': dam.breed, 'initial_location_id': carrier.location_id.id or False})
-                rec.foal_id = foal
-                preg.state = 'foaled'
+                rec.with_context(**{FLOW: True}).foal_id = foal
+                preg.with_context(**{FLOW: True}).state = 'foaled'
             elif rec.outcome == 'aborted':
                 preg._close('lost', self.env._("The pregnancy ended in abortion."))
             else:
-                preg.state = 'foaled'
-            rec.state = 'completed'
+                preg.with_context(**{FLOW: True}).state = 'foaled'
+            rec.with_context(**{FLOW: True}).state = 'completed'
             preg.task_ids.filtered(lambda t: t.state in ('todo', 'deferred')).action_cancel()
             rec.message_post(body=self.env._("Identity completed by %s.", self.env.user.name))
 

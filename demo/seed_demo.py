@@ -56,7 +56,7 @@ def loc(name, parent=None):
 barn_a, barn_b = loc('إسطبل أ (الأفراس) · Barn A (mares)'), loc('إسطبل ب (الفحول) · Barn B (stallions)')
 foaling, quarantine = loc('وحدة الولادة · Foaling unit'), loc('إسطبلات الحجر الصحي · Quarantine stalls')
 yard = loc('ساحة التدريب · Training yard')
-tank_room = loc('غرفة خزانات السائل المنوي · Semen tank room')
+tank_room = loc('غرفة خزانات السائل المنوي · Semen tank room', wh.lot_stock_id)   # inside stock, so sales and transfers find the straws
 tank_1 = loc('الخزان 1 · Tank 1', tank_room)
 med_store = loc('مخزن الأدوية · Medicine store')
 feed_store = loc('مخزن الأعلاف · Feed store', wh.lot_stock_id)   # inside the warehouse's stock, so sales orders can reserve feed
@@ -206,9 +206,10 @@ E['alfia.quarantine'].create({'horse_id': new_arrival.id, 'start_date': d(-5), '
 
 # Feed plans
 Product = E['product.product']
-oats = Product.create({'name': 'Oats (kg)', 'type': 'consu', 'is_storable': True, 'standard_price': 2.1, 'list_price': 3})
-hay = Product.create({'name': 'Timothy hay (kg)', 'type': 'consu', 'is_storable': True, 'standard_price': 1.4, 'list_price': 2})
-alfalfa = Product.create({'name': 'Alfalfa (kg)', 'type': 'consu', 'is_storable': True, 'standard_price': 1.8, 'list_price': 2.5})
+kg = ref('uom.product_uom_kgm')
+oats = Product.create({'name': 'Oats (kg)', 'type': 'consu', 'is_storable': True, 'uom_id': kg.id, 'standard_price': 2.1, 'list_price': 3})
+hay = Product.create({'name': 'Timothy hay (kg)', 'type': 'consu', 'is_storable': True, 'uom_id': kg.id, 'standard_price': 1.4, 'list_price': 2})
+alfalfa = Product.create({'name': 'Alfalfa (kg)', 'type': 'consu', 'is_storable': True, 'uom_id': kg.id, 'standard_price': 1.8, 'list_price': 2.5})
 for h in mares + stallions:
     E['alfia.diet'].create({'horse_id': h.id, 'name': 'عليقة الشتاء', 'date_from': d(-30), 'line_ids': [
         Command.create({'product_id': hay.id, 'qty_per_meal': 4, 'meals_per_day': 2}),
@@ -302,6 +303,7 @@ contract = E['alfia.breeding.contract'].create({'client_id': client_1.id, 'stall
                                                 'product_id': nomination.id, 'fee': 25000, 'live_foal_guarantee': True})
 contract.action_confirm()
 contract.with_user(users['accountant']).action_invoice()
+contract.invoice_id.with_user(users['finance']).action_post()   # posting the invoice marks the contract Invoiced
 E['alfia.breeding.contract'].create({'client_id': client_2.id, 'stallion_id': stallions[1].id, 'season': '2027', 'product_id': nomination.id, 'fee': 18000})
 E['alfia.horse.sale'].with_user(users['breeding.manager']).create({'horse_id': young[3].id, 'buyer_id': buyer.id, 'price': 180000,
                                                                    'notes': 'عرض وصل في مزاد الخريف.'})

@@ -29,8 +29,15 @@ export DB_HOST DB_PORT DB_USER DB_PASSWORD
 cd /opt/alfia
 echo "Waiting for the database…"
 python deploy/dbcheck.py wait
-if ! python deploy/dbcheck.py exists "$DB_NAME"; then
-  LVL="${INIT_LOG_LEVEL:-warn}"
+LVL="${INIT_LOG_LEVEL:-warn}"
+if python deploy/dbcheck.py exists "$DB_NAME"; then
+  if [ "${INIT_ONLY:-0}" = "1" ]; then
+    # An existing database (a redeploy): bring the Alfia modules up to this image's code, keeping every record.
+    echo "$(date -u +%H:%M:%S) Existing database: upgrading the Alfia modules…"
+    python odoo-bin -c "$CONF" -d "$DB_NAME" -u alfia_security,alfia_equine,alfia_equine_ops,alfia_finance,alfia_hr \
+      --stop-after-init --log-level="$LVL"
+  fi
+else
   echo "$(date -u +%H:%M:%S) First start: installing the base module…"
   python odoo-bin -c "$CONF" -d "$DB_NAME" -i base --stop-after-init --log-level="$LVL" || true
   python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < demo/set_country.py || true
@@ -50,6 +57,10 @@ if ! python deploy/dbcheck.py exists "$DB_NAME"; then
       exit 1
     fi
   fi
+fi
+# Data corrections that later releases need (safe to run again; does nothing once applied).
+if [ "${INIT_ONLY:-0}" = "1" ]; then
+  python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < demo/data_fixes.py || { echo "ERROR: data fixes failed" >&2; exit 1; }
 fi
 # INIT_ONLY=1 (a one-off job, e.g. on Azure Container Apps): build the database and stop, without serving.
 if [ "${LOAD_DEMO_FARM:-1}" = "1" ]; then

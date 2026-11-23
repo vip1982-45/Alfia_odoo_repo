@@ -72,7 +72,8 @@ class AlfiaBreedingContract(models.Model):
                 'move_type': 'out_invoice', 'partner_id': rec.client_id.id, 'invoice_date': fields.Date.context_today(self),
                 'invoice_line_ids': [Command.create({'product_id': rec.product_id.id, 'quantity': 1, 'price_unit': rec.fee,
                                                       'name': f"{rec.name}: {rec.stallion_id.name} ({rec.season})"})]})
-            rec.state = 'invoiced'
+            # The contract shows "Invoiced" only once the invoice is posted (see AccountMove._post below).
+            rec.message_post(body=self.env._("Draft invoice created; the contract becomes Invoiced when the invoice is posted."))
 
     def action_refund(self):
         """Credit the client when the live-foal guarantee applies and there was no live foal."""
@@ -95,3 +96,15 @@ class AlfiaBreedingContract(models.Model):
         if any(r.invoice_id for r in self):
             raise UserError(self.env._("An invoiced contract cannot be cancelled."))
         self.write({'state': 'cancelled'})
+
+
+class AccountMove(models.Model):
+    _inherit = 'account.move'
+
+    def _post(self, soft=True):
+        posted = super()._post(soft=soft)
+        invoices = posted.filtered(lambda m: m.move_type == 'out_invoice')
+        if invoices:
+            contracts = self.env['alfia.breeding.contract'].sudo().search([('invoice_id', 'in', invoices.ids), ('state', '=', 'confirmed')])
+            contracts.write({'state': 'invoiced'})
+        return posted
