@@ -44,16 +44,22 @@ retry() {
 }
 
 az extension add -n log-analytics -y -o none 2>/dev/null || true
-joblogs() {  # last lines the init job printed (Log Analytics), oldest first
+joblogs() {  # last lines from the init job: Azure's start-up events and the container's own output, oldest first
   local cid; cid=$(az monitor log-analytics workspace show -g "$RG" -n "$LAW" --query customerId -o tsv 2>/dev/null) || return 0
-  az monitor log-analytics query -w "$cid" -t P1D --analytics-query \
-    "ContainerAppConsoleLogs_CL | where ContainerJobName_s == '$JOB' | top ${1:-60} by TimeGenerated desc | project TimeGenerated, Log_s | order by TimeGenerated asc" \
-    --query "[].join(' ', [TimeGenerated, Log_s])" -o tsv || echo "   (could not read the job's logs)"
+  az monitor log-analytics query -w "$cid" -t P2D --analytics-query \
+    "union isfuzzy=true ContainerAppSystemLogs_CL, ContainerAppConsoleLogs_CL
+     | extend J = strcat(column_ifexists('ContainerJobName_s',''), column_ifexists('JobName_s',''), column_ifexists('ContainerAppName_s',''))
+     | where J has '$JOB' or isempty(J)
+     | extend L = strcat(column_ifexists('Reason_s',''), ' ', column_ifexists('Log_s',''))
+     | top ${1:-60} by TimeGenerated desc | order by TimeGenerated asc | project T=tostring(TimeGenerated), L" \
+    --query "[].join(' ', [T, L])" -o tsv || echo "   (could not read the job's logs)"
 }
 if [[ "${DIAGNOSE:-0}" == "1" ]]; then
   echo "Diagnose only: the init job's recent runs and their last log lines"
   az containerapp job execution list -g "$RG" -n "$JOB" --query "[].join(' ', [name, properties.status, properties.startTime, properties.endTime || ''])" -o tsv || true
   joblogs 120
+  echo "Replicas of the latest run:"
+  az containerapp job replica list -g "$RG" -n "$JOB" -o json 2>/dev/null | head -c 3000 || true
   exit 0
 fi
 
