@@ -30,17 +30,19 @@ cd /opt/alfia
 echo "Waiting for the database…"
 python deploy/dbcheck.py wait
 if ! python deploy/dbcheck.py exists "$DB_NAME"; then
-  echo "First start: installing the Alfia modules (several minutes)…"
-  python odoo-bin -c "$CONF" -d "$DB_NAME" -i base --stop-after-init --log-level=warn || true
+  LVL="${INIT_LOG_LEVEL:-warn}"
+  echo "$(date -u +%H:%M:%S) First start: installing the base module…"
+  python odoo-bin -c "$CONF" -d "$DB_NAME" -i base --stop-after-init --log-level="$LVL" || true
   python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < demo/set_country.py || true
-  python odoo-bin -c "$CONF" -d "$DB_NAME" -i alfia_hr --stop-after-init --log-level=warn || true
+  echo "$(date -u +%H:%M:%S) Installing the Alfia modules (several minutes)…"
+  python odoo-bin -c "$CONF" -d "$DB_NAME" -i alfia_hr --stop-after-init --log-level="$LVL" || true
   if ! python deploy/dbcheck.py installed "$DB_NAME" alfia_hr; then
     echo "ERROR: installing the Alfia modules failed (see the messages above). Removing the half-built database so the next start retries." >&2
     python deploy/dbcheck.py drop "$DB_NAME"
     exit 1
   fi
   if [ "${LOAD_DEMO_FARM:-1}" = "1" ]; then
-    echo "Loading the demonstration farm…"
+    echo "$(date -u +%H:%M:%S) Loading the demonstration farm…"
     if ! python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < demo/seed_demo.py | tee /tmp/seed.log; then :; fi
     if ! grep -q "Demo farm ready" /tmp/seed.log; then
       echo "ERROR: loading the demonstration farm failed. Removing the database so the next start retries." >&2

@@ -43,6 +43,20 @@ retry() {
   rm -f "$err"
 }
 
+az extension add -n log-analytics -y -o none 2>/dev/null || true
+joblogs() {  # last lines the init job printed (Log Analytics), oldest first
+  local cid; cid=$(az monitor log-analytics workspace show -g "$RG" -n "$LAW" --query customerId -o tsv 2>/dev/null) || return 0
+  az monitor log-analytics query -w "$cid" -t P1D --analytics-query \
+    "ContainerAppConsoleLogs_CL | where ContainerJobName_s == '$JOB' | top ${1:-60} by TimeGenerated desc | project TimeGenerated, Log_s | order by TimeGenerated asc" \
+    --query "[].join(' ', [TimeGenerated, Log_s])" -o tsv || echo "   (could not read the job's logs)"
+}
+if [[ "${DIAGNOSE:-0}" == "1" ]]; then
+  echo "Diagnose only: the init job's recent runs and their last log lines"
+  az containerapp job execution list -g "$RG" -n "$JOB" --query "[].join(' ', [name, properties.status, properties.startTime, properties.endTime || ''])" -o tsv || true
+  joblogs 120
+  exit 0
+fi
+
 echo "1/10 Resource group"
 az group show -n "$RG" -o none 2>/dev/null || az group create -n "$RG" -l "$RG_LOCATION" -o none
 az group update -n "$RG" --tags "${TAGS[@]}" -o none
@@ -188,6 +202,7 @@ cat <<YAML
           - {name: DB_NAME, value: "$DB_NAME"}
           - {name: LOAD_DEMO_FARM, value: "1"}
           - {name: INIT_ONLY, value: "$1"}
+          - {name: INIT_LOG_LEVEL, value: "info"}
           - {name: DB_PASSWORD, secretRef: db-password}
           - {name: MASTER_PASSWORD, secretRef: master-password}
           - {name: ALFIA_DEMO_PASSWORD, secretRef: demo-password}
@@ -238,15 +253,14 @@ for i in $(seq 1 120); do
   ST=$(az containerapp job execution show -g "$RG" -n "$JOB" --job-execution-name "$EXEC" --query properties.status -o tsv 2>/dev/null) \
     || { relogin; ST=$(az containerapp job execution show -g "$RG" -n "$JOB" --job-execution-name "$EXEC" --query properties.status -o tsv 2>&1 || true); }
   (( i % 4 == 0 )) && echo "   $(date -u +%H:%M) job status: $ST"
+  (( i % 12 == 0 )) && joblogs 8
   [[ "$ST" == "Succeeded" || "$ST" == "Failed" || "$ST" == "Stopped" || "$ST" == "Degraded" ]] && break
   sleep 45
 done
 relogin
 echo "   job run finished: $ST"
-LAW_CID=$(az monitor log-analytics workspace show -g "$RG" -n "$LAW" --query customerId -o tsv)
-az monitor log-analytics query -w "$LAW_CID" --analytics-query \
-  "ContainerAppConsoleLogs_CL | where ContainerJobName_s == '$JOB' | where Log_s has_any ('First start','Initialisation','Demo farm','ERROR','Traceback') | project TimeGenerated, Log_s | order by TimeGenerated asc | take 30" \
-  -o table 2>/dev/null || echo "   (logs not available yet)"
+echo "   last lines from the job:"
+joblogs 40
 [[ "$ST" == "Succeeded" ]] || { echo "The database job did not succeed ($ST); the logs above say why." >&2; exit 1; }
 
 echo "9/10 The app (one copy, HTTPS, only from $WEB_CIDRS)"
