@@ -3,7 +3,7 @@ from datetime import timedelta
 
 from odoo import Command, fields
 from odoo.addons.alfia_equine.tests.test_equine import OVULATION
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests import tagged
 
 from .test_ops import OpsCase
@@ -129,3 +129,43 @@ class TestRfpFixes(OpsCase):
         self.assertEqual(seen, att)
         self.assertEqual(seen.with_user(self.vet_mgr).raw.content, data)
         self.assertEqual(seen.with_user(self.vet_mgr).file_size, len(data))
+
+    # Retest addendum of 24 Nov: access gaps that blocked the role accounts
+    def _scoped(self, login, groups, locations):
+        profile = self.env['alfia.access.profile'].create({'name': f'RF {login}', 'location_ids': [Command.set([l.id for l in locations])],
+            'group_ids': [Command.set([self.env.ref(f'alfia_security.group_alfia_{g}').id for g in groups])]})
+        return self.env['res.users'].with_context(no_reset_password=True).create(
+            {'name': login, 'login': f'{login}@rf.local', 'alfia_profile_ids': [Command.set([profile.id])]})
+
+    def test_breeding_staff_see_semen_batches_but_not_the_stock(self):
+        col = self._collection()
+        col.with_user(self.vet).action_release()
+        self.assertEqual(self.env['stock.lot'].with_user(self.breed_mgr).search_count([('id', '=', col.lot_id.id)]), 1)
+        self.assertEqual(self.env['stock.quant'].with_user(self.breed_mgr).search_count([('lot_id', '=', col.lot_id.id)]), 0)
+        with self.assertRaises(AccessError):
+            col.lot_id.with_user(self.breed_mgr).write({'name': 'renamed'})
+        svc = self.env['alfia.breeding.service'].with_user(self.breed_mgr).create(
+            {'mare_id': self.mare.id, 'stallion_id': self.stallion.id, 'method': 'ai_frozen', 'semen_lot_id': col.lot_id.id})
+        svc.with_user(self.breed_mgr).action_done()
+        self.assertEqual(svc.state, 'done')
+
+    def test_custodian_sees_a_pick_whose_lines_are_in_the_tank(self):
+        col = self._collection()
+        col.with_user(self.vet).action_release()
+        custodian = self._scoped('rfcust', ['semen_custodian'], [self.tank])
+        parent = self.tank.location_id                      # a header outside the custodian's sites
+        customers = self.env.ref('stock.stock_location_customers')
+        pick = self.env['stock.picking'].create({
+            'picking_type_id': self.wh.out_type_id.id, 'location_id': parent.id, 'location_dest_id': customers.id,
+            'move_ids': [Command.create({'product_id': col.product_id.id, 'product_uom_qty': 1, 'location_id': parent.id, 'location_dest_id': customers.id})]})
+        pick.action_confirm()
+        pick.action_assign()
+        self.assertEqual(pick.move_line_ids.location_id, self.tank)
+        self.assertEqual(self.env['stock.picking'].with_user(custodian).search_count([('id', '=', pick.id)]), 1)
+
+    def test_contract_is_visible_from_the_mares_site(self):
+        manager = self._scoped('rfbm', ['breeding_manager'], [self.barn_a])
+        far_stallion = self.env['alfia.horse'].create({'name': 'Far stallion', 'sex': 'male', 'initial_location_id': self.barn_b.id})
+        contract = self.env['alfia.breeding.contract'].with_user(manager).create({
+            'client_id': self.client.id, 'stallion_id': far_stallion.id, 'mare_id': self.mare.id, 'season': '2027', 'product_id': self.service.id, 'fee': 10})
+        self.assertEqual(self.env['alfia.breeding.contract'].with_user(manager).search_count([('id', '=', contract.id)]), 1)

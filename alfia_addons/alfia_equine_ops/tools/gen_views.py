@@ -31,7 +31,10 @@ SPEC = [
          access=([BM, TM, VM, ACC, AUD], [BM, TM, VM, ACC], [])),
     dict(model='alfia.breeding.contract', title='Breeding contracts', menu='breeding', list=['name', 'client_id', 'stallion_id', 'season', 'fee', 'outcome', 'state'],
          form=['name', 'client_id', 'stallion_id', 'mare_id', 'season', 'product_id', 'fee', 'live_foal_guarantee', 'refund_percent', 'pregnancy_id', 'outcome', 'invoice_id', 'credit_note_id', 'state'], locked=['invoice_id', 'credit_note_id', 'state'],
-         search=['name', 'client_id', 'stallion_id'], scope='stallion_id', chatter=True, status='state',
+         search=['name', 'client_id', 'stallion_id'], chatter=True, status='state',
+         # Visible from either horse's site: a nomination is the stallion's business and the mare's (the stallion may be
+         # sold or standing elsewhere, the mare boarding here).
+         scope_domain="['|', ('stallion_id.location_id', 'child_of', user.alfia_location_ids.ids), ('mare_id.location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []",
          buttons=[('action_confirm', 'Confirm', "state != 'draft'", 'btn-primary'), ('action_invoice', 'Create invoice', "state != 'confirmed'", 'btn-primary'), ('action_refund', 'Refund (no live foal)', "state != 'invoiced'", ''),
                   ('action_close', 'Close', "state not in ('invoiced','refunded')", ''), ('action_cancel', 'Cancel', "state in ('invoiced','refunded','closed','cancelled')", '')],
          access=([BM, ACC, AUD, V], [BM, ACC], [])),

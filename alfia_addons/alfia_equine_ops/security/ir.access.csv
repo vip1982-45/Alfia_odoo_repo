@@ -34,7 +34,7 @@ acc_alfia_breeding_contract_group_account_invoice,alfia.breeding.contract: group
 acc_alfia_breeding_contract_group_alfia_security_auditor,alfia.breeding.contract: group_alfia_security_auditor,alfia.breeding.contract,alfia_security.group_alfia_security_auditor,r,
 acc_alfia_breeding_contract_group_alfia_vet_user,alfia.breeding.contract: group_alfia_vet_user,alfia.breeding.contract,alfia_security.group_alfia_vet_user,r,
 acc_alfia_breeding_contract_system,alfia.breeding.contract: system administrators,alfia.breeding.contract,base.group_system,crud,
-scope_alfia_breeding_contract,Alfia site scope: alfia.breeding.contract,alfia.breeding.contract,,crud,"[('stallion_id.location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+scope_alfia_breeding_contract,Alfia site scope: alfia.breeding.contract,alfia.breeding.contract,,crud,"['|', ('stallion_id.location_id', 'child_of', user.alfia_location_ids.ids), ('mare_id.location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
 acc_alfia_boarding_group_alfia_breeding_manager,alfia.boarding: group_alfia_breeding_manager,alfia.boarding,alfia_security.group_alfia_breeding_manager,cru,
 acc_alfia_boarding_group_alfia_training_manager,alfia.boarding: group_alfia_training_manager,alfia.boarding,alfia_security.group_alfia_training_manager,cru,
 acc_alfia_boarding_group_alfia_stable_user,alfia.boarding: group_alfia_stable_user,alfia.boarding,alfia_security.group_alfia_stable_user,r,

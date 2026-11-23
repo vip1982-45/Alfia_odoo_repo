@@ -1,7 +1,7 @@
 from odoo import api, fields, models
 from odoo.exceptions import AccessError
 
-WATCHED = ('alfia_access_group_id', 'alfia_dual_approval', 'alfia_approver_group_ids')
+WATCHED = ('alfia_access_group_id', 'alfia_dual_approval', 'alfia_approver_group_ids', 'alfia_lot_reader_group_ids')
 
 
 class ProductCategory(models.Model):
@@ -24,6 +24,19 @@ class ProductCategory(models.Model):
         'res.groups', 'alfia_category_eff_approver_rel', 'category_id', 'group_id',
         compute='_compute_alfia_effective_group', store=True, recursive=True, string='Effective approver groups',
         help="This category's own approver groups when dual approval is on, otherwise the nearest parent's.")
+
+    alfia_lot_reader_group_ids = fields.Many2many(
+        'res.groups', 'alfia_category_lot_reader_rel', 'category_id', 'group_id', string='May see batch names',
+        help="Groups that may see the batches (lots) of this restricted stock, to refer to them (e.g. the semen batch used "
+             "for a service), without seeing its stock or moving it.")
+    alfia_effective_lot_reader_group_ids = fields.Many2many(
+        'res.groups', 'alfia_category_eff_lot_reader_rel', 'category_id', 'group_id', compute='_compute_alfia_effective_lot_readers',
+        store=True, recursive=True, string='Effective batch readers')
+
+    @api.depends('alfia_lot_reader_group_ids', 'parent_id.alfia_effective_lot_reader_group_ids')
+    def _compute_alfia_effective_lot_readers(self):
+        for category in self:
+            category.alfia_effective_lot_reader_group_ids = category.alfia_lot_reader_group_ids or category.parent_id.alfia_effective_lot_reader_group_ids
 
     @api.depends('alfia_access_group_id', 'alfia_dual_approval', 'alfia_approver_group_ids',
                  'parent_id.alfia_effective_group_id', 'parent_id.alfia_effective_approver_group_ids')

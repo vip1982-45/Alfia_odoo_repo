@@ -12,7 +12,7 @@ PROFILE_GROUPS = [
     'alfia_security.group_alfia_dispatch_vet_approver', 'alfia_security.group_alfia_stock_adjust_approver',
     # Inventory, purchasing, sales, accounting
     'stock.group_stock_manager', 'purchase.group_purchase_manager', 'sales_team.group_sale_manager',
-    'account.group_account_manager',
+    'account.group_account_manager', 'product.group_product_manager',
     # HR (the HR manager group also gives every department)
     'hr.group_hr_manager', 'hr_holidays.group_hr_holidays_manager', 'hr_recruitment.group_hr_recruitment_manager',
     'hr_expense.group_hr_expense_manager', 'hr_attendance.group_hr_attendance_manager',

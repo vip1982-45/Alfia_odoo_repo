@@ -51,6 +51,7 @@
             <field name="alfia_access_group_id" ref="alfia_security.group_alfia_semen_custodian"/>
             <field name="alfia_dual_approval" eval="True"/>
             <field name="alfia_approver_group_ids" eval="[(6, 0, [ref('alfia_security.group_alfia_dispatch_admin_approver'), ref('alfia_security.group_alfia_dispatch_vet_approver')])]"/>
+            <field name="alfia_lot_reader_group_ids" eval="[(6, 0, [ref('alfia_security.group_alfia_breeding_user'), ref('alfia_security.group_alfia_vet_user')])]"/>
         </record>
         <record id="product_frozen_semen" model="product.product">
             <field name="name">Frozen semen dose</field>
@@ -60,4 +61,7 @@
             <field name="categ_id" ref="category_semen"/>
         </record>
     </data>
+    <!-- Breeding and veterinary staff refer to semen batches (a frozen service names its batch): on every install and upgrade,
+         give the semen category its batch readers if it has none (an administrator may change them later). -->
+    <function model="product.category" name="_alfia_default_semen_lot_readers"/>
 </odoo>

@@ -88,8 +88,6 @@ for model in ('alfia.diag.image', 'alfia.lab.test'):
         if linked:
             done.append('%d file(s) linked to their %s record' % (linked, model))
 
-env.cr.commit()
-
 # 7. Last, as uninstalling reloads the registry: supplier and customer name lookup needs a paid online service (IAP)
 #    and failed with an access error.
 mod = env['ir.module.module'].sudo().search([('name', '=', 'partner_autocomplete'), ('state', '=', 'installed')])

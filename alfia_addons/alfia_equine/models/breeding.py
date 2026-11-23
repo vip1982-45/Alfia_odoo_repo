@@ -743,3 +743,14 @@ class AlfiaSemenCollection(models.Model):
         if any(r.state == 'released' for r in self):
             raise UserError(self.env._("A released batch is stock and cannot be deleted."))
         return super().unlink()
+
+
+class ProductCategorySemen(models.Model):
+    _inherit = 'product.category'
+
+    @api.model
+    def _alfia_default_semen_lot_readers(self):
+        semen = self.env.ref('alfia_equine.category_semen', raise_if_not_found=False)
+        if semen and not semen.alfia_lot_reader_group_ids:
+            readers = self.env.ref('alfia_security.group_alfia_breeding_user') | self.env.ref('alfia_security.group_alfia_vet_user')
+            semen.sudo().alfia_lot_reader_group_ids = [(6, 0, readers.ids)]
