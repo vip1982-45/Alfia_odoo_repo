@@ -24,7 +24,7 @@ The first start builds the image (about 10 minutes) and then the demonstration f
     docker compose logs -f odoo        # wait for "Demo farm ready"
 
 Open `https://<SITE_ADDRESS>` and sign in. Evaluators use the logins in `demo/README.md` with `DEMO_PASSWORD`;
-the `admin` account uses `ADMIN_PASSWORD` and should stay with the project team.
+the `admin` account uses `ADMIN_PASSWORD` and should stay with the project team. It must be at least 12 characters and not the example value: the container refuses to start otherwise, and on every start it makes sure Odoo's default `admin`/`admin` login no longer works, with or without the demo farm.
 
 ## Look after it
 

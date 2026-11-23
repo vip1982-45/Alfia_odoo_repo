@@ -3,6 +3,8 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from odoo.addons.alfia_security.flow import in_trusted, workflow
+
 MAX_GENERATIONS = 12
 KINSHIP_GENERATIONS = 30
 
@@ -263,7 +265,7 @@ class AlfiaHorseStatusLog(models.Model):
     reason = fields.Char()
 
     def write(self, vals):
-        if not self.env.context.get('alfia_merge'):
+        if not in_trusted('alfia_merge'):
             raise UserError(self.env._("Status history cannot be edited."))
         return super().write(vals)
 
@@ -318,6 +320,8 @@ class AlfiaHorseOwnership(models.Model):
 class AlfiaHorseMovement(models.Model):
     _name = 'alfia.horse.movement'
     _description = 'Horse movement'
+    _inherit = ['alfia.guarded.mixin']
+    _alfia_guarded = ('state',)
     _order = 'date desc, id desc'
 
     horse_id = fields.Many2one('alfia.horse', required=True, ondelete='cascade', index=True)
@@ -356,17 +360,28 @@ class AlfiaHorseMovement(models.Model):
                 raise UserError(self.env._("Only a planned movement can be completed."))
             if move.kind == 'internal' and not move.horse_id.on_site:
                 raise UserError(self.env._("%s is not on site, so it cannot be moved internally.", move.horse_id.name))
-            move.write({'state': 'done', 'location_from_id': move.location_from_id.id or move.horse_id.location_id.id})
+            with workflow():
+                move.write({'state': 'done', 'location_from_id': move.location_from_id.id or move.horse_id.location_id.id})
         return True
 
     def action_cancel(self):
         for move in self:
             if move.state == 'done':
                 raise UserError(self.env._("A completed movement cannot be cancelled. Record a new movement to correct it."))
-        self.state = 'cancelled'
+        with workflow():
+            self.state = 'cancelled'
 
     def write(self, vals):
-        allowed = {'reason', 'state', 'location_from_id'} | ({'horse_id'} if self.env.context.get('alfia_merge') else set())
+        allowed = {'reason', 'state', 'location_from_id'} | ({'horse_id'} if in_trusted('alfia_merge') else set())
         if any(m.state == 'done' for m in self) and set(vals) - allowed:
             raise UserError(self.env._("A completed movement cannot be changed. Record a new movement to correct it."))
-        return super().write(vals)
+        res = super().write(vals)
+        if not self.env.su and {'horse_id', 'location_to_id'} & set(vals):
+            # The same site check as when it was recorded: changing the horse or the destination of a planned movement
+            # must not pull a horse from somebody else's site into one's own.
+            for move in self:
+                if move.horse_id.location_id:
+                    self.env.user._alfia_check_location(move.horse_id.location_id, self.env._("current place of %s", move.horse_id.name))
+                if move.location_to_id:
+                    self.env.user._alfia_check_location(move.location_to_id, self.env._("destination"))
+        return res

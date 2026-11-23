@@ -1,4 +1,5 @@
 from odoo import api, models
+from odoo.addons.alfia_security.flow import trusted
 
 SELF_SERVICE_GROUPS = ('hr_holidays.group_hr_holidays_employee',)
 
@@ -14,7 +15,8 @@ class ResUsers(models.Model):
         for user in self.filtered(lambda u: u._is_internal()):
             missing = groups - user.group_ids
             if missing:
-                user.sudo().with_context(alfia_sync=True).write({'group_ids': [(4, g.id) for g in missing]})
+                with trusted('alfia_sync'):
+                    user.sudo().write({'group_ids': [(4, g.id) for g in missing]})
 
     @api.model_create_multi
     def create(self, vals_list):

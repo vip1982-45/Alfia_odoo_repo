@@ -1,6 +1,8 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 
+from odoo.addons.alfia_security.flow import trusted
+
 
 class AlfiaHorseMerge(models.TransientModel):
     _name = 'alfia.horse.merge'
@@ -23,12 +25,13 @@ class AlfiaHorseMerge(models.TransientModel):
         dup.sudo().write({'microchip': False})
         moved = 0
         for field in Fields.search([('relation', '=', 'alfia.horse'), ('ttype', '=', 'many2one'), ('store', '=', True)]):
-            model = self.env[field.model].sudo().with_context(active_test=False, alfia_merge=True)
+            model = self.env[field.model].sudo().with_context(active_test=False)
             if field.model == 'alfia.horse.merge' or model._abstract or not model._auto:
                 continue   # transient, abstract and view-backed models hold no rows of their own
             records = model.search([(field.name, '=', dup.id)])
             if records:
-                records.write({field.name: keep.id})
+                with trusted('alfia_merge'):
+                    records.write({field.name: keep.id})
                 moved += len(records)
         keep.sudo().write({k: (v.id if hasattr(v, 'id') else v) for k, v in carry.items()})
         for field in ('sire_id', 'dam_id', 'carrier_mare_id'):

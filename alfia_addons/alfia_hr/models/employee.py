@@ -1,6 +1,7 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
+from odoo.addons.alfia_security.flow import trusted
 
 DOCUMENT_FIELDS = ('alfia_qid_expiry', 'alfia_passport_expiry', 'alfia_health_card_expiry')
 NOTICE_DAYS = 30
@@ -49,11 +50,22 @@ class HrEmployee(models.Model):
         Audit = self.env['alfia.security.audit']
         for employee in self.sudo().with_context(active_test=False):
             user = employee.user_id
+            privileged = user and (user.has_group('base.group_system') or user.has_group('base.group_erp_manager')
+                                   or user.has_group('alfia_security.group_alfia_security_officer'))
+            if privileged and not self.env.su and not self.env.user.has_group('base.group_system'):
+                # HR cannot switch off an administrator's or security officer's account by archiving their employee.
+                Audit._alfia_log('user.offboard_refused', 'res.users', user.login,
+                                 "Employee %s left, but the account has administration rights: a system administrator "
+                                 "must remove its access." % employee.name)
+                employee.message_post(body=self.env._("%s has administration rights, so the account was not switched "
+                                                      "off. Ask a system administrator to remove its access.", user.name))
+                continue
             if user and (user.active or user.alfia_profile_ids):
-                user.with_context(alfia_sync=True).write({'alfia_profile_ids': [(5, 0, 0)]})
-                user._alfia_sync_profile_groups()
-                if user.active and user != self.env.user:
-                    user.with_context(alfia_sync=True).write({'active': False})
+                with trusted('alfia_sync'):
+                    user.write({'alfia_profile_ids': [(5, 0, 0)]})
+                    user._alfia_sync_profile_groups()
+                    if user.active and user != self.env.user:
+                        user.write({'active': False})
                 Audit._alfia_log('user.offboarded', 'res.users', user.login,
                                  reason or "Employee %s left: access profiles removed and account switched off." % employee.name)
             employee.alfia_access_revoked = True

@@ -1,6 +1,8 @@
 from odoo import Command, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from odoo.addons.alfia_security.flow import workflow
+
 from .common import BILLING_MANAGERS, lock_after, require_any
 
 
@@ -8,7 +10,9 @@ class AlfiaHorseSale(models.Model):
     """Sale or gift of a horse. Completing it moves ownership, status and the horse off site in one step."""
     _name = 'alfia.horse.sale'
     _description = 'Horse sale or gift'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'alfia.guarded.mixin']
+    # Maker and checker are recorded by the system; status and invoice move only through the buttons.
+    _alfia_guarded = ('state', 'created_by_id', 'approved_by_id', 'move_id')
     _order = 'date desc, id desc'
 
     horse_id = fields.Many2one('alfia.horse', required=True, index=True, ondelete='restrict', tracking=True)
@@ -37,7 +41,8 @@ class AlfiaHorseSale(models.Model):
                 raise UserError(self.env._("Only a draft can be approved."))
             if sale.created_by_id == self.env.user and not self.env.su and not self.env.user.has_group('alfia_security.group_alfia_sod_exempt'):
                 raise UserError(self.env._("You prepared this sale, so someone else must approve it."))
-            sale.write({'state': 'approved', 'approved_by_id': self.env.user.id})
+            with workflow():
+                sale.write({'state': 'approved', 'approved_by_id': self.env.user.id})
 
     def write(self, vals):
         lock_after(self, vals, ('approved', 'done'), ('state', 'move_id', 'notes'), self.env._("An approved sale"))
@@ -68,12 +73,16 @@ class AlfiaHorseSale(models.Model):
             horse.write({'status': 'sold' if sale.kind == 'sale' else 'gifted'})
             if sale.kind == 'sale':
                 product = self.env.ref('alfia_equine_ops.product_horse_sale')
-                sale.move_id = self.env['account.move'].sudo().with_company(sale.company_id).create({
+                invoice = self.env['account.move'].sudo().with_company(sale.company_id).create({
                     'move_type': 'out_invoice', 'partner_id': sale.buyer_id.id, 'invoice_date': sale.date,
                     'invoice_line_ids': [Command.create({'product_id': product.id, 'name': self.env._("Horse: %s", horse.name), 'quantity': 1, 'price_unit': sale.price})]})
-            sale.state = 'done'
+                with workflow():
+                    sale.move_id = invoice
+            with workflow():
+                sale.state = 'done'
 
     def action_cancel(self):
         if any(s.state == 'done' for s in self):
             raise UserError(self.env._("A completed sale cannot be cancelled."))
-        self.state = 'cancelled'
+        with workflow():
+            self.state = 'cancelled'

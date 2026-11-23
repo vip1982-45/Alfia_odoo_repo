@@ -1,6 +1,8 @@
 from odoo import Command, api, fields, models
 from odoo.exceptions import UserError
 
+from odoo.addons.alfia_security.flow import is_trusted, trusted
+
 
 class AccountMove(models.Model):
     _name = 'account.move'
@@ -30,7 +32,9 @@ class AccountPayment(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        payments = super().create(vals_list)
+        # Odoo may confirm a payment while creating it; outgoing ones that need a second person are put back to draft below.
+        with trusted('alfia_payment_post'):
+            payments = super().create(vals_list)
         # Some paths (e.g. 'Register payment') create payments already confirmed. An outgoing payment that needs a second
         # person always starts as a draft, whichever way it is created.
         for payment in payments:
@@ -40,15 +44,22 @@ class AccountPayment(models.Model):
                     payment.move_id.button_draft()
         return payments
 
-    def action_post(self):
+    def _alfia_check_second_person(self):
         for payment in self:
-            if payment.payment_type == 'outbound' and payment.create_uid == self.env.user:
-                amount = payment.currency_id._convert(
-                    abs(payment.amount), payment.company_id.currency_id, payment.company_id, payment.date or fields.Date.today())
-                if payment._alfia_sod_applies(amount, payment.company_id):
-                    raise UserError(self.env._(
-                        "Segregation of duties: you created this outgoing payment, so another person must confirm it."))
-        return super().action_post()
+            if payment.create_uid == self.env.user and payment._alfia_needs_second_person():
+                raise UserError(self.env._(
+                    "Segregation of duties: you created this outgoing payment, so another person must confirm it."))
+
+    def action_post(self):
+        self._alfia_check_second_person()
+        with trusted('alfia_payment_post'):
+            return super().action_post()
+
+    def write(self, vals):
+        # Confirming by writing the status directly would skip the check in action_post.
+        if vals.get('state') not in (None, 'draft', 'canceled') and not is_trusted(self.env, 'alfia_payment_post'):
+            self._alfia_check_second_person()
+        return super().write(vals)
 
 
 class AccountPaymentRegister(models.TransientModel):

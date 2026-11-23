@@ -204,3 +204,44 @@ class TestHrScope(HrCase):
         new = self.env['hr.employee'].with_user(self.u_officer_b).create({'name': 'New groom B', 'department_id': self.dept_b.id})
         self.assertEqual(new.department_id, self.dept_b)
         self.assertTrue(new.with_user(self.u_officer_b).read(['name']))
+
+
+@tagged('post_install', '-at_install', 'alfia_hr', 'alfia_security_findings')
+class TestHrSecurityFindings(HrCase):
+    """Regression tests for the security scan of 22 Nov 2026 (F5, F6, F47, F54)."""
+
+    def _expense(self, employee, user):
+        return self.env['hr.expense'].with_user(user).create({
+            'name': 'Fuel', 'employee_id': employee.id, 'product_id': self.env.ref('alfia_hr.expense_fuel').id,
+            'total_amount_currency': 50.0, 'payment_mode': 'own_account'})
+
+    def test_f5_hr_cannot_switch_off_an_administrator_by_archiving_their_employee(self):
+        admin_user = self.env['res.users'].with_context(no_reset_password=True).create(
+            {'name': 'F5 admin', 'login': 'f5admin@hr.local', 'group_ids': [Command.link(self.env.ref('base.group_system').id)]})
+        employee = self.env['hr.employee'].with_context(alfia_no_onboarding=True).create(
+            {'name': 'F5 admin', 'user_id': admin_user.id, 'department_id': self.dept_a.id})
+        employee.with_user(self.u_hr).action_archive()
+        self.assertTrue(admin_user.active, "the administrator's account stays on; a system administrator removes its access")
+        self.assertTrue(admin_user.has_group('base.group_system'))
+
+    def test_f6_expense_with_no_approver_is_not_approved_for_its_submitter(self):
+        self.e_hr.expense_manager_id = False
+        self.e_hr.parent_id = False
+        expense = self._expense(self.e_hr, self.u_hr)
+        expense.with_user(self.u_hr).action_submit()
+        self.assertEqual(expense.state, 'submitted')
+
+    def test_f47_time_off_cannot_be_created_already_approved_for_oneself(self):
+        self._allocate(self.e_hr)
+        day = self._next_workday(self.today + relativedelta(days=30))
+        with self.assertRaises(UserError):
+            self.env['hr.leave'].with_user(self.u_hr).create({
+                'employee_id': self.e_hr.id, 'work_entry_type_id': self.annual.id, 'request_date_from': day, 'request_date_to': day,
+                'state': 'validate'})
+
+    def test_f54_duplicate_wizard_does_not_approve_ones_own_expense(self):
+        expense = self._expense(self.e_hr, self.u_hr)
+        expense.with_user(self.u_hr).action_submit()
+        wizard = self.env['hr.expense.approve.duplicate'].with_user(self.u_hr).create({'expense_ids': [Command.set(expense.ids)]})
+        with self.assertRaises(UserError):
+            wizard.action_approve()

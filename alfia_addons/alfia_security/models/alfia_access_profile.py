@@ -1,5 +1,6 @@
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
+from odoo.addons.alfia_security.flow import is_trusted
 
 FORBIDDEN_GROUPS = (
     'base.group_system',
@@ -53,7 +54,7 @@ class AlfiaAccessProfile(models.Model):
 
     def _alfia_forbid_direct_user_edit(self, vals):
         # Assigning a profile must go through res.users, where the escalation guard, the group sync and the audit live.
-        if 'user_ids' in vals and not self.env.su and not self.env.context.get('alfia_sync'):
+        if 'user_ids' in vals and not is_trusted(self.env, 'alfia_sync'):
             raise AccessError(self.env._("Assign profiles from the user's own form."))
 
     @api.model_create_multi

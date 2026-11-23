@@ -1,6 +1,8 @@
 from odoo import Command, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from odoo.addons.alfia_security.flow import workflow
+
 from .common import BILLING_MANAGERS, lock_after, require_any, sod_blocks
 
 
@@ -8,7 +10,8 @@ class AlfiaBreedingContract(models.Model):
     """A stallion nomination sold to a client: fee, optional live-foal guarantee, invoice and refund."""
     _name = 'alfia.breeding.contract'
     _description = 'Breeding contract'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'alfia.guarded.mixin']
+    _alfia_guarded = ('state', 'invoice_id', 'credit_note_id')
     _order = 'id desc'
 
     name = fields.Char(readonly=True, copy=False, default=lambda s: s.env._('New'))
@@ -61,17 +64,20 @@ class AlfiaBreedingContract(models.Model):
         for rec in self.filtered(lambda r: r.state == 'draft'):
             if sod_blocks(rec, rec.fee):
                 raise UserError(self.env._("You prepared contract %s, so someone else must confirm it.", rec.name))
-            rec.state = 'confirmed'
+            with workflow():
+                rec.state = 'confirmed'
 
     def action_invoice(self):
         require_any(self.env, ('account.group_account_invoice', 'base.group_system'), self.env._("accounting staff"))
         for rec in self:
             if rec.state != 'confirmed' or rec.invoice_id:
                 raise UserError(self.env._("Only a confirmed, not yet invoiced contract can be invoiced."))
-            rec.invoice_id = self.env['account.move'].with_company(rec.company_id).create({
+            invoice = self.env['account.move'].with_company(rec.company_id).create({
                 'move_type': 'out_invoice', 'partner_id': rec.client_id.id, 'invoice_date': fields.Date.context_today(self),
                 'invoice_line_ids': [Command.create({'product_id': rec.product_id.id, 'quantity': 1, 'price_unit': rec.fee,
                                                       'name': f"{rec.name}: {rec.stallion_id.name} ({rec.season})"})]})
+            with workflow():
+                rec.invoice_id = invoice
             # The contract shows "Invoiced" only once the invoice is posted (see AccountMove._post below).
             rec.message_post(body=self.env._("Draft invoice created; the contract becomes Invoiced when the invoice is posted."))
 
@@ -87,15 +93,18 @@ class AlfiaBreedingContract(models.Model):
                 'move_type': 'out_refund', 'partner_id': rec.client_id.id, 'invoice_date': fields.Date.context_today(self),
                 'invoice_line_ids': [Command.create({'product_id': rec.product_id.id, 'quantity': 1, 'price_unit': rec.fee * rec.refund_percent / 100.0,
                                                       'name': self.env._("Live-foal guarantee refund: %s", rec.name)})]})
-            rec.write({'credit_note_id': credit.id, 'state': 'refunded'})
+            with workflow():
+                rec.write({'credit_note_id': credit.id, 'state': 'refunded'})
 
     def action_close(self):
-        self.filtered(lambda r: r.state in ('invoiced', 'refunded')).write({'state': 'closed'})
+        with workflow():
+            self.filtered(lambda r: r.state in ('invoiced', 'refunded')).write({'state': 'closed'})
 
     def action_cancel(self):
         if any(r.invoice_id for r in self):
             raise UserError(self.env._("An invoiced contract cannot be cancelled."))
-        self.write({'state': 'cancelled'})
+        with workflow():
+            self.write({'state': 'cancelled'})
 
 
 class AccountMove(models.Model):

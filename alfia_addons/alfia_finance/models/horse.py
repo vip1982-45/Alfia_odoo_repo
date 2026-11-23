@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 
 class AlfiaHorse(models.Model):
@@ -30,11 +31,17 @@ class AlfiaHorse(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        if not self.env.su and any(v.get('analytic_account_id') for v in vals_list):
+            raise UserError(self.env._("A horse's cost centre is set by the system."))
         horses = super().create(vals_list)
         horses._alfia_ensure_analytic_account()
         return horses
 
     def write(self, vals):
+        # Each horse has its own cost centre, made by the system; pointing a horse at another account (which would then be
+        # renamed and charged with the horse's costs) is not allowed.
+        if 'analytic_account_id' in vals and not self.env.su:
+            raise UserError(self.env._("A horse's cost centre is set by the system."))
         res = super().write(vals)
         if 'name' in vals:
             for horse in self.filtered('analytic_account_id'):

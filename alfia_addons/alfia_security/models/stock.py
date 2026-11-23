@@ -1,7 +1,11 @@
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError
 
-MOVE_WATCHED = {'product_id', 'product_uom_qty', 'quantity', 'location_id', 'location_dest_id', 'lot_id'}
+from odoo.addons.alfia_security.flow import in_trusted, trusted
+
+MOVE_WATCHED = {'product_id', 'product_uom_qty', 'quantity', 'location_id', 'location_dest_id', 'lot_id', 'uom_id',
+                'product_uom', 'partner_id', 'picking_id', 'package_id', 'result_package_id', 'owner_id'}
+PICKING_WATCHED = {'partner_id', 'location_id', 'location_dest_id', 'picking_type_id', 'owner_id'}
 
 
 class AlfiaPickingApproval(models.Model):
@@ -73,16 +77,22 @@ class StockPicking(models.Model):
             if self.env.user in picking.alfia_approval_ids.user_id and picking._alfia_sod_applies():
                 raise UserError(self.env._("An approver cannot also dispatch %s. Another person must validate the transfer.", picking.name))
 
+    def write(self, vals):
+        if PICKING_WATCHED & set(vals):
+            self.move_ids._alfia_invalidate_approvals()
+        return super().write(vals)
+
     def button_validate(self):
         self._alfia_check_dual_approval()
-        return super(StockPicking, self.with_context(alfia_keep_approvals=True)).button_validate()
+        with trusted('alfia_keep_approvals'):
+            return super().button_validate()
 
 
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
     def _alfia_invalidate_approvals(self):
-        if self.env.context.get('alfia_keep_approvals'):
+        if in_trusted('alfia_keep_approvals'):
             return
         pickings = self.picking_id.filtered(lambda p: p.alfia_approval_ids and p.state not in ('done', 'cancel'))
         if pickings:
@@ -91,10 +101,19 @@ class StockMove(models.Model):
                 picking.sudo().message_post(body=self.env._("The transfer changed after it was approved. Approvals were cleared and must be given again."))
             pickings.alfia_approval_ids.sudo().unlink()
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        moves = super().create(vals_list)
+        moves._alfia_invalidate_approvals()        # a line added to an approved transfer
+        return moves
+
     def write(self, vals):
         if MOVE_WATCHED & set(vals):
             self._alfia_invalidate_approvals()
-        return super().write(vals)
+        res = super().write(vals)
+        if 'picking_id' in vals:
+            self._alfia_invalidate_approvals()    # the transfer it joined
+        return res
 
     def _action_scrap(self):
         """Writing off controlled stock (semen, embryos, medicine...) is an inventory adjustment: approvers only."""

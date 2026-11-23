@@ -1,5 +1,6 @@
 from odoo import Command, api, fields, models
 from odoo.exceptions import AccessError
+from odoo.addons.alfia_security.flow import is_trusted, trusted
 
 GUARDED = ('group_ids', 'alfia_profile_ids')
 SYSTEM_MANAGED = ('alfia_managed_group_ids', 'alfia_location_ids', 'alfia_warehouse_ids', 'alfia_journal_ids')
@@ -98,7 +99,7 @@ class ResUsers(models.Model):
 
     def _alfia_guard(self, vals, creating=False):
         env = self.env
-        if env.su or env.context.get('alfia_sync'):
+        if is_trusted(env, 'alfia_sync'):
             return
         actor = env.user
         if actor.has_group('base.group_system'):
@@ -143,10 +144,11 @@ class ResUsers(models.Model):
                 continue
             added = target - current
             removed = current - target
-            user.with_context(alfia_sync=True).sudo().write({
-                'group_ids': [Command.set(target.ids)],
-                'alfia_managed_group_ids': [Command.set(wanted.ids)],
-            })
+            with trusted('alfia_sync'):
+                user.sudo().write({
+                    'group_ids': [Command.set(target.ids)],
+                    'alfia_managed_group_ids': [Command.set(wanted.ids)],
+                })
             self.env['alfia.security.audit']._alfia_log(
                 'user.groups', self._name, user.login,
                 "profiles: %s\ngranted: %s\nrevoked: %s" % (
@@ -170,7 +172,7 @@ class ResUsers(models.Model):
         profiles_before = {u.id: u.alfia_profile_ids for u in self} if 'alfia_profile_ids' in vals else {}
         security_flags = {u.id: (u.active, u.login) for u in self} if ('active' in vals or 'login' in vals) else {}
         res = super().write(vals)
-        if 'alfia_profile_ids' in vals and not self.env.context.get('alfia_sync'):
+        if 'alfia_profile_ids' in vals and not is_trusted(self.env, 'alfia_sync'):
             for user in self:
                 self.env['alfia.security.audit']._alfia_log(
                     'user.profiles', self._name, user.login,

@@ -3,6 +3,9 @@
 set -eu
 : "${DB_HOST:=db}" "${DB_PORT:=5432}" "${DB_USER:=odoo}" "${DB_NAME:=alfia_demo}"
 : "${DB_PASSWORD:?Set DB_PASSWORD in deploy/.env}" "${MASTER_PASSWORD:?Set MASTER_PASSWORD in deploy/.env}"
+: "${ALFIA_ADMIN_PASSWORD:?Set ADMIN_PASSWORD in deploy/.env (the administrator must not keep admin/admin)}"
+case "$ALFIA_ADMIN_PASSWORD" in admin|change-me-admin) echo "ERROR: choose a real ADMIN_PASSWORD." >&2; exit 1;; esac
+if [ "${#ALFIA_ADMIN_PASSWORD}" -lt 12 ]; then echo "ERROR: ADMIN_PASSWORD must be at least 12 characters." >&2; exit 1; fi
 CONF=/var/lib/alfia/odoo.conf
 cat > "$CONF" <<CFG
 [options]
@@ -58,6 +61,8 @@ else
     fi
   fi
 fi
+# The administrator never keeps Odoo's default password, whether or not the demo farm was loaded.
+python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < deploy/admin_password.py || { echo "ERROR: could not secure the administrator account" >&2; exit 1; }
 # Data corrections that later releases need (safe to run again; does nothing once applied).
 if [ "${INIT_ONLY:-0}" = "1" ]; then
   python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < demo/data_fixes.py || { echo "ERROR: data fixes failed" >&2; exit 1; }

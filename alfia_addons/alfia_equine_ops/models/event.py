@@ -3,6 +3,8 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 
+from odoo.addons.alfia_security.flow import is_trusted, workflow
+
 G = 'alfia_security.group_alfia_'
 
 
@@ -83,8 +85,10 @@ class AlfiaEvent(models.Model):
 class AlfiaEventEntry(models.Model):
     _name = 'alfia.event.entry'
     _description = 'Event entry'
-    _inherit = ['alfia.horse.record', 'mail.thread']
+    _inherit = ['alfia.horse.record', 'mail.thread', 'alfia.guarded.mixin']
     _order = 'event_id, id'
+    # Submitted, vet-confirmed and decided only through the buttons, which apply the restriction rules.
+    _alfia_guarded = ('state', 'issues', 'vet_confirmed', 'vet_id', 'decided_by_id')
 
     event_id = fields.Many2one('alfia.event', required=True, ondelete='cascade', index=True)
     rider_id = fields.Many2one('res.partner', string='Rider')
@@ -100,20 +104,28 @@ class AlfiaEventEntry(models.Model):
         for rec in self:
             rule = rec.event_id.rule_id
             problems = rule._problems(rec.horse_id, rec.event_id.date_start) if rule else []
-            rec.issues = '\n'.join(problems)
+            with workflow():
+                rec.issues = '\n'.join(problems)
         return True
+
+    def write(self, vals):
+        # What was submitted (horse, event) is what the vet and the manager decide on.
+        if not is_trusted(self.env) and {'horse_id', 'event_id'} & set(vals) and any(r.state != 'draft' for r in self):
+            raise UserError(self.env._("A submitted entry cannot be moved to another horse or event."))
+        return super().write(vals)
 
     def action_submit(self):
         for rec in self.filtered(lambda r: r.state == 'draft'):
             rec.action_check()
-            rec.state = 'pending'
-            rec.vet_confirmed = False
+            with workflow():
+                rec.write({'state': 'pending', 'vet_confirmed': False})
 
     def action_vet_confirm(self):
         if not (self.env.su or self.env.user.has_group(G + 'vet_user')):
             raise AccessError(self.env._("Only veterinary staff can confirm fitness for an entry."))
         for rec in self.filtered(lambda r: r.state == 'pending'):
-            rec.write({'vet_confirmed': True, 'vet_id': self.env.user.id})
+            with workflow():
+                rec.write({'vet_confirmed': True, 'vet_id': self.env.user.id})
 
     def action_approve(self):
         if not (self.env.su or self.env.user.has_group(G + 'training_manager')):
@@ -124,9 +136,11 @@ class AlfiaEventEntry(models.Model):
                 raise UserError(self.env._("%(horse)s cannot be approved:\n%(issues)s", horse=rec.horse_id.name, issues=rec.issues))
             if rec.event_id.rule_id.require_fitness and not rec.vet_confirmed:
                 raise UserError(self.env._("The vet must confirm %s first.", rec.horse_id.name))
-            rec.write({'state': 'approved', 'decided_by_id': self.env.user.id})
+            with workflow():
+                rec.write({'state': 'approved', 'decided_by_id': self.env.user.id})
 
     def action_reject(self):
         if not (self.env.su or self.env.user.has_group(G + 'training_manager')):
             raise AccessError(self.env._("Only a competition manager can reject entries."))
-        self.filtered(lambda r: r.state in ('pending', 'draft')).write({'state': 'rejected', 'decided_by_id': self.env.user.id})
+        with workflow():
+            self.filtered(lambda r: r.state in ('pending', 'draft')).write({'state': 'rejected', 'decided_by_id': self.env.user.id})

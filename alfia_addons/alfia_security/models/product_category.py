@@ -37,8 +37,14 @@ class ProductCategory(models.Model):
         """The approver groups a transfer of this category needs (empty when no dual approval applies)."""
         return self.alfia_effective_approver_group_ids
 
+    def _alfia_restriction_key(self):
+        return (self.alfia_effective_group_id.id, tuple(sorted(self.alfia_effective_approver_group_ids.ids)))
+
     def _alfia_check_can_edit_restrictions(self, vals):
-        if not any(f in vals for f in WATCHED) or self.env.su:
+        moving = 'parent_id' in vals and any(
+            c._alfia_restriction_key() != (self.browse(vals['parent_id']) if vals['parent_id'] else self.browse())._alfia_restriction_key()
+            and not (c.alfia_access_group_id and c.alfia_dual_approval) for c in self)
+        if not (any(f in vals for f in WATCHED) or moving) or self.env.su:
             return
         user = self.env.user
         if user.has_group('base.group_system'):
@@ -84,3 +90,17 @@ class ProductCategory(models.Model):
         return "restricted to=%s dual approval=%s approvers=[%s]" % (
             category.alfia_access_group_id.display_name or '-', category.alfia_dual_approval,
             ', '.join(sorted(category.alfia_approver_group_ids.mapped('display_name'))))
+
+
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    def write(self, vals):
+        # Moving a product to a category with other stock restrictions would lift (or impose) them: officers only.
+        if 'categ_id' in vals and not self.env.su and not self.env.user.has_group('base.group_system') \
+                and not self.env.user.has_group('alfia_security.group_alfia_security_officer'):
+            new = self.env['product.category'].browse(vals['categ_id']) if vals['categ_id'] else self.env['product.category']
+            if any(t.categ_id._alfia_restriction_key() != new._alfia_restriction_key() for t in self):
+                raise AccessError(self.env._("Moving a product to a category with different stock restrictions is for "
+                                             "security officers and system administrators."))
+        return super().write(vals)

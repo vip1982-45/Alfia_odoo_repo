@@ -1,6 +1,8 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 
+from odoo.addons.alfia_security.flow import workflow
+
 TASK_KINDS = [
     ('pregnancy_check', 'Pregnancy check'), ('pregnancy_vaccine', 'Pregnancy vaccination'), ('foaling_prep', 'Foaling preparation'),
     ('heat_alert', 'Heat in pregnant mare'), ('teasing', 'Teasing'), ('health_due', 'Health care due'), ('vet_follow_up', 'Vet follow-up'),
@@ -10,7 +12,10 @@ TASK_KINDS = [
 class AlfiaTask(models.Model):
     _name = 'alfia.task'
     _description = 'Work item'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'alfia.guarded.mixin']
+    # Keys identify the work the system schedules (pregnancy checks, quarantine...): only the system sets them, so nobody
+    # can take over or pre-empt a scheduled item. Who did the work is recorded by the system too.
+    _alfia_guarded = ('key', 'done_by_id', 'done_date')
     _order = 'due_date, urgent desc, id'
 
     name = fields.Char(required=True)
@@ -83,7 +88,8 @@ class AlfiaTask(models.Model):
         for task in self:
             if task.state in ('done', 'cancelled'):
                 raise UserError(self.env._("This work item is already %s.", dict(task._fields['state']._description_selection(task.env))[task.state].lower()))
-        self.write({'state': 'done', 'done_by_id': self.env.user.id, 'done_date': fields.Datetime.now()})
+        with workflow():
+            self.write({'state': 'done', 'done_by_id': self.env.user.id, 'done_date': fields.Datetime.now()})
 
     def action_cancel(self):
         if any(t.state == 'done' for t in self):

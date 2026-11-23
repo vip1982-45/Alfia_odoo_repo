@@ -1,6 +1,8 @@
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 
+from odoo.addons.alfia_security.flow import ANY, workflow
+
 
 class AlfiaHorseRecord(models.AbstractModel):
     """Common ground of every record that belongs to one horse."""
@@ -135,7 +137,8 @@ class AlfiaTreatmentDose(models.Model):
 class AlfiaLabTest(models.Model):
     _name = 'alfia.lab.test'
     _description = 'Laboratory test'
-    _inherit = ['alfia.horse.record']
+    _inherit = ['alfia.horse.record', 'alfia.guarded.mixin']
+    _alfia_guarded = ('state', 'reviewed_by_id', 'reviewed_date')
     _order = 'date desc, id desc'
     _rec_name = 'test'
 
@@ -153,7 +156,8 @@ class AlfiaLabTest(models.Model):
     def action_review(self):
         if not self.env.user.has_group('alfia_security.group_alfia_vet_user'):
             raise AccessError(self.env._("Only veterinary staff can review laboratory results."))
-        self.write({'state': 'reviewed', 'reviewed_by_id': self.env.user.id, 'reviewed_date': fields.Datetime.now()})
+        with workflow():
+            self.write({'state': 'reviewed', 'reviewed_by_id': self.env.user.id, 'reviewed_date': fields.Datetime.now()})
 
 
 class AlfiaDiagnosticImage(models.Model):
@@ -335,7 +339,16 @@ class AlfiaClearance(models.Model):
     A missing record never means "cleared": the horse's status is *pending* until somebody decides."""
     _name = 'alfia.clearance'
     _description = 'Fitness or eligibility decision'
-    _inherit = ['alfia.horse.record']
+    _inherit = ['alfia.horse.record', 'alfia.guarded.mixin']
+    # The decision is taken only through Clear / Restrict (or when creating it, by someone allowed to decide it).
+    _alfia_guarded = ('kind', 'state', 'decided_by_id')
+    _alfia_guarded_create = {'kind': ANY, 'state': ANY, 'decided_by_id': ANY}
+
+    def write(self, vals):
+        if 'restricted_until' in vals and not self.env.su:
+            for rec in self:
+                rec._check_may_decide(rec.kind)   # part of the decision: only whoever may decide it
+        return super().write(vals)
     _order = 'date desc, id desc'
     _rec_name = 'kind'
 
@@ -355,7 +368,8 @@ class AlfiaClearance(models.Model):
     def action_decide(self, state, restricted_until=None, notes=None):
         for rec in self:
             rec._check_may_decide(rec.kind)
-            rec.write({'state': state, 'decided_by_id': self.env.user.id, 'restricted_until': restricted_until, 'notes': notes or rec.notes})
+            with workflow():
+                rec.write({'state': state, 'decided_by_id': self.env.user.id, 'restricted_until': restricted_until, 'notes': notes or rec.notes})
 
     def action_clear(self):
         self.action_decide('cleared')
@@ -366,7 +380,7 @@ class AlfiaClearance(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get('state', 'pending') != 'pending':
+            if vals.get('state', 'pending') != 'pending' or vals.get('decided_by_id') or vals.get('restricted_until'):
                 self._check_may_decide(vals.get('kind'))
                 vals['decided_by_id'] = self.env.user.id
         return super().create(vals_list)

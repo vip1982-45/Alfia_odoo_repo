@@ -3,7 +3,8 @@ from dateutil.relativedelta import relativedelta
 from odoo import Command, api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 
-FLOW = 'alfia_breeding_flow'  # set by the methods that move a record on; direct status edits are refused
+from odoo.addons.alfia_security.flow import ANY, in_trusted, is_trusted, trusted, workflow
+
 PARAMETERS = ('check_offsets', 'gestation_days', 'prep_days', 'vaccine_months', 'season_start_month', 'season_start_day',
               'season_end_month', 'season_end_day', 'teasing_pregnant_until_day')
 
@@ -17,7 +18,8 @@ class AlfiaBreedingRule(models.Model):
     """A versioned, vet-approved set of breeding schedule parameters. Nothing is scheduled from an unapproved set."""
     _name = 'alfia.breeding.rule'
     _description = 'Breeding schedule rule set'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'alfia.guarded.mixin']
+    _alfia_guarded = ('state', 'approved_by_id', 'approved_date', 'drafted_by_id')
     _order = 'version desc, id desc'
 
     name = fields.Char(required=True, tracking=True)
@@ -85,28 +87,34 @@ class AlfiaBreedingRule(models.Model):
             if rule.drafted_by_id == self.env.user and self.env['alfia.sod.mixin']._alfia_sod_applies(None, rule.company_id):
                 raise UserError(self.env._("You set these schedule parameters, so another resident veterinarian must approve them."))
             others = self.search([('state', '=', 'approved'), ('company_id', '=', rule.company_id.id), ('id', '!=', rule.id)])
-            others.write({'state': 'retired'})
-            rule.write({'state': 'approved', 'approved_by_id': self.env.user.id, 'approved_date': fields.Datetime.now()})
+            with workflow():
+                others.write({'state': 'retired'})
+                rule.write({'state': 'approved', 'approved_by_id': self.env.user.id, 'approved_date': fields.Datetime.now()})
             rule.message_post(body=self.env._("Approved by %s. It now drives new pregnancies.", self.env.user.name))
 
     def action_new_version(self):
         self.ensure_one()
-        new = self.copy({'name': self.name, 'version': self.version + 1, 'state': 'draft'})
-        new.drafted_by_id = self.env.user
+        with workflow():
+            new = self.copy({'name': self.name, 'version': self.version + 1, 'state': 'draft'})
+            new.drafted_by_id = self.env.user
         return new
 
     @api.model_create_multi
     def create(self, vals_list):
         rules = super().create(vals_list)
         if not self.env.su:
-            rules.drafted_by_id = self.env.user
+            with workflow():
+                rules.drafted_by_id = self.env.user
         return rules
 
     def write(self, vals):
         if set(vals) & set(PARAMETERS) and any(r.state != 'draft' for r in self):
             raise UserError(self.env._("An approved rule set cannot be changed. Create a new version instead."))
         if set(vals) & set(PARAMETERS) and not self.env.su:
-            vals = dict(vals, drafted_by_id=self.env.user.id)
+            if not is_trusted(self.env) and set(vals) & set(self._alfia_guarded):
+                self._alfia_guard_refuse(set(vals) & set(self._alfia_guarded))
+            with workflow():   # whoever changes the parameters is their drafter (and cannot approve them)
+                return super().write(dict(vals, drafted_by_id=self.env.user.id))
         return super().write(vals)
 
     def season_contains(self, day):
@@ -219,7 +227,8 @@ class AlfiaTeasing(models.Model):
 class AlfiaBreedingService(models.Model):
     _name = 'alfia.breeding.service'
     _description = 'Breeding service (attempt)'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'alfia.guarded.mixin']
+    _alfia_guarded = ('state',)
     _order = 'date desc, id desc'
 
     mare_id = fields.Many2one('alfia.horse', string='Mare', required=True, domain="[('sex', '=', 'female')]", index=True, tracking=True)
@@ -257,29 +266,20 @@ class AlfiaBreedingService(models.Model):
             if rec.stallion_id and rec.stallion_id.sex != 'male':
                 raise ValidationError(self.env._("The stallion of a service must be a stallion."))
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        if not self.env.su and any(v.get('state', 'planned') != 'planned' for v in vals_list):
-            raise UserError(self.env._("A service is recorded as planned and then marked done or cancelled."))
-        return super().create(vals_list)
-
-    def write(self, vals):
-        if 'state' in vals and not self.env.su and not self.env.context.get(FLOW):
-            raise UserError(self.env._("Use 'Mark done' or 'Cancel': a service's status is not edited by hand."))
-        return super().write(vals)
-
     def action_done(self):
         for rec in self:
             if rec.state != 'planned':
                 raise UserError(self.env._("Only a planned service can be marked done."))
             if rec.method == 'ai_frozen' and rec.semen_lot_id:
                 rec._alfia_use_dose()
-        self.with_context(**{FLOW: True}).write({'state': 'done'})
+        with workflow():
+            self.write({'state': 'done'})
 
     def action_cancel(self):
         if any(r.state == 'done' for r in self):
             raise UserError(self.env._("A completed service is not cancelled."))
-        self.with_context(**{FLOW: True}).write({'state': 'cancelled'})
+        with workflow():
+            self.write({'state': 'cancelled'})
 
     def _alfia_use_dose(self):
         """A frozen insemination uses one dose of the linked semen batch: it leaves the tank it is stored in
@@ -310,7 +310,8 @@ class AlfiaBreedingService(models.Model):
 class AlfiaOvulation(models.Model):
     _name = 'alfia.ovulation'
     _description = 'Ovulation'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'alfia.guarded.mixin']
+    _alfia_guarded = ('state', 'confirmed_by_id', 'confirmed_date', 'pregnancy_id')
     _order = 'date desc, id desc'
 
     mare_id = fields.Many2one('alfia.horse', string='Mare', required=True, domain="[('sex', '=', 'female')]", index=True)
@@ -337,10 +338,12 @@ class AlfiaOvulation(models.Model):
                 continue
             rule = self.env['alfia.breeding.rule']._get_approved(rec.company_id)
             service = rec.service_id
-            pregnancy = self.env['alfia.pregnancy'].create({
-                'mare_id': rec.mare_id.id, 'genetic_dam_id': rec.mare_id.id, 'service_id': service.id or False,
-                'sire_id': service.stallion_id.id or False, 'ovulation_id': rec.id, 'ovulation_date': rec.date, 'rule_id': rule.id})
-            rec.write({'state': 'confirmed', 'confirmed_by_id': self.env.user.id, 'confirmed_date': fields.Datetime.now(), 'pregnancy_id': pregnancy.id})
+            with workflow():
+                pregnancy = self.env['alfia.pregnancy'].create({
+                    'mare_id': rec.mare_id.id, 'genetic_dam_id': rec.mare_id.id, 'service_id': service.id or False,
+                    'sire_id': service.stallion_id.id or False, 'ovulation_id': rec.id, 'ovulation_date': rec.date, 'rule_id': rule.id})
+            with workflow():
+                rec.write({'state': 'confirmed', 'confirmed_by_id': self.env.user.id, 'confirmed_date': fields.Datetime.now(), 'pregnancy_id': pregnancy.id})
             pregnancy._generate_tasks()
         return True
 
@@ -351,15 +354,17 @@ class AlfiaOvulation(models.Model):
             raise UserError(self.env._("Enter a reason for the correction."))
         for rec in self:
             old = rec.date
-            rec.with_context(alfia_ovulation_correction=True).write({'date': new_date})
+            with trusted('alfia_ovulation_correction'):
+                rec.write({'date': new_date})
             rec.message_post(body=self.env._("Date corrected from %(old)s to %(new)s by %(user)s: %(reason)s", old=old, new=new_date, user=self.env.user.name, reason=reason))
             if rec.pregnancy_id:
-                rec.pregnancy_id.ovulation_date = new_date
+                with workflow():
+                    rec.pregnancy_id.ovulation_date = new_date
                 moved = rec.pregnancy_id._generate_tasks()
                 rec.pregnancy_id.message_post(body=self.env._("Ovulation date corrected. %d pending work item(s) were re-dated; completed work was kept.", moved))
 
     def write(self, vals):
-        if 'date' in vals and any(r.state == 'confirmed' for r in self) and not self.env.context.get('alfia_ovulation_correction'):
+        if 'date' in vals and any(r.state == 'confirmed' for r in self) and not in_trusted('alfia_ovulation_correction'):
             raise UserError(self.env._("A confirmed ovulation date is corrected with 'Correct date', which keeps the history."))
         return super().write(vals)
 
@@ -391,7 +396,9 @@ class AlfiaReproductiveExam(models.Model):
 class AlfiaPregnancy(models.Model):
     _name = 'alfia.pregnancy'
     _description = 'Pregnancy'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'alfia.guarded.mixin']
+    _alfia_guarded = ('state', 'ovulation_date', 'rule_id', 'ovulation_id')
+    _alfia_guarded_create = {'ovulation_date': ANY, 'rule_id': ANY, 'ovulation_id': ANY}
     _order = 'ovulation_date desc, id desc'
 
     name = fields.Char(compute='_compute_name', store=True)
@@ -444,18 +451,6 @@ class AlfiaPregnancy(models.Model):
             if rec.genetic_dam_id and rec.genetic_dam_id.sex != 'female':
                 raise ValidationError(self.env._("The genetic dam must be a mare."))
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        if not self.env.su and not self.env.context.get(FLOW) and any(v.get('state', 'bred') != 'bred' for v in vals_list):
-            raise UserError(self.env._("A new pregnancy starts as 'Bred, awaiting result'; the vet's checks move it on."))
-        return super().create(vals_list)
-
-    def write(self, vals):
-        if 'state' in vals and not self.env.su and not self.env.context.get(FLOW):
-            raise UserError(self.env._("A pregnancy's status follows the vet's checks and the foaling record; record a check "
-                                       "or a foaling instead of changing it by hand."))
-        return super().write(vals)
-
     def _generate_tasks(self):
         """Schedule every item of the rule set this pregnancy was created under. Safe to repeat: items are matched by key, so
         nothing is duplicated, pending items follow a corrected date, and completed or cancelled items are left alone."""
@@ -477,7 +472,8 @@ class AlfiaPregnancy(models.Model):
     def _close(self, state, reason):
         """End a pregnancy: the mare is open again, pending work is cancelled, history is kept."""
         for rec in self:
-            rec.with_context(**{FLOW: True}).state = state
+            with workflow():
+                rec.state = state
             cancelled = self.env['alfia.task']._alfia_cancel_pending(f"preg:{rec.id}:", reason)
             rec.message_post(body=self.env._("%(reason)s %(count)d pending work item(s) were cancelled; results and history are kept.", reason=reason, count=len(cancelled)))
 
@@ -527,7 +523,8 @@ class AlfiaPregnancyCheck(models.Model):
         if self.task_id and self.task_id.state in ('todo', 'deferred'):
             self.task_id.action_done()
         if self.result == 'positive':
-            pregnancy.with_context(**{FLOW: True}).state = 'pregnant'
+            with workflow():
+                pregnancy.state = 'pregnant'
         elif self.result == 'negative':
             pregnancy._close('negative', self.env._("Negative result confirmed by %s.", self.vet_id.name))
         elif self.result == 'loss':
@@ -542,7 +539,8 @@ class AlfiaFoaling(models.Model):
     """Birth in three steps: stable staff record it, the vet confirms it, administration completes the foal's identity."""
     _name = 'alfia.foaling'
     _description = 'Foaling'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'alfia.guarded.mixin']
+    _alfia_guarded = ('state', 'foal_id', 'confirmed_by_id', 'recorded_by_id')
     _order = 'date desc, id desc'
 
     pregnancy_id = fields.Many2one('alfia.pregnancy', required=True, ondelete='restrict', index=True)
@@ -562,15 +560,10 @@ class AlfiaFoaling(models.Model):
 
     _one_per_pregnancy = models.Constraint('unique(pregnancy_id)', 'A birth is already recorded for this pregnancy.')
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        if not self.env.su and any(v.get('state', 'draft') != 'draft' for v in vals_list):
-            raise UserError(self.env._("A birth is recorded first; the vet then confirms it and the breeding manager completes the foal's identity."))
-        return super().create(vals_list)
-
     def write(self, vals):
-        if any(f in vals for f in ('state', 'foal_id', 'confirmed_by_id')) and not self.env.su and not self.env.context.get(FLOW):
-            raise UserError(self.env._("Use 'Vet confirms birth' and 'Complete foal identity': a birth's status is not edited by hand."))
+        # Once the vet has confirmed the birth, what was confirmed stays as confirmed.
+        if not self.env.su and set(vals) & {'pregnancy_id', 'date', 'outcome'} and any(r.state != 'draft' for r in self):
+            raise UserError(self.env._("A birth confirmed by the vet cannot be changed."))
         return super().write(vals)
 
     def action_vet_confirm(self):
@@ -578,7 +571,8 @@ class AlfiaFoaling(models.Model):
         for rec in self:
             if rec.state != 'draft':
                 raise UserError(self.env._("Only a recorded birth can be confirmed."))
-            rec.with_context(**{FLOW: True}).write({'state': 'vet_confirmed', 'confirmed_by_id': self.env.user.id})
+            with workflow():
+                rec.write({'state': 'vet_confirmed', 'confirmed_by_id': self.env.user.id})
 
     def action_complete(self):
         _require_group(self.env, 'alfia_security.group_alfia_breeding_manager', self.env._("the breeding manager"))
@@ -597,13 +591,16 @@ class AlfiaFoaling(models.Model):
                     'name': rec.foal_name, 'sex': 'female' if rec.foal_sex == 'filly' else 'male', 'birthdate': rec.date,
                     'sire_id': preg.sire_id.id or False, 'dam_id': dam.id, 'carrier_mare_id': carrier.id if carrier != dam else False,
                     'breed': dam.breed, 'initial_location_id': carrier.location_id.id or False})
-                rec.with_context(**{FLOW: True}).foal_id = foal
-                preg.with_context(**{FLOW: True}).state = 'foaled'
+                with workflow():
+                    rec.foal_id = foal
+                    preg.state = 'foaled'
             elif rec.outcome == 'aborted':
                 preg._close('lost', self.env._("The pregnancy ended in abortion."))
             else:
-                preg.with_context(**{FLOW: True}).state = 'foaled'
-            rec.with_context(**{FLOW: True}).state = 'completed'
+                with workflow():
+                    preg.state = 'foaled'
+            with workflow():
+                rec.state = 'completed'
             preg.task_ids.filtered(lambda t: t.state in ('todo', 'deferred')).action_cancel()
             rec.message_post(body=self.env._("Identity completed by %s.", self.env.user.name))
 
@@ -611,7 +608,8 @@ class AlfiaFoaling(models.Model):
 class AlfiaEmbryo(models.Model):
     _name = 'alfia.embryo'
     _description = 'Embryo'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'alfia.guarded.mixin']
+    _alfia_guarded = ('state', 'pregnancy_id')
     _order = 'flush_date desc, id desc'
 
     name = fields.Char(string='Embryo code', required=True, copy=False, default=lambda self: self.env['ir.sequence'].next_by_code('alfia.embryo'))
@@ -633,14 +631,18 @@ class AlfiaEmbryo(models.Model):
         for rec in self:
             if not rec.tank_id:
                 raise UserError(self.env._("Choose where the embryo is stored."))
-            rec.state = 'stored'
+            if rec.state != 'collected':
+                raise UserError(self.env._("Only a collected embryo is put into storage."))
+            with workflow():
+                rec.state = 'stored'
 
     def action_discard(self):
         _require_group(self.env, 'alfia_security.group_alfia_vet_user', self.env._("veterinary staff"))
         for rec in self:
             if rec.state == 'transferred':
                 raise UserError(self.env._("A transferred embryo cannot be discarded."))
-        self.state = 'discarded'
+        with workflow():
+            self.state = 'discarded'
 
     def action_transfer(self, pregnancy):
         """Place the embryo in a recipient's pregnancy: the recipient stays the carrier; the donor becomes the genetic dam."""
@@ -652,15 +654,17 @@ class AlfiaEmbryo(models.Model):
                 raise UserError(self.env._("The recipient's pregnancy is not active."))
             if pregnancy.mare_id == rec.donor_id:
                 raise UserError(self.env._("The recipient must be a different mare from the donor."))
-            pregnancy.write({'genetic_dam_id': rec.donor_id.id, 'sire_id': rec.sire_id.id or pregnancy.sire_id.id})
-            rec.write({'state': 'transferred', 'pregnancy_id': pregnancy.id})
+            with workflow():
+                pregnancy.write({'genetic_dam_id': rec.donor_id.id, 'sire_id': rec.sire_id.id or pregnancy.sire_id.id})
+                rec.write({'state': 'transferred', 'pregnancy_id': pregnancy.id})
             pregnancy.message_post(body=self.env._("Embryo %(code)s from donor %(donor)s transferred to carrier %(carrier)s.", code=rec.name, donor=rec.donor_id.name, carrier=pregnancy.mare_id.name))
 
 
 class AlfiaSemenCollection(models.Model):
     _name = 'alfia.semen.collection'
     _description = 'Semen collection'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'alfia.guarded.mixin']
+    _alfia_guarded = ('state', 'lot_id', 'released_by_id')
     _order = 'date desc, id desc'
 
     name = fields.Char(copy=False, readonly=True, default='New')
@@ -706,8 +710,14 @@ class AlfiaSemenCollection(models.Model):
                 raise UserError(self.env._("Choose the semen product and the tank location."))
             self.env.user._alfia_check_location(rec.tank_id, self.env._("semen tank"))
             product = rec.product_id
+            semen = self.env.ref('alfia_equine.category_semen')
+            if not self.env['product.category'].search_count([('id', '=', product.categ_id.id), ('id', 'child_of', semen.id)]):
+                # Releasing creates stock out of nothing: only semen may enter this way, never other (controlled) products.
+                raise UserError(self.env._("Only a product in the %s category can be released as a semen batch.", semen.display_name))
             lot = self.env['stock.lot'].sudo().create({'name': f"{rec.name}-{rec.stallion_id.id}", 'product_id': product.id, 'company_id': rec.company_id.id})
-            source = self.env['stock.location'].sudo().search([('usage', '=', 'inventory'), ('company_id', 'in', (False, rec.company_id.id))], limit=1)
+            used = self.env.ref('alfia_equine.stock_location_semen_used', raise_if_not_found=False)
+            source = self.env['stock.location'].sudo().search([('usage', '=', 'inventory'), ('company_id', 'in', (False, rec.company_id.id)),
+                                                               ('id', '!=', used.id if used else 0)], limit=1)
             move = self.env['stock.move'].sudo().create({
                 'product_id': product.id, 'product_uom_qty': rec.doses, 'uom_id': product.uom_id.id, 'company_id': rec.company_id.id,
                 'location_id': source.id, 'location_dest_id': rec.tank_id.id, 'origin': rec.name, 'picked': True,
@@ -715,11 +725,19 @@ class AlfiaSemenCollection(models.Model):
                                                   'location_id': source.id, 'location_dest_id': rec.tank_id.id, 'company_id': rec.company_id.id})]})
             move._action_confirm()
             move._action_done()
-            rec.write({'state': 'released', 'lot_id': lot.id, 'released_by_id': self.env.user.id})
+            with workflow():
+                rec.write({'state': 'released', 'lot_id': lot.id, 'released_by_id': self.env.user.id})
 
     def action_reject(self):
         _require_group(self.env, 'alfia_security.group_alfia_vet_user', self.env._("veterinary staff"))
-        self.filtered(lambda r: r.state == 'draft').write({'state': 'rejected'})
+        with workflow():
+            self.filtered(lambda r: r.state == 'draft').write({'state': 'rejected'})
+
+    def write(self, vals):
+        # A released batch is stock: what it contains and where it went no longer change (notes only).
+        if not self.env.su and set(vals) - {'notes'} and any(r.state != 'draft' for r in self) and not is_trusted(self.env):
+            raise UserError(self.env._("A released or rejected batch cannot be changed."))
+        return super().write(vals)
 
     def unlink(self):
         if any(r.state == 'released' for r in self):

@@ -125,7 +125,7 @@
         <field name="name">alfia.lab.test.form</field>
         <field name="model">alfia.lab.test</field>
         <field name="arch" type="xml">
-            <form><header><button name="action_review" string="Vet review" type="object" class="btn-primary" invisible="state == 'reviewed'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="date"/><field name="test"/><field name="lab"/><field name="vet_id"/></group><group><field name="result"/><field name="reference_range"/><field name="state"/><field name="reviewed_by_id"/></group></group><group><field name="notes"/></group></sheet></form>
+            <form><header><button name="action_review" string="Vet review" type="object" class="btn-primary" invisible="state == 'reviewed'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="date"/><field name="test"/><field name="lab"/><field name="vet_id"/></group><group><field name="result"/><field name="reference_range"/><field name="state" readonly="1"/><field name="reviewed_by_id"/></group></group><group><field name="notes"/></group></sheet></form>
         </field>
     </record>
     <record id="alfia_lab_test_view_search" model="ir.ui.view">
@@ -286,7 +286,7 @@
         <field name="name">alfia.clearance.form</field>
         <field name="model">alfia.clearance</field>
         <field name="arch" type="xml">
-            <form><header><button name="action_clear" string="Clear" type="object" class="btn-primary" invisible="state == 'cleared'"/><button name="action_restrict" string="Restrict" type="object" class="" invisible="state == 'restricted'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="kind"/><field name="date"/></group><group><field name="state"/><field name="restricted_until"/><field name="decided_by_id"/></group></group><group><field name="notes"/></group></sheet></form>
+            <form><header><button name="action_clear" string="Clear" type="object" class="btn-primary" invisible="state == 'cleared'"/><button name="action_restrict" string="Restrict" type="object" class="" invisible="state == 'restricted'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="kind"/><field name="date"/></group><group><field name="state" readonly="1"/><field name="restricted_until"/><field name="decided_by_id"/></group></group><group><field name="notes"/></group></sheet></form>
         </field>
     </record>
     <record id="alfia_clearance_view_search" model="ir.ui.view">
@@ -424,7 +424,7 @@
         <field name="name">alfia.ovulation.form</field>
         <field name="model">alfia.ovulation</field>
         <field name="arch" type="xml">
-            <form><header><button name="action_confirm" string="Vet confirms ovulation" type="object" class="btn-primary" invisible="state == 'confirmed'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="mare_id"/><field name="service_id"/><field name="date"/></group><group><field name="state"/><field name="confirmed_by_id"/><field name="pregnancy_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+            <form><header><button name="action_confirm" string="Vet confirms ovulation" type="object" class="btn-primary" invisible="state == 'confirmed'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="mare_id"/><field name="service_id"/><field name="date"/></group><group><field name="state" readonly="1"/><field name="confirmed_by_id"/><field name="pregnancy_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
         </field>
     </record>
     <record id="alfia_ovulation_view_search" model="ir.ui.view">
@@ -539,7 +539,7 @@
         <field name="name">alfia.embryo.form</field>
         <field name="model">alfia.embryo</field>
         <field name="arch" type="xml">
-            <form><header><button name="action_store" string="Freeze / store" type="object" class="" invisible="state != 'collected'"/><button name="action_discard" string="Discard" type="object" class="" invisible="state in ('transferred','discarded')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="donor_id"/><field name="sire_id"/><field name="flush_date"/><field name="stage"/></group><group><field name="grade"/><field name="state"/><field name="tank_id"/><field name="pregnancy_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+            <form><header><button name="action_store" string="Freeze / store" type="object" class="" invisible="state != 'collected'"/><button name="action_discard" string="Discard" type="object" class="" invisible="state in ('transferred','discarded')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="donor_id"/><field name="sire_id"/><field name="flush_date"/><field name="stage"/></group><group><field name="grade"/><field name="state" readonly="1"/><field name="tank_id"/><field name="pregnancy_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
         </field>
     </record>
     <record id="alfia_embryo_view_search" model="ir.ui.view">
@@ -562,7 +562,7 @@
         <field name="name">alfia.semen.collection.form</field>
         <field name="model">alfia.semen.collection</field>
         <field name="arch" type="xml">
-            <form><header><button name="action_release" string="Release batch" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_reject" string="Reject" type="object" class="" invisible="state != 'draft'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="stallion_id"/><field name="date"/><field name="volume_ml"/><field name="concentration"/><field name="motility"/><field name="morphology"/></group><group><field name="doses"/><field name="product_id"/><field name="tank_id"/><field name="state"/><field name="lot_id"/><field name="released_by_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+            <form><header><button name="action_release" string="Release batch" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_reject" string="Reject" type="object" class="" invisible="state != 'draft'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="stallion_id"/><field name="date"/><field name="volume_ml"/><field name="concentration"/><field name="motility"/><field name="morphology"/></group><group><field name="doses"/><field name="product_id"/><field name="tank_id"/><field name="state" readonly="1"/><field name="lot_id"/><field name="released_by_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
         </field>
     </record>
     <record id="alfia_semen_collection_view_search" model="ir.ui.view">
@@ -585,7 +585,7 @@
         <field name="name">alfia.breeding.rule.form</field>
         <field name="model">alfia.breeding.rule</field>
         <field name="arch" type="xml">
-            <form><header><button name="action_approve" string="Approve (resident vet)" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_new_version" string="New version" type="object" class="" invisible="state == 'draft'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="version"/><field name="state"/><field name="check_offsets"/><field name="gestation_days"/><field name="prep_days"/><field name="vaccine_months"/><field name="season_start_month"/></group><group><field name="season_start_day"/><field name="season_end_month"/><field name="season_end_day"/><field name="teasing_pregnant_until_day"/><field name="drafted_by_id"/><field name="approved_by_id"/><field name="approved_date"/></group></group><group><field name="day_zero_notes"/></group></sheet><chatter/></form>
+            <form><header><button name="action_approve" string="Approve (resident vet)" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_new_version" string="New version" type="object" class="" invisible="state == 'draft'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="version"/><field name="state" readonly="1"/><field name="check_offsets"/><field name="gestation_days"/><field name="prep_days"/><field name="vaccine_months"/><field name="season_start_month"/></group><group><field name="season_start_day"/><field name="season_end_month"/><field name="season_end_day"/><field name="teasing_pregnant_until_day"/><field name="drafted_by_id"/><field name="approved_by_id"/><field name="approved_date"/></group></group><group><field name="day_zero_notes"/></group></sheet><chatter/></form>
         </field>
     </record>
     <record id="alfia_breeding_rule_view_search" model="ir.ui.view">
@@ -654,7 +654,7 @@
         <field name="name">alfia.horse.movement.form</field>
         <field name="model">alfia.horse.movement</field>
         <field name="arch" type="xml">
-            <form><header><button name="action_done" string="Complete" type="object" class="btn-primary" invisible="state != 'planned'"/><button name="action_cancel" string="Cancel" type="object" class="" invisible="state != 'planned'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="kind"/><field name="date"/><field name="location_to_id"/></group><group><field name="partner_id"/><field name="responsible_id"/><field name="reason"/><field name="state"/></group></group></sheet></form>
+            <form><header><button name="action_done" string="Complete" type="object" class="btn-primary" invisible="state != 'planned'"/><button name="action_cancel" string="Cancel" type="object" class="" invisible="state != 'planned'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="kind"/><field name="date"/><field name="location_to_id"/></group><group><field name="partner_id"/><field name="responsible_id"/><field name="reason"/><field name="state" readonly="1"/></group></group></sheet></form>
         </field>
     </record>
     <record id="alfia_horse_movement_view_search" model="ir.ui.view">

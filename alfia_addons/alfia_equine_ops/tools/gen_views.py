@@ -14,23 +14,23 @@ SPEC = [
          form=['name', 'description', 'active', 'company_id', 'sex', 'status', 'breed', 'reproductive_state', 'min_age_years', 'max_age_years', 'location_id'],
          extra_form='<field name="member_ids"/>', header_buttons=[('action_open_members', 'Show members', '', '')], search=['name'], access=(ALL_HORSE + [BM], [BM, TM, VM], [BM])),
     dict(model='alfia.charge', title='Charges', menu='billing', list=['date', 'horse_id', 'partner_id', 'product_id', 'quantity', 'price_unit', 'amount', 'state'],
-         form=['horse_id', 'partner_id', 'product_id', 'name', 'date', 'quantity', 'price_unit', 'amount', 'plan_id', 'move_id', 'state'], search=['horse_id', 'partner_id'], scope='horse_id', chatter=True, status='state',
+         form=['horse_id', 'partner_id', 'product_id', 'name', 'date', 'quantity', 'price_unit', 'amount', 'plan_id', 'move_id', 'state'], locked=['state', 'move_id', 'plan_id'], search=['horse_id', 'partner_id'], scope='horse_id', chatter=True, status='state',
          buttons=[('action_approve', 'Approve', "state != 'draft'", 'btn-primary'), ('action_invoice', 'Create invoice', "state != 'approved'", 'btn-primary'), ('action_cancel', 'Cancel', "state in ('invoiced','cancelled')", '')],
          modes='list,form,pivot,graph', filters=[('draft', 'To approve', "[('state', '=', 'draft')]"), ('approved', 'Ready to invoice', "[('state', '=', 'approved')]")],
          access=([BM, TM, VM, ACC, AUD], [BM, TM, VM, ACC], [BM])),
     dict(model='alfia.charge.plan', title='Recurring charges', menu='billing', list=['name', 'target_kind', 'product_id', 'price_unit', 'interval', 'next_date', 'state', 'active'],
-         form=['name', 'active', 'company_id', 'target_kind', 'horse_id', 'location_id', 'group_id', 'partner_id', 'product_id', 'quantity', 'price_unit', 'interval', 'next_date', 'end_date', 'auto_approve', 'approved_by_id'],
+         form=['name', 'active', 'company_id', 'target_kind', 'horse_id', 'location_id', 'group_id', 'partner_id', 'product_id', 'quantity', 'price_unit', 'interval', 'next_date', 'end_date', 'auto_approve', 'approved_by_id'], locked=['approved_by_id'],
          status='state', buttons=[('action_approve', 'Approve', "state != 'draft'", 'btn-primary'), ('action_generate', 'Generate due charges now', "state != 'approved'", ''),
                                   ('action_reset', 'Send back for approval', "state != 'approved'", '')],
          search=['name'], access=([BM, TM, VM, ACC, AUD], [BM, TM, ACC], [BM]),
          scope_domain="['|', '|', ('horse_id.location_id', 'child_of', user.alfia_location_ids.ids), ('location_id', 'child_of', user.alfia_location_ids.ids), ('create_uid', '=', user.id)] if user.alfia_scope_locations else []"),
     dict(model='alfia.horse.sale', title='Sales and gifts', menu='billing', list=['date', 'horse_id', 'kind', 'buyer_id', 'price', 'state'],
-         form=['horse_id', 'kind', 'buyer_id', 'date', 'price', 'currency_id', 'created_by_id', 'approved_by_id', 'move_id', 'state'], long=['notes'], search=['horse_id', 'buyer_id'], chatter=True, status='state',
+         form=['horse_id', 'kind', 'buyer_id', 'date', 'price', 'currency_id', 'created_by_id', 'approved_by_id', 'move_id', 'state'], locked=['state', 'created_by_id', 'approved_by_id', 'move_id'], long=['notes'], search=['horse_id', 'buyer_id'], chatter=True, status='state',
          scope_domain="['|', ('horse_id.location_id', '=', False), ('horse_id.location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []",
          buttons=[('action_approve', 'Approve', "state != 'draft'", 'btn-primary'), ('action_complete', 'Complete', "state != 'approved'", 'btn-primary'), ('action_cancel', 'Cancel', "state in ('done','cancelled')", '')],
          access=([BM, TM, VM, ACC, AUD], [BM, TM, VM, ACC], [])),
     dict(model='alfia.breeding.contract', title='Breeding contracts', menu='breeding', list=['name', 'client_id', 'stallion_id', 'season', 'fee', 'outcome', 'state'],
-         form=['name', 'client_id', 'stallion_id', 'mare_id', 'season', 'product_id', 'fee', 'live_foal_guarantee', 'refund_percent', 'pregnancy_id', 'outcome', 'invoice_id', 'credit_note_id', 'state'],
+         form=['name', 'client_id', 'stallion_id', 'mare_id', 'season', 'product_id', 'fee', 'live_foal_guarantee', 'refund_percent', 'pregnancy_id', 'outcome', 'invoice_id', 'credit_note_id', 'state'], locked=['invoice_id', 'credit_note_id', 'state'],
          search=['name', 'client_id', 'stallion_id'], scope='stallion_id', chatter=True, status='state',
          buttons=[('action_confirm', 'Confirm', "state != 'draft'", 'btn-primary'), ('action_invoice', 'Create invoice', "state != 'confirmed'", 'btn-primary'), ('action_refund', 'Refund (no live foal)', "state != 'invoiced'", ''),
                   ('action_close', 'Close', "state not in ('invoiced','refunded')", ''), ('action_cancel', 'Cancel', "state in ('invoiced','refunded','closed','cancelled')", '')],
@@ -47,14 +47,14 @@ SPEC = [
          form=['horse_id', 'start_date', 'planned_end', 'end_date', 'reason', 'isolation_location_id', 'released_by_id', 'state'], search=['horse_id', 'reason'], scope='horse_id', chatter=True, status='state',
          buttons=[('action_release', 'Release', "state != 'active'", 'btn-primary')], access=(ALL_HORSE, [V], [VM])),
     dict(model='alfia.medicine.issue', title='Medicine issues', menu='health', list=['date', 'horse_id', 'product_id', 'quantity', 'returned_qty', 'location_id', 'state'],
-         form=['horse_id', 'date', 'product_id', 'quantity', 'returned_qty', 'location_id', 'treatment_id', 'state'], search=['horse_id', 'product_id'], scope='horse_id', chatter=True, status='state',
+         form=['horse_id', 'date', 'product_id', 'quantity', 'returned_qty', 'location_id', 'treatment_id', 'state'], locked=['returned_qty', 'state'], search=['horse_id', 'product_id'], scope='horse_id', chatter=True, status='state',
          buttons=[('action_issue', 'Issue from stock', "state != 'draft'", 'btn-primary'), ('action_return', 'Return remaining', "state not in ('issued','returned')", '')], access=([V, MED, AUD], [V, MED], [])),
     dict(model='alfia.restriction.rule', title='Entry rules', menu='training', list=['name', 'sex', 'min_age_years', 'max_age_years', 'require_fitness', 'forbid_withdrawal'],
          form=['name', 'active', 'company_id', 'sex', 'min_age_years', 'max_age_years', 'require_fitness', 'forbid_withdrawal', 'forbid_pregnant', 'forbid_quarantine'], search=['name'], access=([V, B, T, AUD], [TM], [TM])),
     dict(model='alfia.event', title='Events', menu='training', list=['date_start', 'name', 'venue', 'discipline', 'entry_count'], form=['name', 'company_id', 'date_start', 'date_end', 'venue', 'discipline', 'rule_id'],
          extra_form='<field name="entry_ids"><list><field name="horse_id"/><field name="rider_id"/><field name="state"/></list></field>', search=['name'], modes='list,form,calendar', chatter=True,
          access=(ALL_HORSE, [TM], [TM])),
-    dict(model='alfia.event.entry', title='Event entries', menu='training', list=['event_id', 'horse_id', 'rider_id', 'vet_confirmed', 'state'], form=['event_id', 'horse_id', 'rider_id', 'vet_confirmed', 'decided_by_id', 'state'],
+    dict(model='alfia.event.entry', title='Event entries', menu='training', list=['event_id', 'horse_id', 'rider_id', 'vet_confirmed', 'state'], form=['event_id', 'horse_id', 'rider_id', 'vet_confirmed', 'decided_by_id', 'state'], locked=['vet_confirmed', 'decided_by_id', 'state'],
          long=['issues'], search=['horse_id', 'event_id'], scope='horse_id', chatter=True, status='state',
          buttons=[('action_check', 'Check rules', "state in ('approved','rejected')", ''), ('action_submit', 'Submit', "state != 'draft'", 'btn-primary'), ('action_vet_confirm', 'Vet confirms fitness', "state != 'pending'", ''),
                   ('action_approve', 'Approve', "state != 'pending'", 'btn-primary'), ('action_reject', 'Reject', "state in ('approved','rejected')", '')], access=(ALL_HORSE, [T, V], [TM])),
@@ -83,8 +83,9 @@ def view_xml(s):
     </record>'''
     if s['form']:
         half = (len(s['form']) + 1) // 2
-        left = ''.join(f'<field name="{f}"/>' for f in s['form'][:half])
-        right = ''.join(f'<field name="{f}"/>' for f in s['form'][half:])
+        ro = lambda f: ' readonly="1"' if f in s.get('locked', ()) else ''  # noqa: E731  (set only by the record's buttons)
+        left = ''.join(f'<field name="{f}"{ro(f)}/>' for f in s['form'][:half])
+        right = ''.join(f'<field name="{f}"{ro(f)}/>' for f in s['form'][half:])
         longs = ''.join(f'<field name="{f}"/>' for f in s.get('long', []))
         btns = ''.join(f'<button name="{n}" string="{escape(l)}" type="object" class="{c}"{(" invisible=" + chr(34) + escape(i) + chr(34)) if i else ""}/>' for n, l, i, c in s.get('buttons', []) + s.get('header_buttons', []))
         status = f'<field name="{s["status"]}" widget="statusbar"/>' if s.get('status') else ''

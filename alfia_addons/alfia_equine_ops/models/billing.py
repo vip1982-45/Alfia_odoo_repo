@@ -3,6 +3,8 @@ from dateutil.relativedelta import relativedelta
 from odoo import Command, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
+from odoo.addons.alfia_security.flow import is_trusted, workflow
+
 from .common import BILLING_MANAGERS, lock_after, require_any, sod_blocks
 
 MAX_PERIODS_PER_RUN = 60
@@ -14,7 +16,9 @@ class AlfiaCharge(models.Model):
     """A billable service for one horse. Charges are approved, then turned into invoices exactly once."""
     _name = 'alfia.charge'
     _description = 'Charge to invoice'
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'alfia.guarded.mixin']
+    # Approval and invoicing happen only through their buttons; generated charges are made by the system.
+    _alfia_guarded = ('state', 'move_id', 'plan_id', 'key')
     _order = 'date desc, id desc'
 
     horse_id = fields.Many2one('alfia.horse', required=True, index=True, ondelete='restrict')
@@ -73,12 +77,14 @@ class AlfiaCharge(models.Model):
         for charge in self.filtered(lambda c: c.state == 'draft'):
             if sod_blocks(charge, charge.amount):
                 raise UserError(self.env._("You entered the charge for %s, so someone else must approve it.", charge.horse_id.name))
-            charge.state = 'approved'
+            with workflow():
+                charge.state = 'approved'
 
     def action_cancel(self):
         if any(c.state == 'invoiced' for c in self):
             raise UserError(self.env._("An invoiced charge cannot be cancelled. Issue a credit note instead."))
-        self.write({'state': 'cancelled'})
+        with workflow():
+            self.write({'state': 'cancelled'})
 
     def _alfia_invoice_line_vals(self):
         """The invoice line for this charge. Extended by alfia_finance to allocate it to the horse."""
@@ -98,7 +104,8 @@ class AlfiaCharge(models.Model):
             move = self.env['account.move'].with_company(company).create({
                 'move_type': 'out_invoice', 'partner_id': partner.id, 'company_id': company.id, 'invoice_date': fields.Date.context_today(self),
                 'invoice_line_ids': [Command.create(c._alfia_invoice_line_vals()) for c in charges]})
-            charges.write({'state': 'invoiced', 'move_id': move.id})
+            with workflow():
+                charges.write({'state': 'invoiced', 'move_id': move.id})
             invoices |= move
         if not invoices:
             return False
@@ -108,6 +115,8 @@ class AlfiaCharge(models.Model):
 class AlfiaChargePlan(models.Model):
     _name = 'alfia.charge.plan'
     _description = 'Recurring charge'
+    _inherit = ['alfia.guarded.mixin']
+    _alfia_guarded = ('state', 'approved_by_id')
     _order = 'name'
 
     name = fields.Char(required=True)
@@ -158,8 +167,12 @@ class AlfiaChargePlan(models.Model):
     def write(self, vals):
         if PLAN_TERMS & set(vals) and not self.env.su and any(p.state == 'approved' for p in self):
             # What a plan bills, to whom and how much was approved by someone; any change needs a new approval.
-            vals = dict(vals, state='draft', approved_by_id=False)
-        res = super().write(vals)
+            if not is_trusted(self.env) and {'state', 'approved_by_id'} & set(vals):
+                self._alfia_guard_refuse({'state', 'approved_by_id'} & set(vals))
+            with workflow():
+                res = super().write(dict(vals, state='draft', approved_by_id=False))
+        else:
+            res = super().write(vals)
         if {'horse_id', 'location_id', 'group_id', 'target_kind'} & set(vals):
             self._check_scope()
         return res
@@ -169,10 +182,19 @@ class AlfiaChargePlan(models.Model):
         for plan in self.filtered(lambda p: p.state == 'draft'):
             if sod_blocks(plan):
                 raise UserError(self.env._("You set up the recurring charge %s, so someone else must approve it.", plan.name))
-            plan.write({'state': 'approved', 'approved_by_id': self.env.user.id})
+            with workflow():
+                plan.write({'state': 'approved', 'approved_by_id': self.env.user.id})
 
     def action_reset(self):
-        self.write({'state': 'draft', 'approved_by_id': False})
+        with workflow():
+            self.write({'state': 'draft', 'approved_by_id': False})
+
+    def _alfia_back_to_draft(self, reason):
+        for plan in self:
+            with workflow():
+                plan.sudo().write({'state': 'draft', 'approved_by_id': False})
+            if hasattr(plan, 'message_post'):
+                plan.message_post(body=reason)
 
     def _target_horses(self):
         self.ensure_one()
@@ -180,8 +202,9 @@ class AlfiaChargePlan(models.Model):
         if self.target_kind == 'horse':
             return self.horse_id
         if self.target_kind == 'location':
-            return Horse.search([('location_id', 'child_of', self.location_id.id), ('status', '=', 'active')])
-        return self.group_id.sudo().all_member_ids.filtered(lambda h: h.status == 'active')
+            return Horse.search([('location_id', 'child_of', self.location_id.id), ('status', '=', 'active'), ('company_id', '=', self.company_id.id)])
+        # Only the plan's own company, whatever else the group may hold.
+        return self.group_id.sudo().all_member_ids.filtered(lambda h: h.status == 'active' and h.company_id == self.company_id)
 
     def action_generate(self, upto=None):
         """Create the charges that are due up to `upto`. Safe to repeat: each (plan, horse, date) is generated once."""

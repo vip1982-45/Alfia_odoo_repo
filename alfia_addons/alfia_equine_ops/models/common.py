@@ -16,7 +16,11 @@ def lock_after(records, vals, states, editable, what):
 def sod_blocks(record, amount=None):
     """Whether segregation of duties stops the current user approving `record`, which they created."""
     env = record.env
-    if env.su or record.create_uid != env.user:
+    if env.su:
+        return False
+    # The maker is whoever created the record or last changed it: rewriting a colleague's draft and then approving it
+    # is approving one's own work.
+    if env.user not in (record.create_uid, record.write_uid):
         return False
     return env['alfia.sod.mixin']._alfia_sod_applies(amount, record.company_id)
 
