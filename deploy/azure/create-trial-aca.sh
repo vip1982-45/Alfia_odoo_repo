@@ -271,9 +271,26 @@ echo "   last lines from the job:"
 joblogs 40
 [[ "$ST" == "Succeeded" ]] || { echo "The database job did not succeed ($ST); the logs above say why." >&2; exit 1; }
 
-echo "9/10 The app (one copy, HTTPS, only from $WEB_CIDRS)"
+echo "9/10 The app (one copy, HTTPS, only from $WEB_CIDRS ${WEB_COUNTRY:+and all of $WEB_COUNTRY})"
 RULES=""; i=0
 for c in $WEB_CIDRS; do i=$((i+1)); RULES+="        - {name: office-$i, ipAddressRange: \"$c\", action: Allow}"$'\n'; done
+if [[ -n "${WEB_COUNTRY:-}" ]]; then
+  # Every address range the regional registry (RIPE NCC) lists for the country, merged; fetched fresh each run.
+  CC_RANGES=$(curl -fsS --max-time 120 https://ftp.ripe.net/pub/stats/ripencc/delegated-ripencc-latest | python3 -c '
+import ipaddress, sys
+cc = sys.argv[1].upper(); nets = []
+for line in sys.stdin:
+    f = line.strip().split("|")
+    if len(f) >= 7 and f[1] == cc and f[2] == "ipv4" and f[6] in ("allocated", "assigned"):
+        start = ipaddress.IPv4Address(f[3])
+        nets += ipaddress.summarize_address_range(start, start + int(f[4]) - 1)
+print("\n".join(map(str, ipaddress.collapse_addresses(nets))))' "$WEB_COUNTRY") \
+    || { echo "Could not fetch the address ranges for $WEB_COUNTRY." >&2; exit 1; }
+  n=0
+  for c in $CC_RANGES; do n=$((n+1)); RULES+="        - {name: ${WEB_COUNTRY,,}-$n, ipAddressRange: \"$c\", action: Allow}"$'\n'; done
+  echo "   allowing $n address ranges registered to $WEB_COUNTRY"
+  (( n > 0 && n <= 90 )) || { echo "Unexpected number of ranges for $WEB_COUNTRY ($n)." >&2; exit 1; }
+fi
 RUNNER_IP=$(curl -fsS https://api.ipify.org 2>/dev/null || true)   # let this run check the page, then removed below
 [[ -n "$RUNNER_IP" ]] && RULES+="        - {name: deploy-check, ipAddressRange: \"$RUNNER_IP/32\", action: Allow}"$'\n'
 cat > "$YDIR/app.yaml" <<YAML
@@ -326,7 +343,7 @@ az lock create -n do-not-delete --lock-type CanNotDelete -g "$RG" -o none
 rm -rf "$YDIR"
 cat <<SUMMARY
 
-Address        : https://$FQDN   (only from $WEB_CIDRS)
+Address        : https://$FQDN   (only from $WEB_CIDRS ${WEB_COUNTRY:+and all of $WEB_COUNTRY})
 Region         : $LOC
 Resource group : $RG  (tags: ${TAGS[*]})
 Passwords      : Key Vault $KV  (demo-password for the evaluator accounts, admin-password for admin)
