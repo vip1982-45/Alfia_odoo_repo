@@ -67,7 +67,7 @@ SPEC = [
     dict(model='alfia.reproductive.exam', title='Reproductive exams', menu='breeding', list=['date', 'mare_id', 'left_follicle_mm', 'right_follicle_mm', 'edema', 'cervix', 'next_action'],
          form=['mare_id', 'date', 'left_follicle_mm', 'right_follicle_mm', 'edema', 'cervix', 'service_id', 'next_action'], long=['findings'], search=['mare_id'], scope='mare_id', access=([V, B, AUD], [V], [VM])),
     dict(model='alfia.pregnancy', title='Pregnancies', menu='breeding', list=['ovulation_date', 'mare_id', 'genetic_dam_id', 'sire_id', 'expected_foaling', 'state', 'day_count'],
-         form=['mare_id', 'genetic_dam_id', 'sire_id', 'service_id', 'ovulation_date', 'rule_id', 'expected_foaling', 'state'], search=['mare_id'], scope='mare_id', chatter=True, status='state', locked=['state'],
+         form=['mare_id', 'genetic_dam_id', 'sire_id', 'service_id', 'ovulation_date', 'rule_id', 'expected_foaling', 'state', 'foal_id'], search=['mare_id'], scope='mare_id', chatter=True, status='state', locked=['state'],
          extra_form='<field name="check_ids"><list><field name="date"/><field name="days_after_ovulation"/><field name="result"/><field name="next_check_date"/><field name="vet_id"/></list></field><field name="task_ids"><list><field name="due_date"/><field name="name"/><field name="state"/></list></field>',
          access=([V, B, S, AUD], [V, B], [])),
     dict(model='alfia.pregnancy.check', title='Pregnancy checks', menu='breeding', list=['date', 'mare_id', 'days_after_ovulation', 'result', 'next_check_date', 'vet_id'],

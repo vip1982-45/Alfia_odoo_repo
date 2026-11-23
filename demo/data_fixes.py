@@ -16,9 +16,22 @@ if 'alfia.breeding.contract' in env:
         early.write({'state': 'confirmed'})
         done.append('%d contract(s) back to Confirmed until their invoice is posted' % len(early))
 
+# 3. Controlled deliveries leave from the warehouse's output area, which the custodians and dispatch approvers could not
+#    see (their scope was only their store), so an open delivery was invisible to the people who must approve it.
+if wh:
+    out = wh.wh_output_stock_loc_id
+    roles = [env.ref(x, raise_if_not_found=False) for x in ('alfia_security.group_alfia_semen_custodian', 'alfia_security.group_alfia_medicine_custodian',
+             'alfia_security.group_alfia_dispatch_admin_approver', 'alfia_security.group_alfia_dispatch_vet_approver')]
+    roles = [g.id for g in roles if g]
+    profiles = env['alfia.access.profile'].sudo().search([('group_ids', 'in', roles), ('location_ids', '!=', False)]).filtered(
+        lambda pr: not env['stock.location'].sudo().search_count([('id', '=', out.id), ('id', 'child_of', pr.location_ids.ids)]))
+    if out and profiles:
+        profiles.write({'location_ids': [(4, out.id)]})
+        done.append('%d custodian/approver profile(s) can now see %s' % (len(profiles), out.complete_name))
+
 env.cr.commit()
 
-# 3. Last, as uninstalling reloads the registry: supplier and customer name lookup needs a paid online service (IAP)
+# 4. Last, as uninstalling reloads the registry: supplier and customer name lookup needs a paid online service (IAP)
 #    and failed with an access error.
 mod = env['ir.module.module'].sudo().search([('name', '=', 'partner_autocomplete'), ('state', '=', 'installed')])
 if mod:

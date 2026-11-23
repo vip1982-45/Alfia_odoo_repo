@@ -371,6 +371,7 @@ class TestBreeding(EquineCase):
         draft.with_user(self.breed_mgr).action_complete()
         self.assertEqual(self.env['alfia.horse'].search_count([('name', '=', 'Cleo II')]), 1, "completing twice never makes a second foal")
         self.assertEqual((preg.state, self.mare.reproductive_state), ('foaled', 'open'))
+        self.assertEqual(preg.foal_id, foal, "the pregnancy shows the foal it produced")
         self.assertFalse(preg.task_ids.filtered(lambda t: t.state == 'todo'))
         with self.assertRaises(Exception):
             with self.env.cr.savepoint():

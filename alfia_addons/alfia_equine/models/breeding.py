@@ -409,8 +409,15 @@ class AlfiaPregnancy(models.Model):
                               ('negative', 'Not pregnant'), ('foaled', 'Foaled')], default='bred', required=True, tracking=True, index=True)
     check_ids = fields.One2many('alfia.pregnancy.check', 'pregnancy_id')
     foaling_ids = fields.One2many('alfia.foaling', 'pregnancy_id')
+    foal_id = fields.Many2one('alfia.horse', string='Foal', compute='_compute_foal_id',
+                              help="The foal registered by this pregnancy's foaling record.")
     task_ids = fields.One2many('alfia.task', compute='_compute_task_ids')
     day_count = fields.Integer(string='Days since ovulation', compute='_compute_day_count')
+
+    @api.depends('foaling_ids.foal_id')
+    def _compute_foal_id(self):
+        for rec in self:
+            rec.foal_id = rec.foaling_ids.filtered('foal_id')[:1].foal_id
 
     @api.depends('mare_id.name', 'ovulation_date')
     def _compute_name(self):

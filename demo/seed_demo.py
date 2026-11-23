@@ -90,6 +90,10 @@ med_profile = Profile.create({'name': 'Medicine custodian – medicine store', '
                               'group_ids': [Command.set([ref('alfia_security.group_alfia_medicine_custodian').id, ref('alfia_security.group_alfia_vet_user').id])]})
 vet_approver = Profile.create({'name': 'Dispatch approver (veterinary)', 'location_ids': [Command.set([tank_room.id])],
                                'group_ids': [Command.set([ref('alfia_security.group_alfia_dispatch_vet_approver').id])]})
+# Controlled deliveries are picked into the warehouse's output area and dispatched from there, so the people who approve
+# and dispatch them must see that area as well as their store.
+for p in (prof('semen_custodian'), prof('dispatch_admin_approver'), vet_approver, med_profile):
+    p.location_ids = [Command.link(wh.wh_output_stock_loc_id.id)]
 groom_b = Profile.create({'name': 'Stable staff – Barn B', 'location_ids': [Command.set([barn_b.id])],
                           'group_ids': [Command.set(prof('stable_staff').group_ids.ids)]})
 journals = E['account.journal'].search([('company_id', '=', company.id)])

@@ -45,13 +45,20 @@ export class PickingTypeDashboardGraphField extends JournalDashboardGraphField {
                 ],
             },
             options: {
-                onClick: (e) => {
-                    const pickingTypeId = e.chart.config._config.options.pickingTypeId;
+                onClick: (e, active, chart) => {
+                    chart = chart || e.chart;
+                    const pickingTypeId = chart?.config?._config?.options?.pickingTypeId;
                     // If no picking type ID was provided, than this is sample data
                     if (!pickingTypeId) {
                         return;
                     }
-                    const columnIndex = e.chart.tooltip.dataPoints[0].parsed.x;
+                    // Find the column under the pointer; the tooltip has no data point until the pointer has hovered,
+                    // so reading it directly failed on a click that came first (e.g. a tap).
+                    const points = chart.getElementsAtEventForMode(e.native || e, "index", { intersect: false }, false);
+                    const columnIndex = points.length ? points[0].index : chart.tooltip?.dataPoints?.[0]?.parsed.x;
+                    if (columnIndex === undefined) {
+                        return;
+                    }
                     const dateCategories = {
                         0: "before",
                         1: "yesterday",
