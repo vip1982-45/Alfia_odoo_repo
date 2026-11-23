@@ -157,7 +157,9 @@ echo "5/10 Share for attachments (Azure Files)"
 az storage account show -g "$RG" -n "$STF" -o none 2>/dev/null \
   || az storage account create -g "$RG" -n "$STF" -l "$LOC" --sku Standard_LRS --kind StorageV2 \
        --min-tls-version TLS1_2 --allow-blob-public-access false --https-only true --tags "${TAGS[@]}" -o none
-az storage share-rm create --storage-account "$STF" -n odoo-data --quota 100 -o none 2>/dev/null || true
+az storage share-rm show -g "$RG" --storage-account "$STF" -n odoo-data -o none 2>/dev/null \
+  || az storage share-rm create -g "$RG" --storage-account "$STF" -n odoo-data --quota 100 -o none
+az storage share-rm show -g "$RG" --storage-account "$STF" -n odoo-data -o none   # stop here if the share is missing
 STF_KEY=$(az storage account keys list -g "$RG" -n "$STF" --query '[0].value' -o tsv)
 
 echo "6/10 Container Apps environment"
