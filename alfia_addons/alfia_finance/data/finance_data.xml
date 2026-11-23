@@ -7,4 +7,22 @@
     <record id="account.group_account_invoice" model="res.groups">
         <field name="implied_ids" eval="[(4, ref('analytic.group_analytic_accounting'))]"/>
     </record>
+    <!-- Feed is bought in bags and fed by the kilogram: bag units convert to kg, so receipts in bags report in kg. -->
+    <data noupdate="1">
+        <record id="uom_bag_20kg" model="uom.uom">
+            <field name="name">كيس 20 كغ · Bag 20 kg</field>
+            <field name="relative_factor" eval="20"/>
+            <field name="relative_uom_id" ref="uom.product_uom_kgm"/>
+        </record>
+        <record id="uom_bag_25kg" model="uom.uom">
+            <field name="name">كيس 25 كغ · Bag 25 kg</field>
+            <field name="relative_factor" eval="25"/>
+            <field name="relative_uom_id" ref="uom.product_uom_kgm"/>
+        </record>
+        <record id="uom_bag_50kg" model="uom.uom">
+            <field name="name">كيس 50 كغ · Bag 50 kg</field>
+            <field name="relative_factor" eval="50"/>
+            <field name="relative_uom_id" ref="uom.product_uom_kgm"/>
+        </record>
+    </data>
 </odoo>

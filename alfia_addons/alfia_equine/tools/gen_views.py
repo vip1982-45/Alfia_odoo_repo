@@ -31,10 +31,10 @@ SPEC = [
     dict(model='alfia.treatment.dose', title='Doses given', menu=None, list=['given_at', 'horse_id', 'treatment_id', 'dose_given', 'missed', 'given_by_id'],
          form=['treatment_id', 'given_at', 'dose_given', 'missed', 'notes'], search=['treatment_id'], scope='horse_id', access=([V, B, S, AUD], [V, S], [VM])),
     dict(model='alfia.lab.test', title='Laboratory tests', menu='health', list=['date', 'horse_id', 'test', 'lab', 'result', 'state'],
-         form=['horse_id', 'date', 'test', 'lab', 'vet_id', 'result', 'reference_range', 'state', 'reviewed_by_id'], locked=['state'], long=['notes'], search=['test', 'horse_id'], scope='horse_id', status='state',
+         form=['horse_id', 'date', 'test', 'lab', 'vet_id', 'result', 'reference_range', 'state', 'reviewed_by_id', 'attachment_ids'], locked=['state'], chatter=True, widgets={'attachment_ids': 'many2many_binary'}, long=['notes'], search=['test', 'horse_id'], scope='horse_id', status='state',
          buttons=[('action_review', 'Vet review', "state == 'reviewed'", 'btn-primary')], access=([V, B, AUD], [V], [VM])),
     dict(model='alfia.diag.image', title='Diagnostic images', menu='health', list=['date', 'horse_id', 'modality', 'body_part', 'vet_id'],
-         form=['horse_id', 'date', 'modality', 'body_part', 'vet_id', 'attachment_ids'], long=['findings'], search=['body_part', 'horse_id'], scope='horse_id', access=([V, B, AUD], [V], [VM])),
+         form=['horse_id', 'date', 'modality', 'body_part', 'vet_id', 'attachment_ids'], long=['findings'], search=['body_part', 'horse_id'], scope='horse_id', chatter=True, widgets={'attachment_ids': 'many2many_binary'}, access=([V, B, AUD], [V], [VM])),
     dict(model='alfia.odontology', title='Dental exams', menu='health', list=['date', 'horse_id', 'vet_id', 'floated', 'next_date'],
          form=['horse_id', 'date', 'vet_id', 'floated', 'extractions', 'next_date', 'cost'], long=['findings'], search=['horse_id'], scope='horse_id', access=([V, B, AUD], [V], [VM])),
     dict(model='alfia.farrier.visit', title='Farrier', menu='care', list=['date', 'horse_id', 'farrier_id', 'lf_shoe', 'rf_shoe', 'lh_shoe', 'rh_shoe', 'next_date'],
@@ -110,7 +110,9 @@ def view_xml(s):
     lst = ''.join(f'<field name="{f}"/>' for f in s['list'])
     half = (len(s['form']) + 1) // 2
     locked = set(s.get('locked', ()))   # shown, but moved on only by the header buttons / the workflow
-    fld = lambda f: f'<field name="{f}" readonly="1"/>' if f in locked else f'<field name="{f}"/>'
+    widgets = s.get('widgets', {})    # e.g. many2many_binary, so files are uploaded with their content
+    fld = lambda f: (f'<field name="{f}" readonly="1"/>' if f in locked else
+                     f'<field name="{f}" widget="{widgets[f]}"/>' if f in widgets else f'<field name="{f}"/>')
     left = ''.join(fld(f) for f in s['form'][:half])
     right = ''.join(fld(f) for f in s['form'][half:])
     longs = ''.join(f'<field name="{f}"/>' for f in s.get('long', []))

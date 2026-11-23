@@ -9,4 +9,8 @@
     <record id="hr.group_hr_manager" model="res.groups">
         <field name="implied_ids" eval="[(4, ref('group_alfia_all_departments'))]"/>
     </record>
+    <!-- Approved attendance is handed to payroll as an export: the people who validate it may export it (others may not). -->
+    <record id="hr_attendance.group_hr_attendance_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('base.group_allow_export'))]"/>
+    </record>
 </odoo>

@@ -145,3 +145,29 @@ class AlfiaQuarantine(models.Model):
         for rec in self.filtered(lambda r: r.state == 'active'):
             rec.write({'state': 'released', 'end_date': fields.Date.context_today(self), 'released_by_id': self.env.user.id})
             self.env['alfia.task']._alfia_cancel_pending(f"quarantine:{rec.id}", self.env._("Released"))
+
+
+class AlfiaHorseMovementQuarantine(models.Model):
+    _inherit = 'alfia.horse.movement'
+
+    def _alfia_check_quarantine(self):
+        """A horse in quarantine moves only into its isolation stall; anything else needs the resident vet."""
+        if self.env.su or self.env.user.has_group(G + 'vet_manager'):
+            return
+        Quarantine = self.env['alfia.quarantine'].sudo()
+        for move in self.filtered(lambda m: m.kind in ('internal', 'departure')):
+            q = Quarantine.search([('horse_id', '=', move.horse_id.id), ('state', '=', 'active')], limit=1)
+            if q and not (move.kind == 'internal' and q.isolation_location_id and move.location_to_id == q.isolation_location_id):
+                raise UserError(self.env._(
+                    "%(horse)s is in quarantine (%(reason)s). It can only go to its isolation stall until the vet releases it; "
+                    "other moves need the resident veterinarian.", horse=move.horse_id.name, reason=q.reason))
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        moves = super().create(vals_list)
+        moves._alfia_check_quarantine()
+        return moves
+
+    def action_done(self):
+        self._alfia_check_quarantine()
+        return super().action_done()

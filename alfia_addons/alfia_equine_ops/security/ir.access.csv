@@ -111,3 +111,5 @@ acc_import_vet,Import horses,alfia.horse.import,alfia_security.group_alfia_vet_m
 acc_alfia_horse_ops_group_account_invoice,Horse names for billing and medicine,alfia.horse,account.group_account_invoice,r,
 acc_alfia_horse_ops_group_alfia_medicine_custodian,Horse names for billing and medicine,alfia.horse,alfia_security.group_alfia_medicine_custodian,r,
 acc_import_system,Import horses: system,alfia.horse.import,base.group_system,crud,
+acc_medicine_return_group_alfia_medicine_custodian,Return issued medicine,alfia.medicine.return,alfia_security.group_alfia_medicine_custodian,crud,
+acc_medicine_return_group_system,Return issued medicine,alfia.medicine.return,base.group_system,crud,

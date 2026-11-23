@@ -210,13 +210,13 @@
     <record id="alfia_medicine_issue_view_list" model="ir.ui.view">
         <field name="name">alfia.medicine.issue.list</field>
         <field name="model">alfia.medicine.issue</field>
-        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="product_id"/><field name="quantity"/><field name="returned_qty"/><field name="location_id"/><field name="state"/></list></field>
+        <field name="arch" type="xml"><list><field name="date"/><field name="horse_id"/><field name="product_id"/><field name="quantity"/><field name="administered_qty"/><field name="returned_qty"/><field name="held_qty"/><field name="location_id"/><field name="state"/></list></field>
     </record>
     <record id="alfia_medicine_issue_view_form" model="ir.ui.view">
         <field name="name">alfia.medicine.issue.form</field>
         <field name="model">alfia.medicine.issue</field>
         <field name="arch" type="xml">
-            <form><header><button name="action_issue" string="Issue from stock" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_return" string="Return remaining" type="object" class="" invisible="state not in ('issued','returned')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="date"/><field name="product_id"/><field name="quantity"/></group><group><field name="returned_qty" readonly="1"/><field name="location_id"/><field name="treatment_id"/><field name="state" readonly="1"/></group></group></sheet><chatter/></form>
+            <form><header><button name="action_issue" string="Issue from stock" type="object" class="btn-primary" invisible="state != 'draft'"/><button name="action_open_return" string="Return…" type="object" class="" invisible="state not in ('issued','returned') or held_qty &lt;= 0"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="date"/><field name="product_id"/><field name="quantity"/><field name="location_id"/><field name="treatment_id"/></group><group><field name="administered_qty"/><field name="returned_qty" readonly="1"/><field name="wasted_qty" readonly="1"/><field name="held_qty"/><field name="custody_location_id"/><field name="state" readonly="1"/></group></group><field name="dose_ids" readonly="1"><list><field name="given_at"/><field name="quantity"/><field name="dose_given"/><field name="missed"/><field name="given_by_id"/></list></field></sheet><chatter/></form>
         </field>
     </record>
     <record id="alfia_medicine_issue_view_search" model="ir.ui.view">
@@ -308,7 +308,7 @@
         <field name="name">alfia.asset.form</field>
         <field name="model">alfia.asset</field>
         <field name="arch" type="xml">
-            <form><header><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="kind"/><field name="company_id"/><field name="location_id"/><field name="reference"/><field name="responsible_id"/><field name="horse_id"/></group><group><field name="acquired"/><field name="value"/><field name="next_service"/><field name="state"/><field name="borrower_id"/><field name="active"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+            <form><header><button name="action_assign" string="Assign / lend" type="object" class="btn-primary" invisible="state != 'available'"/><button name="action_return" string="Returned" type="object" class="" invisible="state != 'in_use'"/><button name="action_maintenance" string="Send to maintenance" type="object" class="" invisible="state not in ('available', 'in_use')"/><button name="action_release" string="Release after repair" type="object" class="btn-primary" invisible="state != 'maintenance'"/><button name="action_retire" string="Retire" type="object" class="" invisible="state == 'retired'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="kind"/><field name="company_id"/><field name="location_id"/><field name="reference"/><field name="responsible_id"/><field name="horse_id"/><field name="acquired"/></group><group><field name="value"/><field name="next_service"/><field name="state" readonly="1"/><field name="borrower_id"/><field name="maintenance_by_id" readonly="1"/><field name="released_by_id" readonly="1"/><field name="active"/></group></group><group><field name="repair_notes"/><field name="notes"/></group></sheet><chatter/></form>
         </field>
     </record>
     <record id="alfia_asset_view_search" model="ir.ui.view">

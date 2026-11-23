@@ -46,9 +46,11 @@ SPEC = [
     dict(model='alfia.quarantine', title='Quarantine', menu='health', list=['horse_id', 'start_date', 'planned_end', 'reason', 'isolation_location_id', 'state'],
          form=['horse_id', 'start_date', 'planned_end', 'end_date', 'reason', 'isolation_location_id', 'released_by_id', 'state'], search=['horse_id', 'reason'], scope='horse_id', chatter=True, status='state',
          buttons=[('action_release', 'Release', "state != 'active'", 'btn-primary')], access=(ALL_HORSE, [V], [VM])),
-    dict(model='alfia.medicine.issue', title='Medicine issues', menu='health', list=['date', 'horse_id', 'product_id', 'quantity', 'returned_qty', 'location_id', 'state'],
-         form=['horse_id', 'date', 'product_id', 'quantity', 'returned_qty', 'location_id', 'treatment_id', 'state'], locked=['returned_qty', 'state'], search=['horse_id', 'product_id'], scope='horse_id', chatter=True, status='state',
-         buttons=[('action_issue', 'Issue from stock', "state != 'draft'", 'btn-primary'), ('action_return', 'Return remaining', "state not in ('issued','returned')", '')], access=([V, MED, AUD], [V, MED], [])),
+    dict(model='alfia.medicine.issue', title='Medicine issues', menu='health', list=['date', 'horse_id', 'product_id', 'quantity', 'administered_qty', 'returned_qty', 'held_qty', 'location_id', 'state'],
+         form=['horse_id', 'date', 'product_id', 'quantity', 'location_id', 'treatment_id', 'administered_qty', 'returned_qty', 'wasted_qty', 'held_qty', 'custody_location_id', 'state'],
+         locked=['returned_qty', 'wasted_qty', 'state'], search=['horse_id', 'product_id'], scope='horse_id', chatter=True, status='state',
+         extra_form='<field name="dose_ids" readonly="1"><list><field name="given_at"/><field name="quantity"/><field name="dose_given"/><field name="missed"/><field name="given_by_id"/></list></field>',
+         buttons=[('action_issue', 'Issue from stock', "state != 'draft'", 'btn-primary'), ('action_open_return', 'Return…', "state not in ('issued','returned') or held_qty <= 0", '')], access=([V, MED, AUD], [V, MED], [])),
     dict(model='alfia.restriction.rule', title='Entry rules', menu='training', list=['name', 'sex', 'min_age_years', 'max_age_years', 'require_fitness', 'forbid_withdrawal'],
          form=['name', 'active', 'company_id', 'sex', 'min_age_years', 'max_age_years', 'require_fitness', 'forbid_withdrawal', 'forbid_pregnant', 'forbid_quarantine'], search=['name'], access=([V, B, T, AUD], [TM], [TM])),
     dict(model='alfia.event', title='Events', menu='training', list=['date_start', 'name', 'venue', 'discipline', 'entry_count'], form=['name', 'company_id', 'date_start', 'date_end', 'venue', 'discipline', 'rule_id'],
@@ -59,7 +61,11 @@ SPEC = [
          buttons=[('action_check', 'Check rules', "state in ('approved','rejected')", ''), ('action_submit', 'Submit', "state != 'draft'", 'btn-primary'), ('action_vet_confirm', 'Vet confirms fitness', "state != 'pending'", ''),
                   ('action_approve', 'Approve', "state != 'pending'", 'btn-primary'), ('action_reject', 'Reject', "state in ('approved','rejected')", '')], access=(ALL_HORSE, [T, V], [TM])),
     dict(model='alfia.asset', title='Fleet, trophies, library', menu='facilities', list=['name', 'kind', 'reference', 'responsible_id', 'next_service', 'state'],
-         form=['name', 'kind', 'company_id', 'location_id', 'reference', 'responsible_id', 'horse_id', 'acquired', 'value', 'next_service', 'state', 'borrower_id', 'active'], long=['notes'], search=['name', 'reference'], chatter=True, status='state',
+         form=['name', 'kind', 'company_id', 'location_id', 'reference', 'responsible_id', 'horse_id', 'acquired', 'value', 'next_service', 'state', 'borrower_id', 'maintenance_by_id', 'released_by_id', 'active'],
+         locked=['state', 'maintenance_by_id', 'released_by_id'], long=['repair_notes', 'notes'], search=['name', 'reference'], chatter=True, status='state',
+         buttons=[('action_assign', 'Assign / lend', "state != 'available'", 'btn-primary'), ('action_return', 'Returned', "state != 'in_use'", ''),
+                  ('action_maintenance', 'Send to maintenance', "state not in ('available', 'in_use')", ''),
+                  ('action_release', 'Release after repair', "state != 'maintenance'", 'btn-primary'), ('action_retire', 'Retire', "state == 'retired'", '')],
          scope_domain="['|', ('location_id', '=', False), ('location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []",
          access=(ALL_HORSE, [TM, BM, S], [TM, BM])),
     dict(model='alfia.report.breeding', title='Breeding performance', menu='reports', list=['stallion_id', 'season', 'services', 'pregnancies', 'live_foals', 'pregnancy_rate'], form=None, search=['stallion_id', 'season'],
@@ -150,6 +156,8 @@ def main():
     for g in (ACC, MED):
         rows.append([f'acc_alfia_horse_ops_{g.split(".")[-1]}', 'Horse names for billing and medicine', 'alfia.horse', g, 'r', ''])
     rows.append(['acc_import_system', 'Import horses: system', 'alfia.horse.import', 'base.group_system', 'crud', ''])
+    for g in (MED, 'base.group_system'):
+        rows.append([f'acc_medicine_return_{g.split(".")[-1]}', 'Return issued medicine', 'alfia.medicine.return', g, 'crud', ''])
     buf = io.StringIO()
     csv.writer(buf).writerows(rows)
     open('security/ir.access.csv', 'w', newline='').write(buf.getvalue())

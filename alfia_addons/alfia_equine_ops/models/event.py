@@ -103,10 +103,27 @@ class AlfiaEventEntry(models.Model):
     def action_check(self):
         for rec in self:
             rule = rec.event_id.rule_id
-            problems = rule._problems(rec.horse_id, rec.event_id.date_start) if rule else []
+            on_date = rec.event_id.date_start
+            problems = rec._alfia_baseline_problems(on_date)
+            problems += [p for p in (rule._problems(rec.horse_id, on_date) if rule else []) if p not in problems]
             with workflow():
                 rec.issues = '\n'.join(problems)
         return True
+
+    def _alfia_baseline_problems(self, on_date):
+        """Checks that apply to every entry, whatever the event's rules say (or when it has none): a horse in a medicine
+        withdrawal period, in quarantine or under a vet's clinical restriction is never entered."""
+        self.ensure_one()
+        horse, out = self.horse_id, []
+        if self.env['alfia.treatment'].sudo().search_count([('horse_id', '=', horse.id), ('withdrawal_until', '>=', on_date)]):
+            out.append(self.env._("Still in a medicine withdrawal period."))
+        if self.env['alfia.quarantine'].sudo().search_count([('horse_id', '=', horse.id), ('state', '=', 'active')]):
+            out.append(self.env._("The horse is in quarantine."))
+        fit = self.env['alfia.clearance'].sudo().search([('horse_id', '=', horse.id), ('kind', '=', 'fitness'), ('date', '<=', on_date)],
+                                                        order='date desc, id desc', limit=1)
+        if fit.state == 'restricted' and (not fit.restricted_until or fit.restricted_until >= on_date):
+            out.append(self.env._("Clinically restricted by the vet."))
+        return out
 
     def write(self, vals):
         # What was submitted (horse, event) is what the vet and the manager decide on.
@@ -134,7 +151,8 @@ class AlfiaEventEntry(models.Model):
             rec.action_check()
             if rec.issues:
                 raise UserError(self.env._("%(horse)s cannot be approved:\n%(issues)s", horse=rec.horse_id.name, issues=rec.issues))
-            if rec.event_id.rule_id.require_fitness and not rec.vet_confirmed:
+            # Without entry rules nothing says fitness is not needed: unknown rules stay with the vet.
+            if (not rec.event_id.rule_id or rec.event_id.rule_id.require_fitness) and not rec.vet_confirmed:
                 raise UserError(self.env._("The vet must confirm %s first.", rec.horse_id.name))
             with workflow():
                 rec.write({'state': 'approved', 'decided_by_id': self.env.user.id})

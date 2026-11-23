@@ -58,4 +58,37 @@
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
+    <!-- Returning issued medicine: how much, why, and where it goes (never more than the team holds). -->
+    <record id="alfia_medicine_return_view_form" model="ir.ui.view">
+        <field name="name">alfia.medicine.return.form</field>
+        <field name="model">alfia.medicine.return</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="issue_id" readonly="1"/>
+                    <field name="held_qty"/>
+                    <field name="quantity"/>
+                    <field name="disposition"/>
+                    <field name="reason"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Return" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- A dose given from issued medicine names the issue and the quantity, so custody reconciles. -->
+    <record id="alfia_treatment_view_form_issue" model="ir.ui.view">
+        <field name="name">alfia.treatment.form.issue</field>
+        <field name="model">alfia.treatment</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_treatment_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='dose_ids']/list/field[@name='dose_given']" position="before">
+                <field name="issue_id" options="{'no_create': True}" domain="[('treatment_id', '=', parent.id), ('state', 'in', ('issued', 'returned'))]"/>
+                <field name="quantity"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>

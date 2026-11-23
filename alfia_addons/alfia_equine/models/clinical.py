@@ -4,6 +4,31 @@ from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.addons.alfia_security.flow import ANY, workflow
 
 
+class AlfiaAttachmentOwner(models.AbstractModel):
+    """Files uploaded into an `attachment_ids` field belong to the record, so whoever may read the record (the vet, the
+    auditor) can open them. Uploaded alone they stay linked to nothing and only the uploader can see them."""
+    _name = 'alfia.attachment.owner'
+    _description = 'Record that owns its uploaded files'
+
+    def _alfia_link_attachments(self):
+        for rec in self:
+            loose = rec.sudo().attachment_ids.filtered(lambda a: not a.res_id or a.res_model != rec._name)
+            if loose:
+                loose.write({'res_model': rec._name, 'res_id': rec.id})
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        records._alfia_link_attachments()
+        return records
+
+    def write(self, vals):
+        res = super().write(vals)
+        if 'attachment_ids' in vals:
+            self._alfia_link_attachments()
+        return res
+
+
 class AlfiaHorseRecord(models.AbstractModel):
     """Common ground of every record that belongs to one horse."""
     _name = 'alfia.horse.record'
@@ -137,7 +162,7 @@ class AlfiaTreatmentDose(models.Model):
 class AlfiaLabTest(models.Model):
     _name = 'alfia.lab.test'
     _description = 'Laboratory test'
-    _inherit = ['alfia.horse.record', 'alfia.guarded.mixin']
+    _inherit = ['alfia.horse.record', 'mail.thread', 'alfia.guarded.mixin', 'alfia.attachment.owner']
     _alfia_guarded = ('state', 'reviewed_by_id', 'reviewed_date')
     _order = 'date desc, id desc'
     _rec_name = 'test'
@@ -152,6 +177,7 @@ class AlfiaLabTest(models.Model):
     state = fields.Selection([('new', 'Awaiting review'), ('reviewed', 'Reviewed by vet')], default='new', required=True)
     reviewed_by_id = fields.Many2one('res.users', readonly=True, copy=False)
     reviewed_date = fields.Datetime(readonly=True, copy=False)
+    attachment_ids = fields.Many2many('ir.attachment', 'alfia_lab_test_attachment_rel', 'test_id', 'attachment_id', string='Laboratory report')
 
     def action_review(self):
         if not self.env.user.has_group('alfia_security.group_alfia_vet_user'):
@@ -163,7 +189,7 @@ class AlfiaLabTest(models.Model):
 class AlfiaDiagnosticImage(models.Model):
     _name = 'alfia.diag.image'
     _description = 'Diagnostic image'
-    _inherit = ['alfia.horse.record']
+    _inherit = ['alfia.horse.record', 'mail.thread', 'alfia.attachment.owner']
     _order = 'date desc, id desc'
     _rec_name = 'body_part'
 
@@ -325,6 +351,19 @@ class AlfiaTrainingSession(models.Model):
     rest_day = fields.Boolean()
     entry_mode = fields.Selection([('manual', 'Entered by hand'), ('device', 'From a device')], default='manual')
     notes = fields.Text()
+
+    @api.constrains('date', 'rest_day', 'horse_id')
+    def _check_fitness_restriction(self):
+        # A vet's clinical restriction stops training (rest days only) until it ends; it is not a note to read past.
+        Clearance = self.env['alfia.clearance'].sudo()
+        for rec in self.filtered(lambda r: not r.rest_day and r.horse_id and r.date):
+            last = Clearance.search([('horse_id', '=', rec.horse_id.id), ('kind', '=', 'fitness'), ('date', '<=', rec.date)],
+                                    order='date desc, id desc', limit=1)
+            if last.state == 'restricted' and (not last.restricted_until or last.restricted_until >= rec.date):
+                until = self.env._(" until %s", last.restricted_until) if last.restricted_until else ''
+                raise ValidationError(self.env._(
+                    "%(horse)s is clinically restricted by the vet%(until)s: only a rest day can be recorded on %(date)s.",
+                    horse=rec.horse_id.name, until=until, date=rec.date))
 
     @api.constrains('effort')
     def _check_effort(self):

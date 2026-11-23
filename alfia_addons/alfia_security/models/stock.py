@@ -5,7 +5,7 @@ from odoo.addons.alfia_security.flow import in_trusted, trusted
 
 MOVE_WATCHED = {'product_id', 'product_uom_qty', 'quantity', 'location_id', 'location_dest_id', 'lot_id', 'uom_id',
                 'product_uom', 'partner_id', 'picking_id', 'package_id', 'result_package_id', 'owner_id'}
-PICKING_WATCHED = {'partner_id', 'location_id', 'location_dest_id', 'picking_type_id', 'owner_id'}
+PICKING_WATCHED = {'partner_id', 'location_id', 'location_dest_id', 'picking_type_id', 'owner_id', 'scheduled_date', 'date_deadline'}
 
 
 class AlfiaPickingApproval(models.Model):
@@ -74,7 +74,9 @@ class StockPicking(models.Model):
                 raise UserError(self.env._(
                     "%(picking)s contains controlled stock and cannot be dispatched yet. Missing approvals: %(missing)s.",
                     picking=picking.name, missing=', '.join(missing.mapped('display_name'))))
-            if self.env.user in picking.alfia_approval_ids.user_id and picking._alfia_sod_applies():
+            # Three people for controlled stock, always: the two approvers and someone else who dispatches. The trial's
+            # segregation-of-duties exemption does not cover this, as it does not cover approving twice.
+            if self.env.user in picking.alfia_approval_ids.user_id:
                 raise UserError(self.env._("An approver cannot also dispatch %s. Another person must validate the transfer.", picking.name))
 
     def write(self, vals):

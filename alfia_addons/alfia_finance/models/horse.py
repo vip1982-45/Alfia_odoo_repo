@@ -60,11 +60,24 @@ class AlfiaCharge(models.Model):
         return vals
 
 
+class AlfiaBreedingContract(models.Model):
+    _inherit = 'alfia.breeding.contract'
+
+    def _alfia_invoice_line_vals(self, price=None, name=None):
+        vals = super()._alfia_invoice_line_vals(price, name)
+        # A nomination fee is the stallion's income (and its refund the stallion's cost); without a stallion of ours,
+        # it goes to the mare named on the contract.
+        horse = self.stallion_id if self.stallion_id.analytic_account_id else self.mare_id
+        if horse.analytic_account_id:
+            vals['analytic_distribution'] = {str(horse.analytic_account_id.id): 100}
+        return vals
+
+
 class AlfiaMedicineIssue(models.Model):
     _inherit = 'alfia.medicine.issue'
 
-    def _move(self, qty, src, dst):
-        move = super()._move(qty, src, dst)
+    def _move(self, qty, src, dst, origin=None):
+        move = super()._move(qty, src, dst, origin=origin)
         # The cost of medicine given to a horse is allocated to that horse.
         account = self.horse_id.analytic_account_id
         if account:

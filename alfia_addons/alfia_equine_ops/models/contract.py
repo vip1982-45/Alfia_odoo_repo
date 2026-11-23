@@ -67,6 +67,12 @@ class AlfiaBreedingContract(models.Model):
             with workflow():
                 rec.state = 'confirmed'
 
+    def _alfia_invoice_line_vals(self, price=None, name=None):
+        """The contract's invoice (or credit note) line. Extended by alfia_finance to allocate it to the horse."""
+        self.ensure_one()
+        return {'product_id': self.product_id.id, 'quantity': 1, 'price_unit': self.fee if price is None else price,
+                'name': name or f"{self.name}: {self.stallion_id.name} ({self.season})"}
+
     def action_invoice(self):
         require_any(self.env, ('account.group_account_invoice', 'base.group_system'), self.env._("accounting staff"))
         for rec in self:
@@ -74,8 +80,7 @@ class AlfiaBreedingContract(models.Model):
                 raise UserError(self.env._("Only a confirmed, not yet invoiced contract can be invoiced."))
             invoice = self.env['account.move'].with_company(rec.company_id).create({
                 'move_type': 'out_invoice', 'partner_id': rec.client_id.id, 'invoice_date': fields.Date.context_today(self),
-                'invoice_line_ids': [Command.create({'product_id': rec.product_id.id, 'quantity': 1, 'price_unit': rec.fee,
-                                                      'name': f"{rec.name}: {rec.stallion_id.name} ({rec.season})"})]})
+                'invoice_line_ids': [Command.create(rec._alfia_invoice_line_vals())]})
             with workflow():
                 rec.invoice_id = invoice
             # The contract shows "Invoiced" only once the invoice is posted (see AccountMove._post below).
@@ -91,8 +96,8 @@ class AlfiaBreedingContract(models.Model):
                 raise UserError(self.env._("A refund is due only under a live-foal guarantee when there is no live foal."))
             credit = self.env['account.move'].with_company(rec.company_id).create({
                 'move_type': 'out_refund', 'partner_id': rec.client_id.id, 'invoice_date': fields.Date.context_today(self),
-                'invoice_line_ids': [Command.create({'product_id': rec.product_id.id, 'quantity': 1, 'price_unit': rec.fee * rec.refund_percent / 100.0,
-                                                      'name': self.env._("Live-foal guarantee refund: %s", rec.name)})]})
+                'invoice_line_ids': [Command.create(rec._alfia_invoice_line_vals(rec.fee * rec.refund_percent / 100.0,
+                                                                                 self.env._("Live-foal guarantee refund: %s", rec.name)))]})
             with workflow():
                 rec.write({'credit_note_id': credit.id, 'state': 'refunded'})
 

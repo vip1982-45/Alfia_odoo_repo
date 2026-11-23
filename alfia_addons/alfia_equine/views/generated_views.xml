@@ -125,7 +125,7 @@
         <field name="name">alfia.lab.test.form</field>
         <field name="model">alfia.lab.test</field>
         <field name="arch" type="xml">
-            <form><header><button name="action_review" string="Vet review" type="object" class="btn-primary" invisible="state == 'reviewed'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="date"/><field name="test"/><field name="lab"/><field name="vet_id"/></group><group><field name="result"/><field name="reference_range"/><field name="state" readonly="1"/><field name="reviewed_by_id"/></group></group><group><field name="notes"/></group></sheet></form>
+            <form><header><button name="action_review" string="Vet review" type="object" class="btn-primary" invisible="state == 'reviewed'"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="horse_id"/><field name="date"/><field name="test"/><field name="lab"/><field name="vet_id"/></group><group><field name="result"/><field name="reference_range"/><field name="state" readonly="1"/><field name="reviewed_by_id"/><field name="attachment_ids" widget="many2many_binary"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
         </field>
     </record>
     <record id="alfia_lab_test_view_search" model="ir.ui.view">
@@ -148,7 +148,7 @@
         <field name="name">alfia.diag.image.form</field>
         <field name="model">alfia.diag.image</field>
         <field name="arch" type="xml">
-            <form><sheet><group><group><field name="horse_id"/><field name="date"/><field name="modality"/></group><group><field name="body_part"/><field name="vet_id"/><field name="attachment_ids"/></group></group><group><field name="findings"/></group></sheet></form>
+            <form><sheet><group><group><field name="horse_id"/><field name="date"/><field name="modality"/></group><group><field name="body_part"/><field name="vet_id"/><field name="attachment_ids" widget="many2many_binary"/></group></group><group><field name="findings"/></group></sheet><chatter/></form>
         </field>
     </record>
     <record id="alfia_diag_image_view_search" model="ir.ui.view">

@@ -208,6 +208,19 @@ class TestReportsAndCostAllocation(FinanceCase):
         lines = self.env['account.analytic.line'].search([(column, '=', self.mare.analytic_account_id.id)])
         self.assertAlmostEqual(sum(lines.mapped('amount')), 300.0, places=2, msg="the horse's income is on its cost centre")
 
+    def test_nomination_income_lands_on_the_stallion(self):
+        service = self.env['product.product'].create({'name': 'Nomination (test)', 'type': 'service', 'list_price': 100})
+        contract = self.env['alfia.breeding.contract'].create({'client_id': self.customer.id, 'stallion_id': self.stallion.id,
+                                                               'mare_id': self.mare.id, 'season': '2026', 'product_id': service.id, 'fee': 100})
+        contract.action_confirm()
+        contract.action_invoice()
+        self.assertEqual(contract.invoice_id.invoice_line_ids.analytic_distribution, {str(self.stallion.analytic_account_id.id): 100})
+
+    def test_feed_bags_convert_to_kg(self):
+        bag = self.env.ref('alfia_finance.uom_bag_25kg')
+        kg = self.env.ref('uom.product_uom_kgm')
+        self.assertAlmostEqual(bag._compute_quantity(2, kg), 50.0)
+
     def test_aged_receivables(self):
         invoice = self.env['account.move'].create({
             'move_type': 'out_invoice', 'partner_id': self.customer.id, 'invoice_date': fields.Date.today() - relativedelta(days=50),
