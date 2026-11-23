@@ -43,3 +43,5 @@ Arabic text still appears but screens stay left to right. Install it once (Node.
     npm install -g rtlcss@4.3.0
 
 `build_demo.sh` warns when it is missing.
+
+**`power.user`** (demo password): every business function in every site, store, warehouse, journal and department, and allowed to approve its own requests so one person can run a process end to end. It has no system administration (no Settings, no user or security administration). Created by `demo/power_user.py`.

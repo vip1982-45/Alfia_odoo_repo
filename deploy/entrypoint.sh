@@ -52,6 +52,10 @@ if ! python deploy/dbcheck.py exists "$DB_NAME"; then
   fi
 fi
 # INIT_ONLY=1 (a one-off job, e.g. on Azure Container Apps): build the database and stop, without serving.
+if [ "${LOAD_DEMO_FARM:-1}" = "1" ]; then
+  # The trial power user (every business function, no administration); safe to run on every start.
+  python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < demo/power_user.py || echo "WARNING: could not create the power user" >&2
+fi
 if [ "${INIT_ONLY:-0}" = "1" ]; then
   echo "Initialisation finished."
   exit 0
