@@ -23,3 +23,7 @@ acc_close_auditor,Period closes: auditor,alfia.period.close,alfia_security.group
 acc_bank_match,Bank matching wizard: accountants,alfia.bank.match,account.group_account_user,crud,
 acc_bank_import,Bank import wizard: accountants,alfia.bank.import,account.group_account_user,crud,
 acc_qc_scope,Alfia site scope: receipt inspections,alfia.quality.check,,crud,"[('location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+acc_asset_accounting,Assets: accounting staff capitalise and depreciate,alfia.asset,account.group_account_user,ru,
+acc_asset_dep_accounting,Asset depreciation: accounting staff,alfia.asset.depreciation,account.group_account_user,r,
+acc_asset_dep_auditor,Asset depreciation: auditor,alfia.asset.depreciation,alfia_security.group_alfia_security_auditor,r,
+acc_asset_disposal,Asset disposal wizard: finance managers,alfia.asset.disposal,account.group_account_manager,crud,

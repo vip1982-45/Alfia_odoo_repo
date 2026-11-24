@@ -42,3 +42,22 @@
 - "Match automatically" settles a line when exactly one open item has its amount (and partner) and, if several do, the
   line's text names one of them. Otherwise "Match…" lets the accountant pick the items, with an account for any
   difference such as bank charges. "Undo" reverses a match. Lines in a foreign currency use Odoo's standard way.
+
+## Fixed assets (an asset's Accounting tab; Accounting › Accounting › Fixed assets)
+- Accounting staff capitalise an asset from the farm register: cost, residual value, useful life in months, start date,
+  the fixed-asset, accumulated-depreciation and expense accounts, and the journal. Straight-line depreciation is planned
+  by month (the last month takes the rounding) and posted daily by a scheduled job, or with "Post due depreciation".
+  These entries come from the register, so they are not manual entries needing a second person.
+- Cost, life and accounts are fixed once capitalised. A finance manager disposes of an asset (sale or write-off):
+  depreciation is brought up to the date (the last month by day), cost and accumulated depreciation leave the books,
+  and the difference to the proceeds is a gain or loss. The asset is retired.
+
+## Boarding when a horse leaves
+- A completed departure, or a horse sold, gifted or dead, ends its recurring charges on that day. The period it leaves
+  in is billed for the days it stayed (the price is prorated, so amounts are exact); later periods are cancelled and no
+  longer generated. Periods already invoiced get one draft credit note per invoice for the unused days, for accounting
+  to post. An arrival resumes charges from the next period. The horse's log lists what changed.
+
+## Arabic
+- `i18n/ar.po` covers every label and message. After changing strings, export the template and run `tools/make_ar.py`
+  (it refuses a missing translation or a changed placeholder).

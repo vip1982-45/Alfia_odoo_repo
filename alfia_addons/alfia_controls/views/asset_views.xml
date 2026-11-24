@@ -1,0 +1,75 @@
+<odoo>
+    <record id="alfia_asset_form_accounting" model="ir.ui.view">
+        <field name="name">alfia.asset.form.accounting</field>
+        <field name="model">alfia.asset</field>
+        <field name="inherit_id" ref="alfia_equine_ops.alfia_asset_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_capitalise" string="Capitalise" type="object" groups="account.group_account_user"
+                        invisible="accounting_state != 'none'"/>
+                <button name="action_post_depreciation" string="Post due depreciation" type="object" groups="account.group_account_user"
+                        invisible="accounting_state != 'running'"/>
+                <button name="action_open_disposal" string="Dispose (sell / write off)" type="object" groups="account.group_account_manager"
+                        invisible="accounting_state not in ('running', 'done')"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <notebook groups="account.group_account_user">
+                    <page string="Accounting" name="alfia_accounting">
+                        <group>
+                            <group>
+                                <field name="accounting_state" readonly="1"/>
+                                <field name="cost" readonly="accounting_state != 'none'"/>
+                                <field name="salvage_value" readonly="accounting_state != 'none'"/>
+                                <field name="useful_life_months" readonly="accounting_state != 'none'"/>
+                                <field name="depreciation_start" readonly="accounting_state != 'none'"/>
+                            </group>
+                            <group>
+                                <field name="asset_account_id" readonly="accounting_state != 'none'"/>
+                                <field name="accumulated_account_id" readonly="accounting_state != 'none'"/>
+                                <field name="expense_account_id" readonly="accounting_state != 'none'"/>
+                                <field name="asset_journal_id" readonly="accounting_state != 'none'"/>
+                                <field name="accumulated_depreciation"/>
+                                <field name="book_value"/>
+                                <field name="disposal_move_id" invisible="not disposal_move_id"/>
+                                <field name="disposed_by_id" invisible="not disposed_by_id"/>
+                            </group>
+                        </group>
+                        <field name="depreciation_line_ids" readonly="1">
+                            <list decoration-muted="state == 'cancelled'" decoration-success="state == 'posted'">
+                                <field name="date"/><field name="amount" sum="Total"/><field name="state"/><field name="move_id"/>
+                                <field name="currency_id" column_invisible="1"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+    <record id="alfia_asset_disposal_view_form" model="ir.ui.view">
+        <field name="name">alfia.asset.disposal.form</field>
+        <field name="model">alfia.asset.disposal</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>Depreciation is brought up to the disposal date (the last month by day), the cost and accumulated depreciation
+                    leave the books, and the difference to the proceeds is posted as a gain or loss.</p>
+                <group>
+                    <group><field name="asset_id"/><field name="date"/><field name="reason"/></group>
+                    <group><field name="proceeds"/><field name="proceeds_account_id" invisible="not proceeds" required="proceeds"/>
+                        <field name="gain_loss_account_id"/><field name="currency_id" invisible="1"/></group>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Dispose" type="object" class="btn-primary"
+                            confirm="This posts the disposal to the ledger and retires the asset. Continue?"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_asset_accounting_action" model="ir.actions.act_window">
+        <field name="name">Fixed assets</field>
+        <field name="res_model">alfia.asset</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('accounting_state', '!=', 'none')]</field>
+        <field name="help" type="html"><p>Capitalise an asset from its form (Accounting tab) to depreciate it here.</p></field>
+    </record>
+</odoo>

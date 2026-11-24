@@ -7,4 +7,12 @@
             <field name="padding">4</field>
         </record>
     </data>
+    <record id="cron_post_depreciation" model="ir.cron">
+        <field name="name">Alfia: post due asset depreciation</field>
+        <field name="model_id" ref="alfia_equine_ops.model_alfia_asset"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_post_depreciation()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
 </odoo>

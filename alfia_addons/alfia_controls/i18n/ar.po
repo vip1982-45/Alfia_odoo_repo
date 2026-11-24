@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-24 20:23+0000\n"
-"PO-Revision-Date: 2026-11-24 20:23+0000\n"
+"POT-Creation-Date: 2026-11-24 20:32+0000\n"
+"PO-Revision-Date: 2026-11-24 20:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -12,6 +12,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/boarding.py:0
+msgid "%(date)s cancelled"
+msgstr "%(date)s أُلغيت"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/boarding.py:0
+msgid "%(date)s invoiced; credit note drafted for %(unused)s unused days"
+msgstr ""
+"%(date)s مفوترة؛ أُعدّ إشعار دائن مسودة عن %(unused)s يوماً غير مستخدم"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/boarding.py:0
+msgid "%(date)s reduced to %(used)s of %(days)s days"
+msgstr "%(date)s خُفّضت إلى %(used)s من %(days)s يوماً"
 
 #. module: alfia_controls
 #. odoo-python
@@ -46,6 +65,18 @@ msgstr ""
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/boarding.py:0
+msgid "%(name)s (%(used)s of %(days)s days, left %(end)s)"
+msgstr "%(name)s (%(used)s من %(days)s يوماً، غادر في %(end)s)"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/boarding.py:0
+msgid "%(name)s: %(unused)s of %(days)s days not used after %(end)s"
+msgstr "%(name)s: %(unused)s من %(days)s يوماً غير مستخدمة بعد %(end)s"
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/bank.py:0
 msgid "%(new)s line(s) imported, %(dup)s already imported and skipped."
 msgstr "تم استيراد %(new)s سطر، وتم تخطي %(dup)s سبق استيرادها."
@@ -76,6 +107,12 @@ msgstr "تم تقديم %s مسبقاً."
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "%s is already capitalised."
+msgstr "تمت رسملة %s مسبقاً."
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/purchase_request.py:0
 msgid "%s is already ordered; cancel the purchase order instead."
 msgstr "تم طلب %s بالفعل؛ ألغِ أمر الشراء بدلاً من ذلك."
@@ -91,6 +128,11 @@ msgstr "تمت تسوية %s مسبقاً."
 #: code:addons/alfia_controls/models/quality.py:0
 msgid "%s waits for quality inspection before it can go into stock."
 msgstr "ينتظر %s فحص الجودة قبل إدخاله إلى المخزون."
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_asset_disposal__proceeds
+msgid "0 for a write-off."
+msgstr "0 للشطب."
 
 #. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_import_view_form
@@ -209,6 +251,31 @@ msgid "Account Lock Exception"
 msgstr "استثناء تاريخ القفل"
 
 #. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_asset_form_accounting
+msgid "Accounting"
+msgstr "المحاسبة"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__accounting_state
+msgid "Accounting State"
+msgstr "الحالة المحاسبية"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__accumulated_depreciation
+msgid "Accumulated Depreciation"
+msgstr "مجمع الإهلاك"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__accumulated_account_id
+msgid "Accumulated depreciation account"
+msgstr "حساب مجمع الإهلاك"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__cost
+msgid "Acquisition cost"
+msgstr "تكلفة الاقتناء"
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_needaction
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_needaction
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_needaction
@@ -245,11 +312,17 @@ msgid "Alfia Procurement and Finance Controls"
 msgstr "ضوابط المشتريات والمالية - ألفية"
 
 #. module: alfia_controls
+#: model:ir.actions.server,name:alfia_controls.cron_post_depreciation_ir_actions_server
+msgid "Alfia: post due asset depreciation"
+msgstr "ألفية: ترحيل الإهلاك المستحق للأصول"
+
+#. module: alfia_controls
 #: model:res.groups,name:alfia_controls.group_quality_inspector
 msgid "Alfia: receipt quality inspector"
 msgstr "ألفية: مفتش جودة الاستلام"
 
 #. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__amount
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__amount
 msgid "Amount"
 msgstr "المبلغ"
@@ -264,6 +337,17 @@ msgstr "لا يمكن أن يكون حد الاعتماد سالباً."
 #: code:addons/alfia_controls/models/approval.py:0
 msgid "An approval limit is for one person or for one group."
 msgstr "حد الاعتماد يكون لشخص واحد أو لمجموعة واحدة."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid ""
+"An asset's cost, life and accounts cannot change once it is capitalised. "
+"Dispose of it and capitalise a corrected one, so the ledger keeps the "
+"history."
+msgstr ""
+"لا يمكن تغيير تكلفة الأصل وعمره وحساباته بعد رسملته. تخلّص منه ورسمل أصلاً "
+"مصحَّحاً، ليحتفظ الدفتر بالتاريخ."
 
 #. module: alfia_controls
 #: model:ir.model,name:alfia_controls.model_alfia_approval_delegation
@@ -353,6 +437,19 @@ msgid "Archived"
 msgstr "مؤرشف"
 
 #. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__alfia_asset_id
+#: model:ir.model.fields,field_description:alfia_controls.field_account_move__alfia_asset_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__asset_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__asset_id
+msgid "Asset"
+msgstr "الأصل"
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_asset_depreciation
+msgid "Asset depreciation month"
+msgstr "شهر إهلاك الأصل"
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_attachment_count
@@ -396,6 +493,12 @@ msgid "Before closing"
 msgstr "قبل الإقفال"
 
 #. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__book_value
+msgid "Book Value"
+msgstr "القيمة الدفترية"
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_asset_disposal_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_import_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_match_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
@@ -403,6 +506,7 @@ msgid "Cancel"
 msgstr "إلغاء"
 
 #. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_asset_depreciation__state__cancelled
 #: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_purchase_request__state__cancelled
 msgid "Cancelled"
 msgstr "ملغى"
@@ -411,6 +515,28 @@ msgstr "ملغى"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__candidate_ids
 msgid "Candidate"
 msgstr "مرشح"
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_asset_form_accounting
+msgid "Capitalise"
+msgstr "رسملة"
+
+#. module: alfia_controls
+#: model_terms:ir.actions.act_window,help:alfia_controls.alfia_asset_accounting_action
+msgid ""
+"Capitalise an asset from its form (Accounting tab) to depreciate it here."
+msgstr "رسمل الأصل من نموذجه (تبويب المحاسبة) ليُهلَك هنا."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "Capitalised by %(user)s: %(cost)s over %(months)s months."
+msgstr "رسمله %(user)s: %(cost)s على %(months)s شهراً."
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_charge
+msgid "Charge to invoice"
+msgstr "رسم للفوترة"
 
 #. module: alfia_controls
 #. odoo-python
@@ -423,6 +549,12 @@ msgstr "اختر مورداً لـ: %s"
 #: code:addons/alfia_controls/models/bank.py:0
 msgid "Choose what this bank line pays or receives."
 msgstr "اختر ما يسدده هذا السطر البنكي أو يحصّله."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "Choose where the sale proceeds go."
+msgstr "اختر أين تُقيَّد عائدات البيع."
 
 #. module: alfia_controls
 #. odoo-python
@@ -461,6 +593,12 @@ msgstr ""
 "README.md."
 
 #. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "Cost and residual value cannot be negative."
+msgstr "لا يمكن أن تكون التكلفة والقيمة المتبقية سالبة."
+
+#. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
 msgid "Create requests for quotation"
 msgstr "إنشاء طلبات عروض أسعار"
@@ -468,6 +606,8 @@ msgstr "إنشاء طلبات عروض أسعار"
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__create_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__create_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__create_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__create_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__create_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__create_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__create_uid
@@ -480,6 +620,8 @@ msgstr "أنشأه"
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__create_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__create_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__create_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__create_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__create_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__create_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__create_date
@@ -491,6 +633,9 @@ msgstr "تاريخ الإنشاء"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__currency_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__company_currency_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__currency_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__currency_id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__currency_id
 msgid "Currency"
 msgstr "العملة"
@@ -499,6 +644,12 @@ msgstr "العملة"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__current_lock_date
 msgid "Current Lock Date"
 msgstr "تاريخ القفل الحالي"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__date
+msgid "Date"
+msgstr "التاريخ"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__date_from
@@ -519,6 +670,46 @@ msgstr "تاريخ القرار"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__delegator_id
 msgid "Delegated by"
 msgstr "المفوِّض"
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_asset__accounting_state__running
+msgid "Depreciating"
+msgstr "قيد الإهلاك"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "Depreciation %(asset)s %(month)s"
+msgstr "إهلاك %(asset)s %(month)s"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__depreciation_line_ids
+msgid "Depreciation Line"
+msgstr "أسطر الإهلاك"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__depreciation_start
+msgid "Depreciation Start"
+msgstr "بداية الإهلاك"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__expense_account_id
+msgid "Depreciation expense account"
+msgstr "حساب مصروف الإهلاك"
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_asset_disposal_view_form
+msgid ""
+"Depreciation is brought up to the disposal date (the last month by day), the cost and accumulated depreciation\n"
+"                    leave the books, and the difference to the proceeds is posted as a gain or loss."
+msgstr ""
+"يُستكمل الإهلاك حتى تاريخ التخلص (الشهر الأخير بالأيام)، وتخرج التكلفة ومجمع"
+" الإهلاك من الدفاتر، ويُرحَّل الفرق عن العائدات كربح أو خسارة."
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_asset__depreciation_start
+msgid "Depreciation runs from the month of this date."
+msgstr "يبدأ الإهلاك من شهر هذا التاريخ."
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__description
@@ -542,8 +733,14 @@ msgstr "قيد الفرق على"
 #: model:ir.model.fields,field_description:alfia_controls.field_account_payment__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_charge__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_horse__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_horse_movement__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__display_name
@@ -555,6 +752,58 @@ msgstr "قيد الفرق على"
 #: model:ir.model.fields,field_description:alfia_controls.field_stock_move__display_name
 msgid "Display Name"
 msgstr "الاسم المعروض"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__disposal_move_id
+msgid "Disposal Move"
+msgstr "قيد التخلص"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "Disposal of %(asset)s: %(reason)s"
+msgstr "التخلص من %(asset)s: %(reason)s"
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_asset_disposal_view_form
+msgid "Dispose"
+msgstr "تخلّص"
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_asset_form_accounting
+msgid "Dispose (sell / write off)"
+msgstr "التخلص (بيع / شطب)"
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_asset_disposal
+msgid "Dispose of an asset"
+msgstr "التخلص من أصل"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "Dispose of asset"
+msgstr "التخلص من الأصل"
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_asset__accounting_state__disposed
+msgid "Disposed"
+msgstr "تم التخلص منه"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__disposed_by_id
+msgid "Disposed By"
+msgstr "تخلّص منه"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid ""
+"Disposed of by %(user)s on %(date)s: %(reason)s. Book value %(book)s, "
+"proceeds %(proceeds)s, %(kind)s %(result)s."
+msgstr ""
+"تخلّص منه %(user)s في %(date)s: %(reason)s. القيمة الدفترية %(book)s، "
+"العائدات %(proceeds)s، %(kind)s %(result)s."
 
 #. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_approval_limit_view_search
@@ -588,6 +837,12 @@ msgid "Draft entries in the period"
 msgstr "قيود المسودة في الفترة"
 
 #. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/boarding.py:0
+msgid "Drafted when %(horse)s left on %(end)s, for charges on %(invoice)s."
+msgstr "أُعدّ عند مغادرة %(horse)s في %(end)s، عن رسوم الفاتورة %(invoice)s."
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__estimated_total
 msgid "Estimated total"
 msgstr "الإجمالي التقديري"
@@ -603,6 +858,11 @@ msgid "Everything (all users)"
 msgstr "كل شيء (جميع المستخدمين)"
 
 #. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_asset
+msgid "Farm asset"
+msgstr "أصل المزرعة"
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__file
 msgid "File"
 msgstr "الملف"
@@ -611,6 +871,12 @@ msgstr "الملف"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__filename
 msgid "Filename"
 msgstr "اسم الملف"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "Fill in %(what)s before capitalising %(asset)s."
+msgstr "أكمل %(what)s قبل رسملة %(asset)s."
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__findings
@@ -622,6 +888,17 @@ msgstr "النتائج"
 msgid ""
 "Fingerprint of the imported bank line, used to refuse the same line twice."
 msgstr "بصمة السطر البنكي المستورد، تُستخدم لرفض استيراد السطر نفسه مرتين."
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__asset_account_id
+msgid "Fixed asset account"
+msgstr "حساب الأصل الثابت"
+
+#. module: alfia_controls
+#: model:ir.actions.act_window,name:alfia_controls.alfia_asset_accounting_action
+#: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_fixed_assets
+msgid "Fixed assets"
+msgstr "الأصول الثابتة"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_follower_ids
@@ -645,6 +922,16 @@ msgstr "المتابعون (الشركاء)"
 #: model:ir.model.fields,help:alfia_controls.field_alfia_bank_match__writeoff_account_id
 msgid "For example bank charges."
 msgstr "مثلاً رسوم البنك."
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_asset__accounting_state__done
+msgid "Fully depreciated"
+msgstr "مُهلَك بالكامل"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__gain_loss_account_id
+msgid "Gain / loss account"
+msgstr "حساب الربح / الخسارة"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__location_id
@@ -677,14 +964,30 @@ msgid "Has Message"
 msgstr "لديه رسالة"
 
 #. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_horse
+msgid "Horse"
+msgstr "الحصان"
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_horse_movement
+msgid "Horse movement"
+msgstr "حركة الحصان"
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__id
 #: model:ir.model.fields,field_description:alfia_controls.field_account_lock_exception__id
 #: model:ir.model.fields,field_description:alfia_controls.field_account_move__id
 #: model:ir.model.fields,field_description:alfia_controls.field_account_payment__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_charge__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_horse__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_horse_movement__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__id
@@ -787,6 +1090,7 @@ msgid "Is Follower"
 msgstr "متابع"
 
 #. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__asset_journal_id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__journal_id
 msgid "Journal"
 msgstr "اليومية"
@@ -804,6 +1108,8 @@ msgstr "النوع"
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__write_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__write_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__write_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__write_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__write_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__write_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__write_uid
@@ -816,6 +1122,8 @@ msgstr "آخر تحديث بواسطة"
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__write_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__write_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__write_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__write_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__write_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__write_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__write_date
@@ -915,6 +1223,11 @@ msgid "Messages"
 msgstr "الرسائل"
 
 #. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__move_id
+msgid "Move"
+msgstr "القيد"
+
+#. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_search
 msgid "My requests"
 msgstr "طلباتي"
@@ -935,6 +1248,17 @@ msgstr "مطلوب في"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__date_needed
 msgid "Needed by"
 msgstr "مطلوب بحلول"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/boarding.py:0
+msgid "No charge needed adjusting."
+msgstr "لم يحتج أي رسم إلى تعديل."
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_asset__accounting_state__none
+msgid "Not capitalised"
+msgstr "غير مرسمل"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_needaction_counter
@@ -983,6 +1307,13 @@ msgstr ""
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid ""
+"Only a capitalised asset that is not yet disposed of can be disposed of."
+msgstr "لا يمكن التخلص إلا من أصل مرسمل لم يُتخلَّص منه بعد."
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/purchase_request.py:0
 msgid "Only a draft or rejected request can be submitted."
 msgstr "لا يمكن تقديم إلا طلب مسودة أو مرفوض."
@@ -1019,6 +1350,12 @@ msgstr "لا يمكن رفض إلا طلب مقدَّم."
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "Only accounting staff capitalise and depreciate assets."
+msgstr "لا يرسمل الأصول ويهلكها إلا موظفو المحاسبة."
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/purchase_request.py:0
 msgid "Only an approved request can be ordered."
 msgstr "لا يمكن طلب الشراء إلا لطلب معتمد."
@@ -1028,6 +1365,12 @@ msgstr "لا يمكن طلب الشراء إلا لطلب معتمد."
 #: code:addons/alfia_controls/models/journal.py:0
 msgid "Only finance managers close or reopen periods."
 msgstr "لا يُقفل الفترات أو يعيد فتحها إلا المديرون الماليون."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "Only finance managers dispose of assets."
+msgstr "لا يتخلص من الأصول إلا المديرون الماليون."
 
 #. module: alfia_controls
 #. odoo-python
@@ -1123,9 +1466,24 @@ msgid "Person"
 msgstr "الشخص"
 
 #. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_asset_depreciation__state__planned
+msgid "Planned"
+msgstr "مخطط"
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__alfia_suggestion_count
 msgid "Possible matches"
 msgstr "المطابقات المحتملة"
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_asset_form_accounting
+msgid "Post due depreciation"
+msgstr "ترحيل الإهلاك المستحق"
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_asset_depreciation__state__posted
+msgid "Posted"
+msgstr "مرحّل"
 
 #. module: alfia_controls
 #. odoo-python
@@ -1142,6 +1500,17 @@ msgstr "المورد المفضل"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__previous_lock_date
 msgid "Previous Lock Date"
 msgstr "تاريخ القفل السابق"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "Proceeds cannot be negative."
+msgstr "لا يمكن أن تكون العائدات سالبة."
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__proceeds_account_id
+msgid "Proceeds to"
+msgstr "تُقيَّد العائدات في"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__product_id
@@ -1227,6 +1596,7 @@ msgstr "التقييمات"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__reason
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__reason
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__reason
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__reason
 msgid "Reason"
@@ -1279,6 +1649,17 @@ msgstr "حركة الاستلام"
 #: code:addons/alfia_controls/models/quality.py:0
 msgid "Record what was found before rejecting %s."
 msgstr "سجّل ما وُجد قبل رفض %s."
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_horse__alfia_billed_until
+msgid "Recurring charges end"
+msgstr "انتهاء الرسوم الدورية"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/boarding.py:0
+msgid "Recurring charges end on %(date)s (%(reason)s). %(details)s"
+msgstr "تنتهي الرسوم الدورية في %(date)s (%(reason)s). %(details)s"
 
 #. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_period_close_view_form
@@ -1345,6 +1726,11 @@ msgid "Requested by"
 msgstr "مقدّم الطلب"
 
 #. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__salvage_value
+msgid "Residual value"
+msgstr "القيمة المتبقية"
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__result
 msgid "Result"
 msgstr "النتيجة"
@@ -1365,6 +1751,11 @@ msgid "SMS Delivery error"
 msgstr "خطأ في تسليم الرسالة النصية"
 
 #. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__proceeds
+msgid "Sale proceeds"
+msgstr "عائدات البيع"
+
+#. module: alfia_controls
 #. odoo-python
 #: code:addons/alfia_controls/models/journal.py:0
 msgid ""
@@ -1378,6 +1769,14 @@ msgid "Selected Total"
 msgstr "إجمالي المحدد"
 
 #. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_horse__alfia_billed_until
+msgid ""
+"Set when the horse leaves. Recurring charges are not generated after this "
+"date."
+msgstr "يُحدَّد عند مغادرة الحصان. لا تُنشأ رسوم دورية بعد هذا التاريخ."
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__state
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__state
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__state
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__state
@@ -1427,6 +1826,12 @@ msgstr "الإقرارات الضريبية فقط"
 #: code:addons/alfia_controls/models/journal.py:0
 msgid "The books are already closed up to %s."
 msgstr "الدفاتر مقفلة بالفعل حتى %s."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "The disposal date cannot be before depreciation started."
+msgstr "لا يمكن أن يسبق تاريخ التخلص بداية الإهلاك."
 
 #. module: alfia_controls
 #. odoo-python
@@ -1485,6 +1890,18 @@ msgstr "يجب أن تكون الكمية أكبر من صفر."
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "The residual value cannot be more than the cost."
+msgstr "لا يمكن أن تزيد القيمة المتبقية على التكلفة."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "The useful life must be between 1 and 600 months."
+msgstr "يجب أن يكون العمر الإنتاجي بين 1 و600 شهر."
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/bank.py:0
 msgid "This bank line has already been partly matched; undo it first."
 msgstr "تمت مطابقة هذا السطر البنكي جزئياً؛ تراجع عن المطابقة أولاً."
@@ -1502,6 +1919,11 @@ msgid "This payment"
 msgstr "هذه الدفعة"
 
 #. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_asset_disposal_view_form
+msgid "This posts the disposal to the ledger and retires the asset. Continue?"
+msgstr "سيُرحَّل التخلص إلى الدفتر ويُخرَج الأصل من الخدمة. هل تريد المتابعة؟"
+
+#. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_search
 msgid "To match"
 msgstr "بانتظار المطابقة"
@@ -1513,6 +1935,7 @@ msgid "To reopen, choose a date before the current lock date (%s)."
 msgstr "لإعادة الفتح، اختر تاريخاً قبل تاريخ القفل الحالي (%s)."
 
 #. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_asset_form_accounting
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_list
 msgid "Total"
 msgstr "الإجمالي"
@@ -1544,6 +1967,12 @@ msgid "Unreconciled bank lines in the period"
 msgstr "أسطر بنكية غير مسوّاة في الفترة"
 
 #. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/boarding.py:0
+msgid "Unused boarding, %s left"
+msgstr "إيواء غير مستخدم، غادر %s"
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__amount
 msgid "Up to"
 msgstr "حتى"
@@ -1552,6 +1981,11 @@ msgstr "حتى"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__date
 msgid "Up to and including"
 msgstr "حتى وتشمل"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__useful_life_months
+msgid "Useful life (months)"
+msgstr "العمر الإنتاجي (بالأشهر)"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__for_bill
@@ -1581,12 +2015,26 @@ msgid ""
 msgstr "بانتظار فحص الجودة: %s. يجب أن يقبلها مفتش قبل إدخالها إلى المخزون."
 
 #. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_asset__salvage_value
+msgid ""
+"What the asset is expected to be worth at the end of its useful life; not "
+"depreciated."
+msgstr "القيمة المتوقعة للأصل في نهاية عمره الإنتاجي؛ لا تُهلَك."
+
+#. module: alfia_controls
 #: model:ir.model.fields,help:alfia_controls.field_alfia_quality_check__findings
 msgid ""
 "What was checked and found (packaging, temperature, expiry, documents...). "
 "Required to reject."
 msgstr ""
 "ما تم فحصه وما وُجد (التغليف، الحرارة، الصلاحية، المستندات...). مطلوب للرفض."
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_asset_disposal__proceeds_account_id
+msgid ""
+"Where the sale price is due or was received, for example a receivable or the"
+" bank."
+msgstr "أين يُستحق سعر البيع أو استُلم، مثلاً حساب مدين أو البنك."
 
 #. module: alfia_controls
 #: model_terms:ir.actions.act_window,help:alfia_controls.alfia_approval_limit_action
@@ -1666,12 +2114,60 @@ msgstr "أنت قدّمت %s، لذا يجب أن يبت فيه مدير مشت�
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "accounts"
+msgstr "الحسابات"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "cost"
+msgstr "التكلفة"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/boarding.py:0
+msgid "departure"
+msgstr "مغادرة"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "gain"
+msgstr "ربح"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "journal"
+msgstr "اليومية"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "loss"
+msgstr "خسارة"
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/approval.py:0
 msgid "no limit"
 msgstr "بلا حد"
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "start date"
+msgstr "تاريخ البداية"
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/bank.py:0
 msgid "statement_id"
 msgstr "الكشف"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid "useful life"
+msgstr "العمر الإنتاجي"

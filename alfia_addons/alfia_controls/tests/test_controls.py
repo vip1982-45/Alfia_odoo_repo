@@ -518,3 +518,152 @@ class TestBankStatements(ControlsCase):
         line.with_user(self.accountant).action_undo_reconciliation()
         self.assertFalse(line.is_reconciled)
         self.assertEqual(bill.payment_state, 'not_paid')
+
+
+@tagged('post_install', '-at_install', 'alfia_controls')
+class TestAssetAccounting(ControlsCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        env = cls.env
+        env.company.alfia_sod_enabled = True
+        env.company.alfia_sod_threshold = 0
+
+        def user(login, group):
+            return env['res.users'].with_context(no_reset_password=True).create({
+                'name': login, 'login': f'{login}@ctl.local',
+                'group_ids': [Command.link(env.ref(g).id) for g in (group, 'alfia_security.group_alfia_all_journals',
+                                                                     'alfia_security.group_alfia_all_locations')]})
+        cls.acc = user('assetacc', 'account.group_account_user')
+        cls.fm = user('assetfm', 'account.group_account_manager')
+        Account = env['account.account']
+
+        def account(code, kind):
+            return Account.create({'name': f'Asset test {code}', 'code': code, 'account_type': kind})
+        cls.fixed, cls.accum = account('190001', 'asset_fixed'), account('190002', 'asset_fixed')
+        cls.expense, cls.gainloss = account('690001', 'expense_depreciation'), account('790001', 'income_other')
+        cls.receivable = env['account.account'].search([('account_type', '=', 'asset_receivable'), ('company_ids', 'in', env.company.id)], limit=1)
+        cls.journal = env['account.journal'].search([('type', '=', 'general'), ('company_id', '=', env.company.id)], limit=1)
+
+    def _asset(self, cost=12000, salvage=0, months=12, start='2025-01-15'):
+        asset = self.env['alfia.asset'].create({'name': 'Horse trailer', 'kind': 'vehicle'})
+        asset.with_user(self.acc).write({
+            'cost': cost, 'salvage_value': salvage, 'useful_life_months': months, 'depreciation_start': start,
+            'asset_account_id': self.fixed.id, 'accumulated_account_id': self.accum.id, 'expense_account_id': self.expense.id,
+            'asset_journal_id': self.journal.id})
+        asset.with_user(self.acc).action_capitalise()
+        return asset
+
+    def test_schedule_posts_monthly_and_ends_at_residual_value(self):
+        asset = self._asset(cost=10000, salvage=1000, months=7)
+        lines = asset.depreciation_line_ids
+        self.assertEqual(len(lines), 7)
+        self.assertAlmostEqual(sum(lines.mapped('amount')), 9000, places=2, msg="the last month takes the rounding difference")
+        self.assertEqual(str(lines[0].date), '2025-01-31')
+        with self.assertRaises(UserError):
+            asset.with_user(self.acc).cost = 9000                       # fixed once capitalised
+        asset.with_user(self.acc).action_post_depreciation(up_to=fields.Date.to_date('2025-03-31'))
+        posted = lines.filtered(lambda l: l.state == 'posted')
+        self.assertEqual(len(posted), 3, "an accountant posts depreciation; it is not a manual entry needing a second person")
+        self.assertTrue(all(m.state == 'posted' and m.alfia_asset_id == asset for m in posted.move_id))
+        self.assertAlmostEqual(asset.book_value, 10000 - sum(posted.mapped('amount')), places=2)
+        asset.with_user(self.acc).action_post_depreciation(up_to=fields.Date.to_date('2026-12-31'))
+        self.assertEqual(asset.accounting_state, 'done')
+        self.assertAlmostEqual(asset.book_value, 1000, places=2)
+
+    def test_sale_mid_month_books_part_month_and_gain(self):
+        asset = self._asset(cost=12000, months=12, start='2025-01-01')    # 1,000 a month
+        wizard = self.env['alfia.asset.disposal'].with_user(self.fm).create({
+            'asset_id': asset.id, 'date': '2025-04-15', 'reason': 'Sold to TEST Client', 'proceeds': 9000,
+            'proceeds_account_id': self.receivable.id, 'gain_loss_account_id': self.gainloss.id})
+        wizard.action_confirm()
+        posted = asset.depreciation_line_ids.filtered(lambda l: l.state == 'posted')
+        self.assertAlmostEqual(sum(posted.mapped('amount')), 3500, places=2, msg="Jan-Mar plus 15/30 of April")
+        self.assertFalse(asset.depreciation_line_ids.filtered(lambda l: l.state == 'planned'))
+        self.assertEqual((asset.accounting_state, asset.state), ('disposed', 'retired'))
+        move = asset.disposal_move_id
+        self.assertEqual(move.state, 'posted')
+        gain = move.line_ids.filtered(lambda l: l.account_id == self.gainloss)
+        self.assertAlmostEqual(gain.credit, 500, places=2, msg="proceeds 9,000 less book value 8,500")
+        self.assertAlmostEqual(sum(move.line_ids.filtered(lambda l: l.account_id == self.fixed).mapped('credit')), 12000, places=2)
+
+    def test_write_off_is_a_loss_and_only_managers_dispose(self):
+        asset = self._asset(cost=6000, months=6, start='2025-01-01')
+        with self.assertRaises(AccessError):
+            asset.with_user(self.acc).action_open_disposal()
+        self.env['alfia.asset.disposal'].with_user(self.fm).create({
+            'asset_id': asset.id, 'date': '2025-02-28', 'reason': 'Damaged beyond repair',
+            'gain_loss_account_id': self.gainloss.id}).action_confirm()
+        loss = asset.disposal_move_id.line_ids.filtered(lambda l: l.account_id == self.gainloss)
+        self.assertAlmostEqual(loss.debit, 4000, places=2, msg="two months depreciated, 4,000 book value written off")
+
+    def test_stable_staff_do_not_see_accounting(self):
+        stable = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'stableasset', 'login': 'stableasset@ctl.local',
+            'group_ids': [Command.link(self.env.ref('alfia_security.group_alfia_stable_user').id),
+                          Command.link(self.env.ref('alfia_security.group_alfia_all_locations').id)]})
+        asset = self._asset()
+        with self.assertRaises(AccessError):
+            asset.with_user(stable).read(['cost'])
+
+
+@tagged('post_install', '-at_install', 'alfia_controls')
+class TestBoardingExit(ControlsCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        env = cls.env
+        cls.owner = env['res.partner'].create({'name': 'Boarding owner'})
+        cls.service = env['product.product'].create({'name': 'Monthly boarding', 'type': 'service', 'lst_price': 3000})
+        cls.barn = env['stock.location'].search([('usage', '=', 'internal'), ('company_id', '=', env.company.id)], limit=1)
+
+    def _boarded_horse(self, start='2026-01-01'):
+        horse = self.env['alfia.horse'].create({'name': 'Boarder', 'sex': 'female', 'initial_location_id': self.barn.id,
+                                                'invoice_to_id': self.owner.id})
+        plan = self.env['alfia.charge.plan'].create({'name': 'Boarding', 'target_kind': 'horse', 'horse_id': horse.id,
+                                                     'product_id': self.service.id, 'price_unit': 3000, 'interval': 'monthly',
+                                                     'next_date': start, 'auto_approve': True})
+        plan.sudo().write({'state': 'approved'})
+        return horse, plan
+
+    def _charges(self, horse):
+        return self.env['alfia.charge'].search([('horse_id', '=', horse.id)], order='date')
+
+    def test_departure_prorates_the_open_month_and_stops_later_ones(self):
+        horse, plan = self._boarded_horse()
+        plan.action_generate(upto=fields.Date.to_date('2026-03-01'))      # Jan, Feb, Mar charges (billed in advance)
+        self.assertEqual(len(self._charges(horse)), 3)
+        move = self.env['alfia.horse.movement'].create({'horse_id': horse.id, 'kind': 'departure', 'date': '2026-03-10 09:00:00',
+                                                        'reason': 'Returned to owner'})
+        move.action_done()
+        jan, feb, mar = self._charges(horse)
+        self.assertEqual((jan.amount, feb.amount), (3000, 3000))
+        self.assertAlmostEqual(mar.amount, 967.74, places=2, msg="10 of 31 days in March")
+        self.assertEqual(str(horse.alfia_billed_until), '2026-03-10')
+        plan.action_generate(upto=fields.Date.to_date('2026-06-01'))
+        self.assertEqual(len(self._charges(horse)), 3, "no charges after the horse left")
+        self.assertIn('2026-03-10', horse.message_ids[0].body)
+
+    def test_invoiced_months_after_leaving_are_credited(self):
+        horse, plan = self._boarded_horse()
+        plan.action_generate(upto=fields.Date.to_date('2026-02-01'))     # January and February, invoiced together
+        charges = self._charges(horse)
+        charges.action_invoice()
+        credits = horse._alfia_end_recurring_charges(fields.Date.to_date('2026-01-20'), 'Returned to owner')
+        self.assertEqual(len(credits), 1, "one draft credit note against the invoice")
+        self.assertEqual((credits.move_type, credits.state, credits.reversed_entry_id), ('out_refund', 'draft', charges.move_id))
+        self.assertAlmostEqual(credits.amount_untaxed, 1064.52 + 3000, places=2,
+                               msg="11 unused January days (3,000 x 11/31) and all of February")
+
+    def test_status_change_ends_charges_and_return_resumes(self):
+        horse, plan = self._boarded_horse(start=str(fields.Date.today().replace(day=1)))
+        plan.action_generate()
+        horse.write({'status': 'dead'})
+        self.assertEqual(horse.alfia_billed_until, fields.Date.today())
+        horse2, plan2 = self._boarded_horse(start='2026-01-01')
+        self.env['alfia.horse.movement'].create({'horse_id': horse2.id, 'kind': 'departure', 'date': '2026-01-05 10:00:00'}).action_done()
+        self.env['alfia.horse.movement'].create({'horse_id': horse2.id, 'kind': 'arrival', 'date': '2026-03-15 10:00:00',
+                                                 'location_to_id': self.barn.id}).action_done()
+        self.assertFalse(horse2.alfia_billed_until)

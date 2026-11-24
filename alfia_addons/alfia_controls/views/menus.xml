@@ -17,4 +17,6 @@
               action="alfia_bank_line_action" sequence="81" groups="account.group_account_user"/>
     <menuitem id="menu_alfia_controls_bank_import" name="Import bank statement" parent="account.menu_finance_entries"
               action="alfia_bank_import_action" sequence="82" groups="account.group_account_user"/>
+    <menuitem id="menu_alfia_controls_fixed_assets" name="Fixed assets" parent="account.menu_finance_entries"
+              action="alfia_asset_accounting_action" sequence="83" groups="account.group_account_user,alfia_security.group_alfia_security_auditor"/>
 </odoo>
