@@ -141,4 +141,19 @@
             </group>
         </field>
     </record>
+    <!-- Accounting staff bill received purchase orders: Odoo shows the purchase-order Auto-complete and the line's purchase
+         link only to purchase users, so an accountant saw only the previous-bill selector. -->
+    <record id="view_move_form_purchase_autocomplete_accounting" model="ir.ui.view">
+        <field name="name">account.move.form.alfia.purchase.autocomplete</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="purchase.view_move_form_inherit_purchase"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t[field[@name='purchase_vendor_bill_id']]" position="attributes">
+                <attribute name="groups">purchase.group_purchase_user,account.group_account_invoice</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='purchase_line_id']" position="attributes">
+                <attribute name="groups">purchase.group_purchase_user,account.group_account_invoice</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>
