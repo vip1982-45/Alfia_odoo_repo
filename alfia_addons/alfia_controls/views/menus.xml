@@ -1,0 +1,10 @@
+<odoo>
+    <menuitem id="menu_alfia_controls_purchase_request" name="Purchase requests" parent="purchase.menu_procurement_management"
+              action="alfia_purchase_request_action" sequence="1"/>
+    <!-- Everyone may ask to buy something: a top-level entry for staff without the Purchase app. -->
+    <menuitem id="menu_alfia_controls_purchase_request_staff" name="Purchase requests" parent="alfia_equine.menu_alfia_equine_root"
+              action="alfia_purchase_request_action" sequence="90"/>
+    <menuitem id="menu_alfia_controls_quality" name="Receipt inspections" parent="stock.menu_stock_transfers"
+              action="alfia_quality_check_action" sequence="50"
+              groups="alfia_controls.group_quality_inspector,stock.group_stock_user,purchase.group_purchase_user"/>
+</odoo>

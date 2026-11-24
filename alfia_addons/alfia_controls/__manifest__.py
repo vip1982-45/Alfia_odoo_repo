@@ -1,0 +1,20 @@
+{
+    'name': 'Alfia Procurement and Finance Controls',
+    'version': '20.0.1.0.0',
+    'category': 'Purchase',
+    'summary': 'Internal purchase requests, receipt quality control, approval limits and delegation, journal approval and '
+               'period close, bank statement reconciliation',
+    'description': 'Controls the stud farm RFP requires on top of purchasing and accounting. See README.md.',
+    'author': 'Alfia',
+    'license': 'LGPL-3',
+    'depends': ['alfia_finance'],
+    'data': [
+        'security/controls_groups.xml',
+        'security/ir.access.csv',
+        'data/controls_data.xml',
+        'views/purchase_request_views.xml',
+        'views/quality_views.xml',
+        'views/menus.xml',
+    ],
+    'installable': True,
+}

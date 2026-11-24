@@ -1,0 +1,11 @@
+id,name,model_id,group_id/id,operation,domain
+acc_pr_own,Purchase requests: anyone requests for themselves,alfia.purchase.request,base.group_user,cru,"[('requested_by_id', '=', user.id)]"
+acc_pr_purchase,Purchase requests: purchasing staff,alfia.purchase.request,purchase.group_purchase_user,cru,
+acc_pr_auditor,Purchase requests: auditor,alfia.purchase.request,alfia_security.group_alfia_security_auditor,r,
+acc_pr_line_own,Purchase request lines: own requests,alfia.purchase.request.line,base.group_user,crud,"[('request_id.requested_by_id', '=', user.id)]"
+acc_pr_line_purchase,Purchase request lines: purchasing staff,alfia.purchase.request.line,purchase.group_purchase_user,crud,
+acc_pr_line_auditor,Purchase request lines: auditor,alfia.purchase.request.line,alfia_security.group_alfia_security_auditor,r,
+acc_qc_inspector,Quality checks: inspectors,alfia.quality.check,alfia_controls.group_quality_inspector,ru,
+acc_qc_stock,Quality checks: warehouse staff see them,alfia.quality.check,stock.group_stock_user,r,
+acc_qc_purchase,Quality checks: purchasing staff see them,alfia.quality.check,purchase.group_purchase_user,r,
+acc_qc_auditor,Quality checks: auditor,alfia.quality.check,alfia_security.group_alfia_security_auditor,r,

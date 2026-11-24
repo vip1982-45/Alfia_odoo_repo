@@ -1,0 +1,6 @@
+<odoo>
+    <!-- Who inspects goods on receipt (accept into stock or reject). -->
+    <record id="group_quality_inspector" model="res.groups">
+        <field name="name">Alfia: receipt quality inspector</field>
+    </record>
+</odoo>

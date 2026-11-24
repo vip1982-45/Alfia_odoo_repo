@@ -37,7 +37,8 @@ if python deploy/dbcheck.py exists "$DB_NAME"; then
   if [ "${INIT_ONLY:-0}" = "1" ]; then
     # An existing database (a redeploy): bring the Alfia modules up to this image's code, keeping every record.
     echo "$(date -u +%H:%M:%S) Existing database: upgrading the Alfia modules…"
-    python odoo-bin -c "$CONF" -d "$DB_NAME" -u alfia_security,alfia_equine,alfia_equine_ops,alfia_finance,alfia_hr \
+    # -i adds modules this image brings for the first time (installed ones are left as they are by -i).
+    python odoo-bin -c "$CONF" -d "$DB_NAME" -i alfia_controls -u alfia_security,alfia_equine,alfia_equine_ops,alfia_finance,alfia_hr,alfia_controls \
       --stop-after-init --log-level="$LVL"
   fi
 else
@@ -45,8 +46,8 @@ else
   python odoo-bin -c "$CONF" -d "$DB_NAME" -i base --stop-after-init --log-level="$LVL" || true
   python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < demo/set_country.py || true
   echo "$(date -u +%H:%M:%S) Installing the Alfia modules (several minutes)…"
-  python odoo-bin -c "$CONF" -d "$DB_NAME" -i alfia_hr --stop-after-init --log-level="$LVL" || true
-  if ! python deploy/dbcheck.py installed "$DB_NAME" alfia_hr; then
+  python odoo-bin -c "$CONF" -d "$DB_NAME" -i alfia_hr,alfia_controls --stop-after-init --log-level="$LVL" || true
+  if ! python deploy/dbcheck.py installed "$DB_NAME" alfia_hr || ! python deploy/dbcheck.py installed "$DB_NAME" alfia_controls; then
     echo "ERROR: installing the Alfia modules failed (see the messages above). Removing the half-built database so the next start retries." >&2
     python deploy/dbcheck.py drop "$DB_NAME"
     exit 1
