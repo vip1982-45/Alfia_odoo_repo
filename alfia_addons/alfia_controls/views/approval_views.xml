@@ -1,0 +1,72 @@
+<odoo>
+    <record id="alfia_approval_limit_view_list" model="ir.ui.view">
+        <field name="name">alfia.approval.limit.list</field>
+        <field name="model">alfia.approval.limit</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="document_type"/><field name="user_id"/><field name="group_id"/>
+                <field name="amount" invisible="unlimited"/><field name="unlimited"/><field name="currency_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/><field name="active" widget="boolean_toggle" optional="show"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_approval_limit_view_search" model="ir.ui.view">
+        <field name="name">alfia.approval.limit.search</field>
+        <field name="model">alfia.approval.limit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="user_id"/><field name="group_id"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group><filter name="by_type" string="Document" context="{'group_by': 'document_type'}"/></group>
+            </search>
+        </field>
+    </record>
+    <record id="alfia_approval_limit_action" model="ir.actions.act_window">
+        <field name="name">Approval limits</field>
+        <field name="res_model">alfia.approval.limit</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_by_type': 1}</field>
+        <field name="help" type="html"><p>While a kind of document has no limit, it is not limited. Once it has one, only the people
+            covered by a limit may approve it, up to their amount (in the company's currency, whatever the document's currency).</p></field>
+    </record>
+    <record id="alfia_approval_delegation_view_list" model="ir.ui.view">
+        <field name="name">alfia.approval.delegation.list</field>
+        <field name="model">alfia.approval.delegation</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="delegator_id"/><field name="delegate_id"/><field name="date_from"/><field name="date_to"/>
+                <field name="for_purchase_request" optional="show"/><field name="for_purchase" optional="show"/>
+                <field name="for_bill" optional="show"/><field name="for_payment" optional="show"/><field name="reason"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_approval_delegation_view_form" model="ir.ui.view">
+        <field name="name">alfia.approval.delegation.form</field>
+        <field name="model">alfia.approval.delegation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="delegator_id" readonly="1" groups="!account.group_account_manager"/>
+                            <field name="delegator_id" groups="account.group_account_manager"/>
+                            <field name="delegate_id"/><field name="reason"/>
+                        </group>
+                        <group><field name="date_from"/><field name="date_to"/><field name="company_id" groups="base.group_multi_company"/></group>
+                    </group>
+                    <group string="Approvals delegated">
+                        <field name="for_purchase_request"/><field name="for_purchase"/><field name="for_bill"/><field name="for_payment"/>
+                    </group>
+                    <p class="text-muted">The person approves with your limit during these dates, never for documents they created themselves,
+                        and only where they already have the function (for example purchase manager for purchase orders).</p>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_approval_delegation_action" model="ir.actions.act_window">
+        <field name="name">Approval delegations</field>
+        <field name="res_model">alfia.approval.delegation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

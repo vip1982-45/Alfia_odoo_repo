@@ -7,4 +7,8 @@
     <menuitem id="menu_alfia_controls_quality" name="Receipt inspections" parent="stock.menu_stock_transfers"
               action="alfia_quality_check_action" sequence="50"
               groups="alfia_controls.group_quality_inspector,stock.group_stock_user,purchase.group_purchase_user"/>
+    <menuitem id="menu_alfia_controls_limits" name="Approval limits" parent="account.menu_finance_configuration"
+              action="alfia_approval_limit_action" sequence="90" groups="account.group_account_manager,alfia_security.group_alfia_security_auditor"/>
+    <menuitem id="menu_alfia_controls_delegations" name="Approval delegations" parent="alfia_equine.menu_alfia_equine_root"
+              action="alfia_approval_delegation_action" sequence="91"/>
 </odoo>

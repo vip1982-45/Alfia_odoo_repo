@@ -9,3 +9,11 @@ acc_qc_inspector,Quality checks: inspectors,alfia.quality.check,alfia_controls.g
 acc_qc_stock,Quality checks: warehouse staff see them,alfia.quality.check,stock.group_stock_user,r,
 acc_qc_purchase,Quality checks: purchasing staff see them,alfia.quality.check,purchase.group_purchase_user,r,
 acc_qc_auditor,Quality checks: auditor,alfia.quality.check,alfia_security.group_alfia_security_auditor,r,
+acc_limit_manager,Approval limits: finance managers set them,alfia.approval.limit,account.group_account_manager,crud,
+acc_limit_own,Approval limits: everyone sees their own,alfia.approval.limit,base.group_user,r,"[('user_id', '=', user.id)]"
+acc_limit_purchase,Approval limits: purchase managers see them,alfia.approval.limit,purchase.group_purchase_manager,r,
+acc_limit_auditor,Approval limits: auditor,alfia.approval.limit,alfia_security.group_alfia_security_auditor,r,
+acc_deleg_own,Delegations: own (given),alfia.approval.delegation,base.group_user,cru,"[('delegator_id', '=', user.id)]"
+acc_deleg_received,Delegations: received,alfia.approval.delegation,base.group_user,r,"[('delegate_id', '=', user.id)]"
+acc_deleg_manager,Delegations: finance managers,alfia.approval.delegation,account.group_account_manager,crud,
+acc_deleg_auditor,Delegations: auditor,alfia.approval.delegation,alfia_security.group_alfia_security_auditor,r,

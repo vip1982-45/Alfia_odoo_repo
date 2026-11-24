@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from odoo import Command, fields
 from odoo.exceptions import AccessError, UserError
 from odoo.tests import tagged
@@ -185,3 +187,116 @@ class TestReceiptQuality(ControlsCase):
         picking = self._receive(2)
         self.assertFalse(self.env['alfia.quality.check'].search([('picking_id', '=', picking.id)]))
         self.assertEqual(self._qty(self.wh.lot_stock_id), 2)
+
+
+@tagged('post_install', '-at_install', 'alfia_controls')
+class TestApprovalLimits(ControlsCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        env = cls.env
+        cls.env.company.po_double_validation = 'one_step'
+        cls.finance = env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'ctlfinance', 'login': 'ctlfinance@ctl.local',
+            'group_ids': [Command.link(env.ref('account.group_account_manager').id)]})
+        Limit = env['alfia.approval.limit'].with_user(cls.finance)
+        Limit.create({'document_type': 'purchase', 'user_id': cls.manager.id, 'amount': 1000})
+        Limit.create({'document_type': 'purchase', 'user_id': cls.manager2.id, 'amount': 50000})
+        cls.usd = env.ref('base.USD')
+        cls.usd.active = True
+
+    def _po(self, qty, price, currency=None):
+        return self.env['purchase.order'].with_user(self.buyer).create({
+            'partner_id': self.vendor.id, 'currency_id': (currency or self.env.company.currency_id).id,
+            'order_line': [Command.create({'product_id': self.feed.id, 'product_qty': qty, 'price_unit': price})]})
+
+    def test_order_goes_to_someone_whose_limit_covers_it(self):
+        po = self._po(100, 30)                                            # 3,000 in company currency
+        po.with_user(self.buyer).button_confirm()
+        self.assertEqual(po.state, 'to approve', "the buyer has no limit")
+        with self.assertRaises(UserError):
+            po.with_user(self.manager).button_approve()                   # limit 1,000
+        po.with_user(self.manager2).button_approve()
+        self.assertEqual(po.state, 'purchase')
+
+    def test_a_foreign_currency_cannot_slip_under_the_limit(self):
+        company_currency = self.env.company.currency_id
+        if company_currency == self.usd:
+            self.skipTest('needs a company currency other than USD')
+        self.env['res.currency.rate'].create({'currency_id': self.usd.id, 'name': fields.Date.today(),
+                                              'company_rate': 1 / 3.64, 'company_id': self.env.company.id})
+        po = self._po(1, 900, self.usd)                                   # 900 USD ≈ 3,276 in company currency
+        po.with_user(self.buyer).button_confirm()
+        with self.assertRaises(UserError):
+            po.with_user(self.manager).button_approve()
+
+    def test_delegation_lends_the_limit_for_its_dates_only(self):
+        po = self._po(100, 30)
+        po.with_user(self.buyer).button_confirm()
+        Delegation = self.env['alfia.approval.delegation']
+        with self.assertRaises(UserError):
+            Delegation.with_user(self.manager).create({'delegator_id': self.manager2.id, 'delegate_id': self.manager.id,
+                                                       'date_to': fields.Date.today(), 'reason': 'not mine to give'})
+        with self.assertRaises(UserError):
+            Delegation.with_user(self.manager2).create({'delegate_id': self.manager.id, 'reason': 'backdated',
+                                                        'date_from': fields.Date.today() - timedelta(days=3),
+                                                        'date_to': fields.Date.today()})
+        Delegation.with_user(self.manager2).create({'delegate_id': self.manager.id, 'reason': 'Leave next month',
+                                                             'date_from': fields.Date.today() + timedelta(days=30),
+                                                             'date_to': fields.Date.today() + timedelta(days=40)})
+        with self.assertRaises(UserError):
+            po.with_user(self.manager).button_approve()                   # not yet active
+        today = Delegation.with_user(self.manager2).create({'delegate_id': self.manager.id, 'reason': 'Annual leave',
+                                                            'date_to': fields.Date.today() + timedelta(days=5)})
+        with self.assertRaises(UserError):
+            today.with_user(self.manager2).write({'date_to': fields.Date.today() + timedelta(days=20)})  # cannot extend
+        po.with_user(self.manager).button_approve()
+        self.assertEqual(po.state, 'purchase')
+        self.assertTrue(any('on behalf of' in (m.body or '') for m in po.message_ids))
+
+    def test_delegation_never_covers_own_orders(self):
+        self.env['alfia.approval.delegation'].with_user(self.manager2).create({
+            'delegate_id': self.manager.id, 'reason': 'Leave', 'date_to': fields.Date.today() + timedelta(days=2)})
+        po = self.env['purchase.order'].with_user(self.manager).create({
+            'partner_id': self.vendor.id, 'order_line': [Command.create({'product_id': self.feed.id, 'product_qty': 100, 'price_unit': 30})]})
+        po.with_user(self.manager).button_confirm()
+        self.assertEqual(po.state, 'to approve')
+        with self.assertRaises(UserError):
+            po.with_user(self.manager).button_approve()
+
+    def test_nobody_sets_their_own_limit(self):
+        with self.assertRaises(UserError):
+            self.env['alfia.approval.limit'].with_user(self.finance).create(
+                {'document_type': 'bill', 'user_id': self.finance.id, 'unlimited': True})
+        with self.assertRaises(UserError):
+            self.env['alfia.approval.limit'].with_user(self.finance).create(
+                {'document_type': 'bill', 'group_id': self.env.ref('account.group_account_manager').id, 'unlimited': True})
+
+    def test_purchase_request_limit(self):
+        self.env['alfia.approval.limit'].with_user(self.finance).create(
+            {'document_type': 'purchase_request', 'group_id': self.env.ref('purchase.group_purchase_manager').id, 'amount': 30})
+        req = self.env['alfia.purchase.request'].with_user(self.requester).create({
+            'reason': 'Feed', 'line_ids': [Command.create({'product_id': self.feed.id, 'quantity': 20, 'estimated_price': 3})]})
+        req.action_submit()
+        with self.assertRaises(UserError):
+            req.with_user(self.manager).action_approve()                  # 60 > 30
+
+    def test_unlimited_kinds_stay_unlimited(self):
+        self.assertTrue(self.env['alfia.approval.limit']._allows(self.buyer, 'payment', 10 ** 9, self.env.company))
+
+    def test_vendor_bill_limit(self):
+        clerk = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'ctlap', 'login': 'ctlap@ctl.local',
+            'group_ids': [Command.link(self.env.ref('account.group_account_invoice').id),
+                          Command.link(self.env.ref('alfia_security.group_alfia_all_journals').id)]})
+        self.env['alfia.approval.limit'].with_user(self.finance).create(
+            {'document_type': 'bill', 'user_id': clerk.id, 'amount': 100})
+        bill = self.env['account.move'].create({
+            'move_type': 'in_invoice', 'partner_id': self.vendor.id, 'invoice_date': fields.Date.today(),
+            'invoice_line_ids': [Command.create({'name': 'Feed', 'quantity': 1, 'price_unit': 500, 'tax_ids': False})]})
+        with self.assertRaises(UserError):
+            bill.with_user(clerk).action_post()
+        bill.line_ids.filtered(lambda l: l.display_type == 'product').price_unit = 80
+        bill.with_user(clerk).action_post()
+        self.assertEqual(bill.state, 'posted')
