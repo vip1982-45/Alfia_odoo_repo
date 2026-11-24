@@ -221,6 +221,26 @@ class TestReportsAndCostAllocation(FinanceCase):
         kg = self.env.ref('uom.product_uom_kgm')
         self.assertAlmostEqual(bag._compute_quantity(2, kg), 50.0)
 
+    def test_two_25kg_bags_are_received_as_50kg(self):
+        bag = self.env.ref('alfia_finance.uom_bag_25kg')
+        feed = self.env['product.product'].create({'name': 'Feed in kg (test)', 'type': 'consu', 'is_storable': True,
+                                                   'uom_id': self.env.ref('uom.product_uom_kgm').id, 'categ_id': self.categ.id})
+        feed.product_tmpl_id.uom_ids = [Command.link(bag.id)]
+        po = self.env['purchase.order'].create({'partner_id': self.vendor.id, 'order_line': [Command.create(
+            {'product_id': feed.id, 'product_qty': 2, 'uom_id': bag.id, 'price_unit': 40})]})
+        po.button_confirm()
+        if po.state != 'purchase':
+            po.button_approve()
+        receipt = po.picking_ids[:1]
+        receipt.move_ids.quantity = receipt.move_ids.product_uom_qty
+        receipt.move_ids.picked = True
+        receipt.button_validate()
+        self.assertAlmostEqual(feed.with_context(location=self.wh.view_location_id.id).qty_available, 50.0)
+
+    def test_accountant_bills_a_purchase_and_invoices_a_sale(self):
+        self.assertTrue(self.env['purchase.bill.union'].with_user(self.ap_clerk).has_access('read'))
+        self.assertTrue(self.env['sale.advance.payment.inv'].with_user(self.ar_clerk).has_access('create'))
+
     def test_aged_receivables(self):
         invoice = self.env['account.move'].create({
             'move_type': 'out_invoice', 'partner_id': self.customer.id, 'invoice_date': fields.Date.today() - relativedelta(days=50),

@@ -76,17 +76,22 @@ if company.currency_id.name == 'QAR':
             done.append('%s rate from 2026-11-01: 1 %s = %s QAR (indicative, for finance to approve)' % (code, code, qar_per_unit))
 
 # 6. Files uploaded into clinical records (diagnostic images, laboratory reports) were linked to no record, so only the
-#    uploader could open them. They now belong to their record.
-for model in ('alfia.diag.image', 'alfia.lab.test'):
-    if model in env and 'attachment_ids' in env[model]._fields:
-        linked = 0
-        for rec in env[model].sudo().search([('attachment_ids', '!=', False)]):
-            loose = rec.attachment_ids.filtered(lambda a: not a.res_id or a.res_model != model)
-            if loose:
-                loose.write({'res_model': model, 'res_id': rec.id})
-                linked += len(loose)
-        if linked:
-            done.append('%d file(s) linked to their %s record' % (linked, model))
+#    uploader could open them, or sat in the old link table without showing on the record. They now belong to their record.
+for model, table, col in (('alfia.diag.image', 'alfia_diag_image_ir_attachment_rel', 'alfia_diag_image_id'),
+                          ('alfia.lab.test', 'alfia_lab_test_attachment_rel', 'test_id')):
+    env.cr.execute("SELECT to_regclass(%s)", (table,))
+    if not env.cr.fetchone()[0]:
+        continue
+    env.cr.execute(f"SELECT r.{col}, r.ir_attachment_id FROM {table} r" if model == 'alfia.diag.image'
+                   else f"SELECT r.{col}, r.attachment_id FROM {table} r")
+    linked = 0
+    for res_id, att_id in env.cr.fetchall():
+        att = env['ir.attachment'].sudo().browse(att_id).exists()
+        if att and (att.res_model != model or att.res_id != res_id):
+            att.write({'res_model': model, 'res_id': res_id})
+            linked += 1
+    if linked:
+        done.append('%d file(s) linked to their %s record' % (linked, model))
 
 # 7. Last, as uninstalling reloads the registry: supplier and customer name lookup needs a paid online service (IAP)
 #    and failed with an access error.

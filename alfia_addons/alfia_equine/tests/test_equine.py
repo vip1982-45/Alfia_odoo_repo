@@ -497,11 +497,12 @@ class TestSemen(EquineCase):
         move = self.env['stock.move'].create({'product_id': col.product_id.id, 'product_uom_qty': 1, 'uom_id': col.product_id.uom_id.id,
                                               'location_id': self.barn_a.id, 'location_dest_id': customers.id})
         move._action_confirm()
-        move.write({'move_line_ids': [Command.create({'product_id': col.product_id.id, 'lot_id': col.lot_id.id, 'quantity': 1,
-                                                      'location_id': self.barn_a.id, 'location_dest_id': customers.id, 'picked': True})]})
-        move.picked = True
+        # Taking the batch from a place it is not is refused as soon as the line is set, naming where the batch is.
         with self.assertRaisesRegex(UserError, 'Eq Tank room'):
-            move._action_done()
+            move.write({'move_line_ids': [Command.create({'product_id': col.product_id.id, 'lot_id': col.lot_id.id, 'quantity': 1,
+                                                          'location_id': self.barn_a.id, 'location_dest_id': customers.id, 'picked': True})]})
+        self.assertFalse(self.env['stock.quant'].search([('lot_id', '=', col.lot_id.id), ('location_id', '=', self.barn_a.id), ('reserved_quantity', '>', 0)]),
+                         "nothing is left reserved against the empty place")
 
 
 @tagged('post_install', '-at_install', 'alfia_equine')

@@ -1,6 +1,7 @@
 # Run with:  odoo-bin shell -c <conf> -d <db> < demo/retest_fixtures.py      (safe to run again; trial only)
 # TEST records for the retests that the role accounts could not reach: each sits inside the sites of the roles that must
 # use it, so no account needs broader rights. Records are found by name and created only once.
+import os
 from datetime import timedelta
 
 from odoo import fields
@@ -45,30 +46,30 @@ if e4 and not env['alfia.pregnancy'].sudo().search([('mare_id', '=', e4.id)], li
 # E2 - a mare in Barn A for a frozen-semen service by breeding.manager.
 horse('TEST E2 service mare', 'female', barn_a)
 
-# N1 - a dispatch from the output area (visible to the custodian and both approvers) whose line takes semen batch
-# SEM-00001-5 from STA/Output, where it is not: validating it must be refused, naming Tank 1.
-if wh and not env['stock.picking'].sudo().search([('origin', '=', 'TEST N1 wrong-location dispatch')], limit=1):
-    product = env.ref('alfia_equine.product_frozen_semen', raise_if_not_found=False)
-    lot = env['stock.lot'].sudo().search([('name', '=', 'SEM-00001-5')], limit=1)
-    out, customers = wh.wh_output_stock_loc_id, env.ref('stock.stock_location_customers')
-    if product and lot and out:
-        pick = env['stock.picking'].sudo().create({
-            'picking_type_id': wh.out_type_id.id, 'location_id': out.id, 'location_dest_id': customers.id, 'origin': 'TEST N1 wrong-location dispatch',
-            'move_ids': [(0, 0, {'product_id': product.id, 'product_uom_qty': 1, 'uom_id': product.uom_id.id,
-                                 'location_id': out.id, 'location_dest_id': customers.id})]})
-        pick.action_confirm()
-        move = pick.move_ids
-        move.move_line_ids.unlink()
-        move.write({'move_line_ids': [(0, 0, {'product_id': product.id, 'lot_id': lot.id, 'quantity': 1, 'uom_id': product.uom_id.id,
-                                              'location_id': out.id, 'location_dest_id': customers.id, 'picked': True})]})
-        made.append(f'dispatch {pick.name} (TEST N1)')
-
 # R10 - a feed product counted in kg, to buy in 25 kg bags.
 uom_kg = env.ref('uom.product_uom_kgm')
-if not env['product.product'].sudo().search([('name', '=', 'TEST R10 feed (kg)')], limit=1):
-    env['product.product'].sudo().create({'name': 'TEST R10 feed (kg)', 'type': 'consu', 'is_storable': True, 'uom_id': uom_kg.id,
-                                          'standard_price': 2.0, 'purchase_ok': True})
+feed = env['product.product'].sudo().search([('name', '=', 'TEST R10 feed (kg)')], limit=1)
+if not feed:
+    feed = env['product.product'].sudo().create({'name': 'TEST R10 feed (kg)', 'type': 'consu', 'is_storable': True, 'uom_id': uom_kg.id,
+                                                 'standard_price': 2.0, 'purchase_ok': True})
     made.append('product TEST R10 feed (kg)')
+bag = env.ref('alfia_finance.uom_bag_25kg', raise_if_not_found=False)
+if bag and bag not in feed.uom_ids:
+    feed.product_tmpl_id.uom_ids = [(4, bag.id)]
+    made.append('TEST R10 feed (kg) can be bought in 25 kg bags')
+
+# A sales clerk (sales and receivables) account, so the sales cycle can run under an ordinary sales role.
+password = os.environ.get('ALFIA_DEMO_PASSWORD') or os.environ.get('DEMO_PASSWORD')
+profile = env.ref('alfia_security.profile_ar_clerk', raise_if_not_found=False)
+Users = env['res.users'].sudo().with_context(no_reset_password=True)
+if profile and not Users.with_context(active_test=False).search([('login', '=', 'sales.clerk')], limit=1):
+    clerk = Users.create({'name': 'موظف المبيعات · Sales clerk (TEST)', 'login': 'sales.clerk',
+                          'group_ids': [(6, 0, [env.ref('base.group_user').id])]})
+    clerk.write({'alfia_profile_ids': [(6, 0, [profile.id])]})
+    if password:
+        clerk.write({'password': password})
+    clerk._alfia_sync_profile_groups()
+    made.append('account sales.clerk (sales and receivables)')
 
 env.cr.commit()
 print('Retest fixtures: ' + ('; '.join(made) if made else 'already in place'))

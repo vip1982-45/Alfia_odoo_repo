@@ -5,28 +5,23 @@ from odoo.addons.alfia_security.flow import ANY, workflow
 
 
 class AlfiaAttachmentOwner(models.AbstractModel):
-    """Files uploaded into an `attachment_ids` field belong to the record, so whoever may read the record (the vet, the
-    auditor) can open them. Uploaded alone they stay linked to nothing and only the uploader can see them."""
+    """A record's files are the files attached to it, however they were added (the upload field or the activity log), so
+    the field and the log never disagree and whoever may read the record (the vet, the auditor) can open them."""
     _name = 'alfia.attachment.owner'
     _description = 'Record that owns its uploaded files'
 
-    def _alfia_link_attachments(self):
+    def _compute_attachment_ids(self):
+        Attachment = self.env['ir.attachment']
         for rec in self:
-            loose = rec.sudo().attachment_ids.filtered(lambda a: not a.res_id or a.res_model != rec._name)
-            if loose:
-                loose.write({'res_model': rec._name, 'res_id': rec.id})
+            rec.attachment_ids = Attachment.search([('res_model', '=', rec._name), ('res_id', '=', rec.id)]) if rec.id else Attachment
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        records = super().create(vals_list)
-        records._alfia_link_attachments()
-        return records
-
-    def write(self, vals):
-        res = super().write(vals)
-        if 'attachment_ids' in vals:
-            self._alfia_link_attachments()
-        return res
+    def _inverse_attachment_ids(self):
+        Attachment = self.env['ir.attachment'].sudo()
+        for rec in self:
+            wanted = rec.attachment_ids.sudo()
+            current = Attachment.search([('res_model', '=', rec._name), ('res_id', '=', rec.id)])
+            (wanted - current).write({'res_model': rec._name, 'res_id': rec.id})
+            (current - wanted).write({'res_id': 0})   # taken off the record, kept in the database
 
 
 class AlfiaHorseRecord(models.AbstractModel):
@@ -177,7 +172,7 @@ class AlfiaLabTest(models.Model):
     state = fields.Selection([('new', 'Awaiting review'), ('reviewed', 'Reviewed by vet')], default='new', required=True)
     reviewed_by_id = fields.Many2one('res.users', readonly=True, copy=False)
     reviewed_date = fields.Datetime(readonly=True, copy=False)
-    attachment_ids = fields.Many2many('ir.attachment', 'alfia_lab_test_attachment_rel', 'test_id', 'attachment_id', string='Laboratory report')
+    attachment_ids = fields.Many2many('ir.attachment', string='Laboratory report', compute='_compute_attachment_ids', inverse='_inverse_attachment_ids')
 
     def action_review(self):
         if not self.env.user.has_group('alfia_security.group_alfia_vet_user'):
@@ -199,7 +194,7 @@ class AlfiaDiagnosticImage(models.Model):
     body_part = fields.Char()
     vet_id = fields.Many2one('res.partner', string='Vet')
     findings = fields.Text()
-    attachment_ids = fields.Many2many('ir.attachment', string='Images / reports')
+    attachment_ids = fields.Many2many('ir.attachment', string='Images / reports', compute='_compute_attachment_ids', inverse='_inverse_attachment_ids')
 
 
 class AlfiaOdontology(models.Model):

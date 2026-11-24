@@ -128,4 +128,17 @@
     <menuitem id="menu_alfia_horse_costs" name="Costs and income per horse" parent="account.account_reports_management_menu" action="alfia_horse_costs_server" sequence="10"/>
     <menuitem id="menu_alfia_horse_costs_stud" name="Costs and income per horse" parent="alfia_equine_ops.menu_ops_reports" action="alfia_horse_costs_server" sequence="50"
               groups="account.group_account_readonly,account.group_account_invoice"/>
+    <!-- Units a product is also bought in (e.g. 25 kg bags of feed counted in kg). Odoo shows them only on the Sales tab,
+         which is hidden for products that are not sold. -->
+    <record id="product_template_form_purchase_units" model="ir.ui.view">
+        <field name="name">product.template.form.alfia.purchase.units</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="purchase.view_product_supplier_inherit"/>
+        <field name="arch" type="xml">
+            <group name="bill" position="inside">
+                <field name="uom_ids" string="Also bought in" widget="many2many_tags" options="{'no_create': True}"
+                       domain="[('relative_uom_id', '=', uom_id)]" groups="uom.group_uom"/>
+            </group>
+        </field>
+    </record>
 </odoo>

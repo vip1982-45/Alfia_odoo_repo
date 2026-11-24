@@ -4,3 +4,5 @@ acc_aged_invoice,Aged balances: invoicing,alfia.aged.balance,account.group_accou
 acc_aged_auditor,Aged balances: security auditor,alfia.aged.balance,alfia_security.group_alfia_security_auditor,r,
 scope_aged_journal,Alfia journal scope: aged balances,alfia.aged.balance,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
 aged_balance_comp_rule,Aged balances: own companies only,alfia.aged.balance,,crud,"[('company_id', 'in', company_ids)]"
+acc_bill_union_invoicing,Accounting staff match bills to purchase orders,purchase.bill.union,account.group_account_invoice,r,
+acc_sale_invoice_wizard_invoicing,Accounting staff invoice sales orders,sale.advance.payment.inv,account.group_account_invoice,crud,

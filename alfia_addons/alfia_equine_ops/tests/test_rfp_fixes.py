@@ -169,3 +169,11 @@ class TestRfpFixes(OpsCase):
         contract = self.env['alfia.breeding.contract'].with_user(manager).create({
             'client_id': self.client.id, 'stallion_id': far_stallion.id, 'mare_id': self.mare.id, 'season': '2027', 'product_id': self.service.id, 'fee': 10})
         self.assertEqual(self.env['alfia.breeding.contract'].with_user(manager).search_count([('id', '=', contract.id)]), 1)
+
+    # Cumulative report of 24 Nov
+    def test_lab_report_field_shows_files_attached_to_the_record(self):
+        lab = self.env['alfia.lab.test'].with_user(self.vet).create({'horse_id': self.mare.id, 'test': 'CBC'})
+        via_log = self.env['ir.attachment'].with_user(self.vet).create({'name': 'report.pdf', 'raw': b'%PDF-1.4 synthetic',
+                                                                        'res_model': 'alfia.lab.test', 'res_id': lab.id})
+        lab.invalidate_recordset(['attachment_ids'])
+        self.assertEqual(lab.with_user(self.vet_mgr).attachment_ids, via_log)

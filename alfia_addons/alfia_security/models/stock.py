@@ -156,16 +156,42 @@ class StockMove(models.Model):
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
 
+    def _alfia_check_source_stock(self):
+        """A line of tracked or controlled stock cannot take more from a place than is there (counting what other open
+        lines already hold): it is refused at once, naming where the batch really is, instead of reserving against
+        nothing and failing only at dispatch."""
+        Quant = self.env['stock.quant'].sudo()
+        Line = self.env['stock.move.line'].sudo()
+        for ml in self.filtered(lambda l: l.quantity > 0 and l.state not in ('done', 'cancel') and l.location_id.usage == 'internal'
+                                and (l.product_id.tracking != 'none' or l.product_id.categ_id.alfia_effective_group_id
+                                     or l.product_id.categ_id.alfia_effective_approver_group_ids)):
+            domain = [('product_id', '=', ml.product_id.id), ('location_id', '=', ml.location_id.id), ('lot_id', '=', ml.lot_id.id or False)]
+            on_hand = sum(Quant.search(domain).mapped('quantity'))
+            held = sum(Line.search(domain + [('id', '!=', ml.id), ('state', 'not in', ('done', 'cancel')), ('quantity', '>', 0)]).mapped('quantity'))
+            if ml.quantity + held > on_hand + 1e-9:
+                elsewhere = Quant.search([('product_id', '=', ml.product_id.id), ('lot_id', '=', ml.lot_id.id or False),
+                                          ('location_id.usage', '=', 'internal'), ('quantity', '>', 0)])
+                where = ', '.join(f"{q.location_id.complete_name} ({q.quantity - q.reserved_quantity:g} free)" for q in elsewhere) or self.env._("nowhere in stock")
+                raise UserError(self.env._(
+                    "%(product)s%(lot)s: %(loc)s holds %(have)g (%(held)g already taken by other transfers), not %(qty)g. "
+                    "Take it from where it is: %(where)s",
+                    product=ml.product_id.display_name, lot=f" / {ml.lot_id.name}" if ml.lot_id else '', loc=ml.location_id.complete_name,
+                    have=on_hand, held=held, qty=ml.quantity, where=where))
+
     @api.model_create_multi
     def create(self, vals_list):
         lines = super().create(vals_list)
         lines.move_id._alfia_invalidate_approvals()
+        lines._alfia_check_source_stock()
         return lines
 
     def write(self, vals):
         if MOVE_WATCHED & set(vals):
             self.move_id._alfia_invalidate_approvals()
-        return super().write(vals)
+        res = super().write(vals)
+        if {'quantity', 'location_id', 'lot_id', 'product_id'} & set(vals):
+            self._alfia_check_source_stock()
+        return res
 
     def unlink(self):
         self.move_id._alfia_invalidate_approvals()
