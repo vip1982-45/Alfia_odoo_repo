@@ -54,7 +54,7 @@ class AlfiaQualityCheck(models.Model):
 
     def _compute_lots(self):
         for rec in self:
-            rec.lot_names = ', '.join(rec.move_id.move_line_ids.lot_id.mapped('name'))
+            rec.lot_names = ', '.join(rec.sudo().move_id.move_line_ids.lot_id.mapped('name'))
 
     # ------------------------------------------------------------------ creation, from the receipt
     @api.model
@@ -113,11 +113,12 @@ class AlfiaQualityCheck(models.Model):
     def action_accept(self):
         self._check_inspector()
         for rec in self:
-            if not rec.move_id.move_dest_ids:
-                self._alfia_transfer(rec.move_id, rec.location_id, rec.move_id.location_dest_id)
+            move = rec.sudo().move_id
+            if not move.move_dest_ids:
+                self._alfia_transfer(move, rec.sudo().location_id, move.location_dest_id)
             with workflow():
                 rec.write({'state': 'passed', 'inspector_id': self.env.user.id, 'decided_date': fields.Datetime.now(),
-                           'location_id': rec.move_id.location_dest_id.id})
+                           'location_id': move.location_dest_id.id})
             rec.message_post(body=self.env._("Accepted by %(user)s. %(findings)s", user=self.env.user.name, findings=rec.findings or ''))
 
     def action_reject(self):
@@ -125,16 +126,17 @@ class AlfiaQualityCheck(models.Model):
         for rec in self:
             if not rec.findings:
                 raise UserError(self.env._("Record what was found before rejecting %s.", rec.name))
-            warehouse = rec.location_id.warehouse_id or rec.move_id.picking_type_id.warehouse_id
+            move, location = rec.sudo().move_id, rec.sudo().location_id
+            warehouse = location.warehouse_id or move.picking_type_id.warehouse_id
             rejected = self._alfia_hold_location(warehouse, 'rejected')
             # The put-away waiting for these goods will not happen (cancelled first, so it no longer reserves them).
-            rec.move_id.move_dest_ids.filtered(lambda m: m.state not in ('done', 'cancel')).sudo()._action_cancel()
-            self._alfia_transfer(rec.move_id, rec.location_id, rejected)
+            move.move_dest_ids.filtered(lambda m: m.state not in ('done', 'cancel'))._action_cancel()
+            self._alfia_transfer(move, location, rejected)
             with workflow():
                 rec.write({'state': 'rejected', 'inspector_id': self.env.user.id, 'decided_date': fields.Datetime.now(),
                            'location_id': rejected.id})
             rec.message_post(body=self.env._("Rejected by %(user)s: %(findings)s", user=self.env.user.name, findings=rec.findings))
-            rec.picking_id.message_post(body=self.env._("%(product)s was rejected at inspection: %(findings)s",
+            rec.sudo().picking_id.message_post(body=self.env._("%(product)s was rejected at inspection: %(findings)s",
                                                         product=rec.product_id.display_name, findings=rec.findings))
 
 

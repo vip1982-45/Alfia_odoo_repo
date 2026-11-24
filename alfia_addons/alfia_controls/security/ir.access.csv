@@ -22,3 +22,4 @@ acc_close_accountant,Period closes: accountants see them,alfia.period.close,acco
 acc_close_auditor,Period closes: auditor,alfia.period.close,alfia_security.group_alfia_security_auditor,r,
 acc_bank_match,Bank matching wizard: accountants,alfia.bank.match,account.group_account_user,crud,
 acc_bank_import,Bank import wizard: accountants,alfia.bank.import,account.group_account_user,crud,
+acc_qc_scope,Alfia site scope: receipt inspections,alfia.quality.check,,crud,"[('location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"

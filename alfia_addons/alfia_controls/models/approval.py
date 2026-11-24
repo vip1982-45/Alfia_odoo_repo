@@ -76,38 +76,51 @@ class AlfiaApprovalLimit(models.Model):
         return True, max(mine.mapped('amount') or [0.0])
 
     @api.model
-    def _limit_for(self, user, doc_type, company, date=None):
-        """(limited, amount, delegators): the user's own limit, raised by delegations active on `date`."""
-        limited, amount = self._own_limit(user, doc_type, company)
-        delegators = self.env['res.users']
-        if not limited:
-            return False, 0.0, delegators
+    def _limit_for(self, user, doc_type, company, date=None, creator=None):
+        """(limited, own, delegated, delegator): the user's own limit, and the highest limit lent to them by a delegation
+        active on `date`. A delegation never counts for a document the user created themselves."""
+        limited, own = self._own_limit(user, doc_type, company)
+        delegated, delegator = own, self.env['res.users']
+        if not limited or (creator and creator == user):
+            return limited, own, delegated, delegator
         for delegation in self.env['alfia.approval.delegation'].sudo()._active_for(user, doc_type, company, date):
             _lim, their = self._own_limit(delegation.delegator_id, doc_type, company)
-            if their > amount:
-                amount, delegators = their, delegation.delegator_id
-        return True, amount, delegators
+            if their > delegated:
+                delegated, delegator = their, delegation.delegator_id
+        return limited, own, delegated, delegator
 
     @api.model
-    def _check(self, doc_type, amount_company, company, record_name, date=None):
+    def _check(self, doc_type, amount_company, company, record_name, date=None, creator=None):
         """Raise when the current user may not approve `amount_company` (company currency). Returns the delegator whose
-        limit was used, if any, so the approval can say so."""
+        limit was needed, if any, so the approval can say so.
+
+        A delegated limit never covers the delegate's own documents. This holds even for members of the emergency
+        segregation-of-duties exemption: the exemption waives the creator check, not the terms of a delegation."""
+        users = self.env['res.users']
         if self.env.su:
-            return self.env['res.users']
-        limited, limit, delegators = self._limit_for(self.env.user, doc_type, company, date)
-        if limited and amount_company > limit:
-            currency = company.currency_id
-            if limit:
+            return users
+        limited, own, delegated, delegator = self._limit_for(self.env.user, doc_type, company, date)
+        if not limited or amount_company <= own:
+            return users
+        currency = company.currency_id
+        if amount_company <= delegated:
+            if creator and creator == self.env.user:
                 raise UserError(self.env._(
-                    "%(doc)s is %(amount)s, above your approval limit of %(limit)s. Someone with a higher limit must approve it.",
-                    doc=record_name, amount=f"{amount_company:,.2f} {currency.name}", limit=f"{limit:,.2f} {currency.name}"))
-            raise UserError(self.env._("You have no approval limit for this kind of document, so you cannot approve %s.", record_name))
-        return delegators
+                    "%(doc)s is above your own approval limit of %(limit)s, and the limit delegated to you by %(owner)s does "
+                    "not cover documents you created yourself. Someone else must approve it.",
+                    doc=record_name, limit=f"{own:,.2f} {currency.name}", owner=delegator.name))
+            return delegator
+        top = max(own, delegated)
+        if top:
+            raise UserError(self.env._(
+                "%(doc)s is %(amount)s, above your approval limit of %(limit)s. Someone with a higher limit must approve it.",
+                doc=record_name, amount=f"{amount_company:,.2f} {currency.name}", limit=f"{top:,.2f} {currency.name}"))
+        raise UserError(self.env._("You have no approval limit for this kind of document, so you cannot approve %s.", record_name))
 
     @api.model
-    def _allows(self, user, doc_type, amount_company, company):
-        limited, limit, _d = self._limit_for(user, doc_type, company)
-        return not limited or amount_company <= limit
+    def _allows(self, user, doc_type, amount_company, company, creator=None):
+        limited, own, delegated, _d = self._limit_for(user, doc_type, company, creator=creator)
+        return not limited or amount_company <= max(own, delegated)
 
 
 class AlfiaApprovalDelegation(models.Model):
@@ -189,11 +202,12 @@ class PurchaseOrder(models.Model):
     def _approval_allowed(self):
         allowed = super()._approval_allowed()
         return allowed and (self.env.su or self.env['alfia.approval.limit']._allows(
-            self.env.user, 'purchase', self._alfia_amount_company(), self.company_id))
+            self.env.user, 'purchase', self._alfia_amount_company(), self.company_id, creator=self.create_uid))
 
     def button_approve(self, force=False):
         for order in self.filtered(lambda o: o.state in ('draft', 'sent', 'to approve')):
-            delegators = self.env['alfia.approval.limit']._check('purchase', order._alfia_amount_company(), order.company_id, order.name)
+            delegators = self.env['alfia.approval.limit']._check('purchase', order._alfia_amount_company(), order.company_id, order.name,
+                                                                 creator=order.create_uid)
             if delegators:
                 order.message_post(body=self.env._("Approved by %(user)s on behalf of %(owner)s (delegation).",
                                                    user=self.env.user.name, owner=delegators.name))
@@ -206,7 +220,8 @@ class AccountMove(models.Model):
     def _post(self, soft=True):
         for move in self.filtered(lambda m: m.move_type in ('in_invoice', 'in_refund') and m.state == 'draft'):
             amount = abs(move.amount_total_signed)
-            delegators = self.env['alfia.approval.limit']._check('bill', amount, move.company_id, move.name or move.ref or self.env._('This bill'))
+            delegators = self.env['alfia.approval.limit']._check('bill', amount, move.company_id, move.name or move.ref or self.env._('This bill'),
+                                                                 creator=move.create_uid)
             if delegators:
                 move.message_post(body=self.env._("Posted by %(user)s on behalf of %(owner)s (delegation).",
                                                   user=self.env.user.name, owner=delegators.name))
@@ -220,7 +235,8 @@ class AccountPayment(models.Model):
         for payment in self.filtered(lambda p: p.payment_type == 'outbound' and p.state == 'draft'):
             amount = payment.currency_id._convert(abs(payment.amount), payment.company_id.currency_id, payment.company_id,
                                                   payment.date or fields.Date.today())
-            delegators = self.env['alfia.approval.limit']._check('payment', amount, payment.company_id, payment.name or self.env._('This payment'))
+            delegators = self.env['alfia.approval.limit']._check('payment', amount, payment.company_id, payment.name or self.env._('This payment'),
+                                                                 creator=payment.create_uid)
             if delegators:
                 payment.message_post(body=self.env._("Confirmed by %(user)s on behalf of %(owner)s (delegation).",
                                                      user=self.env.user.name, owner=delegators.name))
@@ -232,7 +248,8 @@ class AlfiaPurchaseRequest(models.Model):
 
     def action_approve(self):
         for rec in self:
-            delegators = self.env['alfia.approval.limit']._check('purchase_request', rec.estimated_total, rec.company_id, rec.name)
+            delegators = self.env['alfia.approval.limit']._check('purchase_request', rec.estimated_total, rec.company_id, rec.name,
+                                                                 creator=rec.requested_by_id)
             if delegators:
                 rec.message_post(body=self.env._("Approved by %(user)s on behalf of %(owner)s (delegation).",
                                                  user=self.env.user.name, owner=delegators.name))

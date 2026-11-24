@@ -174,6 +174,31 @@ class TestReceiptQuality(ControlsCase):
         put_away.button_validate()
         self.assertEqual(self._qty(self.wh.lot_stock_id), 3)
 
+    def test_inspector_scoped_by_profile_can_open_and_decide(self):
+        """Round 5 P3: an inspector whose profile lists a warehouse (not all locations) opens and accepts the inspection."""
+        profile = self.env.ref('alfia_controls.profile_quality_inspector').copy({'warehouse_ids': [Command.set(self.wh.ids)]})
+        scoped = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'scoped inspector', 'login': 'scopedinsp@ctl.local', 'group_ids': [Command.link(self.env.ref('base.group_user').id)]})
+        scoped.alfia_profile_ids = [Command.set(profile.ids)]
+        scoped._alfia_sync_profile_groups()
+        self.assertTrue(scoped.alfia_scope_locations, "the case under test: site-scoped, not all locations")
+        picking = self._receive(6, steps='two_steps')
+        check = self.env['alfia.quality.check'].with_user(scoped).search([('picking_id', '=', picking.id)])
+        self.assertEqual(len(check), 1)
+        # What the form loads: the receipt, supplier, product, batches and where the goods are.
+        check.read(['picking_id', 'partner_id', 'product_id', 'lot_names', 'location_id', 'move_id', 'uom_id'])
+        check.picking_id.read(['display_name'])
+        check.action_accept()
+        self.assertEqual(check.state, 'passed')
+        nowhere = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'inspector without site', 'login': 'nositeinsp@ctl.local',
+            'group_ids': [Command.link(self.env.ref('base.group_user').id)]})
+        nowhere.alfia_profile_ids = [Command.set(profile.copy({'warehouse_ids': [Command.clear()]}).ids)]
+        nowhere._alfia_sync_profile_groups()
+        self.assertFalse(nowhere.alfia_location_ids)
+        self.assertFalse(self.env['alfia.quality.check'].with_user(nowhere).search([('picking_id', '=', picking.id)]),
+                         "without a site the list is empty instead of failing")
+
     def test_two_step_rejection_cancels_the_put_away(self):
         picking = self._receive(5, steps='two_steps')
         check = self.env['alfia.quality.check'].search([('picking_id', '=', picking.id)])
@@ -265,6 +290,27 @@ class TestApprovalLimits(ControlsCase):
         self.assertEqual(po.state, 'to approve')
         with self.assertRaises(UserError):
             po.with_user(self.manager).button_approve()
+
+    def test_delegation_never_covers_own_orders_even_when_exempt(self):
+        """Round 5 P6: the delegate was in the segregation-of-duties exemption group and approved an order they created."""
+        exempt = self.env.ref('alfia_security.group_alfia_sod_exempt')
+        self.manager.group_ids = [Command.link(exempt.id)]
+        self.env['alfia.approval.delegation'].with_user(self.manager2).create({
+            'delegate_id': self.manager.id, 'reason': 'Leave', 'date_to': fields.Date.today() + timedelta(days=2)})
+        own = self.env['purchase.order'].with_user(self.manager).create({
+            'partner_id': self.vendor.id, 'order_line': [Command.create({'product_id': self.feed.id, 'product_qty': 100, 'price_unit': 30})]})
+        own.with_user(self.manager).button_confirm()
+        self.assertEqual(own.state, 'to approve', "confirming waits for approval instead of using the delegation")
+        with self.assertRaises(UserError):
+            own.with_user(self.manager).button_approve()
+        small = self.env['purchase.order'].with_user(self.manager).create({
+            'partner_id': self.vendor.id, 'order_line': [Command.create({'product_id': self.feed.id, 'product_qty': 10, 'price_unit': 30})]})
+        small.with_user(self.manager).button_confirm()
+        self.assertEqual(small.state, 'purchase', "within their own limit the exemption still applies, as before")
+        others = self._po(100, 30)
+        others.with_user(self.buyer).button_confirm()
+        others.with_user(self.manager).button_approve()
+        self.assertEqual(others.state, 'purchase', "the delegation still covers other people's orders")
 
     def test_nobody_sets_their_own_limit(self):
         with self.assertRaises(UserError):

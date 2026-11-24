@@ -87,6 +87,13 @@ def account(login, name, profile_xmlid):
 
 
 if 'alfia.quality.check' in env:
+    inspector_profile = env.ref('alfia_controls.profile_quality_inspector', raise_if_not_found=False)
+    if inspector_profile and wh and not inspector_profile.warehouse_ids:
+        # Inspectors see the receipts, moves and inspections of the sites on their profile, like storekeepers.
+        inspector_profile.warehouse_ids = [(4, wh.id)]
+        for user in Users.search([('alfia_profile_ids', 'in', inspector_profile.ids)]):
+            user._alfia_sync_profile_groups()
+        made.append(f'quality inspector profile covers {wh.name}')
     account('quality.inspector', 'مفتش الجودة · Quality inspector (TEST)', 'alfia_controls.profile_quality_inspector')
     account('finance2', 'المراقب المالي ٢ · Finance controller 2 (TEST)', 'alfia_security.profile_finance_controller')
     Categ = env['product.category'].sudo()
