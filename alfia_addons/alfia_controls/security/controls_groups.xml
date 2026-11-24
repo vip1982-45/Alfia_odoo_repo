@@ -3,4 +3,9 @@
     <record id="group_quality_inspector" model="res.groups">
         <field name="name">Alfia: receipt quality inspector</field>
     </record>
+    <record id="profile_quality_inspector" model="alfia.access.profile">
+        <field name="name">Receipt quality inspector</field>
+        <field name="description">Accepts received goods into stock or rejects them with findings. Give it to someone who does not receive goods.</field>
+        <field name="group_ids" eval="[(6, 0, [ref('group_quality_inspector'), ref('stock.group_stock_user'), ref('alfia_security.group_alfia_all_warehouses')])]"/>
+    </record>
 </odoo>

@@ -21,3 +21,20 @@
 - A person can delegate their limit to someone else for up to 90 days, with a reason, starting today or later. Once it
   has started it can only be ended earlier. The approval notes "on behalf of". Delegation never lets anyone approve
   their own documents, and does not give functions the delegate does not have.
+
+## Journal approval and period close (Accounting › Accounting › Period closes)
+- A manual journal entry (Miscellaneous operations, not one generated from a payment, bank line, exchange difference,
+  cash basis tax or stock valuation) is posted by a second person, when segregation of duties is on for the company.
+  It cannot be set to post itself automatically.
+- Lock dates change only through a period close: one finance manager prepares it, another approves it, which sets the
+  lock date. The form shows draft entries, unreconciled bank lines and pending inspections in the period; drafts block
+  approval and Odoo itself refuses unreconciled bank lines. Reopening is the same, with a reason, and is recorded.
+  Odoo's lock-date exceptions are refused: reopen through a period close instead.
+
+## Bank statements (Accounting › Accounting › Import bank statement / Bank reconciliation)
+- Import a CSV from online banking: a Date column and an Amount column (or Debit/Credit), optionally Description,
+  Reference and Partner; comma, semicolon or tab separated; dates as YYYY-MM-DD or DD/MM/YYYY. Each line gets a
+  fingerprint, so lines already imported are skipped when exports overlap (two identical lines in one file both count).
+- "Match automatically" settles a line when exactly one open item has its amount (and partner) and, if several do, the
+  line's text names one of them. Otherwise "Match…" lets the accountant pick the items, with an account for any
+  difference such as bank charges. "Undo" reverses a match. Lines in a foreign currency use Odoo's standard way.

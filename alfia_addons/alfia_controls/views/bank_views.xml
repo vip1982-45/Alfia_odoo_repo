@@ -1,0 +1,91 @@
+<odoo>
+    <record id="alfia_bank_line_view_list" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.list.alfia</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list create="0" decoration-muted="is_reconciled">
+                <header>
+                    <button name="action_alfia_auto_match" string="Match automatically" type="object" class="btn-primary"/>
+                </header>
+                <field name="date"/><field name="journal_id" optional="hide"/><field name="payment_ref"/><field name="ref" optional="show"/>
+                <field name="partner_name" optional="show"/><field name="partner_id" optional="show"/>
+                <field name="amount" sum="Total"/><field name="currency_id" column_invisible="1"/>
+                <field name="alfia_suggestion_count" optional="show"/><field name="is_reconciled"/>
+                <button name="action_alfia_match" string="Match…" type="object" icon="fa-link" invisible="is_reconciled"/>
+                <button name="action_undo_reconciliation" string="Undo" type="object" icon="fa-undo" invisible="not is_reconciled"
+                        confirm="Undo the matching of this bank line?"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_bank_line_view_search" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.search.alfia</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="payment_ref"/><field name="partner_id"/><field name="journal_id"/><field name="statement_id"/>
+                <filter name="to_match" string="To match" domain="[('is_reconciled', '=', False)]"/>
+                <filter name="matched" string="Matched" domain="[('is_reconciled', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+    <record id="alfia_bank_line_action" model="ir.actions.act_window">
+        <field name="name">Bank reconciliation</field>
+        <field name="res_model">account.bank.statement.line</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="alfia_bank_line_view_list"/>
+        <field name="search_view_id" ref="alfia_bank_line_view_search"/>
+        <field name="context">{'search_default_to_match': 1}</field>
+        <field name="help" type="html"><p>Import a statement (Accounting › Import bank statement), then match each line with the invoice,
+            bill or payment it settles. "Match automatically" handles lines with exactly one clear match.</p></field>
+    </record>
+    <record id="alfia_bank_match_view_form" model="ir.ui.view">
+        <field name="name">alfia.bank.match.form</field>
+        <field name="model">alfia.bank.match</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group><field name="statement_line_id"/><field name="amount"/><field name="partner_filter_id"/></group>
+                    <group><field name="selected_total"/><field name="difference"/>
+                        <field name="writeoff_account_id" invisible="not difference"/><field name="writeoff_label" invisible="not difference"/></group>
+                </group>
+                <field name="candidate_ids" invisible="1"/>
+                <field name="line_ids" widget="many2many" options="{'no_create': True}">
+                    <list>
+                        <field name="date"/><field name="move_id"/><field name="partner_id"/><field name="account_id"/>
+                        <field name="name" optional="show"/><field name="amount_residual" string="Open amount"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_confirm" string="Match" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_bank_import_view_form" model="ir.ui.view">
+        <field name="name">alfia.bank.import.form</field>
+        <field name="model">alfia.bank.import</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>A CSV file from online banking with a <b>Date</b> column and an <b>Amount</b> column (or <b>Debit</b>/<b>Credit</b>),
+                    and optionally Description, Reference and Partner. Lines already imported are skipped.</p>
+                <group>
+                    <field name="journal_id"/>
+                    <field name="file" filename="filename"/><field name="filename" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_import" string="Import" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_bank_import_action" model="ir.actions.act_window">
+        <field name="name">Import bank statement</field>
+        <field name="res_model">alfia.bank.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

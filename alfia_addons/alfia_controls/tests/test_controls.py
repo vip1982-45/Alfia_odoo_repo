@@ -4,6 +4,7 @@ from odoo import Command, fields
 from odoo.exceptions import AccessError, UserError
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
+from odoo.tools.binary import BinaryBytes
 
 
 class ControlsCase(TransactionCase):
@@ -300,3 +301,172 @@ class TestApprovalLimits(ControlsCase):
         bill.line_ids.filtered(lambda l: l.display_type == 'product').price_unit = 80
         bill.with_user(clerk).action_post()
         self.assertEqual(bill.state, 'posted')
+
+
+@tagged('post_install', '-at_install', 'alfia_controls')
+class TestJournalAndPeriodClose(ControlsCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        env = cls.env
+        env.company.alfia_sod_enabled = True
+        env.company.alfia_sod_threshold = 0
+
+        def accountant(login, manager=False):
+            groups = ['account.group_account_manager' if manager else 'account.group_account_user',
+                      'alfia_security.group_alfia_all_journals']
+            return env['res.users'].with_context(no_reset_password=True).create({
+                'name': login, 'login': f'{login}@ctl.local', 'group_ids': [Command.link(env.ref(g).id) for g in groups]})
+        cls.acc1, cls.acc2 = accountant('ctlacc1'), accountant('ctlacc2')
+        cls.fm1, cls.fm2 = accountant('ctlfm1', True), accountant('ctlfm2', True)
+        cls.misc = env['account.journal'].search([('type', '=', 'general'), ('company_id', '=', env.company.id),
+                                                  ('id', '!=', env.company.currency_exchange_journal_id.id)], limit=1)
+        accounts = env['account.account'].search([('company_ids', 'in', env.company.id), ('account_type', '=', 'expense')], limit=2)
+        cls.a1, cls.a2 = accounts[0], accounts[-1]
+
+    def _entry(self, user, date=None):
+        return self.env['account.move'].with_user(user).create({
+            'move_type': 'entry', 'journal_id': self.misc.id, 'date': date or fields.Date.today(), 'ref': 'Accrual',
+            'line_ids': [Command.create({'account_id': self.a1.id, 'debit': 250, 'name': 'Accrual'}),
+                         Command.create({'account_id': self.a2.id, 'credit': 250, 'name': 'Accrual'})]})
+
+    def test_manual_entry_is_posted_by_a_second_person(self):
+        move = self._entry(self.acc1)
+        self.assertTrue(move.alfia_manual)
+        with self.assertRaises(UserError):
+            move.with_user(self.acc1).action_post()
+        move.with_user(self.acc2).action_post()
+        self.assertEqual(move.state, 'posted')
+
+    def test_manual_entry_cannot_post_itself_later(self):
+        move = self._entry(self.acc1)
+        with self.assertRaises(UserError):
+            move.with_user(self.acc1).auto_post = 'at_date'
+
+    def test_lock_dates_only_through_an_approved_close(self):
+        with self.assertRaises(UserError):
+            self.env.company.with_user(self.fm1).fiscalyear_lock_date = fields.Date.today() - timedelta(days=400)
+        close = self.env['alfia.period.close'].with_user(self.fm1).create({'date': fields.Date.today() - timedelta(days=400)})
+        close.action_submit()
+        with self.assertRaises(UserError):
+            close.with_user(self.fm1).action_approve()                    # prepared it
+        with self.assertRaises(UserError):
+            close.with_user(self.fm1).write({'state': 'done'})
+        with self.assertRaises(AccessError):
+            close.with_user(self.acc1).action_approve()                   # not a finance manager
+        close.with_user(self.fm2).action_approve()
+        self.assertEqual(self.env.company.fiscalyear_lock_date, close.date)
+        late = self._entry(self.acc1, close.date)
+        late.with_user(self.acc2).action_post()
+        self.assertGreater(late.date, close.date, "nothing is posted inside a closed period")
+        with self.assertRaises(UserError):
+            self.env['account.lock_exception'].with_user(self.fm1).create({'company_id': self.env.company.id,
+                                                                            'fiscalyear_lock_date': False})
+
+    def test_reopen_needs_a_reason_and_a_second_person(self):
+        close = self.env['alfia.period.close'].with_user(self.fm1).create({'date': fields.Date.today() - timedelta(days=400)})
+        close.action_submit()
+        close.with_user(self.fm2).action_approve()
+        reopen = self.env['alfia.period.close'].with_user(self.fm2).create({'kind': 'reopen', 'date': close.date - timedelta(days=31)})
+        with self.assertRaises(UserError):
+            reopen.action_submit()                                        # no reason
+        reopen.reason = 'Supplier credit note for the closed month'
+        reopen.action_submit()
+        reopen.with_user(self.fm1).action_approve()
+        self.assertEqual(self.env.company.fiscalyear_lock_date, reopen.date)
+        with self.assertRaises(UserError):
+            close.with_user(self.fm1).unlink()
+
+    def test_close_waits_for_draft_entries(self):
+        self._entry(self.acc1, fields.Date.today() - timedelta(days=500))
+        close = self.env['alfia.period.close'].with_user(self.fm1).create({'date': fields.Date.today() - timedelta(days=400)})
+        close.action_submit()
+        self.assertTrue(close.draft_count)
+        with self.assertRaises(UserError):
+            close.with_user(self.fm2).action_approve()
+
+
+@tagged('post_install', '-at_install', 'alfia_controls')
+class TestBankStatements(ControlsCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        env = cls.env
+        cls.bank = env['account.journal'].search([('type', '=', 'bank'), ('company_id', '=', env.company.id)], limit=1)
+        cls.accountant = env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'ctlbank', 'login': 'ctlbank@ctl.local',
+            'group_ids': [Command.link(env.ref(g).id) for g in ('account.group_account_user', 'alfia_security.group_alfia_all_journals')]})
+        cls.customer = env['res.partner'].create({'name': 'Stud client'})
+        cls.charges = env['account.account'].search([('company_ids', 'in', env.company.id), ('account_type', '=', 'expense')], limit=1)
+
+    def _invoice(self, amount, move_type='out_invoice', partner=None):
+        move = self.env['account.move'].create({
+            'move_type': move_type, 'partner_id': (partner or self.customer).id, 'invoice_date': fields.Date.today(),
+            'invoice_line_ids': [Command.create({'name': 'Boarding', 'quantity': 1, 'price_unit': amount, 'tax_ids': False})]})
+        move.action_post()
+        return move
+
+    def _import(self, csv_text, user=None):
+        wiz = self.env['alfia.bank.import'].with_user(user or self.accountant).create({
+            'journal_id': self.bank.id, 'file': BinaryBytes(csv_text.encode(), 'statement.csv'), 'filename': 'statement.csv'})
+        return wiz, wiz.action_import()
+
+    def test_import_skips_lines_already_imported(self):
+        csv_text = ("Date;Description;Debit;Credit;Reference\n"
+                    "2026-11-02;Fee;10.00;;A1\n2026-11-02;Fee;10.00;;A1\n03/11/2026;Deposit;;1,250.50;B7\n")
+        wiz, action = self._import(csv_text)
+        lines = self.env['account.bank.statement.line'].search(action['domain'])
+        self.assertEqual(sorted(lines.mapped('amount')), [-10.0, -10.0, 1250.5], "two identical fees are both real")
+        with self.assertRaises(UserError):                                  # everything already there
+            self._import(csv_text)
+        wiz, action = self._import(csv_text + "2026-11-04;Transfer;;99;C9\n")
+        self.assertEqual(self.env['account.bank.statement.line'].search_count(action['domain']), 1)
+        self.assertIn('3 already imported', wiz.result)
+
+    def test_bad_files_are_refused_with_a_reason(self):
+        with self.assertRaises(UserError):
+            self._import("When,What\n2026-11-01,x\n")
+        with self.assertRaises(UserError):
+            self._import("Date,Amount\n31/31/2026,5\n")
+
+    def test_auto_match_settles_the_invoice_it_names(self):
+        inv = self._invoice(1150)
+        other = self._invoice(1150)                                         # same amount: only the reference decides
+        _w, action = self._import(f"Date,Description,Amount,Partner\n2026-11-05,Payment {inv.name},1150,Stud client\n")
+        line = self.env['account.bank.statement.line'].search(action['domain'])
+        self.assertEqual(line.partner_id, self.customer)
+        line.with_user(self.accountant).action_alfia_auto_match()
+        self.assertTrue(line.is_reconciled)
+        self.assertEqual(inv.payment_state, 'paid')
+        self.assertEqual(other.payment_state, 'not_paid')
+
+    def test_ambiguous_lines_wait_for_a_person(self):
+        self._invoice(700)
+        self._invoice(700)
+        _w, action = self._import("Date,Description,Amount,Partner\n2026-11-05,Transfer,700,Stud client\n")
+        line = self.env['account.bank.statement.line'].search(action['domain'])
+        self.assertEqual(line.alfia_suggestion_count, 2)
+        line.with_user(self.accountant).action_alfia_auto_match()
+        self.assertFalse(line.is_reconciled)
+
+    def test_manual_match_with_bank_charges_and_undo(self):
+        bill = self._invoice(500, 'in_invoice', self.vendor)
+        _w, action = self._import("Date,Description,Amount\n2026-11-06,Supplier transfer,-505\n")
+        line = self.env['account.bank.statement.line'].search(action['domain'])
+        match = self.env['alfia.bank.match'].with_user(self.accountant).create({'statement_line_id': line.id, 'partner_filter_id': self.vendor.id})
+        payable = bill.line_ids.filtered(lambda l: l.account_id.account_type == 'liability_payable')
+        self.assertIn(payable, match.candidate_ids)
+        match.line_ids = payable
+        self.assertEqual(match.difference, -5)
+        with self.assertRaises(UserError):
+            match.action_confirm()                                          # no account for the difference
+        match.writeoff_account_id = self.charges
+        match.action_confirm()
+        self.assertTrue(line.is_reconciled)
+        self.assertEqual(bill.payment_state, 'paid')
+        self.assertEqual(sum(line.move_id.line_ids.filtered(lambda l: l.account_id == self.charges).mapped('balance')), 5)
+        line.with_user(self.accountant).action_undo_reconciliation()
+        self.assertFalse(line.is_reconciled)
+        self.assertEqual(bill.payment_state, 'not_paid')

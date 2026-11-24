@@ -17,3 +17,8 @@ acc_deleg_own,Delegations: own (given),alfia.approval.delegation,base.group_user
 acc_deleg_received,Delegations: received,alfia.approval.delegation,base.group_user,r,"[('delegate_id', '=', user.id)]"
 acc_deleg_manager,Delegations: finance managers,alfia.approval.delegation,account.group_account_manager,crud,
 acc_deleg_auditor,Delegations: auditor,alfia.approval.delegation,alfia_security.group_alfia_security_auditor,r,
+acc_close_manager,Period closes: finance managers,alfia.period.close,account.group_account_manager,cru,
+acc_close_accountant,Period closes: accountants see them,alfia.period.close,account.group_account_user,r,
+acc_close_auditor,Period closes: auditor,alfia.period.close,alfia_security.group_alfia_security_auditor,r,
+acc_bank_match,Bank matching wizard: accountants,alfia.bank.match,account.group_account_user,crud,
+acc_bank_import,Bank import wizard: accountants,alfia.bank.import,account.group_account_user,crud,

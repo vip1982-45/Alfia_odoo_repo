@@ -71,5 +71,42 @@ if profile and not Users.with_context(active_test=False).search([('login', '=', 
     clerk._alfia_sync_profile_groups()
     made.append('account sales.clerk (sales and receivables)')
 
+
+# Round 5 (alfia_controls): a quality inspector, a second finance controller (period closes need two), goods that are
+# inspected on receipt, and purchase-order approval limits.
+def account(login, name, profile_xmlid):
+    prof = env.ref(profile_xmlid, raise_if_not_found=False)
+    if not prof or Users.with_context(active_test=False).search([('login', '=', login)], limit=1):
+        return
+    user = Users.create({'name': name, 'login': login, 'group_ids': [(6, 0, [env.ref('base.group_user').id])]})
+    user.write({'alfia_profile_ids': [(6, 0, [prof.id])]})
+    if password:
+        user.write({'password': password})
+    user._alfia_sync_profile_groups()
+    made.append(f'account {login}')
+
+
+if 'alfia.quality.check' in env:
+    account('quality.inspector', 'مفتش الجودة · Quality inspector (TEST)', 'alfia_controls.profile_quality_inspector')
+    account('finance2', 'المراقب المالي ٢ · Finance controller 2 (TEST)', 'alfia_security.profile_finance_controller')
+    Categ = env['product.category'].sudo()
+    qc = Categ.search([('name', '=', 'TEST QC vaccines')], limit=1)
+    if not qc:
+        qc = Categ.create({'name': 'TEST QC vaccines', 'alfia_requires_inspection': True})
+        made.append('category TEST QC vaccines (inspected on receipt)')
+    if not env['product.product'].sudo().search([('name', '=', 'TEST QC vaccine')], limit=1):
+        vendor = env['res.partner'].sudo().search([('supplier_rank', '>', 0)], limit=1)
+        env['product.product'].sudo().create({
+            'name': 'TEST QC vaccine', 'type': 'consu', 'is_storable': True, 'categ_id': qc.id, 'purchase_ok': True,
+            'standard_price': 40.0, 'seller_ids': [(0, 0, {'partner_id': vendor.id, 'price': 40.0})] if vendor else []})
+        made.append('product TEST QC vaccine')
+    Limit = env['alfia.approval.limit'].sudo()
+    if not Limit.search_count([('document_type', '=', 'purchase')]):
+        for login, amount, unlimited in (('purchase.approver', 50000, False), ('power.user', 50000, False), ('finance', 0, True)):
+            user = Users.search([('login', '=', login)], limit=1)
+            if user:
+                Limit.create({'document_type': 'purchase', 'user_id': user.id, 'amount': amount, 'unlimited': unlimited})
+        made.append('purchase-order approval limits (purchase.approver and power.user 50,000 QAR; finance no limit)')
+
 env.cr.commit()
 print('Retest fixtures: ' + ('; '.join(made) if made else 'already in place'))

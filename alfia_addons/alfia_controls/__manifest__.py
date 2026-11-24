@@ -15,6 +15,8 @@
         'views/purchase_request_views.xml',
         'views/quality_views.xml',
         'views/approval_views.xml',
+        'views/journal_views.xml',
+        'views/bank_views.xml',
         'views/menus.xml',
     ],
     'installable': True,
