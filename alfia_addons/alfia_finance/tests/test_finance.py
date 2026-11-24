@@ -237,6 +237,29 @@ class TestReportsAndCostAllocation(FinanceCase):
         receipt.button_validate()
         self.assertAlmostEqual(feed.with_context(location=self.wh.view_location_id.id).qty_available, 50.0)
 
+    def test_accountant_fills_a_bill_from_a_received_order(self):
+        from odoo.tests import Form
+        po = self.env['purchase.order'].with_user(self.buyer).create({'partner_id': self.vendor.id, 'order_line': [Command.create(
+            {'product_id': self.oats.id, 'product_qty': 3, 'price_unit': 10})]})
+        po.button_confirm()
+        if po.state != 'purchase':
+            po.with_user(self.purchase_approver).button_approve()
+        receipt = po.picking_ids[:1]
+        receipt.move_ids.quantity = 3
+        receipt.move_ids.picked = True
+        receipt.button_validate()
+        accountant = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'invoicing only', 'login': 'invonly@fin.local', 'group_ids': [Command.link(self.env.ref(x).id) for x in (
+                'base.group_user', 'account.group_account_invoice', 'alfia_security.group_alfia_all_journals', 'alfia_security.group_alfia_all_warehouses')]})
+        self.assertFalse(accountant.has_group('purchase.group_purchase_user'))
+        bill_form = Form(self.env['account.move'].with_user(accountant).with_context(default_move_type='in_invoice'), view='account.view_move_form')
+        bill_form.partner_id = self.vendor
+        bill_form.invoice_date = fields.Date.today()
+        bill_form.purchase_vendor_bill_id = self.env['purchase.bill.union'].with_user(accountant).search([('purchase_order_id', '=', po.id)])
+        bill = bill_form.save()
+        self.assertEqual(bill.invoice_line_ids.purchase_line_id.order_id, po)
+        self.assertAlmostEqual(bill.amount_untaxed, 30.0)
+
     def test_accountant_bills_a_purchase_and_invoices_a_sale(self):
         self.assertTrue(self.env['purchase.bill.union'].with_user(self.ap_clerk).has_access('read'))
         self.assertTrue(self.env['sale.advance.payment.inv'].with_user(self.ar_clerk).has_access('create'))
