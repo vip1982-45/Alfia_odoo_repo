@@ -46,6 +46,9 @@ if e4 and not env['alfia.pregnancy'].sudo().search([('mare_id', '=', e4.id)], li
 # E2 - a mare in Barn A for a frozen-semen service by breeding.manager.
 horse('TEST E2 service mare', 'female', barn_a)
 
+# Round 7 - a horse to sell, to check the sale invoice carries the horse's cost centre.
+horse('TEST H1 sale horse', 'male', barn_b)
+
 # R10 - a feed product counted in kg, to buy in 25 kg bags.
 uom_kg = env.ref('uom.product_uom_kgm')
 feed = env['product.product'].sudo().search([('name', '=', 'TEST R10 feed (kg)')], limit=1)

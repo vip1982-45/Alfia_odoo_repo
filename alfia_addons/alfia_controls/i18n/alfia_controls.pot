@@ -1,0 +1,1643 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* alfia_controls
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-24 20:23+0000\n"
+"PO-Revision-Date: 2026-11-24 20:23+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid ""
+"%(doc)s is %(amount)s, above your approval limit of %(limit)s. Someone with "
+"a higher limit must approve it."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid ""
+"%(doc)s is above your own approval limit of %(limit)s, and the limit "
+"delegated to you by %(owner)s does not cover documents you created yourself."
+" Someone else must approve it."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid ""
+"%(matched)s line(s) matched; %(skipped)s need a decision (no single clear "
+"match)."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "%(new)s line(s) imported, %(dup)s already imported and skipped."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "%(product)s was rejected at inspection: %(findings)s"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "%s draft entries are dated in the period. Post or delete them first."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "%s has already been decided."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "%s has already been submitted."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "%s is already ordered; cancel the purchase order instead."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "%s is already reconciled."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "%s waits for quality inspection before it can go into stock."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_import_view_form
+msgid ""
+"A CSV file from online banking with a <b>Date</b> column and an <b>Amount</b> column (or <b>Debit</b>/<b>Credit</b>),\n"
+"                    and optionally Description, Reference and Partner. Lines already imported are skipped."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid ""
+"A closed period is reopened through Accounting › Period closes, with a "
+"reason and a second person's approval."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid ""
+"A completed period close is kept as the record of who closed the books."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "A delegation cannot start in the past."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid ""
+"A delegation lasts at most 90 days; give a longer one a new approval limit "
+"instead."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "A delegation must end on or after the day it starts."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "A delegation that has started can only be ended earlier."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "A delegation that has started cannot be extended; create a new one."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid ""
+"A manual journal entry is posted by a second person, so it cannot be set to "
+"post automatically."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_move_form_manual
+msgid "A manual journal entry is posted by a second person, who reviews it."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "A period close cannot be changed once it is submitted."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "A person cannot delegate to themselves."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid ""
+"A submitted request cannot be changed. Ask the approver to reject it, then "
+"change and resubmit it."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_quality_check_view_form
+msgid "Accept into stock"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_quality_check__state__passed
+msgid "Accepted"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "Accepted by %(user)s. %(findings)s"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_account_lock_exception
+msgid "Account Lock Exception"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_needaction
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_needaction
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_needaction
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__message_needaction
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__active
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__active
+msgid "Active"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Add what you need before submitting."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_product_category__alfia_effective_inspection
+msgid "Alfia Effective Inspection"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__alfia_import_key
+msgid "Alfia Import Key"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.module.module,shortdesc:base.module_alfia_controls
+msgid "Alfia Procurement and Finance Controls"
+msgstr ""
+
+#. module: alfia_controls
+#: model:res.groups,name:alfia_controls.group_quality_inspector
+msgid "Alfia: receipt quality inspector"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__amount
+msgid "Amount"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.constraint,message:alfia_controls.constraint_alfia_approval_limit_check_amount
+msgid "An approval limit cannot be negative."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "An approval limit is for one person or for one group."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_approval_delegation
+msgid "Approval delegation"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.actions.act_window,name:alfia_controls.alfia_approval_delegation_action
+#: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_delegations
+msgid "Approval delegations"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_approval_limit
+msgid "Approval limit"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.actions.act_window,name:alfia_controls.alfia_approval_limit_action
+#: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_limits
+msgid "Approval limits"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_approval_delegation_view_form
+msgid "Approvals delegated"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
+msgid "Approve"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_period_close_view_form
+msgid "Approve and lock"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_purchase_request__state__approved
+msgid "Approved"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__approved_by_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__approved_by_id
+msgid "Approved By"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__approved_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__approved_date
+msgid "Approved Date"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "Approved by %(user)s on behalf of %(owner)s (delegation)."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "Approved by %(user)s: books locked up to %(date)s (before: %(prev)s)."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Approved by %s."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_search
+msgid "Approved, to order"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__delegate_id
+msgid "Approves instead"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_approval_limit_view_search
+msgid "Archived"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_account_bank_statement_line
+msgid "Bank Transaction"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "Bank difference"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid ""
+"Bank lines in a foreign currency are matched in the standard way, not here."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.actions.act_window,name:alfia_controls.alfia_bank_line_action
+#: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_bank_reco
+msgid "Bank reconciliation"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__lot_names
+msgid "Batches"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_period_close_view_form
+msgid "Before closing"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_import_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_match_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
+msgid "Cancel"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_purchase_request__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__candidate_ids
+msgid "Candidate"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Choose a vendor for: %s"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "Choose what this bank line pays or receives."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "Close"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_period_close__kind__close
+msgid "Close the period"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_res_company
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__company_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__company_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__company_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__company_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__company_id
+msgid "Company"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "Confirmed by %(user)s on behalf of %(owner)s (delegation)."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.module.module,description:base.module_alfia_controls
+msgid ""
+"Controls the stud farm RFP requires on top of purchasing and accounting. See"
+" README.md."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
+msgid "Create requests for quotation"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__create_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__create_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__create_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__create_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__create_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__create_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__create_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__create_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__create_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__create_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__create_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__create_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__create_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__create_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__currency_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__current_lock_date
+msgid "Current Lock Date"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__date_from
+msgid "Date From"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__date_to
+msgid "Date To"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__decided_date
+msgid "Decided Date"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__delegator_id
+msgid "Delegated by"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__description
+msgid "Description"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__difference
+msgid "Difference"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__writeoff_account_id
+msgid "Difference to"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_account_lock_exception__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_account_move__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_account_payment__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_product_category__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_res_company__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_stock_move__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_approval_limit_view_search
+msgid "Document"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__document_type
+msgid "Document Type"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__document_types
+msgid "Document Types"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_period_close__state__done
+msgid "Done"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_period_close__state__draft
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_purchase_request__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__draft_count
+msgid "Draft entries in the period"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__estimated_total
+msgid "Estimated total"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__estimated_price
+msgid "Estimated unit price"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_period_close__lock__fiscalyear_lock_date
+msgid "Everything (all users)"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__file
+msgid "File"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__filename
+msgid "Filename"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__findings
+msgid "Findings"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_account_bank_statement_line__alfia_import_key
+msgid ""
+"Fingerprint of the imported bank line, used to refuse the same line twice."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_bank_match__writeoff_account_id
+msgid "For example bank charges."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__location_id
+msgid "Goods are in"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.actions.act_window,help:alfia_controls.alfia_quality_check_action
+msgid ""
+"Goods of categories marked \"Inspect on receipt\" appear here when they are "
+"received."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_product_category__alfia_requires_inspection
+msgid ""
+"Goods of this category (and its sub-categories) received from a supplier "
+"wait for a quality inspection before they can be put into stock."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__has_message
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__has_message
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__has_message
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__has_message
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__id
+#: model:ir.model.fields,field_description:alfia_controls.field_account_lock_exception__id
+#: model:ir.model.fields,field_description:alfia_controls.field_account_move__id
+#: model:ir.model.fields,field_description:alfia_controls.field_account_payment__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__id
+#: model:ir.model.fields,field_description:alfia_controls.field_product_category__id
+#: model:ir.model.fields,field_description:alfia_controls.field_purchase_order__id
+#: model:ir.model.fields,field_description:alfia_controls.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:alfia_controls.field_res_company__id
+#: model:ir.model.fields,field_description:alfia_controls.field_stock_move__id
+msgid "ID"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_approval_delegation__message_needaction
+#: model:ir.model.fields,help:alfia_controls.field_alfia_approval_limit__message_needaction
+#: model:ir.model.fields,help:alfia_controls.field_alfia_period_close__message_needaction
+#: model:ir.model.fields,help:alfia_controls.field_alfia_purchase_request__message_needaction
+#: model:ir.model.fields,help:alfia_controls.field_alfia_quality_check__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_approval_delegation__message_has_error
+#: model:ir.model.fields,help:alfia_controls.field_alfia_approval_delegation__message_has_sms_error
+#: model:ir.model.fields,help:alfia_controls.field_alfia_approval_limit__message_has_error
+#: model:ir.model.fields,help:alfia_controls.field_alfia_approval_limit__message_has_sms_error
+#: model:ir.model.fields,help:alfia_controls.field_alfia_period_close__message_has_error
+#: model:ir.model.fields,help:alfia_controls.field_alfia_period_close__message_has_sms_error
+#: model:ir.model.fields,help:alfia_controls.field_alfia_purchase_request__message_has_error
+#: model:ir.model.fields,help:alfia_controls.field_alfia_purchase_request__message_has_sms_error
+#: model:ir.model.fields,help:alfia_controls.field_alfia_quality_check__message_has_error
+#: model:ir.model.fields,help:alfia_controls.field_alfia_quality_check__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_import_view_form
+msgid "Import"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "Import %s"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_bank_import
+msgid "Import a bank statement"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.actions.act_window,help:alfia_controls.alfia_bank_line_action
+msgid ""
+"Import a statement (Accounting › Import bank statement), then match each line with the invoice,\n"
+"            bill or payment it settles. \"Match automatically\" handles lines with exactly one clear match."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.actions.act_window,name:alfia_controls.alfia_bank_import_action
+#: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_bank_import
+msgid "Import bank statement"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "Imported bank lines"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_product_category__alfia_requires_inspection
+msgid "Inspect on receipt"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__inspector_id
+msgid "Inspector"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.module.module,summary:base.module_alfia_controls
+msgid ""
+"Internal purchase requests, receipt quality control, approval limits and "
+"delegation, journal approval and period close, bank statement reconciliation"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_is_follower
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_is_follower
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_is_follower
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__message_is_follower
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__journal_id
+msgid "Journal"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__kind
+msgid "Kind"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__write_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__write_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__write_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__write_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__write_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__write_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__write_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__write_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__write_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__write_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__write_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__write_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__write_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__write_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__line_ids
+msgid "Line"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "Line %(n)s: %(error)s"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__lock
+msgid "Lock"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid ""
+"Lock dates are set by an approved period close (Accounting › Period closes)."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__alfia_manual
+#: model:ir.model.fields,field_description:alfia_controls.field_account_move__alfia_manual
+msgid "Manual journal entry"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_match_view_form
+msgid "Match"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_bank_match
+msgid "Match a bank line"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_list
+msgid "Match automatically"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "Match bank line"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_search
+msgid "Matched"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "Matched by %(user)s with %(items)s."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__line_ids
+msgid "Matches"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_list
+msgid "Match…"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_has_error
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_has_error
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_has_error
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__message_has_error
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__message_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_search
+msgid "My requests"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__name
+msgid "Name"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__location_id
+msgid "Needed at"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__date_needed
+msgid "Needed by"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_approval_delegation__message_needaction_counter
+#: model:ir.model.fields,help:alfia_controls.field_alfia_approval_limit__message_needaction_counter
+#: model:ir.model.fields,help:alfia_controls.field_alfia_period_close__message_needaction_counter
+#: model:ir.model.fields,help:alfia_controls.field_alfia_purchase_request__message_needaction_counter
+#: model:ir.model.fields,help:alfia_controls.field_alfia_quality_check__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_approval_delegation__message_has_error_counter
+#: model:ir.model.fields,help:alfia_controls.field_alfia_approval_limit__message_has_error_counter
+#: model:ir.model.fields,help:alfia_controls.field_alfia_period_close__message_has_error_counter
+#: model:ir.model.fields,help:alfia_controls.field_alfia_purchase_request__message_has_error_counter
+#: model:ir.model.fields,help:alfia_controls.field_alfia_quality_check__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.actions.act_window,help:alfia_controls.alfia_period_close_action
+msgid ""
+"One finance manager prepares the close of a period; another approves it, which sets the lock date.\n"
+"            Reopening works the same way, with a reason."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Only a draft or rejected request can be submitted."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Only a purchase manager can approve or reject purchase requests."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "Only a submitted period close can be approved."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "Only a submitted period close can be rejected."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Only a submitted request can be approved."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Only a submitted request can be rejected."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Only an approved request can be ordered."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "Only finance managers close or reopen periods."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "Only posted, open items of the same company can be matched."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Only purchasing staff turn requests into orders."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "Only quality inspectors can accept or reject received goods."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Only the requester or a purchase manager can cancel a request."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Only the requester submits the request."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_match_view_form
+msgid "Open amount"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__group_id
+msgid "Or everyone in"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_purchase_request__state__ordered
+msgid "Ordered"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Ordered: %s"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
+msgid "Orders"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__for_payment
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_approval_limit__document_type__payment
+msgid "Outgoing payments"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_quality_check_view_form
+msgid "Packaging, temperature, expiry, documents, quantity counted..."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__partner_filter_id
+msgid "Partner"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_account_payment
+msgid "Payment"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_period_close
+msgid "Period close"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.actions.act_window,name:alfia_controls.alfia_period_close_action
+#: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_period_close
+msgid "Period closes"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__user_id
+msgid "Person"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__alfia_suggestion_count
+msgid "Possible matches"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "Posted by %(user)s on behalf of %(owner)s (delegation)."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__vendor_id
+msgid "Preferred vendor"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__previous_lock_date
+msgid "Previous Lock Date"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__product_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__product_id
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_search
+msgid "Product"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_product_category
+msgid "Product Category"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_purchase_order
+msgid "Purchase Order"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__purchase_order_count
+msgid "Purchase Order Count"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__purchase_order_id
+msgid "Purchase order"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__purchase_line_ids
+msgid "Purchase order lines"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__for_purchase
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__purchase_order_ids
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_approval_limit__document_type__purchase
+msgid "Purchase orders"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_purchase_request
+#: model:ir.model.fields,field_description:alfia_controls.field_purchase_order_line__alfia_request_id
+msgid "Purchase request"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_purchase_request_line
+#: model:ir.model.fields,field_description:alfia_controls.field_purchase_order_line__alfia_request_line_id
+msgid "Purchase request line"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.actions.act_window,name:alfia_controls.alfia_purchase_request_action
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__for_purchase_request
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_approval_limit__document_type__purchase_request
+#: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_purchase_request
+#: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_purchase_request_staff
+msgid "Purchase requests"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__quantity
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__quantity
+msgid "Quantity"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__rating_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__rating_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__rating_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__rating_ids
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__reason
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__reason
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__reason
+msgid "Reason"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__picking_id
+msgid "Receipt"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.actions.act_window,name:alfia_controls.alfia_quality_check_action
+#: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_quality
+msgid "Receipt inspections"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_quality_check
+msgid "Receipt quality check"
+msgstr ""
+
+#. module: alfia_controls
+#: model:alfia.access.profile,name:alfia_controls.profile_quality_inspector
+msgid "Receipt quality inspector"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__pending_inspections
+msgid "Receipts waiting for inspection"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__received_by_id
+msgid "Received by"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "Received in %s; waiting for inspection."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__move_id
+msgid "Received move"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "Record what was found before rejecting %s."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_period_close_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_quality_check_view_form
+msgid "Reject"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_period_close__state__rejected
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_purchase_request__state__rejected
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_quality_check__state__rejected
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_quality_check_view_search
+msgid "Rejected"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "Rejected by %(user)s: %(findings)s"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Rejected by %(user)s: %(reason)s"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "Rejected by %s."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__rejection_reason
+msgid "Rejection Reason"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "Reopen"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_period_close__kind__reopen
+msgid "Reopen the period"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__request_id
+msgid "Request"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__requested_by_id
+msgid "Requested By"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__requested_by_id
+msgid "Requested by"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__result
+msgid "Result"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "Reviewed and posted by %s."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid ""
+"Segregation of duties: you entered the journal entry %s, so another person "
+"must review and post it."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__selected_total
+msgid "Selected Total"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__state
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__state
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__state
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__state
+msgid "State"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__statement_line_id
+msgid "Statement Line"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_quality_check_view_search
+msgid "Status"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_period_close_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
+msgid "Submit for approval"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Submitted for approval by %s."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__partner_id
+msgid "Supplier"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_period_close__lock__tax_lock_date
+msgid "Tax returns only"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "The books are already closed up to %s."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "The file has more than %s lines; split it by month."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "The file has no bank lines."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid ""
+"The file needs a Date column and either an Amount column or Debit/Credit "
+"columns. Columns found: %s"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_quality_check_view_form
+msgid ""
+"The goods will be moved to Rejected goods for return to the supplier. "
+"Continue?"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid ""
+"The items do not add up to the bank amount (difference %s). Choose an "
+"account for the difference, such as bank charges."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_approval_delegation_view_form
+msgid ""
+"The person approves with your limit during these dates, never for documents they created themselves,\n"
+"                        and only where they already have the function (for example purchase manager for purchase orders)."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.constraint,message:alfia_controls.constraint_alfia_purchase_request_line_qty_positive
+msgid "The quantity must be above zero."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "This bank line has already been partly matched; undo it first."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "This bill"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "This payment"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_search
+msgid "To match"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "To reopen, choose a date before the current lock date (%s)."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_list
+msgid "Total"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_list
+msgid "Undo"
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_list
+msgid "Undo the matching of this bank line?"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__uom_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__uom_id
+msgid "Unit"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__unlimited
+msgid "Unlimited"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__unreconciled_count
+msgid "Unreconciled bank lines in the period"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__amount
+msgid "Up to"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__date
+msgid "Up to and including"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__for_bill
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_approval_limit__document_type__bill
+msgid "Vendor bills"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_period_close__state__submitted
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_purchase_request__state__submitted
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_search
+msgid "Waiting for approval"
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_quality_check__state__pending
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_quality_check_view_search
+msgid "Waiting for inspection"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid ""
+"Waiting for quality inspection: %s. An inspector must accept them before "
+"they go into stock."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_quality_check__findings
+msgid ""
+"What was checked and found (packaging, temperature, expiry, documents...). "
+"Required to reject."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.actions.act_window,help:alfia_controls.alfia_approval_limit_action
+msgid ""
+"While a kind of document has no limit, it is not limited. Once it has one, only the people\n"
+"            covered by a limit may approve it, up to their amount (in the company's currency, whatever the document's currency)."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_period_close__reason
+msgid "Why the period is reopened (required to reopen)."
+msgstr ""
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_period_close_view_form
+msgid "Why the period must be reopened"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "Write the reason for rejecting %s first."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "Write why the period must be reopened."
+msgstr ""
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__writeoff_label
+msgid "Writeoff Label"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "You can only delegate your own approvals."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid ""
+"You cannot set an approval limit that covers yourself; another finance "
+"manager must."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid ""
+"You have no approval limit for this kind of document, so you cannot approve "
+"%s."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/journal.py:0
+msgid "You prepared %s, so another finance manager must approve it."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "You received these goods, so another person must inspect them."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/purchase_request.py:0
+msgid "You requested %s, so another purchase manager must decide on it."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/approval.py:0
+msgid "no limit"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bank.py:0
+msgid "statement_id"
+msgstr ""
