@@ -189,7 +189,10 @@ class IrAttachment(models.Model):
                         raise OSError("Cannot hardlink in _file_write")  # noqa: TRY301
                     os.link(bin_value.name, tmp_path)
                 except OSError:
-                    # Copy, works for all io.IOBase
+                    # Copy, works for all io.IOBase. Rewind first: the caller may have read the stream to compute its
+                    # checksum, and copying from its end would store an empty file (seen on file shares that refuse
+                    # hard links, such as Azure Files, where this copy is the only path taken).
+                    bin_value.seek(0)
                     with open(tmp_path, 'wb') as tmp_file:
                         shutil.copyfileobj(bin_value, tmp_file)
                         tmp_file.flush()

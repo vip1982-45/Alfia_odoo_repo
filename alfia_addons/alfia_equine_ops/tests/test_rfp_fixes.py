@@ -177,3 +177,15 @@ class TestRfpFixes(OpsCase):
                                                                         'res_model': 'alfia.lab.test', 'res_id': lab.id})
         lab.invalidate_recordset(['attachment_ids'])
         self.assertEqual(lab.with_user(self.vet_mgr).attachment_ids, via_log)
+
+    def test_upload_keeps_its_content_where_hard_links_are_refused(self):
+        # On a file share that refuses hard links (Azure Files), the file store copies the upload instead; the copy must
+        # start at the beginning of the stream, or an empty file is stored and every later upload of it "collides".
+        import io
+        from unittest.mock import patch
+        data = b'Synthetic report for the hard-link fallback ' * 50
+        Attachment = self.env['ir.attachment'].with_user(self.vet)
+        with patch('os.link', side_effect=OSError('hard links refused')):
+            att = Attachment._upload_file(io.BytesIO(data), {'name': 'fallback.txt', 'res_model': 'alfia.lab.test', 'res_id': 0})
+        self.assertEqual(att.raw.content, data)
+        self.assertEqual(att.file_size, len(data))

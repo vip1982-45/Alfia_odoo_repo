@@ -93,7 +93,25 @@ for model, table, col in (('alfia.diag.image', 'alfia_diag_image_ir_attachment_r
     if linked:
         done.append('%d file(s) linked to their %s record' % (linked, model))
 
-# 7. Last, as uninstalling reloads the registry: supplier and customer name lookup needs a paid online service (IAP)
+# 7. Uploaded files that were stored empty (the file store's copy step started from the end of the upload): the stored
+#    file does not match its record, cannot be read, and blocks every new upload of the same file as a "collision".
+#    Remove those broken copies so the files can be uploaded again; the records keep their names and history.
+import os
+Attachment = env['ir.attachment'].sudo()
+broken = 0
+for att in Attachment.with_context(active_test=False).search([('store_fname', '!=', False), ('file_size', '>', 0)]):
+    path = Attachment._full_path(att.store_fname)
+    try:
+        size = os.path.getsize(path)
+    except OSError:
+        continue
+    if size == 0:   # the bug left empty files; anything else is left alone
+        os.remove(path)
+        broken += 1
+if broken:
+    done.append('%d broken empty stored file(s) removed; upload those files again' % broken)
+
+# 8. Last, as uninstalling reloads the registry: supplier and customer name lookup needs a paid online service (IAP)
 #    and failed with an access error.
 mod = env['ir.module.module'].sudo().search([('name', '=', 'partner_autocomplete'), ('state', '=', 'installed')])
 if mod:
