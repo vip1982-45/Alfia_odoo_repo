@@ -8,14 +8,12 @@ class AlfiaSodMixin(models.AbstractModel):
     def _alfia_sod_applies(self, amount_company_currency=None, company=None):
         """Whether the current user must be a different person from the record's creator.
 
-        Not enforced for the superuser / sudo calls (system automation) or for members of the
-        explicit emergency-exemption group. The company switch and threshold are set by system
-        administrators only.
+        Not enforced for the superuser / sudo calls (system automation). Nobody else is exempt: the former
+        emergency-exemption group no longer waives the check (owner decision, 24 Nov 2026: nobody approves a
+        document they created). The company switch and threshold are set by system administrators only.
         """
         env = self.env
         if env.su:
-            return False
-        if env.user.has_group('alfia_security.group_alfia_sod_exempt'):
             return False
         company = company or env.company
         if not company.alfia_sod_enabled:

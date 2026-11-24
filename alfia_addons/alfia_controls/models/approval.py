@@ -94,8 +94,8 @@ class AlfiaApprovalLimit(models.Model):
         """Raise when the current user may not approve `amount_company` (company currency). Returns the delegator whose
         limit was needed, if any, so the approval can say so.
 
-        A delegated limit never covers the delegate's own documents. This holds even for members of the emergency
-        segregation-of-duties exemption: the exemption waives the creator check, not the terms of a delegation."""
+        A delegated limit never covers the delegate's own documents (and since 24 Nov 2026 nobody approves a document
+        they created at all; this stays as a second line with a clearer message)."""
         users = self.env['res.users']
         if self.env.su:
             return users

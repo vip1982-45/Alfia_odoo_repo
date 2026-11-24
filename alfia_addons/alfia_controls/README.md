@@ -22,8 +22,8 @@
   limit may approve it, up to their amount. Nobody can set a limit that covers themselves.
 - A person can delegate their limit to someone else for up to 90 days, with a reason, starting today or later. Once it
   has started it can only be ended earlier. The approval notes "on behalf of". A delegated limit never covers a
-  document the delegate created (or requested), even for members of the segregation-of-duties exemption group: the
-  exemption waives the creator check within their own limit, not the terms of a delegation. Delegation does not give
+  document the delegate created (or requested). Since 24 Nov 2026 nobody approves a document they created in any case:
+  the former segregation-of-duties exemption group no longer waives anything. Delegation does not give
   functions the delegate does not have.
 
 ## Journal approval and period close (Accounting › Accounting › Period closes)

@@ -1,7 +1,6 @@
 # Run with:  odoo-bin shell -c <conf> -d <db> < demo/power_user.py      (safe to run again)
 # Creates the trial "power user": every business function in every site, store, warehouse, journal and
-# department, allowed to approve its own transactions so one person can walk a process end to end, but
-# with no system administration (no Settings, no technical menus, no user or security administration).
+# department, with no system administration (no Settings, no technical menus, no user or security administration).
 import os
 
 PROFILE_GROUPS = [
@@ -19,8 +18,8 @@ PROFILE_GROUPS = [
     # Scope: everything
     'alfia_security.group_alfia_all_locations', 'alfia_security.group_alfia_all_warehouses',
     'alfia_security.group_alfia_all_journals',
-    # Trial only: may approve its own requests (segregation of duties does not apply to this account)
-    'alfia_security.group_alfia_sod_exempt',
+    # No segregation-of-duties exemption: since 24 Nov 2026 nobody approves a document they created, this account
+    # included, so a second account approves what power.user creates.
 ]
 FORBIDDEN = ['base.group_system', 'base.group_erp_manager', 'alfia_security.group_alfia_security_officer']
 

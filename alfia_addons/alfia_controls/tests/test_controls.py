@@ -306,7 +306,9 @@ class TestApprovalLimits(ControlsCase):
         small = self.env['purchase.order'].with_user(self.manager).create({
             'partner_id': self.vendor.id, 'order_line': [Command.create({'product_id': self.feed.id, 'product_qty': 10, 'price_unit': 30})]})
         small.with_user(self.manager).button_confirm()
-        self.assertEqual(small.state, 'purchase', "within their own limit the exemption still applies, as before")
+        self.assertEqual(small.state, 'to approve', "the former exemption group no longer approves its own orders at all")
+        with self.assertRaises(UserError):
+            small.with_user(self.manager).button_approve()
         others = self._po(100, 30)
         others.with_user(self.buyer).button_confirm()
         others.with_user(self.manager).button_approve()

@@ -484,8 +484,8 @@ class TestSegregationOfDuties(OpsCase):
         contract.with_user(self.accountant).action_confirm()
         self.assertEqual(contract.state, 'confirmed')
 
-    def test_the_exemption_is_explicit_and_audited_through_groups(self):
+    def test_the_former_exemption_group_no_longer_approves_own_work(self):
         exempt = self._user('exempt', ['breeding_manager', 'sod_exempt'])
         plan = self.env['alfia.charge.plan'].with_user(exempt).create({'name': 'Emergency', 'target_kind': 'horse', 'horse_id': self.mare.id, 'product_id': self.service.id})
-        plan.with_user(exempt).action_approve()
-        self.assertEqual(plan.state, 'approved', "only members of the explicit emergency group may approve their own work")
+        with self.assertRaises(UserError):
+            plan.with_user(exempt).action_approve()     # owner decision 24 Nov 2026: nobody approves their own work

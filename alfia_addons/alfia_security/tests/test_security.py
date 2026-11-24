@@ -290,7 +290,7 @@ class TestSegregationOfDuties(AlfiaSecurityCase):
         exempt = self._make_user('exempt', groups=['purchase.group_purchase_user', 'alfia_security.group_alfia_sod_exempt', 'alfia_security.group_alfia_all_warehouses', 'alfia_security.group_alfia_all_locations'])
         po2 = self._po(exempt)
         po2.with_user(exempt).button_confirm()
-        self.assertEqual(po2.state, 'purchase')
+        self.assertEqual(po2.state, 'to approve', "the former exemption group no longer approves its own orders")
 
     def test_threshold_keeps_small_orders_simple(self):
         self.company.alfia_sod_threshold = 1000

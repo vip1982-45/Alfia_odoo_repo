@@ -39,7 +39,7 @@ class AlfiaHorseSale(models.Model):
         for sale in self:
             if sale.state != 'draft':
                 raise UserError(self.env._("Only a draft can be approved."))
-            if sale.created_by_id == self.env.user and not self.env.su and not self.env.user.has_group('alfia_security.group_alfia_sod_exempt'):
+            if sale.created_by_id == self.env.user and not self.env.su:
                 raise UserError(self.env._("You prepared this sale, so someone else must approve it."))
             with workflow():
                 sale.write({'state': 'approved', 'approved_by_id': self.env.user.id})

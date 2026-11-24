@@ -1,5 +1,4 @@
-"""Nobody approves their own time off, allocation or reimbursement. Members of the explicit emergency group
-(alfia_security.group_alfia_sod_exempt) are the only exception, as everywhere else in the system."""
+"""Nobody approves their own time off, allocation or reimbursement, as everywhere else in the system."""
 from odoo import api, models
 from odoo.exceptions import UserError
 
