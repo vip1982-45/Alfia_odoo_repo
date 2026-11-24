@@ -101,12 +101,22 @@ if 'alfia.quality.check' in env:
             'standard_price': 40.0, 'seller_ids': [(0, 0, {'partner_id': vendor.id, 'price': 40.0})] if vendor else []})
         made.append('product TEST QC vaccine')
     Limit = env['alfia.approval.limit'].sudo()
-    if not Limit.search_count([('document_type', '=', 'purchase')]):
-        for login, amount, unlimited in (('purchase.approver', 50000, False), ('power.user', 50000, False), ('finance', 0, True)):
-            user = Users.search([('login', '=', login)], limit=1)
-            if user:
-                Limit.create({'document_type': 'purchase', 'user_id': user.id, 'amount': amount, 'unlimited': unlimited})
-        made.append('purchase-order approval limits (purchase.approver and power.user 50,000 QAR; finance no limit)')
+    finance = Users.search([('login', '=', 'finance')], limit=1)
+    stale = Limit.search([('document_type', '=', 'purchase'), ('user_id', '=', finance.id), ('unlimited', '=', True)]) if finance else Limit
+    if stale:                                   # an earlier version of these fixtures gave finance an unused unlimited row
+        stale.unlink()
+    for login, amount in (('purchase.approver', 50000), ('power.user', 10000)):
+        user = Users.search([('login', '=', login)], limit=1)
+        if not user:
+            continue
+        row = Limit.search([('document_type', '=', 'purchase'), ('user_id', '=', user.id)], limit=1)
+        if not row:
+            Limit.create({'document_type': 'purchase', 'user_id': user.id, 'amount': amount})
+        elif row.amount != amount or row.unlimited:
+            row.write({'amount': amount, 'unlimited': False})
+        else:
+            continue
+        made.append(f'purchase-order approval limit for {login}: {amount:,} QAR')
 
 env.cr.commit()
 print('Retest fixtures: ' + ('; '.join(made) if made else 'already in place'))
