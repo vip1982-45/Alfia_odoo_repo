@@ -60,6 +60,15 @@ if [[ "${DIAGNOSE:-0}" == "1" ]]; then
   joblogs 120
   echo "Replicas of the latest run:"
   az containerapp job replica list -g "$RG" -n "$JOB" -o json 2>/dev/null | head -c 3000 || true
+  echo "The app's recent errors and file-store messages:"
+  cid=$(az monitor log-analytics workspace show -g "$RG" -n "$LAW" --query customerId -o tsv 2>/dev/null) || true
+  [[ -n "${cid:-}" ]] && az monitor log-analytics query -w "$cid" -t P2D --analytics-query \
+    "ContainerAppConsoleLogs_CL
+     | where column_ifexists('ContainerAppName_s','') == '$CAPP'
+     | extend L = column_ifexists('Log_s','')
+     | where L has_any ('_file_write', '_file_read', 'Traceback', 'ERROR', 'Error', 'upload_attachment', 'PermissionError', 'OSError')
+     | top 80 by TimeGenerated desc | order by TimeGenerated asc | project T=tostring(TimeGenerated), L" \
+    --query "[].join(' ', [T, L])" -o tsv || echo "   (could not read the app's logs)"
   exit 0
 fi
 
