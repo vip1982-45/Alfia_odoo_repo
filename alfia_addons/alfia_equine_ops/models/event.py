@@ -162,3 +162,31 @@ class AlfiaEventEntry(models.Model):
             raise AccessError(self.env._("Only a competition manager can reject entries."))
         with workflow():
             self.filtered(lambda r: r.state in ('pending', 'draft')).write({'state': 'rejected', 'decided_by_id': self.env.user.id})
+
+    def action_record_result(self):
+        """Record the result of an approved entry as a competition record linked to it (event, horse and date come
+        from the entry)."""
+        self.ensure_one()
+        if self.state != 'approved':
+            raise UserError(self.env._("Only an approved entry has a result to record."))
+        return {'type': 'ir.actions.act_window', 'res_model': 'alfia.competition', 'view_mode': 'form', 'target': 'current',
+                'context': {'default_entry_id': self.id, 'default_horse_id': self.horse_id.id, 'default_event': self.event_id.name,
+                            'default_date': self.event_id.date_start, 'default_rider_id': self.rider_id.id,
+                            'default_location': self.event_id.venue, 'default_discipline': self.event_id.discipline}}
+
+
+class AlfiaCompetitionEntryLink(models.Model):
+    _inherit = 'alfia.competition'
+
+    entry_id = fields.Many2one('alfia.event.entry', string='Event entry', index=True,
+                               domain="[('horse_id', '=', horse_id), ('state', '=', 'approved')]",
+                               help="The approved entry this result belongs to.")
+    event_id = fields.Many2one(related='entry_id.event_id', store=True, string='Event (linked)')
+
+    @api.constrains('entry_id', 'horse_id')
+    def _check_entry(self):
+        for rec in self.filtered('entry_id'):
+            if rec.entry_id.horse_id != rec.horse_id:
+                raise ValidationError(self.env._("The result's horse must be the horse of the entry."))
+            if rec.entry_id.state != 'approved':
+                raise ValidationError(self.env._("A result can only be recorded for an approved entry."))

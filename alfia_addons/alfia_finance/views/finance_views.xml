@@ -117,6 +117,10 @@
         <field name="model_id" ref="alfia_equine.model_alfia_horse"/>
         <field name="state">code</field>
         <field name="code">action = model.action_alfia_horse_costs()</field>
+        <!-- A report: who may read it runs it (without groups, Odoo would require write access to horses). -->
+        <field name="group_ids" eval="[(6, 0, [ref('account.group_account_invoice'), ref('account.group_account_readonly'),
+                                               ref('alfia_security.group_alfia_breeding_manager'), ref('alfia_security.group_alfia_training_manager'),
+                                               ref('alfia_security.group_alfia_vet_manager'), ref('alfia_security.group_alfia_security_auditor')])]"/>
     </record>
 
     <menuitem id="menu_alfia_trial_balance" name="Trial balance" parent="account.account_reports_legal_statements_menu" action="alfia_trial_balance_action" sequence="10"/>
@@ -154,6 +158,17 @@
             <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='purchase_line_id']" position="attributes">
                 <attribute name="groups">purchase.group_purchase_user,account.group_account_invoice</attribute>
             </xpath>
+        </field>
+    </record>
+    <!-- Finance sets the receipt tolerance on the company. -->
+    <record id="view_company_form_receipt_tolerance" model="ir.ui.view">
+        <field name="name">res.company.form.alfia.receipt.tolerance</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <field name="currency_id" position="after">
+                <field name="alfia_receipt_tolerance"/>
+            </field>
         </field>
     </record>
 </odoo>

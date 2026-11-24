@@ -1,1 +1,1 @@
-from . import company, horse, aged
+from . import company, horse, aged, controls

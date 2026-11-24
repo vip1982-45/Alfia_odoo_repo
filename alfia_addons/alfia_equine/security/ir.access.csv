@@ -222,3 +222,4 @@ scope_alfia_horse_read,Alfia site scope: alfia.horse (reading),alfia.horse,,r,"[
 acc_merge_bm,Merge horses,alfia.horse.merge,alfia_security.group_alfia_breeding_manager,crud,
 acc_merge_vm,Merge horses,alfia.horse.merge,alfia_security.group_alfia_vet_manager,crud,
 acc_merge_tm,Merge horses,alfia.horse.merge,alfia_security.group_alfia_training_manager,crud,
+acc_embryo_transfer_v,Transfer an embryo,alfia.embryo.transfer,alfia_security.group_alfia_vet_user,crud,

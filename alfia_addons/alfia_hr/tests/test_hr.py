@@ -245,3 +245,9 @@ class TestHrSecurityFindings(HrCase):
         wizard = self.env['hr.expense.approve.duplicate'].with_user(self.u_hr).create({'expense_ids': [Command.set(expense.ids)]})
         with self.assertRaises(UserError):
             wizard.action_approve()
+
+    def test_checklist_steps_never_go_to_nobody(self):
+        employee = self.env['hr.employee'].with_user(self.u_hr).create({'name': 'No manager, no user'})
+        steps = self.env['mail.activity'].search([('res_model', '=', 'hr.employee'), ('res_id', '=', employee.id)])
+        self.assertTrue(steps)
+        self.assertFalse(steps.filtered(lambda a: not a.user_id), "every onboarding step has an owner")

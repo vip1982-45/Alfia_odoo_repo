@@ -189,3 +189,27 @@ class TestRfpFixes(OpsCase):
             att = Attachment._upload_file(io.BytesIO(data), {'name': 'fallback.txt', 'res_model': 'alfia.lab.test', 'res_id': 0})
         self.assertEqual(att.raw.content, data)
         self.assertEqual(att.file_size, len(data))
+
+    # Business process master list, 24 Nov
+    def test_vet_transfers_a_stored_embryo_to_a_chosen_recipient(self):
+        embryo = self.env['alfia.embryo'].create({'donor_id': self.mare.id, 'sire_id': self.stallion.id, 'tank_id': self.tank.id})
+        embryo.with_user(self.vet).action_store()
+        recipient = self._pregnancy(mare=self.mare2)
+        wizard = self.env['alfia.embryo.transfer'].with_user(self.vet).create({'embryo_id': embryo.id, 'pregnancy_id': recipient.id})
+        wizard.action_confirm()
+        self.assertEqual((embryo.state, embryo.pregnancy_id), ('transferred', recipient))
+        self.assertEqual((recipient.mare_id, recipient.genetic_dam_id), (self.mare2, self.mare))
+
+    def test_result_is_linked_to_its_approved_entry(self):
+        event = self.env['alfia.event'].create({'name': 'Result show', 'date_start': fields.Date.today()})
+        entry = self.env['alfia.event.entry'].with_user(self.trainer).create({'event_id': event.id, 'horse_id': self.mare2.id})
+        entry.with_user(self.trainer).action_submit()
+        with self.assertRaises(UserError):
+            entry.with_user(self.train_mgr).action_record_result()       # not approved yet
+        entry.with_user(self.vet).action_vet_confirm()
+        entry.with_user(self.train_mgr).action_approve()
+        ctx = entry.with_user(self.train_mgr).action_record_result()['context']
+        result = self.env['alfia.competition'].with_user(self.train_mgr).with_context(ctx).create({'result': '2nd'})
+        self.assertEqual((result.entry_id, result.event_id, result.horse_id), (entry, event, self.mare2))
+        with self.assertRaises(ValidationError):
+            result.horse_id = self.mare

@@ -62,7 +62,7 @@ SPEC = [
     dict(model='alfia.event.entry', title='Event entries', menu='training', list=['event_id', 'horse_id', 'rider_id', 'vet_confirmed', 'state'], form=['event_id', 'horse_id', 'rider_id', 'vet_confirmed', 'decided_by_id', 'state'], locked=['vet_confirmed', 'decided_by_id', 'state'],
          long=['issues'], search=['horse_id', 'event_id'], scope='horse_id', chatter=True, status='state',
          buttons=[('action_check', 'Check rules', "state in ('approved','rejected')", ''), ('action_submit', 'Submit', "state != 'draft'", 'btn-primary'), ('action_vet_confirm', 'Vet confirms fitness', "state != 'pending'", ''),
-                  ('action_approve', 'Approve', "state != 'pending'", 'btn-primary'), ('action_reject', 'Reject', "state in ('approved','rejected')", '')], access=(ALL_HORSE, [T, V], [TM])),
+                  ('action_approve', 'Approve', "state != 'pending'", 'btn-primary'), ('action_reject', 'Reject', "state in ('approved','rejected')", ''), ('action_record_result', 'Record result', "state != 'approved'", '')], access=(ALL_HORSE, [T, V], [TM])),
     dict(model='alfia.asset', title='Fleet, trophies, library', menu='facilities', list=['name', 'kind', 'reference', 'responsible_id', 'next_service', 'state'],
          form=['name', 'kind', 'company_id', 'location_id', 'reference', 'responsible_id', 'horse_id', 'acquired', 'value', 'next_service', 'state', 'borrower_id', 'maintenance_by_id', 'released_by_id', 'active'],
          locked=['state', 'maintenance_by_id', 'released_by_id'], long=['repair_notes', 'notes'], search=['name', 'reference'], chatter=True, status='state',

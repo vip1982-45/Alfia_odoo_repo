@@ -91,4 +91,15 @@
             </xpath>
         </field>
     </record>
+    <!-- A competition result can be linked to the approved event entry it belongs to. -->
+    <record id="alfia_competition_view_form_entry" model="ir.ui.view">
+        <field name="name">alfia.competition.form.entry</field>
+        <field name="model">alfia.competition</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_competition_view_form"/>
+        <field name="arch" type="xml">
+            <field name="event" position="before">
+                <field name="entry_id" options="{'no_create': True}"/>
+            </field>
+        </field>
+    </record>
 </odoo>

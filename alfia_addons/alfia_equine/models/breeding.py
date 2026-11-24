@@ -644,6 +644,12 @@ class AlfiaEmbryo(models.Model):
         with workflow():
             self.state = 'discarded'
 
+    def action_open_transfer(self):
+        self.ensure_one()
+        _require_group(self.env, 'alfia_security.group_alfia_vet_user', self.env._("veterinary staff"))
+        return {'type': 'ir.actions.act_window', 'res_model': 'alfia.embryo.transfer', 'view_mode': 'form', 'target': 'new',
+                'context': {'default_embryo_id': self.id}}
+
     def action_transfer(self, pregnancy):
         """Place the embryo in a recipient's pregnancy: the recipient stays the carrier; the donor becomes the genetic dam."""
         _require_group(self.env, 'alfia_security.group_alfia_vet_user', self.env._("veterinary staff"))
@@ -754,3 +760,20 @@ class ProductCategorySemen(models.Model):
         if semen and not semen.alfia_lot_reader_group_ids:
             readers = self.env.ref('alfia_security.group_alfia_breeding_user') | self.env.ref('alfia_security.group_alfia_vet_user')
             semen.sudo().alfia_lot_reader_group_ids = [(6, 0, readers.ids)]
+
+
+class AlfiaEmbryoTransfer(models.TransientModel):
+    """The vet chooses the recipient: an active pregnancy of a different mare (the carrier); the donor stays the genetic dam."""
+    _name = 'alfia.embryo.transfer'
+    _description = 'Transfer an embryo to a recipient'
+
+    embryo_id = fields.Many2one('alfia.embryo', required=True, readonly=True)
+    donor_id = fields.Many2one(related='embryo_id.donor_id')
+    pregnancy_id = fields.Many2one('alfia.pregnancy', string='Recipient pregnancy', required=True,
+                                   domain="[('state', 'in', ('bred', 'pregnant')), ('mare_id', '!=', donor_id)]")
+    recipient_id = fields.Many2one(related='pregnancy_id.mare_id', string='Recipient (carrier)')
+
+    def action_confirm(self):
+        self.ensure_one()
+        self.embryo_id.action_transfer(self.pregnancy_id)
+        return {'type': 'ir.actions.act_window_close'}

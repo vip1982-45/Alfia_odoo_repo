@@ -111,7 +111,27 @@ for att in Attachment.with_context(active_test=False).search([('store_fname', '!
 if broken:
     done.append('%d broken empty stored file(s) removed; upload those files again' % broken)
 
-# 8. Last, as uninstalling reloads the registry: supplier and customer name lookup needs a paid online service (IAP)
+# 8. Goods are invoiced for what was delivered (services stay on ordered quantities).
+if 'invoice_policy' in env['product.template']._fields:
+    goods = env['product.template'].sudo().with_context(active_test=False).search([('type', '=', 'consu'), ('invoice_policy', '!=', 'delivery')])
+    if goods:
+        goods.write({'invoice_policy': 'delivery'})
+        done.append('%d goods product(s) now invoiced on delivered quantities' % len(goods))
+
+# 9. Onboarding/offboarding steps that went to nobody (the employee had no manager or user): give them to the
+#    employee's HR responsible, otherwise to an HR manager.
+hr_manager = env['res.users'].sudo().search([('group_ids', 'in', env.ref('hr.group_hr_manager').ids), ('share', '=', False),
+                                              ('id', '!=', env.ref('base.user_admin').id)], limit=1)
+loose = env['mail.activity'].sudo().search([('res_model', '=', 'hr.employee'), ('user_id', '=', False)])
+for act in loose:
+    emp = env['hr.employee'].sudo().with_context(active_test=False).browse(act.res_id).exists()
+    owner = (emp.hr_responsible_id if emp and 'hr_responsible_id' in emp._fields else False) or hr_manager
+    if owner:
+        act.user_id = owner
+if loose:
+    done.append('%d unassigned HR checklist step(s) given an owner' % len(loose))
+
+# 10. Last, as uninstalling reloads the registry: supplier and customer name lookup needs a paid online service (IAP)
 #    and failed with an access error.
 mod = env['ir.module.module'].sudo().search([('name', '=', 'partner_autocomplete'), ('state', '=', 'installed')])
 if mod:

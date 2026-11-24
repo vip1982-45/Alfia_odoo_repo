@@ -73,6 +73,16 @@ class AlfiaBreedingContract(models.Model):
         return vals
 
 
+class AlfiaHorseSale(models.Model):
+    _inherit = 'alfia.horse.sale'
+
+    def _alfia_invoice_line_vals(self, product, horse):
+        vals = super()._alfia_invoice_line_vals(product, horse)
+        if horse.analytic_account_id:
+            vals['analytic_distribution'] = {str(horse.analytic_account_id.id): 100}
+        return vals
+
+
 class AlfiaMedicineIssue(models.Model):
     _inherit = 'alfia.medicine.issue'
 

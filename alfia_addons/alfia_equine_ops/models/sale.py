@@ -75,11 +75,16 @@ class AlfiaHorseSale(models.Model):
                 product = self.env.ref('alfia_equine_ops.product_horse_sale')
                 invoice = self.env['account.move'].sudo().with_company(sale.company_id).create({
                     'move_type': 'out_invoice', 'partner_id': sale.buyer_id.id, 'invoice_date': sale.date,
-                    'invoice_line_ids': [Command.create({'product_id': product.id, 'name': self.env._("Horse: %s", horse.name), 'quantity': 1, 'price_unit': sale.price})]})
+                    'invoice_line_ids': [Command.create(sale._alfia_invoice_line_vals(product, horse))]})
                 with workflow():
                     sale.move_id = invoice
             with workflow():
                 sale.state = 'done'
+
+    def _alfia_invoice_line_vals(self, product, horse):
+        """The sale invoice line. Extended by alfia_finance to put the income on the horse's cost centre."""
+        self.ensure_one()
+        return {'product_id': product.id, 'name': self.env._("Horse: %s", horse.name), 'quantity': 1, 'price_unit': self.price}
 
     def action_cancel(self):
         if any(s.state == 'done' for s in self):

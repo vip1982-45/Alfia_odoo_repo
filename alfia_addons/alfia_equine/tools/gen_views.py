@@ -77,7 +77,8 @@ SPEC = [
          buttons=[('action_vet_confirm', 'Vet confirms birth', "state != 'draft'", 'btn-primary'), ('action_complete', 'Complete foal identity', "state != 'vet_confirmed'", 'btn-primary')], access=([V, B, S, AUD], [S, V, B], [BM])),
     dict(model='alfia.embryo', title='Embryos', menu='breeding', list=['name', 'donor_id', 'sire_id', 'flush_date', 'grade', 'state', 'tank_id'], form=['name', 'donor_id', 'sire_id', 'flush_date', 'stage', 'grade', 'state', 'tank_id', 'pregnancy_id'], locked=['state'],
          long=['notes'], search=['name', 'donor_id'], scope=('donor_id', 'tank_id'), chatter=True, status='state',
-         buttons=[('action_store', 'Freeze / store', "state != 'collected'", ''), ('action_discard', 'Discard', "state in ('transferred','discarded')", '')], access=([V, B, AUD], [V, B], [BM])),
+         buttons=[('action_store', 'Freeze / store', "state != 'collected'", ''), ('action_open_transfer', 'Transfer to recipient', "state not in ('collected','stored')", 'btn-primary'),
+                  ('action_discard', 'Discard', "state in ('transferred','discarded')", '')], access=([V, B, AUD], [V, B], [BM])),
     dict(model='alfia.semen.collection', title='Semen collections', menu='breeding', list=['date', 'name', 'stallion_id', 'doses', 'motility', 'concentration', 'tank_id', 'state'],
          form=['stallion_id', 'date', 'volume_ml', 'concentration', 'motility', 'morphology', 'doses', 'product_id', 'tank_id', 'state', 'lot_id', 'released_by_id'], locked=['state'], long=['notes'], search=['name', 'stallion_id'],
          scope=('stallion_id', 'tank_id'), chatter=True, status='state',
@@ -207,6 +208,7 @@ def main():
                 add(f'scope_{key}', f'Alfia site scope: {model}', model, '', 'crud', scope_domain(path))
     for g, gk in ((BM, 'bm'), (VM, 'vm'), (TM, 'tm')):
         add(f'acc_merge_{gk}', 'Merge horses', 'alfia.horse.merge', g, 'crud')
+    add('acc_embryo_transfer_v', 'Transfer an embryo', 'alfia.embryo.transfer', V, 'crud')
     open('security/ir.access.csv', 'w', newline='').writelines(csv_lines(rows))
 
 

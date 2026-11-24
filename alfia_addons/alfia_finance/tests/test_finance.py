@@ -264,6 +264,44 @@ class TestReportsAndCostAllocation(FinanceCase):
         self.assertTrue(self.env['purchase.bill.union'].with_user(self.ap_clerk).has_access('read'))
         self.assertTrue(self.env['sale.advance.payment.inv'].with_user(self.ar_clerk).has_access('create'))
 
+    def _po_received(self, ordered, received, user):
+        po = self.env['purchase.order'].with_user(self.buyer).create({'partner_id': self.vendor.id, 'order_line': [Command.create(
+            {'product_id': self.oats.id, 'product_qty': ordered, 'price_unit': 1})]})
+        po.button_confirm()
+        if po.state != 'purchase':
+            po.with_user(self.purchase_approver).button_approve()
+        receipt = po.picking_ids[:1].with_user(user)
+        receipt.move_ids.quantity = received
+        receipt.move_ids.picked = True
+        receipt.with_context(skip_backorder=True, cancel_backorder=True).button_validate()
+        return po, receipt
+
+    def test_receipt_above_tolerance_needs_a_purchase_manager(self):
+        self.company.alfia_receipt_tolerance = 5.0
+        with self.assertRaisesRegex(UserError, 'tolerance'):
+            self._po_received(2, 3, self.storekeeper)
+        po, receipt = self._po_received(20, 21, self.storekeeper)          # 5% over: within tolerance
+        self.assertEqual(receipt.state, 'done')
+        po, receipt = self._po_received(2, 3, self.purchase_approver)     # a purchase manager may accept the excess
+        self.assertEqual(receipt.state, 'done')
+        self.assertIn('accepted a receipt', ' '.join(po.message_ids.mapped('body')))
+
+    def test_goods_are_invoiced_on_delivered_quantities(self):
+        goods = self.env['product.product'].create({'name': 'Goods policy (test)', 'type': 'consu', 'is_storable': True})
+        service = self.env['product.product'].create({'name': 'Service policy (test)', 'type': 'service'})
+        self.assertEqual(goods.invoice_policy, 'delivery')
+        self.assertNotEqual(service.invoice_policy, 'delivery')
+
+    def test_horse_sale_income_lands_on_the_horse(self):
+        sale = self.env['alfia.horse.sale'].create({'horse_id': self.mare2.id, 'buyer_id': self.customer.id, 'price': 500})
+        sale.action_approve()
+        sale.action_complete()
+        self.assertEqual(sale.move_id.invoice_line_ids.analytic_distribution, {str(self.mare2.analytic_account_id.id): 100})
+
+    def test_accounting_staff_run_the_horse_income_report(self):
+        action = self.env.ref('alfia_finance.alfia_horse_costs_server').with_user(self.ap_clerk).run()
+        self.assertEqual(action['res_model'], 'account.analytic.line')
+
     def test_aged_receivables(self):
         invoice = self.env['account.move'].create({
             'move_type': 'out_invoice', 'partner_id': self.customer.id, 'invoice_date': fields.Date.today() - relativedelta(days=50),

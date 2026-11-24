@@ -539,7 +539,7 @@
         <field name="name">alfia.embryo.form</field>
         <field name="model">alfia.embryo</field>
         <field name="arch" type="xml">
-            <form><header><button name="action_store" string="Freeze / store" type="object" class="" invisible="state != 'collected'"/><button name="action_discard" string="Discard" type="object" class="" invisible="state in ('transferred','discarded')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="donor_id"/><field name="sire_id"/><field name="flush_date"/><field name="stage"/></group><group><field name="grade"/><field name="state" readonly="1"/><field name="tank_id"/><field name="pregnancy_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
+            <form><header><button name="action_store" string="Freeze / store" type="object" class="" invisible="state != 'collected'"/><button name="action_open_transfer" string="Transfer to recipient" type="object" class="btn-primary" invisible="state not in ('collected','stored')"/><button name="action_discard" string="Discard" type="object" class="" invisible="state in ('transferred','discarded')"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="donor_id"/><field name="sire_id"/><field name="flush_date"/><field name="stage"/></group><group><field name="grade"/><field name="state" readonly="1"/><field name="tank_id"/><field name="pregnancy_id"/></group></group><group><field name="notes"/></group></sheet><chatter/></form>
         </field>
     </record>
     <record id="alfia_embryo_view_search" model="ir.ui.view">
