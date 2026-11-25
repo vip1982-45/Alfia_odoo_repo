@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 16:05+0000\n"
-"PO-Revision-Date: 2026-11-25 16:05+0000\n"
+"POT-Creation-Date: 2026-11-25 17:12+0000\n"
+"PO-Revision-Date: 2026-11-25 17:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -95,6 +95,12 @@ msgid ""
 msgstr ""
 
 #. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/horse_profit.py:0
+msgid "A transport cost cannot be negative."
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.constraint,message:alfia_livestock.constraint_alfia_livestock_valuation_value_positive
 msgid "A value cannot be negative."
 msgstr ""
@@ -102,6 +108,11 @@ msgstr ""
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__account_id
 msgid "Account"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__source__accounting
+msgid "Accounting"
 msgstr ""
 
 #. module: alfia_livestock
@@ -274,9 +285,19 @@ msgid "Block"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__services
+msgid "Boarding and services"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_acquisition_kind__birth
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__acquisition_kind__birth
 msgid "Born on the farm"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__breeding
+msgid "Breeding contracts and semen"
 msgstr ""
 
 #. module: alfia_livestock
@@ -369,6 +390,12 @@ msgid "Carrying value"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__category
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
+msgid "Category"
+msgstr ""
+
+#. module: alfia_livestock
 #. odoo-python
 #: code:addons/alfia_livestock/models/livestock.py:0
 msgid ""
@@ -419,6 +446,7 @@ msgstr ""
 #: model:ir.model,name:alfia_livestock.model_res_company
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__company_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__company_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__company_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__company_id
 msgid "Company"
 msgstr ""
@@ -434,6 +462,7 @@ msgid "Control"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__cost
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_valuation__method__cost
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_register_view_list
 msgid "Cost"
@@ -452,6 +481,27 @@ msgstr ""
 #. module: alfia_livestock
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_valuation__method__cost_impairment
 msgid "Cost less impairment"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_list
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
+msgid "Costs"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.actions.act_window,help:alfia_livestock.alfia_horse_profit_action
+msgid ""
+"Costs and income come from invoices and bills allocated to a horse (the Horse column on their lines), medicine\n"
+"               issued from stock, boarding charges, breeding contracts, semen sales and horse sales, plus the vet, dental,\n"
+"               farrier and transport costs the stable records, feed from feed plans and the purchase price."
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_horse__alfia_profit_cost_per_day
+msgid ""
+"Costs other than the purchase price, divided by the days the horse has been "
+"with us."
 msgstr ""
 
 #. module: alfia_livestock
@@ -481,6 +531,8 @@ msgstr ""
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_company_currency_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_movement__alfia_currency_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__currency_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__currency_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__currency_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__currency_id
@@ -494,6 +546,7 @@ msgid "Currency basis"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__date
 msgid "Date"
 msgstr ""
@@ -506,6 +559,21 @@ msgstr ""
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__date_to
 msgid "Date To"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_profit_days
+msgid "Days with us"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__dental
+msgid "Dental"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_odontology
+msgid "Dental exam"
 msgstr ""
 
 #. module: alfia_livestock
@@ -523,22 +591,44 @@ msgid ""
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__name
+msgid "Description"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_register_view_list
+msgid "Details"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__difference
 msgid "Difference"
 msgstr ""
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_account_move__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override_mixin__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_care_cost_bill__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_farrier_visit__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_health_record__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_line_mixin__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_movement__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_odontology__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_vet_visit__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order_line__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_res_company__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_stock_move__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -597,6 +687,26 @@ msgid "Fair value less costs to sell"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__farrier
+msgid "Farrier"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_farrier_visit
+msgid "Farrier visit"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__feed
+msgid "Feed (feed plan)"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__source__plan
+msgid "Feed plan"
+msgstr ""
+
+#. module: alfia_livestock
 #. odoo-python
 #: code:addons/alfia_livestock/models/livestock.py:0
 msgid "Foal of %s"
@@ -625,10 +735,20 @@ msgid "Forecast"
 msgstr ""
 
 #. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
+msgid "From accounting"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__has_message
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__has_message
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__has_message
 msgid "Has Message"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_health_record
+msgid "Health record"
 msgstr ""
 
 #. module: alfia_livestock
@@ -639,10 +759,35 @@ msgstr ""
 
 #. module: alfia_livestock
 #: model:ir.model,name:alfia_livestock.model_alfia_horse
+#: model:ir.model.fields,field_description:alfia_livestock.field_account_move_line__alfia_horse_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_line_mixin__alfia_horse_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__horse_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__horse_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__horse_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__horse_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order_line__alfia_horse_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_sale_order_line__alfia_horse_id
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
 msgid "Horse"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_horse_movement
+msgid "Horse movement"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_horse_profit
+msgid "Horse profit and loss line"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.actions.act_window,name:alfia_livestock.alfia_horse_profit_action
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_horse_profit
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_horse_profit_stud
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_graph
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_pivot
+msgid "Horse profitability"
 msgstr ""
 
 #. module: alfia_livestock
@@ -654,16 +799,28 @@ msgstr ""
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_account_move__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_account_move_line__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override_mixin__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_care_cost_bill__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_farrier_visit__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_health_record__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_line_mixin__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_movement__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_odontology__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_vet_visit__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order_line__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_res_company__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_sale_order_line__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_stock_move__id
 msgid "ID"
 msgstr ""
 
@@ -685,6 +842,18 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__income
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_list
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
+msgid "Income"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_horse_profit__amount
+msgid "Income is positive, costs are negative."
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_is_follower
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_is_follower
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_is_follower
@@ -694,6 +863,11 @@ msgstr ""
 #. module: alfia_livestock
 #: model:ir.model,name:alfia_livestock.model_account_move
 msgid "Journal Entry"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_account_move_line
+msgid "Journal Item"
 msgstr ""
 
 #. module: alfia_livestock
@@ -735,6 +909,11 @@ msgid "Line"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_horse_line_mixin
+msgid "Line allocated to a horse"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_res_company__alfia_livestock_account_id
 msgid "Livestock (biological assets) account"
 msgstr ""
@@ -766,6 +945,7 @@ msgstr ""
 
 #. module: alfia_livestock
 #: model:ir.actions.act_window,name:alfia_livestock.alfia_livestock_register_action
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__source__register
 #: model:ir.ui.menu,name:alfia_livestock.menu_alfia_livestock_register
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_form_livestock
 msgid "Livestock register"
@@ -812,6 +992,11 @@ msgid "Livestock valuations"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__stock
+msgid "Medicine and supplies from stock"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_has_error
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_has_error
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_has_error
@@ -831,9 +1016,20 @@ msgid "Method"
 msgstr ""
 
 #. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
+msgid "Month"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__name
 msgid "Name"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_profit_net
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_list
+msgid "Net result"
 msgstr ""
 
 #. module: alfia_livestock
@@ -845,6 +1041,16 @@ msgstr ""
 #. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
 msgid "New version"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.actions.act_window,help:alfia_livestock.alfia_horse_profit_action
+msgid "No costs or income for any horse yet"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
+msgid "Not in accounting yet"
 msgstr ""
 
 #. module: alfia_livestock
@@ -947,6 +1153,11 @@ msgid "Open purchase orders"
 msgstr ""
 
 #. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_list
+msgid "Open the record"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_acquisition_kind__other
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__acquisition_kind__other
 msgid "Other"
@@ -1003,8 +1214,30 @@ msgid "Previous Value"
 msgstr ""
 
 #. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_form_profit
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_horse_form_profit
+msgid "Profit and loss"
+msgstr ""
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/horse_profit.py:0
+msgid "Profit and loss: %s"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model,name:alfia_livestock.model_purchase_order
 msgid "Purchase Order"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__purchase
+msgid "Purchase of the horse"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1099,18 +1332,36 @@ msgstr ""
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__res_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__res_id
 msgid "Res"
 msgstr ""
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__res_model
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__res_model
 msgid "Res Model"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__amount
+msgid "Result"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.actions.act_window,name:alfia_livestock.alfia_horse_profit_register_action
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_horse_result
+msgid "Result per horse"
 msgstr ""
 
 #. module: alfia_livestock
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_livestock_class__retired
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__livestock_class__retired
 msgid "Retired / companion"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_profit_cost_per_day
+msgid "Running cost per day"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1121,8 +1372,24 @@ msgid "SMS Delivery error"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__sale
+msgid "Sale of the horse"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_classify_view_form
 msgid "Save"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_form_profit
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_horse_form_profit
+msgid "See every cost and income"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1135,9 +1402,29 @@ msgid ""
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__source
+msgid "Source"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_care_cost_bill
+msgid "Stable cost that a supplier bill may cover"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__source__stable
+msgid "Stable records"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__state
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__state
 msgid "State"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_stock_move
+msgid "Stock Move"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1152,10 +1439,74 @@ msgid "Superseded"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__bills
+msgid "Supplier bills and other costs"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_care_cost_bill__alfia_bill_ref
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_farrier_visit__alfia_bill_ref
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_health_record__alfia_bill_ref
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_movement__alfia_bill_ref
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_odontology__alfia_bill_ref
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_vet_visit__alfia_bill_ref
+msgid "Supplier invoice no."
+msgstr ""
+
+#. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_override_view_form
 msgid ""
 "The document may go over its budget once this is recorded. The reason is "
 "kept on the document."
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_account_move_line__alfia_horse_id
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_horse_line_mixin__alfia_horse_id
+#: model:ir.model.fields,help:alfia_livestock.field_purchase_order_line__alfia_horse_id
+#: model:ir.model.fields,help:alfia_livestock.field_sale_order_line__alfia_horse_id
+msgid ""
+"The horse this line is for: its amount counts in the horse's profit and "
+"loss."
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_care_cost_bill__alfia_bill_ref
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_farrier_visit__alfia_bill_ref
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_health_record__alfia_bill_ref
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_horse_movement__alfia_bill_ref
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_odontology__alfia_bill_ref
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_vet_visit__alfia_bill_ref
+msgid ""
+"The supplier's invoice number for this cost, if they bill it. Once finance "
+"posts that supplier bill (with this number as its reference), the horse's "
+"profit counts the bill line instead of the cost recorded here, so the cost "
+"is not counted twice. Allocate the bill line to the horse."
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
+msgid "This year"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_profit_cost
+msgid "Total costs"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_profit_income
+msgid "Total income"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__transport
+msgid "Transport and movements"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_movement__alfia_cost
+msgid "Transport cost"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1208,7 +1559,18 @@ msgstr ""
 #: model:ir.module.module,summary:base.module_alfia_livestock
 msgid ""
 "Versioned budgets with commitments, actuals and control rules; livestock "
-"register, classification and approved valuations posted to the ledger"
+"register, classification and approved valuations posted to the ledger; "
+"profit and loss per horse"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__vet
+msgid "Vet and health"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_vet_visit
+msgid "Vet visit"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1228,6 +1590,13 @@ msgid ""
 "What happens when a purchase order or a bill would take a line over its "
 "budget: nothing (report only), a warning on the document, or a block that a "
 "finance manager can override with a recorded reason."
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_horse_movement__alfia_cost
+msgid ""
+"What this movement cost (transport, export papers, escort). Counted in the "
+"horse's profit."
 msgstr ""
 
 #. module: alfia_livestock

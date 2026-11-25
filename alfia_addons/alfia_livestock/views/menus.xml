@@ -5,4 +5,9 @@
     <menuitem id="menu_alfia_budget_report" name="Budget vs actual" parent="menu_alfia_livestock_root" action="alfia_budget_line_action" sequence="20"/>
     <menuitem id="menu_alfia_livestock_register" name="Livestock register" parent="menu_alfia_livestock_root" action="alfia_livestock_register_action" sequence="30"/>
     <menuitem id="menu_alfia_livestock_valuations" name="Livestock valuations" parent="menu_alfia_livestock_root" action="alfia_livestock_valuation_action" sequence="40"/>
+    <menuitem id="menu_alfia_horse_profit" name="Horse profitability" parent="menu_alfia_livestock_root" action="alfia_horse_profit_action" sequence="50"/>
+    <menuitem id="menu_alfia_horse_result" name="Result per horse" parent="menu_alfia_livestock_root" action="alfia_horse_profit_register_action" sequence="55"/>
+    <!-- The stud's managers see the same in the Stud app's reports. -->
+    <menuitem id="menu_alfia_horse_profit_stud" name="Horse profitability" parent="alfia_equine_ops.menu_ops_reports" action="alfia_horse_profit_action"
+              sequence="400" groups="alfia_security.group_alfia_breeding_manager,alfia_security.group_alfia_security_auditor"/>
 </odoo>

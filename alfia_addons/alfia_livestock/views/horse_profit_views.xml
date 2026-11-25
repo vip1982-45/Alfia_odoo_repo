@@ -1,0 +1,224 @@
+<odoo>
+    <!-- Profit and loss lines -->
+    <record id="alfia_horse_profit_view_list" model="ir.ui.view">
+        <field name="name">alfia.horse.profit.list</field>
+        <field name="model">alfia.horse.profit</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0" decoration-success="amount &gt; 0" decoration-danger="amount &lt; 0">
+                <field name="date"/>
+                <field name="horse_id"/>
+                <field name="category"/>
+                <field name="name"/>
+                <field name="source" optional="show"/>
+                <field name="cost" sum="Costs"/>
+                <field name="income" sum="Income"/>
+                <field name="amount" sum="Net result"/>
+                <field name="currency_id" column_invisible="1"/>
+                <button name="action_open_source" type="object" icon="fa-external-link" title="Open the record"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_horse_profit_view_pivot" model="ir.ui.view">
+        <field name="name">alfia.horse.profit.pivot</field>
+        <field name="model">alfia.horse.profit</field>
+        <field name="arch" type="xml">
+            <pivot string="Horse profitability" sample="1">
+                <field name="horse_id" type="row"/>
+                <field name="category" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="alfia_horse_profit_view_graph" model="ir.ui.view">
+        <field name="name">alfia.horse.profit.graph</field>
+        <field name="model">alfia.horse.profit</field>
+        <field name="arch" type="xml">
+            <graph string="Horse profitability" type="bar" stacked="1">
+                <field name="horse_id"/>
+                <field name="category"/>
+                <field name="amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    <record id="alfia_horse_profit_view_search" model="ir.ui.view">
+        <field name="name">alfia.horse.profit.search</field>
+        <field name="model">alfia.horse.profit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="horse_id"/>
+                <field name="name"/>
+                <filter name="costs" string="Costs" domain="[('amount', '&lt;', 0)]"/>
+                <filter name="incomes" string="Income" domain="[('amount', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="from_accounting" string="From accounting" domain="[('source', '=', 'accounting')]"/>
+                <filter name="from_stable" string="Not in accounting yet" domain="[('source', 'in', ('stable', 'plan', 'register'))]"/>
+                <separator/>
+                <filter name="this_year" string="This year" date="date" default_period="year"/>
+                <group>
+                    <filter name="group_horse" string="Horse" context="{'group_by': 'horse_id'}"/>
+                    <filter name="group_category" string="Category" context="{'group_by': 'category'}"/>
+                    <filter name="group_month" string="Month" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="alfia_horse_profit_action" model="ir.actions.act_window">
+        <field name="name">Horse profitability</field>
+        <field name="res_model">alfia.horse.profit</field>
+        <field name="view_mode">pivot,list,graph</field>
+        <field name="context">{'pivot_measures': ['cost', 'income', 'amount']}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No costs or income for any horse yet</p>
+            <p>Costs and income come from invoices and bills allocated to a horse (the Horse column on their lines), medicine
+               issued from stock, boarding charges, breeding contracts, semen sales and horse sales, plus the vet, dental,
+               farrier and transport costs the stable records, feed from feed plans and the purchase price.</p>
+        </field>
+    </record>
+
+    <!-- Horse register list with the result per horse -->
+    <record id="alfia_horse_profit_register_view_list" model="ir.ui.view">
+        <field name="name">alfia.horse.profit.register</field>
+        <field name="model">alfia.horse</field>
+        <field name="priority">91</field>
+        <field name="arch" type="xml">
+            <list create="0">
+                <field name="name"/><field name="sex"/><field name="status"/>
+                <field name="alfia_profit_days"/>
+                <field name="alfia_profit_cost"/><field name="alfia_profit_income"/>
+                <field name="alfia_profit_net" decoration-success="alfia_profit_net &gt; 0" decoration-danger="alfia_profit_net &lt; 0"/>
+                <field name="alfia_profit_cost_per_day"/>
+                <field name="alfia_company_currency_id" column_invisible="1"/>
+                <button name="action_alfia_horse_profit" type="object" string="Details" icon="fa-line-chart"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_horse_profit_register_action" model="ir.actions.act_window">
+        <field name="name">Result per horse</field>
+        <field name="res_model">alfia.horse</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="alfia_horse_profit_register_view_list"/>
+        <field name="context">{'form_view_ref': 'alfia_livestock.alfia_livestock_horse_form'}</field>
+    </record>
+
+    <!-- On the horse: the result in the header and a Profit button -->
+    <record id="alfia_horse_form_profit" model="ir.ui.view">
+        <field name="name">alfia.horse.form.profit</field>
+        <field name="model">alfia.horse</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_horse_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Profit and loss" name="alfia_profit"
+                      groups="account.group_account_user,account.group_account_manager,alfia_security.group_alfia_security_auditor,alfia_security.group_alfia_breeding_manager">
+                    <group>
+                        <group>
+                            <field name="alfia_profit_cost"/><field name="alfia_profit_income"/>
+                            <field name="alfia_profit_net" decoration-success="alfia_profit_net &gt; 0" decoration-danger="alfia_profit_net &lt; 0"/>
+                        </group>
+                        <group>
+                            <field name="alfia_profit_days"/><field name="alfia_profit_cost_per_day"/>
+                            <field name="alfia_company_currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <button name="action_alfia_horse_profit" type="object" string="See every cost and income" class="btn-secondary"
+                            icon="fa-line-chart"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="alfia_livestock_horse_form_profit" model="ir.ui.view">
+        <field name="name">alfia.horse.livestock.form.profit</field>
+        <field name="model">alfia.horse</field>
+        <field name="inherit_id" ref="alfia_livestock_horse_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Profit and loss" name="alfia_profit">
+                    <group>
+                        <group><field name="alfia_profit_cost"/><field name="alfia_profit_income"/><field name="alfia_profit_net"/></group>
+                        <group><field name="alfia_profit_days"/><field name="alfia_profit_cost_per_day"/></group>
+                    </group>
+                    <button name="action_alfia_horse_profit" type="object" string="See every cost and income" class="btn-secondary"
+                            icon="fa-line-chart"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Costs recorded by the stable: the transport cost on movements; the supplier invoice number on movements and care records -->
+    <record id="alfia_movement_form_cost" model="ir.ui.view">
+        <field name="name">alfia.horse.movement.form.cost</field>
+        <field name="model">alfia.horse.movement</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_horse_movement_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='reason']" position="after">
+                <field name="alfia_cost"/>
+                <field name="alfia_currency_id" invisible="1"/>
+                <field name="alfia_bill_ref"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="alfia_health_record_view_form_bill" model="ir.ui.view">
+        <field name="name">alfia.health.record.form.bill</field>
+        <field name="model">alfia.health.record</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_health_record_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='cost']" position="after"><field name="alfia_bill_ref"/></xpath>
+        </field>
+    </record>
+    <record id="alfia_vet_visit_view_form_bill" model="ir.ui.view">
+        <field name="name">alfia.vet.visit.form.bill</field>
+        <field name="model">alfia.vet.visit</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_vet_visit_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='cost']" position="after"><field name="alfia_bill_ref"/></xpath>
+        </field>
+    </record>
+    <record id="alfia_odontology_view_form_bill" model="ir.ui.view">
+        <field name="name">alfia.odontology.form.bill</field>
+        <field name="model">alfia.odontology</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_odontology_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='cost']" position="after"><field name="alfia_bill_ref"/></xpath>
+        </field>
+    </record>
+    <record id="alfia_farrier_visit_view_form_bill" model="ir.ui.view">
+        <field name="name">alfia.farrier.visit.form.bill</field>
+        <field name="model">alfia.farrier.visit</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_farrier_visit_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='cost']" position="after"><field name="alfia_bill_ref"/></xpath>
+        </field>
+    </record>
+
+    <!-- The Horse column on sale, purchase and invoice lines -->
+    <record id="alfia_sale_order_form_horse" model="ir.ui.view">
+        <field name="name">sale.order.form.alfia.horse</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/column[@name='product_and_description']" position="after">
+                <field name="alfia_horse_id" optional="show" options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="alfia_purchase_order_form_horse" model="ir.ui.view">
+        <field name="name">purchase.order.form.alfia.horse</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='date_planned']" position="before">
+                <field name="alfia_horse_id" optional="show" options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="alfia_move_form_horse" model="ir.ui.view">
+        <field name="name">account.move.form.alfia.horse</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='quantity']" position="before">
+                <field name="alfia_horse_id" optional="show" options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

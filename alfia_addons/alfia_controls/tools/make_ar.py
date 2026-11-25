@@ -425,7 +425,7 @@ for entry in pot:
 po.save(OUT)
 print(f'{len(po)} translated, {len(missing)} missing, {len(bad)} placeholder mismatches')
 for m in missing:
-    print('MISSING:', m[:100])
+    print('MISSING:', m)
 for b in bad:
     print('PLACEHOLDER:', b[:100])
 sys.exit(1 if (missing or bad) else 0)
