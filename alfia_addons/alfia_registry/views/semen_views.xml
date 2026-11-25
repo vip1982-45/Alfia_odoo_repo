@@ -1,0 +1,84 @@
+<odoo>
+    <record id="alfia_location_form_external_centre" model="ir.ui.view">
+        <field name="name">stock.location.form.alfia.centre</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='usage']" position="after">
+                <field name="alfia_external_centre_id"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="alfia_semen_statement_view_list" model="ir.ui.view">
+        <field name="name">alfia.semen.statement.list</field>
+        <field name="model">alfia.semen.statement</field>
+        <field name="arch" type="xml">
+            <list create="0">
+                <field name="name"/><field name="centre_id"/><field name="location_id" optional="show"/><field name="statement_date"/>
+                <field name="ok_count"/><field name="exception_count" decoration-danger="exception_count &gt; 0"/>
+                <field name="imported_by_id" optional="show"/><field name="posted_by_id" optional="show"/><field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_semen_statement_view_form" model="ir.ui.view">
+        <field name="name">alfia.semen.statement.form</field>
+        <field name="model">alfia.semen.statement</field>
+        <field name="arch" type="xml">
+            <form create="0">
+                <header>
+                    <button name="action_post" string="Post" type="object" class="btn-primary" invisible="state != 'checked'"
+                            confirm="Used and shipped straws on OK lines leave the centre's stock. Lines in exception are not posted. Continue?"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state != 'checked'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <h1><field name="name" readonly="1"/></h1>
+                    <group>
+                        <group><field name="centre_id"/><field name="location_id" readonly="1"/><field name="statement_date" readonly="1"/><field name="filename"/></group>
+                        <group><field name="ok_count"/><field name="exception_count"/><field name="imported_by_id"/><field name="posted_by_id"/><field name="posted_date"/></group>
+                    </group>
+                    <field name="line_ids">
+                        <list editable="bottom" create="0" delete="0" decoration-danger="status == 'exception'" decoration-muted="status == 'duplicate'"
+                              decoration-warning="status == 'accepted'">
+                            <field name="row" readonly="1"/><field name="raw_date" readonly="1"/><field name="batch" readonly="1"/><field name="lot_id" readonly="1"/>
+                            <field name="movement" readonly="1"/><field name="quantity" readonly="1"/><field name="reference" readonly="1"/>
+                            <field name="status" readonly="1"/><field name="message" readonly="1"/><field name="resolution"/><field name="move_id" readonly="1" optional="hide"/>
+                            <button name="action_accept_exception" string="Accept" type="object" icon="fa-check" invisible="status != 'exception'"/>
+                        </list>
+                    </field>
+                    <p class="text-muted">The source file is attached below, in the log.</p>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_semen_statement_action" model="ir.actions.act_window">
+        <field name="name">External semen statements</field>
+        <field name="res_model">alfia.semen.statement</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html"><p>Import a centre's statement (Breeding › Import centre statement). Mark a stock location as an
+            external centre (Inventory › Configuration › Locations) and ship straws to it with ordinary transfers.</p></field>
+    </record>
+    <record id="alfia_semen_import_view_form" model="ir.ui.view">
+        <field name="name">alfia.semen.import.form</field>
+        <field name="model">alfia.semen.import</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>A CSV from the centre with the columns <b>Date</b>, <b>Batch</b>, <b>Movement</b> (received, used, shipped, balance)
+                    and <b>Quantity</b>, and optionally <b>Reference</b> (for example the mare). The same file cannot be imported twice,
+                    and lines already posted from an earlier statement are marked as duplicates.</p>
+                <group><field name="location_id"/><field name="statement_date"/><field name="file" filename="filename"/><field name="filename" invisible="1"/></group>
+                <footer>
+                    <button name="action_import" string="Import and check" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_semen_import_action" model="ir.actions.act_window">
+        <field name="name">Import centre statement</field>
+        <field name="res_model">alfia.semen.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

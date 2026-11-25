@@ -128,5 +128,41 @@ if 'alfia.quality.check' in env:
             continue
         made.append(f'purchase-order approval limit for {login}: {amount:,} QAR')
 
+
+# Livestock and registry modules: accounts for livestock valuations, and an external semen centre holding TEST straws.
+if 'alfia.livestock.valuation' in env:
+    company = env.company
+    Acc = env['account.account'].sudo()
+
+    def account(code, name, kind):
+        acc = Acc.search([('code', '=', code), ('company_ids', 'in', company.id)], limit=1)
+        return acc or Acc.create({'code': code, 'name': name, 'account_type': kind})
+    if not company.alfia_livestock_account_id:
+        company.sudo().write({
+            'alfia_livestock_account_id': account('100990', 'TEST Livestock (biological assets)', 'asset_non_current').id,
+            'alfia_livestock_gain_account_id': account('400990', 'TEST Livestock revaluation gain', 'income_other').id,
+            'alfia_livestock_loss_account_id': account('500990', 'TEST Livestock revaluation loss', 'expense').id,
+            'alfia_livestock_journal_id': env['account.journal'].sudo().search([('type', '=', 'general'), ('company_id', '=', company.id)], limit=1).id})
+        made.append('livestock accounts 100990 / 400990 / 500990 on the company')
+if 'alfia.semen.statement' in env and wh:
+    Partner = env['res.partner'].sudo()
+    centre_partner = Partner.search([('name', '=', 'TEST European semen centre')], limit=1) or Partner.create({'name': 'TEST European semen centre'})
+    centre = Loc.search([('name', '=', 'TEST European semen centre'), ('alfia_external_centre_id', '!=', False)], limit=1)
+    if not centre:
+        centre = Loc.create({'name': 'TEST European semen centre', 'usage': 'internal', 'location_id': wh.view_location_id.id,
+                             'alfia_external_centre_id': centre_partner.id})
+        made.append('external semen centre location TEST European semen centre')
+    semen = env.ref('alfia_equine.product_frozen_semen', raise_if_not_found=False)
+    if semen and not env['stock.lot'].sudo().search([('name', '=', 'TEST-EXT-1')], limit=1):
+        lot = env['stock.lot'].sudo().create({'name': 'TEST-EXT-1', 'product_id': semen.id, 'company_id': env.company.id})
+        source = env['stock.location'].sudo().search([('usage', '=', 'inventory'), ('company_id', 'in', (False, env.company.id))], limit=1)
+        move = env['stock.move'].sudo().create({'product_id': semen.id, 'product_uom_qty': 10, 'uom_id': semen.uom_id.id,
+                                                'location_id': source.id, 'location_dest_id': centre.id, 'origin': 'TEST shipment to centre'})
+        move._action_confirm()
+        env['stock.move.line'].sudo().create({'move_id': move.id, 'product_id': semen.id, 'lot_id': lot.id, 'quantity': 10,
+                                              'location_id': source.id, 'location_dest_id': centre.id, 'picked': True})
+        move._action_done()
+        made.append('10 straws of batch TEST-EXT-1 at the centre')
+
 env.cr.commit()
 print('Retest fixtures: ' + ('; '.join(made) if made else 'already in place'))

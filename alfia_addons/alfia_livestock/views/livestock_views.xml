@@ -1,0 +1,202 @@
+<odoo>
+    <record id="alfia_livestock_classify_view_form" model="ir.ui.view">
+        <field name="name">alfia.livestock.classify.form</field>
+        <field name="model">alfia.livestock.classify</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group><field name="horse_id" readonly="1"/><field name="livestock_class"/><field name="note"/></group>
+                    <group><field name="acquisition_kind"/><field name="acquisition_date"/><field name="acquisition_cost"/>
+                        <field name="currency_id" invisible="1"/></group>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Save" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_livestock_classify_action" model="ir.actions.act_window">
+        <field name="name">Classify in the livestock register</field>
+        <field name="res_model">alfia.livestock.classify</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record id="alfia_horse_form_livestock" model="ir.ui.view">
+        <field name="name">alfia.horse.form.livestock</field>
+        <field name="model">alfia.horse</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_horse_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Livestock register" name="alfia_livestock" groups="account.group_account_user,account.group_account_manager,alfia_security.group_alfia_security_auditor">
+                    <div class="mb-2">
+                        <button name="%(alfia_livestock_classify_action)d" string="Classify" type="action" class="btn-secondary"
+                                context="{'active_id': id}" groups="account.group_account_user,account.group_account_manager"/>
+                        <button name="action_alfia_new_valuation" string="New valuation" type="object" class="btn-secondary ms-2"
+                                groups="account.group_account_user,account.group_account_manager"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="alfia_livestock_class" readonly="1"/><field name="alfia_acquisition_kind" readonly="1"/>
+                            <field name="alfia_acquisition_date" readonly="1"/><field name="alfia_acquisition_cost" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="alfia_carrying_value"/><field name="alfia_last_valuation_id"/>
+                            <field name="alfia_company_currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <separator string="Valuations"/>
+                    <field name="alfia_valuation_ids" readonly="1">
+                        <list decoration-success="state == 'posted'" decoration-warning="state == 'submitted'">
+                            <field name="effective_date"/><field name="method"/><field name="value"/><field name="previous_value"/>
+                            <field name="prepared_by_id"/><field name="approved_by_id"/><field name="move_id"/><field name="state"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                    <separator string="Register events"/>
+                    <field name="alfia_livestock_event_ids" readonly="1">
+                        <list>
+                            <field name="date"/><field name="kind"/><field name="amount"/><field name="note"/><field name="user_id"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="alfia_livestock_register_view_list" model="ir.ui.view">
+        <field name="name">alfia.horse.livestock.register</field>
+        <field name="model">alfia.horse</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list create="0">
+                <field name="name"/><field name="sex"/><field name="status"/><field name="alfia_livestock_class"/>
+                <field name="alfia_acquisition_kind" optional="show"/><field name="alfia_acquisition_date" optional="show"/>
+                <field name="alfia_acquisition_cost" optional="hide" sum="Cost"/><field name="alfia_carrying_value" sum="Carrying value"/>
+                <field name="alfia_company_currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <!-- Finance opens horses from the register in this form: only what finance needs, without the stable's records
+         (health, clearances...) that finance has no access to. -->
+    <record id="alfia_livestock_horse_form" model="ir.ui.view">
+        <field name="name">alfia.horse.livestock.form</field>
+        <field name="model">alfia.horse</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0">
+                <header>
+                    <button name="%(alfia_livestock_classify_action)d" string="Classify" type="action" class="btn-primary"
+                            context="{'active_id': id}" groups="account.group_account_user,account.group_account_manager"/>
+                    <button name="action_alfia_new_valuation" string="New valuation" type="object"
+                            groups="account.group_account_user,account.group_account_manager"/>
+                </header>
+                <sheet>
+                    <h1><field name="name" readonly="1"/></h1>
+                    <group>
+                        <group><field name="sex" readonly="1"/><field name="birthdate" readonly="1"/><field name="status" readonly="1"/>
+                            <field name="company_id" readonly="1" groups="base.group_multi_company"/></group>
+                        <group><field name="alfia_livestock_class" readonly="1"/><field name="alfia_acquisition_kind" readonly="1"/>
+                            <field name="alfia_acquisition_date" readonly="1"/><field name="alfia_acquisition_cost" readonly="1"/>
+                            <field name="alfia_carrying_value"/><field name="alfia_last_valuation_id"/>
+                            <field name="alfia_company_currency_id" invisible="1"/></group>
+                    </group>
+                    <notebook>
+                        <page string="Valuations" name="valuations">
+                            <field name="alfia_valuation_ids" readonly="1">
+                                <list decoration-success="state == 'posted'" decoration-warning="state == 'submitted'">
+                                    <field name="effective_date"/><field name="method"/><field name="value"/><field name="previous_value"/>
+                                    <field name="prepared_by_id"/><field name="approved_by_id"/><field name="move_id"/><field name="state"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Register events" name="events">
+                            <field name="alfia_livestock_event_ids" readonly="1">
+                                <list>
+                                    <field name="date"/><field name="kind"/><field name="amount"/><field name="note"/><field name="user_id"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_livestock_register_action" model="ir.actions.act_window">
+        <field name="name">Livestock register</field>
+        <field name="res_model">alfia.horse</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'list', 'view_id': ref('alfia_livestock_register_view_list')}),
+                                      (0, 0, {'view_mode': 'form', 'view_id': ref('alfia_livestock_horse_form')})]"/>
+        <field name="context">{'active_test': False}</field>
+        <field name="help" type="html"><p>Every horse with its livestock class and carrying value. Classify a horse and record valuations from
+            its form (Livestock register tab).</p></field>
+    </record>
+    <record id="alfia_livestock_valuation_view_list" model="ir.ui.view">
+        <field name="name">alfia.livestock.valuation.list</field>
+        <field name="model">alfia.livestock.valuation</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'posted'" decoration-warning="state == 'submitted'">
+                <field name="horse_id"/><field name="effective_date"/><field name="method"/><field name="value" sum="Value"/>
+                <field name="previous_value"/><field name="difference"/><field name="prepared_by_id"/><field name="approved_by_id"/>
+                <field name="state"/><field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_livestock_valuation_view_form" model="ir.ui.view">
+        <field name="name">alfia.livestock.valuation.form</field>
+        <field name="model">alfia.livestock.valuation</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" string="Submit for approval" type="object" class="btn-primary" invisible="state not in ('draft', 'rejected')"/>
+                    <button name="action_approve" string="Approve and post" type="object" class="btn-primary" invisible="state != 'submitted'"
+                            groups="account.group_account_manager"/>
+                    <button name="action_reject" string="Reject" type="object" invisible="state != 'submitted'" groups="account.group_account_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,posted"/>
+                </header>
+                <sheet>
+                    <h1><field name="name" readonly="1"/></h1>
+                    <group>
+                        <group>
+                            <field name="horse_id" readonly="state not in ('draft', 'rejected')"/>
+                            <field name="method" readonly="state not in ('draft', 'rejected')"/>
+                            <field name="effective_date" readonly="state not in ('draft', 'rejected')"/>
+                            <field name="value" readonly="state not in ('draft', 'rejected')"/>
+                            <field name="counterpart_account_id" readonly="state not in ('draft', 'rejected')"/>
+                        </group>
+                        <group>
+                            <field name="previous_value" invisible="state != 'posted'"/><field name="difference"/>
+                            <field name="prepared_by_id"/><field name="approved_by_id"/><field name="approved_date"/><field name="move_id"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="notes" readonly="state not in ('draft', 'rejected')" placeholder="Valuer, comparable sales, insurance value... attach the evidence below."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_livestock_valuation_action" model="ir.actions.act_window">
+        <field name="name">Livestock valuations</field>
+        <field name="res_model">alfia.livestock.valuation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="alfia_company_form_livestock" model="ir.ui.view">
+        <field name="name">res.company.form.alfia.livestock</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Livestock accounting" name="alfia_livestock" groups="account.group_account_manager">
+                    <group>
+                        <field name="alfia_livestock_account_id"/><field name="alfia_livestock_gain_account_id"/>
+                        <field name="alfia_livestock_loss_account_id"/><field name="alfia_livestock_journal_id"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

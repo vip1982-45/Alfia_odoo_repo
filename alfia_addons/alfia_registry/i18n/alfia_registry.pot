@@ -1,0 +1,1532 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* alfia_registry
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-25 07:53+0000\n"
+"PO-Revision-Date: 2026-11-25 07:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "%(count)s corrective action(s) of %(name)s are still open."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "%s has already been submitted."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "%s incident reported: review and assign an investigator"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "%s is already being handled."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "%s is already posted or cancelled."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "%s is not an external centre location."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "%s is not ready for closure."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "%s is not under investigation."
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_import_view_form
+msgid ""
+"A CSV from the centre with the columns <b>Date</b>, <b>Batch</b>, <b>Movement</b> (received, used, shipped, balance)\n"
+"                    and <b>Quantity</b>, and optionally <b>Reference</b> (for example the mare). The same file cannot be imported twice,\n"
+"                    and lines already posted from an earlier statement are marked as duplicates."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "A closed incident cannot be changed."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "A closed incident's actions cannot be changed."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "A completed request is kept as the record."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "A posted statement is kept; correct it with the next statement."
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_statement_view_form
+msgid "Accept"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__name
+msgid "Action"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_needaction
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_needaction
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "Action done by %(user)s: %(action)s (%(evidence)s)"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__state__actions
+msgid "Actions in progress"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_exception_decoration
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_plans_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__activity_plans_ids
+msgid "Activity Plans"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_state
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_type_icon
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.module.module,shortdesc:base.module_alfia_registry
+msgid "Alfia Registrations, External Semen and Incidents"
+msgstr ""
+
+#. module: alfia_registry
+#: model:res.groups,name:alfia_registry.group_incident_manager
+msgid "Alfia: incident manager"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.actions.act_window,help:alfia_registry.alfia_incident_action
+msgid ""
+"Anyone reports an incident. An incident manager assigns an investigator; corrective actions get\n"
+"            owners and due dates; another manager approves the closure."
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
+msgid "Approve"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
+msgid "Approve closure"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__approved_by_id
+msgid "Approved By"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__approved_date
+msgid "Approved Date"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__approved
+msgid "Approved, to send"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
+msgid "Attach the application, the sample form or the certificate below."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__authority_id
+msgid "Authority / laboratory"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__authority_reference
+msgid "Authority reference"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__movement__balance
+msgid "Balance held"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__batch
+msgid "Batch"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__biosecurity
+msgid "Biosecurity"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__kind__breeding_certificate
+msgid "Breeding certificate"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_import_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_statement_view_form
+msgid "Cancel"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__cancelled
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__centre_id
+msgid "Centre"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__location_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__location_id
+msgid "Centre location"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__certificate_number
+msgid "Certificate Number"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__message
+msgid "Check result"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement__state__checked
+msgid "Checked"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "Choose the investigator for %s first."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__state__closed
+msgid "Closed"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__closed_by_id
+msgid "Closed By"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__closed_date
+msgid "Closed Date"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
+msgid "Closure"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__closure_notes
+msgid "Closure Notes"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__company_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__company_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__company_id
+msgid "Company"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
+msgid "Complete"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__done
+msgid "Completed"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__completed_date
+msgid "Completed Date"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__action_ids
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
+msgid "Corrective actions"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__severity__critical
+msgid "Critical"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse__alfia_dna_status
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_search
+msgid "DNA"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__dna_result
+msgid "DNA result"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__kind__dna
+msgid "DNA sample / parentage"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__sample_date
+msgid "DNA sample: when it was taken."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__date
+msgid "Date"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__raw_date
+msgid "Date in file"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "Describe the evidence that the action was done."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__description
+msgid "Description"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_stock_location__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident_action__state__done
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
+msgid "Done"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__done_date
+msgid "Done Date"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__due_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__due_date
+msgid "Due Date"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__status__duplicate
+msgid "Duplicate"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__evidence
+msgid "Evidence"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__status__exception
+msgid "Exception"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__exception_count
+msgid "Exception Count"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__status__accepted
+msgid "Exception accepted"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__expiry_date
+msgid "Expiry Date"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_stock_location__alfia_external_centre_id
+msgid "External semen centre"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_statement
+msgid "External semen centre statement"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_statement_line
+msgid "External semen statement line"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.actions.act_window,name:alfia_registry.alfia_semen_statement_action
+#: model:ir.ui.menu,name:alfia_registry.menu_alfia_semen_statements
+msgid "External semen statements"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__file
+msgid "File"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__file_hash
+msgid "File Hash"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__row
+msgid "File row"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__filename
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__filename
+msgid "Filename"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
+msgid "Findings recorded"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "Follow up %(kind)s for %(horse)s"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__authority_id
+msgid ""
+"For example the Qatar Arabian horse studbook, a WAHO-related registry or a "
+"DNA laboratory."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__has_message
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__has_message
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__severity__high
+msgid "High"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_search
+msgid "High or critical"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_horse
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__horse_id
+msgid "Horse"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__horse_injury
+msgid "Horse injury or illness"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__horse_id
+msgid "Horse involved"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_horse_registration
+msgid "Horse registration and certificate request"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__id
+#: model:ir.model.fields,field_description:alfia_registry.field_stock_location__id
+msgid "ID"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_exception_icon
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__activity_exception_icon
+#: model:ir.model.fields,help:alfia_registry.field_alfia_incident__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__message_needaction
+#: model:ir.model.fields,help:alfia_registry.field_alfia_incident__message_needaction
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__message_has_error
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__message_has_sms_error
+#: model:ir.model.fields,help:alfia_registry.field_alfia_incident__message_has_error
+#: model:ir.model.fields,help:alfia_registry.field_alfia_incident__message_has_sms_error
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_has_error
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__immediate_action
+msgid "Immediate action taken"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.actions.act_window,help:alfia_registry.alfia_semen_statement_action
+msgid ""
+"Import a centre's statement (Breeding › Import centre statement). Mark a stock location as an\n"
+"            external centre (Inventory › Configuration › Locations) and ship straws to it with ordinary transfers."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_import
+msgid "Import an external centre statement"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_import_view_form
+msgid "Import and check"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.actions.act_window,name:alfia_registry.alfia_semen_import_action
+#: model:ir.ui.menu,name:alfia_registry.menu_alfia_semen_import
+msgid "Import centre statement"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__imported_by_id
+msgid "Imported By"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "Imported by %(user)s: %(ok)s line(s) OK, %(exc)s exception(s)."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_incident
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__incident_id
+msgid "Incident"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_incident_action
+msgid "Incident corrective action"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.actions.act_window,name:alfia_registry.alfia_incident_action
+#: model:ir.ui.menu,name:alfia_registry.menu_alfia_incidents_root
+msgid "Incidents"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_stock_location
+msgid "Inventory Location"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "Investigate %s"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
+msgid "Investigation"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__investigation
+msgid "Investigation findings"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__investigator_id
+msgid "Investigator"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_is_follower
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_is_follower
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__is_overdue
+msgid "Is Overdue"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__issue_date
+msgid "Issue Date"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__key
+msgid "Key"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__kind
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__kind
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_search
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_search
+msgid "Kind"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__line_ids
+msgid "Line"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__severity__low
+msgid "Low"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__activity_type_icon
+#: model:ir.model.fields,help:alfia_registry.field_alfia_incident__activity_type_icon
+msgid "Material Symbols icon e.g. checklist"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__severity__medium
+msgid "Medium"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_has_error
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_has_error
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__move_id
+msgid "Move"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__movement
+msgid "Movement"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__raw_movement
+msgid "Movement in file"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__my_activity_date_deadline
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__name
+msgid "Name"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__near_miss
+msgid "Near miss"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_calendar_event_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_date_deadline
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_summary
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_type_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse__alfia_dna_status__none
+msgid "No DNA test"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__notes
+msgid "Notes"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__message_needaction_counter
+#: model:ir.model.fields,help:alfia_registry.field_alfia_incident__message_needaction_counter
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__message_has_error_counter
+#: model:ir.model.fields,help:alfia_registry.field_alfia_incident__message_has_error_counter
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__status__ok
+msgid "OK"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__ok_count
+msgid "Ok Count"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "Only a request sent to the authority can be completed."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "Only a submitted request can be approved."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "Only an approved request is sent to the authority."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "Only an exception on a statement not yet posted can be accepted."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "Only breeding managers approve registration and certificate requests."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "Only incident managers do this."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid ""
+"Only semen custodians and breeding managers handle external centre "
+"statements."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "Only the action's owner or an incident manager marks it done."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "Only the investigator or an incident manager records the findings."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident_action__state__open
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_search
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_search
+msgid "Open"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__open_action_count
+msgid "Open Action Count"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__other
+msgid "Other"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__kind__other
+msgid "Other certificate"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__lot_id
+msgid "Our batch"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_search
+msgid "Overdue"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
+msgid "Overdue: the due date has passed."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__owner_id
+msgid "Owner"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse__alfia_dna_status__not_verified
+msgid "Parentage NOT verified"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__dna_result__not_verified
+msgid "Parentage not verified"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse__alfia_dna_status__verified
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__dna_result__verified
+msgid "Parentage verified"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__kind__passport
+msgid "Passport"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_search
+msgid "Passports"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse__alfia_dna_status__pending
+msgid "Pending"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__employee_id
+msgid "Person involved"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_statement_view_form
+msgid "Post"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement__state__posted
+msgid "Posted"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__posted_by_id
+msgid "Posted By"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__posted_date
+msgid "Posted Date"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "Posted by %(user)s. Lines still in exception were not posted: %(exc)s."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse__alfia_dna_status__profile_only
+msgid "Profile only"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__dna_result__profile_only
+msgid "Profile recorded (no parentage test)"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__damage
+msgid "Property or vehicle damage"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__quantity
+msgid "Quantity"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__raw_quantity
+msgid "Quantity in file"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.module.module,description:base.module_alfia_registry
+msgid "RFP REQ-HOR-03, REQ-SEM-04 and REQ-SAF-01. See README.md."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__rating_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__rating_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__movement__received
+msgid "Received from us"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "Record the DNA result before completing %s."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "Record the certificate or registration number before completing %s."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid ""
+"Record the investigation findings (and the root cause for a high or critical"
+" incident)."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "Record the investigation findings first."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "Record when the DNA sample was taken before submitting %s."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__reference
+msgid "Reference"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.module.module,summary:base.module_alfia_registry
+msgid ""
+"Registration, DNA, passport and breeding-certificate requests; semen held at"
+" external centres reconciled from their statements; incidents with "
+"investigation, actions and closure approval"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_horse_form_registrations
+msgid "Registrations and DNA"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.actions.act_window,name:alfia_registry.alfia_registration_action
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse__alfia_registration_ids
+#: model:ir.ui.menu,name:alfia_registry.menu_alfia_registrations
+msgid "Registrations and certificates"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
+msgid "Reject"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__rejected
+msgid "Rejected"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "Rejected by %s."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__state__reported
+msgid "Reported"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__reported_by_id
+msgid "Reported By"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__request_date
+msgid "Request Date"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
+msgid "Request closure"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "Request closure of %s first."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__requested_by_id
+msgid "Requested By"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__resolution
+msgid "Resolution"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_user_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__root_cause
+msgid "Root Cause"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "Row %(row)s accepted by %(user)s: %(why)s (was: %(msg)s)"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__sample_taken_by_id
+msgid "Sample taken by"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__sample_date
+msgid "Sample taken on"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__security
+msgid "Security"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
+msgid "Send back"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__sent_date
+msgid "Sent Date"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__sent
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
+msgid "Sent to the authority"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__centre_id
+#: model:ir.model.fields,help:alfia_registry.field_stock_location__alfia_external_centre_id
+msgid ""
+"Set when this location is our semen held at an external centre. Its "
+"statements are imported under Breeding › External semen statements."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__severity
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_search
+msgid "Severity"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__movement__shipped
+msgid "Shipped to a third party"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__staff_injury
+msgid "Staff injury"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
+msgid "Start investigation"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__state
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__state
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__state
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__state
+msgid "State"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__statement_id
+msgid "Statement"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "Statement %s"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__statement_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__statement_date
+msgid "Statement Date"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__status
+msgid "Status"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__activity_state
+#: model:ir.model.fields,help:alfia_registry.field_alfia_incident__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse__alfia_registration_number
+msgid "Studbook number"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__kind__registration
+msgid "Studbook registration"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
+msgid "Submit for approval"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_statement_view_form
+msgid "The source file is attached below, in the log."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "The statement has more than %s lines."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "The statement has no lines."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid ""
+"The statement needs the columns Date, Batch, Movement and Quantity (and "
+"optionally Reference). Missing: %s"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "This file was already imported as %s."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "This line cannot be posted: %s"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__activity_exception_decoration
+#: model:ir.model.fields,help:alfia_registry.field_alfia_incident__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__state__investigating
+msgid "Under investigation"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__movement__used
+msgid "Used (insemination)"
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_statement_view_form
+msgid ""
+"Used and shipped straws on OK lines leave the centre's stock. Lines in "
+"exception are not posted. Continue?"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__submitted
+msgid "Waiting for approval"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__state__to_close
+msgid "Waiting for closure approval"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid ""
+"What a request is for cannot change once it is submitted. Cancel it and "
+"raise a new one."
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
+msgid "What happened"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_incident_action__evidence
+msgid "What shows the action was done (attach files to the incident)."
+msgstr ""
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
+msgid "What was done and how it was checked."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__due_date
+msgid "When the authority's answer or the certificate is due."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__location_id
+msgid "Where"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement_line__resolution
+msgid "Why an exception was accepted."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid "Write the closure notes (what was done and how it was checked)."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "Write why the exception is accepted."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "You imported %s, so another person must review and post it."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/registration.py:0
+msgid "You raised %s, so another breeding manager must approve it."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/incident.py:0
+msgid ""
+"You reported or investigated %s, so another incident manager approves its "
+"closure."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "already posted from an earlier statement"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "balance %(qty)s at the centre differs from our %(held)s"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "batch %r is ambiguous"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "batch %r not found"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "centre reports %(qty)s %(what)s but we hold %(held)s there"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid ""
+"centre reports receiving %(qty)s but we shipped %(open)s not yet confirmed"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "quantity %r is not a positive number"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/external_semen.py:0
+msgid "unknown movement %r"
+msgstr ""

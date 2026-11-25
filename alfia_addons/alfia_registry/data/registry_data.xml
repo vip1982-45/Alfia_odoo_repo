@@ -1,0 +1,21 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_incident" model="ir.sequence">
+            <field name="name">Incident</field>
+            <field name="code">alfia.incident</field>
+            <field name="prefix">INC/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="seq_registration" model="ir.sequence">
+            <field name="name">Horse registration request</field>
+            <field name="code">alfia.horse.registration</field>
+            <field name="prefix">REG/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+        <record id="location_semen_used_external" model="stock.location">
+            <field name="name">مستخدم في مراكز خارجية · Semen used at external centres</field>
+            <field name="usage">inventory</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

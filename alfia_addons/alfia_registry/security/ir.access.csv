@@ -1,0 +1,21 @@
+id,name,model_id,group_id/id,operation,domain
+acc_reg_stable,Registrations: stable staff request,alfia.horse.registration,alfia_security.group_alfia_stable_user,cru,
+acc_reg_breeding,Registrations: breeding staff,alfia.horse.registration,alfia_security.group_alfia_breeding_user,cru,
+acc_reg_vet,Registrations: vets (DNA samples),alfia.horse.registration,alfia_security.group_alfia_vet_user,cru,
+acc_reg_manager,Registrations: breeding managers,alfia.horse.registration,alfia_security.group_alfia_breeding_manager,cru,
+acc_reg_auditor,Registrations: auditor,alfia.horse.registration,alfia_security.group_alfia_security_auditor,r,
+acc_sem_st_custodian,Semen statements: custodians,alfia.semen.statement,alfia_security.group_alfia_semen_custodian,cru,
+acc_sem_st_manager,Semen statements: breeding managers,alfia.semen.statement,alfia_security.group_alfia_breeding_manager,cru,
+acc_sem_st_auditor,Semen statements: auditor,alfia.semen.statement,alfia_security.group_alfia_security_auditor,r,
+acc_sem_line_custodian,Semen statement lines: custodians,alfia.semen.statement.line,alfia_security.group_alfia_semen_custodian,ru,
+acc_sem_line_manager,Semen statement lines: breeding managers,alfia.semen.statement.line,alfia_security.group_alfia_breeding_manager,ru,
+acc_sem_line_auditor,Semen statement lines: auditor,alfia.semen.statement.line,alfia_security.group_alfia_security_auditor,r,
+acc_sem_import_custodian,Semen import: custodians,alfia.semen.import,alfia_security.group_alfia_semen_custodian,crud,
+acc_sem_import_manager,Semen import: breeding managers,alfia.semen.import,alfia_security.group_alfia_breeding_manager,crud,
+acc_inc_user,Incidents: anyone reports; sees those they reported investigate or act on,alfia.incident,base.group_user,cru,"['|', '|', ('reported_by_id', '=', user.id), ('investigator_id', '=', user.id), ('action_ids.owner_id', '=', user.id)]"
+acc_inc_manager,Incidents: incident managers,alfia.incident,alfia_registry.group_incident_manager,cru,
+acc_inc_auditor,Incidents: auditor,alfia.incident,alfia_security.group_alfia_security_auditor,r,
+acc_inc_act_user,Incident actions: owners and the people on the incident,alfia.incident.action,base.group_user,ru,"['|', '|', ('owner_id', '=', user.id), ('incident_id.reported_by_id', '=', user.id), ('incident_id.investigator_id', '=', user.id)]"
+acc_inc_act_investigator,Incident actions: the investigator adds them,alfia.incident.action,base.group_user,c,"[('incident_id.investigator_id', '=', user.id)]"
+acc_inc_act_manager,Incident actions: incident managers,alfia.incident.action,alfia_registry.group_incident_manager,crud,
+acc_inc_act_auditor,Incident actions: auditor,alfia.incident.action,alfia_security.group_alfia_security_auditor,r,

@@ -1,0 +1,18 @@
+<odoo>
+    <!-- Who reviews incidents and approves their closure. The stud's managers get it with their role. -->
+    <record id="group_incident_manager" model="res.groups">
+        <field name="name">Alfia: incident manager</field>
+    </record>
+    <record id="alfia_security.group_alfia_breeding_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_incident_manager'))]"/>
+    </record>
+    <record id="alfia_security.group_alfia_training_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_incident_manager'))]"/>
+    </record>
+    <record id="alfia_security.group_alfia_vet_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_incident_manager'))]"/>
+    </record>
+    <record id="hr.group_hr_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_incident_manager'))]"/>
+    </record>
+</odoo>

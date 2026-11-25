@@ -1,0 +1,13 @@
+<odoo>
+    <menuitem id="menu_alfia_registrations" name="Registrations and certificates" parent="alfia_equine.menu_alfia_breeding"
+              action="alfia_registration_action" sequence="80"/>
+    <menuitem id="menu_alfia_semen_statements" name="External semen statements" parent="alfia_equine.menu_alfia_breeding"
+              action="alfia_semen_statement_action" sequence="90"
+              groups="alfia_security.group_alfia_semen_custodian,alfia_security.group_alfia_breeding_manager,alfia_security.group_alfia_security_auditor"/>
+    <menuitem id="menu_alfia_semen_import" name="Import centre statement" parent="alfia_equine.menu_alfia_breeding"
+              action="alfia_semen_import_action" sequence="91"
+              groups="alfia_security.group_alfia_semen_custodian,alfia_security.group_alfia_breeding_manager"/>
+    <!-- Everyone may report an incident, with or without the Stud app. -->
+    <menuitem id="menu_alfia_incidents_root" name="Incidents" sequence="95" web_icon="base,static/description/icon.png"
+              action="alfia_incident_action"/>
+</odoo>

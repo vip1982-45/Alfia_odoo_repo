@@ -1,0 +1,1270 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-25 07:53+0000\n"
+"PO-Revision-Date: 2026-11-25 07:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid ""
+"%(line)s: %(after)s after this %(stage)s against a budget of %(planned)s "
+"(%(currency)s)"
+msgstr ""
+"%(line)s: %(after)s بعد هذا %(stage)s مقابل موازنة قدرها %(planned)s "
+"(%(currency)s)"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "%(old)s → %(new)s"
+msgstr "%(old)s ← %(new)s"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "%(prev)s → %(new)s, approved by %(user)s"
+msgstr "%(prev)s ← %(new)s، اعتمده %(user)s"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "%s has already been submitted."
+msgstr "تم تقديم %s مسبقاً."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "A budget must end on or after the day it starts."
+msgstr "يجب أن تنتهي الموازنة في يوم بدايتها أو بعده."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "A budget override applies to purchase orders and bills."
+msgstr "تجاوز الموازنة ينطبق على أوامر الشراء وفواتير الموردين."
+
+#. module: alfia_livestock
+#: model_terms:ir.actions.act_window,help:alfia_livestock.alfia_budget_action
+msgid ""
+"A budget plans amounts by account, and optionally by cost centre (a horse or activity) and department.\n"
+"            One person prepares it, another finance manager approves it. Revise an approved budget with New version."
+msgstr ""
+"تخطط الموازنة المبالغ حسب الحساب، واختيارياً حسب مركز التكلفة (حصان أو نشاط)"
+" والقسم. يُعدّها شخص ويعتمدها مدير مالي آخر. عدّل الموازنة المعتمدة بإصدار "
+"جديد."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid ""
+"A later valuation (%s) is already posted. Record a new one dated after it."
+msgstr "يوجد تقييم لاحق (%s) مرحّل بالفعل. سجّل تقييماً جديداً بتاريخ بعده."
+
+#. module: alfia_livestock
+#: model:ir.model.constraint,message:alfia_livestock.constraint_alfia_budget_line_planned_positive
+msgid "A planned amount cannot be negative."
+msgstr "لا يمكن أن يكون المبلغ المخطط سالباً."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid ""
+"A posted valuation is part of the review history and cannot be deleted."
+msgstr "التقييم المرحّل جزء من سجل المراجعة ولا يمكن حذفه."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid ""
+"A submitted or approved budget cannot be changed. Create a new version."
+msgstr "لا يمكن تغيير موازنة مقدَّمة أو معتمدة. أنشئ إصداراً جديداً."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid ""
+"A submitted or posted valuation cannot be changed. Record a new valuation."
+msgstr "لا يمكن تغيير تقييم مقدَّم أو مرحّل. سجّل تقييماً جديداً."
+
+#. module: alfia_livestock
+#: model:ir.model.constraint,message:alfia_livestock.constraint_alfia_livestock_valuation_value_positive
+msgid "A value cannot be negative."
+msgstr "لا يمكن أن تكون القيمة سالبة."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__account_id
+msgid "Account"
+msgstr "الحساب"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_acquisition_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__acquisition_date
+msgid "Acquired / born on"
+msgstr "تاريخ الاقتناء / الولادة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_event__kind__acquisition
+msgid "Acquisition"
+msgstr "اقتناء"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__acquisition_cost
+msgid "Acquisition Cost"
+msgstr "تكلفة الاقتناء"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_acquisition_cost
+msgid "Acquisition cost"
+msgstr "تكلفة الاقتناء"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_needaction
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_needaction
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_needaction
+msgid "Action Needed"
+msgstr "إجراء مطلوب"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__actual
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_report
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+msgid "Actual"
+msgstr "الفعلي"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__actual_total
+msgid "Actual Total"
+msgstr "إجمالي الفعلي"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_report
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+msgid "Actual entries"
+msgstr "القيود الفعلية"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Actuals: %s"
+msgstr "الفعلي: %s"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Add budget lines before submitting."
+msgstr "أضف أسطر الموازنة قبل التقديم."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__move_id
+msgid "Adjustment entry"
+msgstr "قيد التسوية"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_last_valuation_id
+msgid "Alfia Last Valuation"
+msgstr "آخر تقييم"
+
+#. module: alfia_livestock
+#: model:ir.module.module,shortdesc:base.module_alfia_livestock
+msgid "Alfia Livestock Accounting and Budgets"
+msgstr "محاسبة الثروة الحيوانية والموازنات - ألفية"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_livestock_event_ids
+msgid "Alfia Livestock Event"
+msgstr "أحداث السجل"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_valuation_ids
+msgid "Alfia Valuation"
+msgstr "التقييمات"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__amount
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_valuation_view_form
+msgid "Approve and post"
+msgstr "اعتماد وترحيل"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_budget__state__approved
+msgid "Approved"
+msgstr "معتمد"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__approved_by_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__approved_by_id
+msgid "Approved By"
+msgstr "اعتمده"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__approved_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__approved_date
+msgid "Approved Date"
+msgstr "تاريخ الاعتماد"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_valuation__state__posted
+msgid "Approved and posted"
+msgstr "معتمد ومرحّل"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "Approved by %(user)s. Carrying value %(prev)s → %(new)s."
+msgstr "اعتمده %(user)s. القيمة الدفترية %(prev)s ← %(new)s."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Approved by %s."
+msgstr "اعتمده %s."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_attachment_count
+msgid "Attachment Count"
+msgstr "عدد المرفقات"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__available
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_report
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+msgid "Available"
+msgstr "المتاح"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__notes
+msgid "Basis and evidence"
+msgstr "الأساس والأدلة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_event__kind__birth
+msgid "Birth"
+msgstr "ولادة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_budget__control__block
+msgid "Block"
+msgstr "منع"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_acquisition_kind__birth
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__acquisition_kind__birth
+msgid "Born on the farm"
+msgstr "وُلد في المزرعة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_livestock_class__breeding
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__livestock_class__breeding
+msgid "Breeding stock"
+msgstr "قطيع الإنتاج"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_budget
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__budget_id
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_search
+msgid "Budget"
+msgstr "الموازنة"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_budget_line
+msgid "Budget line"
+msgstr "سطر الموازنة"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_move_form_budget
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_purchase_order_form_budget
+msgid "Budget override"
+msgstr "تجاوز الموازنة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_account_bank_statement_line__alfia_budget_override_by_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_account_move__alfia_budget_override_by_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override_mixin__alfia_budget_override_by_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order__alfia_budget_override_by_id
+msgid "Budget override by"
+msgstr "تجاوز الموازنة بواسطة"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_budget_override_mixin
+msgid "Budget override on a document"
+msgstr "تجاوز الموازنة على مستند"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_account_bank_statement_line__alfia_budget_override_reason
+#: model:ir.model.fields,field_description:alfia_livestock.field_account_move__alfia_budget_override_reason
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override_mixin__alfia_budget_override_reason
+#: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order__alfia_budget_override_reason
+msgid "Budget override reason"
+msgstr "سبب تجاوز الموازنة"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Budget override recorded by %(user)s: %(reason)s"
+msgstr "سجّل %(user)s تجاوز الموازنة: %(reason)s"
+
+#. module: alfia_livestock
+#: model:ir.actions.act_window,name:alfia_livestock.alfia_budget_line_action
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_budget_report
+msgid "Budget vs actual"
+msgstr "الموازنة مقابل الفعلي"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Budget warning: %s"
+msgstr "تنبيه الموازنة: %s"
+
+#. module: alfia_livestock
+#: model:ir.actions.act_window,name:alfia_livestock.alfia_budget_action
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_budgets
+msgid "Budgets"
+msgstr "الموازنات"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_acquisition_kind
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__acquisition_kind
+msgid "Came to the farm by"
+msgstr "طريقة الوصول إلى المزرعة"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_override_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_classify_view_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_carrying_value
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_register_view_list
+msgid "Carrying value"
+msgstr "القيمة الدفترية"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_event__kind__classification
+msgid "Classification change"
+msgstr "تغيير التصنيف"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_form_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_horse_form
+msgid "Classify"
+msgstr "تصنيف"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_livestock_classify
+msgid "Classify a horse in the livestock register"
+msgstr "تصنيف حصان في سجل الثروة الحيوانية"
+
+#. module: alfia_livestock
+#: model:ir.actions.act_window,name:alfia_livestock.alfia_livestock_classify_action
+msgid "Classify in the livestock register"
+msgstr "التصنيف في سجل الثروة الحيوانية"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Commitments: %s"
+msgstr "الالتزامات: %s"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__committed
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_report
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+msgid "Committed"
+msgstr "الملتزم به"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__committed_total
+msgid "Committed Total"
+msgstr "إجمالي الملتزم به"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_res_company
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__company_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__company_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_budget_line__committed
+msgid "Confirmed purchase orders in the period not yet billed."
+msgstr "أوامر الشراء المؤكدة في الفترة التي لم تُفوتر بعد."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__control
+msgid "Control"
+msgstr "الضبط"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_valuation__method__cost
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_register_view_list
+msgid "Cost"
+msgstr "التكلفة"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_search
+msgid "Cost centre"
+msgstr "مركز التكلفة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__analytic_account_id
+msgid "Cost centre (horse / activity)"
+msgstr "مركز التكلفة (حصان / نشاط)"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_valuation__method__cost_impairment
+msgid "Cost less impairment"
+msgstr "التكلفة ناقص الانخفاض في القيمة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__counterpart_account_id
+msgid "Counterpart account"
+msgstr "الحساب المقابل"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__create_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__create_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__create_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__create_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__create_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__create_uid
+msgid "Created by"
+msgstr "أنشأه"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__create_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__create_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__create_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__create_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__create_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__create_date
+msgid "Created on"
+msgstr "تاريخ الإنشاء"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_company_currency_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__currency_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__currency_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__currency_id
+msgid "Currency"
+msgstr "العملة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__currency_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__currency_id
+msgid "Currency basis"
+msgstr "أساس العملة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__date_from
+msgid "Date From"
+msgstr "من تاريخ"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__date_to
+msgid "Date To"
+msgstr "إلى تاريخ"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__department_id
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_search
+msgid "Department"
+msgstr "القسم"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid ""
+"Describe the basis of the valuation (and attach the evidence) before "
+"submitting."
+msgstr "صِف أساس التقييم (وأرفق الأدلة) قبل التقديم."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__difference
+msgid "Difference"
+msgstr "الفرق"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_account_move__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override_mixin__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_res_company__display_name
+msgid "Display Name"
+msgstr "الاسم المعروض"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_event__kind__disposal
+msgid "Disposal"
+msgstr "استبعاد"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_valuation__method__disposal
+msgid "Disposal (derecognition)"
+msgstr "استبعاد (إلغاء الاعتراف)"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_budget__state__draft
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_valuation__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid ""
+"Drafted automatically; finance chooses the counterpart account (for example "
+"cost of horses sold) and approves it."
+msgstr ""
+"أُعدّ تلقائياً؛ تختار المالية الحساب المقابل (مثلاً تكلفة الخيول المباعة) "
+"وتعتمده."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "Drafted when %(horse)s left the farm (%(why)s)."
+msgstr "أُعدّ عند مغادرة %(horse)s المزرعة (%(why)s)."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__effective_date
+msgid "Effective Date"
+msgstr "تاريخ السريان"
+
+#. module: alfia_livestock
+#: model_terms:ir.actions.act_window,help:alfia_livestock.alfia_livestock_register_action
+msgid ""
+"Every horse with its livestock class and carrying value. Classify a horse and record valuations from\n"
+"            its form (Livestock register tab)."
+msgstr ""
+"كل حصان مع تصنيفه وقيمته الدفترية. صنّف الحصان وسجّل التقييمات من نموذجه "
+"(تبويب سجل الثروة الحيوانية)."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_budget_line__forecast
+msgid ""
+"Expected total for the period. Left empty, it is taken as actual plus "
+"committed."
+msgstr ""
+"الإجمالي المتوقع للفترة. إذا تُرك فارغاً يُحسب الفعلي زائد الملتزم به."
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_valuation__method__fair_value
+msgid "Fair value less costs to sell"
+msgstr "القيمة العادلة ناقص تكاليف البيع"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "Foal of %s"
+msgstr "مهر %s"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_follower_ids
+msgid "Followers"
+msgstr "المتابعون"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "المتابعون (الشركاء)"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__forecast
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__forecast_total
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_report
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+msgid "Forecast"
+msgstr "المتوقع"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__has_message
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__has_message
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__has_message
+msgid "Has Message"
+msgstr "لديه رسالة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_livestock_class__for_sale
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__livestock_class__for_sale
+msgid "Held for sale"
+msgstr "محتفظ به للبيع"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_horse
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__horse_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__horse_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__horse_id
+msgid "Horse"
+msgstr "الحصان"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__notes
+msgid ""
+"How the value was reached (valuer, comparable sales, insurance). Attach the "
+"evidence. Required to submit."
+msgstr ""
+"كيف تم التوصل إلى القيمة (مقيِّم، مبيعات مماثلة، تأمين). أرفق الأدلة. مطلوب "
+"للتقديم."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_account_move__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override_mixin__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_res_company__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_budget__message_needaction
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_event__message_needaction
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "إذا كان محدداً، فهناك رسائل جديدة تتطلب انتباهك."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_budget__message_has_error
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_budget__message_has_sms_error
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_event__message_has_error
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_event__message_has_sms_error
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__message_has_error
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "إذا كان محدداً، فبعض الرسائل بها خطأ في التسليم."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_is_follower
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_is_follower
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_is_follower
+msgid "Is Follower"
+msgstr "متابع"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_account_move
+msgid "Journal Entry"
+msgstr "القيد"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__kind
+msgid "Kind"
+msgstr "النوع"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__write_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__write_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__write_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__write_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__write_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__write_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__write_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__write_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__write_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__write_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__counterpart_account_id
+msgid ""
+"Leave empty to use the company's revaluation gain or loss account. For a "
+"first recognition at cost, choose the account the purchase was booked to; "
+"for a disposal, the cost of horses sold."
+msgstr ""
+"اتركه فارغاً لاستخدام حساب ربح أو خسارة إعادة التقييم للشركة. للاعتراف الأول"
+" بالتكلفة اختر الحساب الذي قُيِّد عليه الشراء؛ وللاستبعاد، تكلفة الخيول "
+"المباعة."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__line_ids
+msgid "Line"
+msgstr "السطر"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_res_company__alfia_livestock_account_id
+msgid "Livestock (biological assets) account"
+msgstr "حساب الثروة الحيوانية (الأصول البيولوجية)"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__livestock_class
+msgid "Livestock Class"
+msgstr "تصنيف الثروة الحيوانية"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_company_form_livestock
+msgid "Livestock accounting"
+msgstr "محاسبة الثروة الحيوانية"
+
+#. module: alfia_livestock
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_livestock_root
+msgid "Livestock and budgets"
+msgstr "الثروة الحيوانية والموازنات"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_livestock_class
+msgid "Livestock class"
+msgstr "تصنيف الثروة الحيوانية"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_res_company__alfia_livestock_journal_id
+msgid "Livestock journal"
+msgstr "يومية الثروة الحيوانية"
+
+#. module: alfia_livestock
+#: model:ir.actions.act_window,name:alfia_livestock.alfia_livestock_register_action
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_livestock_register
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_form_livestock
+msgid "Livestock register"
+msgstr "سجل الثروة الحيوانية"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_livestock_event
+msgid "Livestock register event"
+msgstr "حدث في سجل الثروة الحيوانية"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "Livestock register updated by %(user)s: %(note)s"
+msgstr "حدّث %(user)s سجل الثروة الحيوانية: %(note)s"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_res_company__alfia_livestock_gain_account_id
+msgid "Livestock revaluation gain account"
+msgstr "حساب ربح إعادة تقييم الثروة الحيوانية"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_res_company__alfia_livestock_loss_account_id
+msgid "Livestock revaluation loss account"
+msgstr "حساب خسارة إعادة تقييم الثروة الحيوانية"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_livestock_valuation
+#: model:ir.model.fields,field_description:alfia_livestock.field_account_bank_statement_line__alfia_livestock_valuation_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_account_move__alfia_livestock_valuation_id
+msgid "Livestock valuation"
+msgstr "تقييم الثروة الحيوانية"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "Livestock valuation %(horse)s %(date)s (%(method)s)"
+msgstr "تقييم %(horse)s %(date)s (%(method)s)"
+
+#. module: alfia_livestock
+#: model:ir.actions.act_window,name:alfia_livestock.alfia_livestock_valuation_action
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_livestock_valuations
+msgid "Livestock valuations"
+msgstr "تقييمات الثروة الحيوانية"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_has_error
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_has_error
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_has_error
+msgid "Message Delivery error"
+msgstr "خطأ في تسليم الرسالة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_ids
+msgid "Messages"
+msgstr "الرسائل"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__method
+msgid "Method"
+msgstr "الطريقة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_form_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_horse_form
+msgid "New valuation"
+msgstr "تقييم جديد"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+msgid "New version"
+msgstr "إصدار جديد"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__note
+msgid "Note"
+msgstr "ملاحظة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_needaction_counter
+msgid "Number of Actions"
+msgstr "عدد الإجراءات"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_has_error_counter
+msgid "Number of errors"
+msgstr "عدد الأخطاء"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_budget__message_needaction_counter
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_event__message_needaction_counter
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "عدد الرسائل التي تتطلب إجراءً"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_budget__message_has_error_counter
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_event__message_has_error_counter
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Only a submitted budget can be approved."
+msgstr "لا يمكن اعتماد إلا موازنة مقدَّمة."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "Only a submitted valuation can be approved."
+msgstr "لا يمكن اعتماد إلا تقييم مقدَّم."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Only an approved budget gets a new version."
+msgstr "لا يُنشأ إصدار جديد إلا لموازنة معتمدة."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Only finance managers approve budgets."
+msgstr "لا يعتمد الموازنات إلا المديرون الماليون."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "Only finance managers approve or reject livestock valuations."
+msgstr "لا يعتمد تقييمات الثروة الحيوانية أو يرفضها إلا المديرون الماليون."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Only finance managers override a budget block."
+msgstr "لا يتجاوز منع الموازنة إلا المديرون الماليون."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "Only finance staff classify horses in the livestock register."
+msgstr "لا يصنّف الخيول في سجل الثروة الحيوانية إلا موظفو المالية."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Only finance staff prepare budgets."
+msgstr "لا يُعدّ الموازنات إلا موظفو المالية."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "Only finance staff prepare livestock valuations."
+msgstr "لا يُعدّ تقييمات الثروة الحيوانية إلا موظفو المالية."
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_report
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+msgid "Open purchase orders"
+msgstr "أوامر الشراء المفتوحة"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_acquisition_kind__other
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__acquisition_kind__other
+msgid "Other"
+msgstr "أخرى"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid ""
+"Over budget, allowed by the override of %(user)s (%(reason)s): %(lines)s"
+msgstr "تجاوز للموازنة، مسموح بتجاوز %(user)s (%(reason)s): %(lines)s"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid ""
+"Over budget: %s. A finance manager can record an override (Budget override) "
+"with a reason."
+msgstr ""
+"تجاوز للموازنة: %s. يمكن لمدير مالي تسجيل تجاوز (تجاوز الموازنة) مع ذكر "
+"السبب."
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_livestock_class__external
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__livestock_class__external
+msgid "Owned by others (not ours)"
+msgstr "مملوك لآخرين (ليس لنا)"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__planned
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_report
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_list
+msgid "Planned"
+msgstr "مخطط"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__planned_total
+msgid "Planned Total"
+msgstr "إجمالي المخطط"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_budget_line__actual
+msgid "Posted entries in the period."
+msgstr "القيود المرحّلة في الفترة."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__prepared_by_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__prepared_by_id
+msgid "Prepared By"
+msgstr "أعدّه"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__previous_value
+msgid "Previous Value"
+msgstr "القيمة السابقة"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_purchase_order
+msgid "Purchase Order"
+msgstr "أمر الشراء"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_acquisition_kind__purchase
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__acquisition_kind__purchase
+msgid "Purchased"
+msgstr "مُشترى"
+
+#. module: alfia_livestock
+#: model:ir.module.module,description:base.module_alfia_livestock
+msgid "RFP REQ-BUD-01..03 and REQ-LIV-01..03. See README.md."
+msgstr "متطلبات كراسة الشروط REQ-BUD-01..03 وREQ-LIV-01..03. انظر README.md."
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_livestock_class__performance
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__livestock_class__performance
+msgid "Racing / performance"
+msgstr "سباقات / أداء"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__rating_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__rating_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__rating_ids
+msgid "Ratings"
+msgstr "التقييمات"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__reason
+msgid "Reason"
+msgstr "السبب"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__note
+msgid "Reason / reference"
+msgstr "السبب / المرجع"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_acquisition_kind__gift
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__acquisition_kind__gift
+msgid "Received as a gift"
+msgstr "مُستلم كهدية"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_budget_override
+msgid "Record a budget override"
+msgstr "تسجيل تجاوز للموازنة"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_override_view_form
+msgid "Record override"
+msgstr "تسجيل التجاوز"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__user_id
+msgid "Recorded by"
+msgstr "سجّله"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_form_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_horse_form
+msgid "Register events"
+msgstr "أحداث السجل"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_valuation_view_form
+msgid "Reject"
+msgstr "رفض"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_budget__state__rejected
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_valuation__state__rejected
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid "Rejected by %s."
+msgstr "رفضه %s."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__previous_id
+msgid "Replaces version"
+msgstr "يحل محل الإصدار"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_budget__control__report
+msgid "Report only"
+msgstr "تقرير فقط"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__res_id
+msgid "Res"
+msgstr "المعرف"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__res_model
+msgid "Res Model"
+msgstr "النموذج"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_livestock_class__retired
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__livestock_class__retired
+msgid "Retired / companion"
+msgstr "متقاعد / مرافق"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "خطأ في تسليم الرسالة النصية"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_classify_view_form
+msgid "Save"
+msgstr "حفظ"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid ""
+"Set the livestock account, the revaluation gain and loss accounts and the "
+"livestock journal on the company (Settings › Companies), or choose a "
+"counterpart account."
+msgstr ""
+"حدّد حساب الثروة الحيوانية وحسابي ربح وخسارة إعادة التقييم ويومية الثروة "
+"الحيوانية في الشركة (الإعدادات › الشركات)، أو اختر حساباً مقابلاً."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__state
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_valuation_view_form
+msgid "Submit for approval"
+msgstr "تقديم للاعتماد"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_budget__state__superseded
+msgid "Superseded"
+msgstr "مستبدل"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_override_view_form
+msgid ""
+"The document may go over its budget once this is recorded. The reason is "
+"kept on the document."
+msgstr "يمكن للمستند تجاوز موازنته بعد تسجيل هذا. يُحفظ السبب على المستند."
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__valuation_id
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_event__kind__valuation
+msgid "Valuation"
+msgstr "تقييم"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_form_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_horse_form
+msgid "Valuations"
+msgstr "التقييمات"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__value
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_valuation_view_list
+msgid "Value"
+msgstr "القيمة"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_valuation_view_form
+msgid ""
+"Valuer, comparable sales, insurance value... attach the evidence below."
+msgstr "المقيِّم، المبيعات المماثلة، قيمة التأمين... أرفق الأدلة أدناه."
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_report
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
+msgid "Variance"
+msgstr "الانحراف"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__variance
+msgid "Variance (planned - forecast)"
+msgstr "الانحراف (المخطط - المتوقع)"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__version
+msgid "Version"
+msgstr "الإصدار"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "Version %s is already being prepared."
+msgstr "الإصدار %s قيد الإعداد بالفعل."
+
+#. module: alfia_livestock
+#: model:ir.module.module,summary:base.module_alfia_livestock
+msgid ""
+"Versioned budgets with commitments, actuals and control rules; livestock "
+"register, classification and approved valuations posted to the ledger"
+msgstr ""
+"موازنات بإصدارات مع الالتزامات والفعلي وقواعد الضبط؛ سجل الثروة الحيوانية "
+"وتصنيفها وتقييمات معتمدة مرحّلة إلى الدفتر"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_budget__state__submitted
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_valuation__state__submitted
+msgid "Waiting for approval"
+msgstr "بانتظار الاعتماد"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_budget__control__warning
+msgid "Warn"
+msgstr "تنبيه"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_budget__control
+msgid ""
+"What happens when a purchase order or a bill would take a line over its "
+"budget: nothing (report only), a warning on the document, or a block that a "
+"finance manager can override with a recorded reason."
+msgstr ""
+"ما يحدث عندما يتسبب أمر شراء أو فاتورة مورد في تجاوز سطر لموازنته: لا شيء "
+"(تقرير فقط)، أو تنبيه على المستند، أو منع يمكن لمدير مالي تجاوزه مع سبب "
+"مسجّل."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid ""
+"You created this document, so another finance manager must override its "
+"budget."
+msgstr "أنت أنشأت هذا المستند، لذا يجب أن يتجاوز موازنته مدير مالي آخر."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "You prepared %s, so another finance manager must approve it."
+msgstr "أنت أعددت %s، لذا يجب أن يعتمده مدير مالي آخر."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid ""
+"You prepared this valuation, so another finance manager must approve it."
+msgstr "أنت أعددت هذا التقييم، لذا يجب أن يعتمده مدير مالي آخر."
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_livestock_class__young
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__livestock_class__young
+msgid "Young stock"
+msgstr "صغار الخيل"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "bill"
+msgstr "فاتورة المورد"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/budget.py:0
+msgid "order"
+msgstr "أمر الشراء"

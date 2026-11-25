@@ -1,0 +1,8 @@
+<odoo>
+    <menuitem id="menu_alfia_livestock_root" name="Livestock and budgets" parent="account.menu_finance" sequence="6"
+              groups="account.group_account_user,account.group_account_manager,alfia_security.group_alfia_security_auditor"/>
+    <menuitem id="menu_alfia_budgets" name="Budgets" parent="menu_alfia_livestock_root" action="alfia_budget_action" sequence="10"/>
+    <menuitem id="menu_alfia_budget_report" name="Budget vs actual" parent="menu_alfia_livestock_root" action="alfia_budget_line_action" sequence="20"/>
+    <menuitem id="menu_alfia_livestock_register" name="Livestock register" parent="menu_alfia_livestock_root" action="alfia_livestock_register_action" sequence="30"/>
+    <menuitem id="menu_alfia_livestock_valuations" name="Livestock valuations" parent="menu_alfia_livestock_root" action="alfia_livestock_valuation_action" sequence="40"/>
+</odoo>

@@ -401,13 +401,18 @@ T.update({
     "plan %(plan)s ends %(date)s": "تنتهي الخطة %(plan)s في %(date)s",
 })
 
+# Terms of the other Alfia modules (alfia_livestock, alfia_registry) live beside this script.
+_more = {}
+exec(open(__file__.replace('make_ar.py', 'ar_terms_more.py'), encoding='utf-8').read(), _more)
+T.update(_more['MORE'])
+
 table = {norm(k): v for k, v in T.items()}
 pot = polib.pofile(POT)
 po = polib.POFile()
 po.metadata = dict(pot.metadata, **{'Language': 'ar', 'Content-Type': 'text/plain; charset=UTF-8',
                                     'Plural-Forms': 'nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;'})
 missing, bad = [], []
-ph = re.compile(r'%\([a-z_]+\)s|%s|<b>|</b>')
+ph = re.compile(r'%\([a-z_]+\)s|%s|%r|<b>|</b>')
 for entry in pot:
     tr = table.get(norm(entry.msgid))
     if tr is None:

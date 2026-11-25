@@ -1,0 +1,79 @@
+<odoo>
+    <record id="alfia_incident_view_list" model="ir.ui.view">
+        <field name="name">alfia.incident.list</field>
+        <field name="model">alfia.incident</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="severity in ('high', 'critical') and state != 'closed'" decoration-muted="state == 'closed'">
+                <field name="name"/><field name="date"/><field name="kind"/><field name="severity" widget="badge"/>
+                <field name="horse_id" optional="show"/><field name="employee_id" optional="hide"/><field name="investigator_id" optional="show"/>
+                <field name="open_action_count"/><field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_incident_view_form" model="ir.ui.view">
+        <field name="name">alfia.incident.form</field>
+        <field name="model">alfia.incident</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_investigate" string="Start investigation" type="object" class="btn-primary" invisible="state != 'reported'" groups="alfia_registry.group_incident_manager"/>
+                    <button name="action_findings_done" string="Findings recorded" type="object" class="btn-primary" invisible="state != 'investigating'"/>
+                    <button name="action_request_closure" string="Request closure" type="object" class="btn-primary" invisible="state not in ('actions', 'investigating')"/>
+                    <button name="action_close" string="Approve closure" type="object" class="btn-primary" invisible="state != 'to_close'" groups="alfia_registry.group_incident_manager"/>
+                    <button name="action_reopen" string="Send back" type="object" invisible="state != 'to_close'" groups="alfia_registry.group_incident_manager"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <h1><field name="name" readonly="1"/></h1>
+                    <group>
+                        <group><field name="date"/><field name="kind"/><field name="severity"/><field name="location_id"/></group>
+                        <group><field name="horse_id"/><field name="employee_id"/><field name="reported_by_id"/><field name="investigator_id"/>
+                            <field name="closed_by_id" invisible="not closed_by_id"/><field name="closed_date" invisible="not closed_by_id"/></group>
+                    </group>
+                    <notebook>
+                        <page string="What happened" name="what">
+                            <group><field name="description"/><field name="immediate_action"/></group>
+                        </page>
+                        <page string="Investigation" name="investigation">
+                            <group><field name="investigation"/><field name="root_cause"/></group>
+                        </page>
+                        <page string="Corrective actions" name="actions">
+                            <field name="action_ids">
+                                <list editable="bottom" decoration-success="state == 'done'">
+                                    <field name="name"/><field name="owner_id"/><field name="due_date"/><field name="evidence"/>
+                                    <field name="state" readonly="1"/><field name="done_date" readonly="1"/>
+                                    <button name="action_done" string="Done" type="object" icon="fa-check" invisible="state != 'open'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Closure" name="closure">
+                            <field name="closure_notes" placeholder="What was done and how it was checked."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_incident_view_search" model="ir.ui.view">
+        <field name="name">alfia.incident.search</field>
+        <field name="model">alfia.incident</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/><field name="horse_id"/><field name="employee_id"/>
+                <filter name="open" string="Open" domain="[('state', '!=', 'closed')]"/>
+                <filter name="serious" string="High or critical" domain="[('severity', 'in', ('high', 'critical'))]"/>
+                <group><filter name="by_kind" string="Kind" context="{'group_by': 'kind'}"/>
+                    <filter name="by_severity" string="Severity" context="{'group_by': 'severity'}"/></group>
+            </search>
+        </field>
+    </record>
+    <record id="alfia_incident_action" model="ir.actions.act_window">
+        <field name="name">Incidents</field>
+        <field name="res_model">alfia.incident</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html"><p>Anyone reports an incident. An incident manager assigns an investigator; corrective actions get
+            owners and due dates; another manager approves the closure.</p></field>
+    </record>
+</odoo>

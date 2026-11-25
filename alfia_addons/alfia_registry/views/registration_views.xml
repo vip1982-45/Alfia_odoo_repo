@@ -1,0 +1,92 @@
+<odoo>
+    <record id="alfia_registration_view_list" model="ir.ui.view">
+        <field name="name">alfia.horse.registration.list</field>
+        <field name="model">alfia.horse.registration</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="is_overdue" decoration-muted="state in ('done', 'cancelled')">
+                <field name="name"/><field name="horse_id"/><field name="kind"/><field name="authority_id" optional="show"/>
+                <field name="due_date"/><field name="certificate_number" optional="show"/><field name="dna_result" optional="show"/>
+                <field name="is_overdue" column_invisible="1"/><field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_registration_view_form" model="ir.ui.view">
+        <field name="name">alfia.horse.registration.form</field>
+        <field name="model">alfia.horse.registration</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" string="Submit for approval" type="object" class="btn-primary" invisible="state not in ('draft', 'rejected')"/>
+                    <button name="action_approve" string="Approve" type="object" class="btn-primary" invisible="state != 'submitted'" groups="alfia_security.group_alfia_breeding_manager"/>
+                    <button name="action_reject" string="Reject" type="object" invisible="state != 'submitted'" groups="alfia_security.group_alfia_breeding_manager"/>
+                    <button name="action_sent" string="Sent to the authority" type="object" class="btn-primary" invisible="state != 'approved'"/>
+                    <button name="action_done" string="Complete" type="object" class="btn-primary" invisible="state != 'sent'"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state in ('done', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,sent,done"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-danger" role="alert" invisible="not is_overdue">Overdue: the due date has passed.</div>
+                    <h1><field name="name" readonly="1"/></h1>
+                    <group>
+                        <group>
+                            <field name="horse_id" readonly="state not in ('draft', 'rejected')"/>
+                            <field name="kind" readonly="state not in ('draft', 'rejected')"/>
+                            <field name="authority_id" readonly="state not in ('draft', 'rejected')"/>
+                            <field name="request_date" readonly="state not in ('draft', 'rejected')"/>
+                            <field name="due_date"/>
+                            <field name="sample_date" invisible="kind != 'dna'"/><field name="sample_taken_by_id" invisible="kind != 'dna'"/>
+                        </group>
+                        <group>
+                            <field name="authority_reference"/><field name="certificate_number" invisible="kind == 'dna'"/>
+                            <field name="dna_result" invisible="kind != 'dna'"/>
+                            <field name="issue_date"/><field name="expiry_date"/>
+                            <field name="requested_by_id"/><field name="approved_by_id"/><field name="sent_date"/><field name="completed_date"/>
+                            <field name="is_overdue" invisible="1"/><field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <field name="notes" placeholder="Attach the application, the sample form or the certificate below."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_registration_view_search" model="ir.ui.view">
+        <field name="name">alfia.horse.registration.search</field>
+        <field name="model">alfia.horse.registration</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="horse_id"/><field name="authority_id"/><field name="certificate_number"/>
+                <filter name="open" string="Open" domain="[('state', 'in', ('draft', 'submitted', 'approved', 'sent'))]"/>
+                <filter name="overdue" string="Overdue" domain="[('is_overdue', '=', True)]"/>
+                <separator/>
+                <filter name="dna" string="DNA" domain="[('kind', '=', 'dna')]"/>
+                <filter name="passport" string="Passports" domain="[('kind', '=', 'passport')]"/>
+                <group><filter name="by_kind" string="Kind" context="{'group_by': 'kind'}"/></group>
+            </search>
+        </field>
+    </record>
+    <record id="alfia_registration_action" model="ir.actions.act_window">
+        <field name="name">Registrations and certificates</field>
+        <field name="res_model">alfia.horse.registration</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_open': 1}</field>
+    </record>
+    <record id="alfia_horse_form_registrations" model="ir.ui.view">
+        <field name="name">alfia.horse.form.registrations</field>
+        <field name="model">alfia.horse</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_horse_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Registrations and DNA" name="alfia_registrations">
+                    <group><group><field name="alfia_registration_number"/><field name="alfia_dna_status"/></group></group>
+                    <field name="alfia_registration_ids" readonly="1">
+                        <list decoration-muted="state in ('done', 'cancelled')">
+                            <field name="name"/><field name="kind"/><field name="due_date"/><field name="certificate_number"/>
+                            <field name="dna_result"/><field name="state"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
