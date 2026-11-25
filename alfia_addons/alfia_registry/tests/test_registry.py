@@ -202,3 +202,20 @@ class TestIncidents(RegistryCase):
         self.assertEqual((inc.state, inc.closed_by_id), ('closed', self.bm2))
         with self.assertRaises(UserError):
             inc.with_user(self.bm2).write({'severity': 'low'})
+
+
+@tagged('post_install', '-at_install', 'alfia_registry')
+class TestHorseDeath(RegistryCase):
+
+    def test_death_sets_status_records_departure_and_is_for_managers(self):
+        barn = self.env['stock.location'].search([('usage', '=', 'internal'), ('company_id', '=', self.env.company.id)], limit=1)
+        horse = self.env['alfia.horse'].create({'name': 'Death test horse', 'sex': 'female', 'initial_location_id': barn.id})
+        wiz = self.env['alfia.horse.death'].with_user(self.bm1).create({'horse_id': horse.id, 'cause': 'injury', 'notes': 'Certified by vet'})
+        with self.assertRaises(AccessError):
+            wiz.with_user(self.groom).action_confirm()
+        wiz.action_confirm()
+        self.assertEqual(horse.status, 'dead')
+        self.assertFalse(horse.on_site)
+        self.assertTrue(horse.alfia_billed_until, "recurring charges end")
+        with self.assertRaises(UserError):
+            self.env['alfia.horse.death'].with_user(self.bm1).create({'horse_id': horse.id, 'cause': 'other', 'notes': 'x'}).action_confirm()

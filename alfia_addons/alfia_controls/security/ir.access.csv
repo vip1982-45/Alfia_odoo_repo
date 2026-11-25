@@ -32,3 +32,4 @@ acc_bank_match_manager,Bank matching wizard: finance managers,alfia.bank.match,a
 acc_bank_import_manager,Bank import wizard: finance managers,alfia.bank.import,account.group_account_manager,crud,
 acc_asset_accounting_manager,Assets: finance managers,alfia.asset,account.group_account_manager,ru,
 acc_asset_dep_manager,Asset depreciation: finance managers,alfia.asset.depreciation,account.group_account_manager,r,
+acc_bill_price_approval,Bill price approval wizard: purchase managers,alfia.bill.price.approval,purchase.group_purchase_manager,crud,

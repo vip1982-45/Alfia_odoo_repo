@@ -1,0 +1,71 @@
+<odoo>
+    <record id="alfia_move_form_price_variance" model="ir.ui.view">
+        <field name="name">account.move.form.alfia.price</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_alfia_approve_price" string="Approve price difference" type="object" groups="purchase.group_purchase_manager"
+                        invisible="move_type != 'in_invoice' or state != 'draft' or not alfia_price_variance or alfia_price_approved_by_id"/>
+            </xpath>
+            <xpath expr="//header" position="after">
+                <div class="alert alert-warning mb-0" role="alert" invisible="move_type != 'in_invoice' or state != 'draft' or not alfia_price_variance">
+                    <strong>Priced above the purchase order:</strong> <field name="alfia_price_variance" class="d-inline"/>
+                    <span invisible="not alfia_price_approved_by_id"> — approved by <field name="alfia_price_approved_by_id" class="d-inline"/>:
+                        <field name="alfia_price_approval_reason" class="d-inline"/></span>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="alfia_bill_price_approval_view_form" model="ir.ui.view">
+        <field name="name">alfia.bill.price.approval.form</field>
+        <field name="model">alfia.bill.price.approval</field>
+        <field name="arch" type="xml">
+            <form>
+                <group><field name="move_id"/><field name="variance"/><field name="reason"/></group>
+                <footer>
+                    <button name="action_confirm" string="Approve" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_lot_expiry_view_list" model="ir.ui.view">
+        <field name="name">stock.lot.list.alfia.expiry</field>
+        <field name="model">stock.lot</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list create="0" decoration-danger="expiration_date and expiration_date &lt; context_today().strftime('%Y-%m-%d')">
+                <field name="product_id"/><field name="name"/><field name="expiration_date"/><field name="alert_date" optional="show"/>
+                <field name="removal_date" optional="hide"/><field name="product_qty" string="On hand"/><field name="company_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_lot_expiry_action" model="ir.actions.act_window">
+        <field name="name">Lots and expiry</field>
+        <field name="res_model">stock.lot</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="alfia_lot_expiry_view_list"/>
+        <field name="domain">[('expiration_date', '!=', False)]</field>
+        <field name="context">{'search_default_expiration_alerts': 1}</field>
+        <field name="help" type="html"><p>Batches with an expiry date. Products are tracked this way when "Tracking: by lots" and
+            "Expiration date" are set on the product. An expired batch cannot be issued, only scrapped.</p></field>
+    </record>
+    <menuitem id="menu_alfia_lot_expiry" name="Lots and expiry" parent="stock.menu_stock_inventory_control" action="alfia_lot_expiry_action"
+              sequence="60" groups="stock.group_stock_user"/>
+    <record id="alfia_company_form_controls" model="ir.ui.view">
+        <field name="name">res.company.form.alfia.controls</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Controls" name="alfia_controls" groups="account.group_account_manager">
+                    <group>
+                        <field name="alfia_bill_price_tolerance"/>
+                        <field name="alfia_count_second_person_value"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

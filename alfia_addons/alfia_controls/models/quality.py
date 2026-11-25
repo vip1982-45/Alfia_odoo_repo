@@ -42,6 +42,9 @@ class AlfiaQualityCheck(models.Model):
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
     state = fields.Selection([('pending', 'Waiting for inspection'), ('passed', 'Accepted'), ('rejected', 'Rejected')],
                              default='pending', required=True, tracking=True)
+    rejected_qty = fields.Float(string='Quantity rejected',
+                                help="For a partial acceptance: how much of the received quantity is rejected (to Rejected goods). "
+                                     "Leave 0 to accept everything.")
     findings = fields.Text(help="What was checked and found (packaging, temperature, expiry, documents...). Required to reject.")
     received_by_id = fields.Many2one('res.users', string='Received by', readonly=True)
     inspector_id = fields.Many2one('res.users', readonly=True, copy=False)
@@ -86,16 +89,25 @@ class AlfiaQualityCheck(models.Model):
             check.message_post(body=self.env._("Received in %s; waiting for inspection.", location.complete_name))
 
     @api.model
-    def _alfia_transfer(self, move, src, dst):
-        """Move exactly what `move` received (same batches and quantities) from src to dst."""
+    def _alfia_transfer(self, move, src, dst, qty=None):
+        """Move what `move` received (same batches) from src to dst: all of it, or `qty`, taken from its batches in turn."""
+        parts, left = [], move.quantity if qty is None else qty
+        for ml in move.move_line_ids:
+            take = min(ml.quantity, left)
+            if take > 0:
+                parts.append((ml, take))
+                left -= take
+        total = sum(take for _ml, take in parts)
+        if not parts:
+            return self.env['stock.move']
         new = self.env['stock.move'].sudo().create({
-            'product_id': move.product_id.id, 'product_uom_qty': move.quantity, 'uom_id': move.uom_id.id,
+            'product_id': move.product_id.id, 'product_uom_qty': total, 'uom_id': move.uom_id.id,
             'location_id': src.id, 'location_dest_id': dst.id, 'company_id': move.company_id.id,
             'origin': f"{move.picking_id.name or ''} / quality"})
         new._action_confirm()
         new.write({'move_line_ids': [Command.create({
-            'product_id': ml.product_id.id, 'lot_id': ml.lot_id.id, 'quantity': ml.quantity, 'uom_id': ml.uom_id.id,
-            'location_id': src.id, 'location_dest_id': dst.id, 'picked': True}) for ml in move.move_line_ids]})
+            'product_id': ml.product_id.id, 'lot_id': ml.lot_id.id, 'quantity': take, 'uom_id': ml.uom_id.id,
+            'location_id': src.id, 'location_dest_id': dst.id, 'picked': True}) for ml, take in parts]})
         new.picked = True
         new._action_done()
         return new
@@ -111,15 +123,36 @@ class AlfiaQualityCheck(models.Model):
                 raise UserError(self.env._("You received these goods, so another person must inspect them."))
 
     def action_accept(self):
+        """Accept the goods into stock; with a rejected quantity, accept the rest and send that part to Rejected goods."""
         self._check_inspector()
         for rec in self:
-            move = rec.sudo().move_id
+            move, location = rec.sudo().move_id, rec.sudo().location_id
+            rejected_qty = rec.rejected_qty or 0.0
+            if rejected_qty < 0 or rejected_qty >= rec.quantity:
+                raise UserError(self.env._("The rejected quantity must be more than 0 and less than %(qty)s; to reject everything "
+                                           "use Reject.", qty=rec.quantity) if rejected_qty else self.env._("Invalid quantity."))
+            if rejected_qty and not rec.findings:
+                raise UserError(self.env._("Record what was found before rejecting part of %s.", rec.name))
+            if rejected_qty:
+                warehouse = location.warehouse_id or move.picking_type_id.warehouse_id
+                rejected_loc = self._alfia_hold_location(warehouse, 'rejected')
+                # The put-away waits only for what was accepted.
+                for dest in move.move_dest_ids.filtered(lambda m: m.state not in ('done', 'cancel')):
+                    dest._do_unreserve()
+                    dest.product_uom_qty = max(dest.product_uom_qty - rejected_qty, 0.0)
+                self._alfia_transfer(move, location, rejected_loc, qty=rejected_qty)
             if not move.move_dest_ids:
-                self._alfia_transfer(move, rec.sudo().location_id, move.location_dest_id)
+                self._alfia_transfer(move, location, move.location_dest_id, qty=rec.quantity - rejected_qty)
             with workflow():
                 rec.write({'state': 'passed', 'inspector_id': self.env.user.id, 'decided_date': fields.Datetime.now(),
                            'location_id': move.location_dest_id.id})
-            rec.message_post(body=self.env._("Accepted by %(user)s. %(findings)s", user=self.env.user.name, findings=rec.findings or ''))
+            if rejected_qty:
+                rec.message_post(body=self.env._("Partly accepted by %(user)s: %(ok)s accepted, %(bad)s rejected to Rejected goods. %(findings)s",
+                                                 user=self.env.user.name, ok=rec.quantity - rejected_qty, bad=rejected_qty, findings=rec.findings))
+                rec.sudo().picking_id.message_post(body=self.env._("%(product)s: %(bad)s rejected at inspection: %(findings)s",
+                                                                   product=rec.product_id.display_name, bad=rejected_qty, findings=rec.findings))
+            else:
+                rec.message_post(body=self.env._("Accepted by %(user)s. %(findings)s", user=self.env.user.name, findings=rec.findings or ''))
 
     def action_reject(self):
         self._check_inspector()

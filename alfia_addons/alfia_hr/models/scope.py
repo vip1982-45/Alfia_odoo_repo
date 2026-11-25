@@ -4,6 +4,7 @@ Access profiles gain departments (next to their stock locations, warehouses and 
 not in the 'All departments' group see the employees, time off, allocations, reimbursements and attendance of their
 departments (and below), plus their own. Everyone always sees their own records."""
 from odoo import Command, api, fields, models
+from odoo.exceptions import UserError
 
 HR_STAFF_GROUPS = ('hr.group_hr_user', 'hr_holidays.group_hr_holidays_user', 'hr_holidays.group_hr_holidays_responsible', 'hr_expense.group_hr_expense_team_approver',
                    'hr_attendance.group_hr_attendance_officer', 'hr_recruitment.group_hr_recruitment_interviewer')
@@ -57,3 +58,30 @@ class AlfiaSiteSetup(models.TransientModel):
         department = self.env['hr.department'].sudo().create({'name': self.site_name.strip(), 'parent_id': self.department_parent_id.id})
         self.created_profile_ids.sudo().write({'department_ids': [Command.link(department.id)]})
         return res
+
+
+class HrEmployeeScope(models.Model):
+    """HR staff limited to departments create employees in those departments: a new employee starts in the user's first
+    department, and a department outside their scope is refused with a clear message (otherwise the record would be
+    saved and immediately hidden from the person who created it)."""
+    _inherit = 'hr.employee'
+
+    @api.model
+    def default_get(self, fields_list):
+        vals = super().default_get(fields_list)
+        user = self.env.user
+        if 'department_id' in fields_list and not vals.get('department_id') and user.alfia_scope_departments and user.alfia_department_ids:
+            vals['department_id'] = user.alfia_department_ids[:1].id
+        return vals
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        user = self.env.user
+        if not self.env.su and user.alfia_scope_departments:
+            allowed = self.env['hr.department'].sudo().search([('id', 'child_of', user.alfia_department_ids.ids)]) if user.alfia_department_ids else self.env['hr.department']
+            for vals in vals_list:
+                if vals.get('department_id') not in allowed.ids and vals.get('user_id') != user.id:
+                    raise UserError(self.env._(
+                        "Choose one of your departments for the new employee: %s. Employees of other departments are "
+                        "created by HR staff responsible for them.", ', '.join(user.alfia_department_ids.mapped('name')) or '—'))
+        return super().create(vals_list)

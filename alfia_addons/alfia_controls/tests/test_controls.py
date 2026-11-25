@@ -680,3 +680,140 @@ class TestBoardingExit(ControlsCase):
         self.env['alfia.horse.movement'].create({'horse_id': horse2.id, 'kind': 'arrival', 'date': '2026-03-15 10:00:00',
                                                  'location_to_id': self.barn.id}).action_done()
         self.assertFalse(horse2.alfia_billed_until)
+
+
+@tagged('post_install', '-at_install', 'alfia_controls')
+class TestStockAndBillControls(ControlsCase):
+    """Owner decisions of 25 Nov 2026: no issue beyond stock, counts need a reason (and a second person above 1,000 QAR),
+    supplier bills within 2% of the order price, expired batches are not issued; and partial acceptance at inspection."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        env = cls.env
+        env.company.write({'alfia_sod_enabled': True, 'alfia_sod_threshold': 0, 'alfia_bill_price_tolerance': 2.0,
+                           'alfia_count_second_person_value': 1000.0, 'po_double_validation': 'one_step'})
+        cls.approver1 = env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'adj1', 'login': 'adj1@ctl.local',
+            'group_ids': [Command.link(env.ref(g).id) for g in ('stock.group_stock_manager', 'alfia_security.group_alfia_stock_adjust_approver',
+                                                                 'alfia_security.group_alfia_all_locations', 'alfia_security.group_alfia_all_warehouses')]})
+        cls.approver2 = cls.approver1.copy({'login': 'adj2@ctl.local', 'name': 'adj2'})
+        cls.approver2.group_ids = cls.approver1.group_ids
+        cls.stocked = env['product.product'].create({'name': 'Controls stocked', 'is_storable': True, 'type': 'consu', 'standard_price': 100})
+        cls.stock = cls.wh.lot_stock_id
+        env['stock.quant']._update_available_quantity(cls.stocked, cls.stock, 5)
+
+    def _out_move(self, qty, product=None, lot=None):
+        product = product or self.stocked
+        move = self.env['stock.move'].create({'product_id': product.id, 'product_uom_qty': qty, 'uom_id': product.uom_id.id,
+                                              'location_id': self.stock.id, 'location_dest_id': self.env.ref('stock.stock_location_customers').id})
+        move._action_confirm()
+        move._action_assign()
+        return move
+
+    def test_no_issue_beyond_stock(self):
+        move = self._out_move(8)
+        move.move_line_ids.unlink()
+        with self.assertRaises(UserError):
+            # Refused when the line asks for more than is there, or at the latest when the transfer is done.
+            self.env['stock.move.line'].create({'move_id': move.id, 'product_id': self.stocked.id, 'quantity': 8, 'picked': True,
+                                                'location_id': self.stock.id, 'location_dest_id': move.location_dest_id.id})
+            move._action_done()
+        plain = self.env['product.product'].create({'name': 'Plain stocked', 'is_storable': True, 'type': 'consu'})
+        self.env['stock.quant']._update_available_quantity(plain, self.stock, 2)
+        short = self._out_move(3, plain)
+        with self.assertRaises(UserError):
+            short.move_line_ids.write({'quantity': 3})
+            short.picked = True
+            short._action_done()
+        ok = self._out_move(5)
+        ok.picked = True
+        ok._action_done()
+        self.assertEqual(ok.state, 'done')
+
+    def test_count_needs_a_reason_and_a_second_person_above_the_threshold(self):
+        quant = self.env['stock.quant'].search([('product_id', '=', self.stocked.id), ('location_id', '=', self.stock.id)])
+        quant.with_user(self.approver1).inventory_quantity = 25            # +20 x 100 = 2,000 QAR
+        with self.assertRaises(UserError):
+            quant.with_user(self.approver1).action_apply_inventory()      # no reason
+        with self.assertRaises(UserError):
+            quant.with_user(self.approver1).with_context(inventory_name='Physical Inventory').action_apply_inventory()
+        with self.assertRaises(UserError):
+            quant.with_user(self.approver1).with_context(inventory_name='Found a pallet behind the hay').action_apply_inventory()
+        quant.with_user(self.approver2).with_context(inventory_name='Found a pallet behind the hay').action_apply_inventory()
+        self.assertEqual(quant.quantity, 25)
+        quant.with_user(self.approver1).inventory_quantity = 26            # +1 x 100 = 100 QAR, under the threshold
+        quant.with_user(self.approver1).with_context(inventory_name='Recount').action_apply_inventory()
+        self.assertEqual(quant.quantity, 26)
+
+    def test_bill_price_above_tolerance_needs_a_purchase_manager(self):
+        po = self.env['purchase.order'].create({'partner_id': self.vendor.id, 'order_line': [
+            Command.create({'product_id': self.tack.id, 'product_qty': 20, 'price_unit': 5.0})]})
+        po.button_confirm()
+        po.order_line.qty_received = 20
+        bill = self.env['account.move'].create({
+            'move_type': 'in_invoice', 'partner_id': self.vendor.id, 'invoice_date': fields.Date.today(),
+            'invoice_line_ids': [Command.create({'purchase_line_id': po.order_line.id, 'product_id': self.tack.id, 'quantity': 20,
+                                                 'price_unit': 6.0, 'name': 'Tack', 'tax_ids': False})]})
+        self.assertIn('+20.0%', bill.alfia_price_variance)
+        poster = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'billposter', 'login': 'billposter@ctl.local',
+            'group_ids': [Command.link(self.env.ref(g).id) for g in ('account.group_account_manager', 'alfia_security.group_alfia_all_journals',
+                                                                     'alfia_security.group_alfia_all_warehouses', 'alfia_security.group_alfia_all_locations',
+                                                                     'stock.group_stock_user')]})
+        with self.assertRaises(UserError):
+            bill.with_user(poster).action_post()                         # Round 7 N1: 20% above, no approval
+        with self.assertRaises(AccessError):
+            self.env['alfia.bill.price.approval'].with_user(self.buyer).create({'move_id': bill.id, 'reason': 'x'}).action_confirm()
+        self.env['alfia.bill.price.approval'].with_user(self.manager).create(
+            {'move_id': bill.id, 'reason': 'Supplier price list changed on 1 Nov'}).action_confirm()
+        bill.with_user(poster).action_post()
+        self.assertEqual(bill.state, 'posted')
+        within = self.env['account.move'].create({
+            'move_type': 'in_invoice', 'partner_id': self.vendor.id, 'invoice_date': fields.Date.today(),
+            'invoice_line_ids': [Command.create({'purchase_line_id': po.order_line.id, 'product_id': self.tack.id, 'quantity': 1,
+                                                 'price_unit': 5.1, 'name': 'Tack', 'tax_ids': False})]})
+        within.with_user(poster).action_post()                             # 2% exactly
+        self.assertEqual(within.state, 'posted')
+
+    def test_expired_batch_cannot_be_issued(self):
+        product = self.env['product.product'].create({'name': 'Controls expiring vaccine', 'is_storable': True, 'type': 'consu',
+                                                      'tracking': 'lot', 'use_expiration_date': True})
+        expired = self.env['stock.lot'].create({'name': 'EXP-OLD', 'product_id': product.id,
+                                                'expiration_date': fields.Datetime.now() - timedelta(days=2)})
+        self.env['stock.quant']._update_available_quantity(product, self.stock, 3, lot_id=expired)
+        move = self._out_move(1, product)
+        move.move_line_ids.unlink()
+        self.env['stock.move.line'].create({'move_id': move.id, 'product_id': product.id, 'lot_id': expired.id, 'quantity': 1,
+                                            'picked': True, 'location_id': self.stock.id, 'location_dest_id': move.location_dest_id.id})
+        with self.assertRaises(UserError):
+            move._action_done()
+
+
+@tagged('post_install', '-at_install', 'alfia_controls')
+class TestPartialAcceptance(TestReceiptQuality):
+
+    def test_partial_accept_two_step(self):
+        picking = self._receive(10, steps='two_steps')
+        check = self.env['alfia.quality.check'].search([('picking_id', '=', picking.id)])
+        check.with_user(self.inspector2).rejected_qty = 3
+        with self.assertRaises(UserError):
+            check.with_user(self.inspector2).action_accept()             # findings required for a partial rejection
+        check.with_user(self.inspector2).findings = 'Three vials cracked'
+        check.with_user(self.inspector2).action_accept()
+        self.assertEqual(check.state, 'passed')
+        rejected = self.env['stock.location'].search([('name', 'ilike', 'Rejected goods'), ('location_id', '=', self.wh.view_location_id.id)])
+        self.assertEqual(self._qty(rejected), 3)
+        put_away = picking.move_ids.move_dest_ids
+        self.assertEqual(put_away.product_uom_qty, 7)
+        put_away.picking_id.action_assign()
+        put_away.picked = True
+        put_away.picking_id.button_validate()
+        self.assertEqual(self._qty(self.wh.lot_stock_id), 7)
+
+    def test_partial_accept_one_step(self):
+        picking = self._receive(10)
+        check = self.env['alfia.quality.check'].search([('picking_id', '=', picking.id)])
+        check.with_user(self.inspector2).write({'rejected_qty': 4, 'findings': 'Wrong strength on 4'})
+        check.with_user(self.inspector2).action_accept()
+        self.assertEqual(self._qty(self.wh.lot_stock_id), 6)

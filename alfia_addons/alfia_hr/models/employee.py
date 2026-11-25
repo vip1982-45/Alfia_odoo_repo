@@ -41,7 +41,7 @@ class HrEmployee(models.Model):
         leaving._alfia_revoke_access()
         plan = self.env.ref('alfia_hr.plan_offboarding', raise_if_not_found=False)
         if plan and plan.active:
-            leaving.with_context(active_test=False)._alfia_launch_plan(plan)
+            leaving.with_context(active_test=False)._alfia_start_offboarding(plan)   # unless a scheduled departure started it
         return res
 
     def _alfia_revoke_access(self, reason=None):

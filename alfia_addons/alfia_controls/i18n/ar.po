@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 13:15+0000\n"
-"PO-Revision-Date: 2026-11-25 13:15+0000\n"
+"POT-Creation-Date: 2026-11-25 16:05+0000\n"
+"PO-Revision-Date: 2026-11-25 16:05+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -12,6 +12,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bill_price.py:0
+msgid ""
+"%(bill)s is priced above its purchase order beyond the %(tol)s%% tolerance: "
+"%(lines)s. A purchase manager must approve the price difference (Approve "
+"price difference) with a reason first."
+msgstr ""
+"%(bill)s مسعّرة أعلى من أمر الشراء بما يتجاوز هامش %(tol)s%%: %(lines)s. يجب"
+" أن يعتمد مدير المشتريات فرق السعر (اعتماد فرق السعر) مع السبب أولاً."
 
 #. module: alfia_controls
 #. odoo-python
@@ -83,9 +94,41 @@ msgstr "تم استيراد %(new)s سطر، وتم تخطي %(dup)s سبق اس
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/stock_controls.py:0
+msgid ""
+"%(product)s batch %(lot)s expired on %(date)s and cannot be issued. Scrap it"
+" instead."
+msgstr ""
+"انتهت صلاحية دفعة %(lot)s من %(product)s في %(date)s ولا يمكن صرفها. أتلفها "
+"بدلاً من ذلك."
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/quality.py:0
 msgid "%(product)s was rejected at inspection: %(findings)s"
 msgstr "تم رفض %(product)s عند الفحص: %(findings)s"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/stock_controls.py:0
+msgid "%(product)s%(lot)s in %(loc)s (short by %(short)g)"
+msgstr "%(product)s%(lot)s في %(loc)s (نقص %(short)g)"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "%(product)s: %(bad)s rejected at inspection: %(findings)s"
+msgstr "%(product)s: رُفض %(bad)s عند الفحص: %(findings)s"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/stock_controls.py:0
+msgid ""
+"%(product)s: this adjustment is worth %(value)s, and you recorded the count,"
+" so another approver must apply it."
+msgstr ""
+"%(product)s: قيمة هذه التسوية %(value)s، وأنت من سجل الجرد، لذا يجب أن "
+"يطبقها معتمِد آخر."
 
 #. module: alfia_controls
 #. odoo-python
@@ -135,6 +178,11 @@ msgid "0 for a write-off."
 msgstr "0 للشطب."
 
 #. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_move_form_price_variance
+msgid "<strong>Priced above the purchase order:</strong>"
+msgstr "<strong>مسعّرة أعلى من أمر الشراء:</strong>"
+
+#. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_import_view_form
 msgid ""
 "A CSV file from online banking with a <b>Date</b> column and an <b>Amount</b> column (or <b>Debit</b>/<b>Credit</b>),\n"
@@ -160,6 +208,15 @@ msgstr ""
 msgid ""
 "A completed period close is kept as the record of who closed the books."
 msgstr "يُحتفظ بإقفال الفترة المكتمل كسجل لمن أقفل الدفاتر."
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_res_company__alfia_count_second_person_value
+msgid ""
+"A count adjustment worth this much or more (quantity difference × cost) must"
+" be applied by an approver who did not record the count."
+msgstr ""
+"تسوية الجرد التي تبلغ هذه القيمة أو أكثر (فرق الكمية × التكلفة) يجب أن "
+"يطبقها معتمِد لم يسجل الجرد."
 
 #. module: alfia_controls
 #. odoo-python
@@ -228,6 +285,16 @@ msgid ""
 "change and resubmit it."
 msgstr ""
 "لا يمكن تغيير طلب مقدَّم. اطلب من المعتمِد رفضه، ثم عدّله وأعد تقديمه."
+
+#. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_res_company__alfia_bill_price_tolerance
+msgid ""
+"A supplier bill line may be up to this much above its purchase order price. "
+"Above it, a purchase manager approves the difference (with a reason) before "
+"the bill can be posted."
+msgstr ""
+"يجوز أن يزيد سطر فاتورة المورد عن سعر أمر الشراء بهذه النسبة. وفوقها يعتمد "
+"مدير المشتريات الفرق (مع السبب) قبل ترحيل الفاتورة."
 
 #. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_quality_check_view_form
@@ -379,14 +446,27 @@ msgid "Approvals delegated"
 msgstr "الاعتمادات المفوَّضة"
 
 #. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bill_price_approval_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
 msgid "Approve"
 msgstr "اعتماد"
 
 #. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_alfia_bill_price_approval
+msgid "Approve a supplier bill price difference"
+msgstr "اعتماد فرق سعر فاتورة مورد"
+
+#. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_period_close_view_form
 msgid "Approve and lock"
 msgstr "اعتماد وقفل"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bill_price.py:0
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_move_form_price_variance
+msgid "Approve price difference"
+msgstr "اعتماد فرق السعر"
 
 #. module: alfia_controls
 #: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_purchase_request__state__approved
@@ -490,9 +570,24 @@ msgid "Batches"
 msgstr "أرقام التشغيلات"
 
 #. module: alfia_controls
+#: model_terms:ir.actions.act_window,help:alfia_controls.alfia_lot_expiry_action
+msgid ""
+"Batches with an expiry date. Products are tracked this way when \"Tracking: by lots\" and\n"
+"            \"Expiration date\" are set on the product. An expired batch cannot be issued, only scrapped."
+msgstr ""
+"الدفعات ذات تاريخ الصلاحية. تُتتبَّع المنتجات بهذه الطريقة عند ضبط \"التتبع:"
+" بالدفعات\" و\"تاريخ الانتهاء\" على المنتج. لا يمكن صرف دفعة منتهية "
+"الصلاحية، بل إتلافها فقط."
+
+#. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_period_close_view_form
 msgid "Before closing"
 msgstr "قبل الإقفال"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_res_company__alfia_bill_price_tolerance
+msgid "Bill price tolerance (%)"
+msgstr "هامش سعر فاتورة المورد (%)"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__book_value
@@ -503,6 +598,7 @@ msgstr "القيمة الدفترية"
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_asset_disposal_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_import_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_match_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bill_price_approval_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
 msgid "Cancel"
 msgstr "إلغاء"
@@ -587,6 +683,7 @@ msgstr "أكّده %(user)s نيابةً عن %(owner)s (تفويض)."
 
 #. module: alfia_controls
 #: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_finance
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_company_form_controls
 msgid "Controls"
 msgstr "الضوابط"
 
@@ -606,6 +703,11 @@ msgid "Cost and residual value cannot be negative."
 msgstr "لا يمكن أن تكون التكلفة والقيمة المتبقية سالبة."
 
 #. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_stock_quant__alfia_counted_by_id
+msgid "Counted by"
+msgstr "جرده"
+
+#. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
 msgid "Create requests for quotation"
 msgstr "إنشاء طلبات عروض أسعار"
@@ -617,6 +719,7 @@ msgstr "إنشاء طلبات عروض أسعار"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__create_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__create_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__create_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bill_price_approval__create_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__create_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__create_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__create_uid
@@ -631,6 +734,7 @@ msgstr "أنشأه"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__create_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__create_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__create_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bill_price_approval__create_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__create_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__create_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__create_date
@@ -737,6 +841,7 @@ msgstr "قيد الفرق على"
 #: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_account_lock_exception__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_account_move__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_account_payment__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__display_name
@@ -745,6 +850,7 @@ msgstr "قيد الفرق على"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bill_price_approval__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_charge__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_horse__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_horse_movement__display_name
@@ -757,6 +863,8 @@ msgstr "قيد الفرق على"
 #: model:ir.model.fields,field_description:alfia_controls.field_purchase_order_line__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_res_company__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_stock_move__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_stock_quant__display_name
 msgid "Display Name"
 msgstr "الاسم المعروض"
 
@@ -931,6 +1039,15 @@ msgid "Followers (Partners)"
 msgstr "المتابعون (الشركاء)"
 
 #. module: alfia_controls
+#: model:ir.model.fields,help:alfia_controls.field_alfia_quality_check__rejected_qty
+msgid ""
+"For a partial acceptance: how much of the received quantity is rejected (to "
+"Rejected goods). Leave 0 to accept everything."
+msgstr ""
+"للقبول الجزئي: مقدار الكمية المستلمة المرفوضة (إلى البضائع المرفوضة). اتركها"
+" 0 لقبول الكل."
+
+#. module: alfia_controls
 #: model:ir.model.fields,help:alfia_controls.field_alfia_bank_match__writeoff_account_id
 msgid "For example bank charges."
 msgstr "مثلاً رسوم البنك."
@@ -989,6 +1106,7 @@ msgstr "حركة الحصان"
 #: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__id
 #: model:ir.model.fields,field_description:alfia_controls.field_account_lock_exception__id
 #: model:ir.model.fields,field_description:alfia_controls.field_account_move__id
+#: model:ir.model.fields,field_description:alfia_controls.field_account_move_line__id
 #: model:ir.model.fields,field_description:alfia_controls.field_account_payment__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__id
@@ -997,6 +1115,7 @@ msgstr "حركة الحصان"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bill_price_approval__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_charge__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_horse__id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_horse_movement__id
@@ -1009,6 +1128,8 @@ msgstr "حركة الحصان"
 #: model:ir.model.fields,field_description:alfia_controls.field_purchase_order_line__id
 #: model:ir.model.fields,field_description:alfia_controls.field_res_company__id
 #: model:ir.model.fields,field_description:alfia_controls.field_stock_move__id
+#: model:ir.model.fields,field_description:alfia_controls.field_stock_move_line__id
+#: model:ir.model.fields,field_description:alfia_controls.field_stock_quant__id
 msgid "ID"
 msgstr "المعرف"
 
@@ -1093,6 +1214,12 @@ msgstr ""
 "القيود وإقفال الفترات، تسوية الكشوف البنكية"
 
 #. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "Invalid quantity."
+msgstr "كمية غير صالحة."
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_is_follower
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__message_is_follower
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__message_is_follower
@@ -1113,6 +1240,11 @@ msgid "Journal Entry"
 msgstr "القيد"
 
 #. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_account_move_line
+msgid "Journal Item"
+msgstr "بند اليومية"
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__kind
 msgid "Kind"
 msgstr "النوع"
@@ -1124,6 +1256,7 @@ msgstr "النوع"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__write_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__write_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__write_uid
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bill_price_approval__write_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__write_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__write_uid
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__write_uid
@@ -1138,6 +1271,7 @@ msgstr "آخر تحديث بواسطة"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__write_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_import__write_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__write_date
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bill_price_approval__write_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__write_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__write_date
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__write_date
@@ -1167,6 +1301,12 @@ msgstr "القفل"
 msgid ""
 "Lock dates are set by an approved period close (Accounting › Period closes)."
 msgstr "تُحدَّد تواريخ القفل بإقفال فترة معتمد (المحاسبة › إقفال الفترات)."
+
+#. module: alfia_controls
+#: model:ir.actions.act_window,name:alfia_controls.alfia_lot_expiry_action
+#: model:ir.ui.menu,name:alfia_controls.menu_alfia_lot_expiry
+msgid "Lots and expiry"
+msgstr "الدفعات والصلاحية"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__alfia_manual
@@ -1236,6 +1376,7 @@ msgstr "الرسائل"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__move_id
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bill_price_approval__move_id
 msgid "Move"
 msgstr "القيد"
 
@@ -1271,6 +1412,16 @@ msgstr "لم يحتج أي رسم إلى تعديل."
 #: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_asset__accounting_state__none
 msgid "Not capitalised"
 msgstr "غير مرسمل"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/stock_controls.py:0
+msgid ""
+"Not enough in stock to issue: %s. Issue only what is there and leave the "
+"rest as a backorder, or receive the goods first."
+msgstr ""
+"لا يوجد مخزون كافٍ للصرف: %s. اصرف المتوفر فقط واترك الباقي كطلب متأخر، أو "
+"استلم البضاعة أولاً."
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_needaction_counter
@@ -1309,6 +1460,11 @@ msgid "Number of messages with delivery error"
 msgstr "عدد الرسائل التي بها خطأ في التسليم"
 
 #. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_lot_expiry_view_list
+msgid "On hand"
+msgstr "المتوفر"
+
+#. module: alfia_controls
 #: model_terms:ir.actions.act_window,help:alfia_controls.alfia_period_close_action
 msgid ""
 "One finance manager prepares the close of a period; another approves it, which sets the lock date.\n"
@@ -1323,6 +1479,12 @@ msgstr ""
 msgid ""
 "Only a capitalised asset that is not yet disposed of can be disposed of."
 msgstr "لا يمكن التخلص إلا من أصل مرسمل لم يُتخلَّص منه بعد."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bill_price.py:0
+msgid "Only a draft bill's price difference can be approved."
+msgstr "لا يمكن اعتماد فرق السعر إلا لفاتورة مسودة."
 
 #. module: alfia_controls
 #. odoo-python
@@ -1392,6 +1554,12 @@ msgstr "لا تُطابَق إلا البنود المرحّلة والمفتو�
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/bill_price.py:0
+msgid "Only purchase managers approve a bill's price difference."
+msgstr "لا يعتمد فرق سعر الفاتورة إلا مديرو المشتريات."
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/purchase_request.py:0
 msgid "Only purchasing staff turn requests into orders."
 msgstr "لا يحوّل الطلبات إلى أوامر إلا موظفو المشتريات."
@@ -1450,6 +1618,16 @@ msgstr "الدفعات الصادرة"
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_quality_check_view_form
 msgid "Packaging, temperature, expiry, documents, quantity counted..."
 msgstr "التغليف، الحرارة، الصلاحية، المستندات، الكمية المعدودة..."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid ""
+"Partly accepted by %(user)s: %(ok)s accepted, %(bad)s rejected to Rejected "
+"goods. %(findings)s"
+msgstr ""
+"قَبِله %(user)s جزئياً: %(ok)s مقبول، و%(bad)s مرفوض إلى البضائع المرفوضة. "
+"%(findings)s"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_bank_match__partner_filter_id
@@ -1514,6 +1692,31 @@ msgid "Previous Lock Date"
 msgstr "تاريخ القفل السابق"
 
 #. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__alfia_price_approved_by_id
+#: model:ir.model.fields,field_description:alfia_controls.field_account_move__alfia_price_approved_by_id
+msgid "Price difference approved by"
+msgstr "اعتمد فرق السعر"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/bill_price.py:0
+msgid "Price difference approved by %(user)s: %(reason)s (%(lines)s)"
+msgstr "اعتمد %(user)s فرق السعر: %(reason)s (%(lines)s)"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__alfia_price_approval_reason
+#: model:ir.model.fields,field_description:alfia_controls.field_account_move__alfia_price_approval_reason
+msgid "Price difference reason"
+msgstr "سبب فرق السعر"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__alfia_price_variance
+#: model:ir.model.fields,field_description:alfia_controls.field_account_move__alfia_price_variance
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bill_price_approval__variance
+msgid "Prices above the order"
+msgstr "أسعار أعلى من الأمر"
+
+#. module: alfia_controls
 #. odoo-python
 #: code:addons/alfia_controls/models/asset_accounting.py:0
 msgid "Proceeds cannot be negative."
@@ -1535,6 +1738,11 @@ msgstr "المنتج"
 #: model:ir.model,name:alfia_controls.model_product_category
 msgid "Product Category"
 msgstr "فئة المنتج"
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "حركات المنتج (سطر حركة المخزون)"
 
 #. module: alfia_controls
 #: model:ir.model,name:alfia_controls.model_purchase_order
@@ -1593,10 +1801,20 @@ msgid "Purchase requests"
 msgstr "طلبات الشراء"
 
 #. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_stock_quant
+msgid "Quant"
+msgstr "رصيد المخزون"
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request_line__quantity
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__quantity
 msgid "Quantity"
 msgstr "الكمية"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_quality_check__rejected_qty
+msgid "Quantity rejected"
+msgstr "الكمية المرفوضة"
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__rating_ids
@@ -1610,6 +1828,7 @@ msgstr "التقييمات"
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__reason
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__reason
+#: model:ir.model.fields,field_description:alfia_controls.field_alfia_bill_price_approval__reason
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_period_close__reason
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_purchase_request__reason
 msgid "Reason"
@@ -1662,6 +1881,12 @@ msgstr "حركة الاستلام"
 #: code:addons/alfia_controls/models/quality.py:0
 msgid "Record what was found before rejecting %s."
 msgstr "سجّل ما وُجد قبل رفض %s."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid "Record what was found before rejecting part of %s."
+msgstr "سجّل ما وُجد قبل رفض جزء من %s."
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_horse__alfia_billed_until
@@ -1814,6 +2039,11 @@ msgid "Stock Move"
 msgstr "حركة المخزون"
 
 #. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_res_company__alfia_count_second_person_value
+msgid "Stock count: second person from"
+msgstr "جرد المخزون: شخص ثانٍ ابتداءً من"
+
+#. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_period_close_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_purchase_request_view_form
 msgid "Submit for approval"
@@ -1904,6 +2134,16 @@ msgstr "يجب أن تكون الكمية أكبر من صفر."
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/quality.py:0
+msgid ""
+"The rejected quantity must be more than 0 and less than %(qty)s; to reject "
+"everything use Reject."
+msgstr ""
+"يجب أن تكون الكمية المرفوضة أكبر من 0 وأقل من %(qty)s؛ ولرفض الكل استخدم "
+"رفض."
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/asset_accounting.py:0
 msgid "The residual value cannot be more than the cost."
 msgstr "لا يمكن أن تزيد القيمة المتبقية على التكلفة."
@@ -1932,6 +2172,7 @@ msgstr "تمت مطابقة هذا السطر البنكي جزئياً؛ ترا
 #. module: alfia_controls
 #. odoo-python
 #: code:addons/alfia_controls/models/approval.py:0
+#: code:addons/alfia_controls/models/bill_price.py:0
 msgid "This bill"
 msgstr "فاتورة المورد هذه"
 
@@ -1962,6 +2203,14 @@ msgstr "لإعادة الفتح، اختر تاريخاً قبل تاريخ ال
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_list
 msgid "Total"
 msgstr "الإجمالي"
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/stock_controls.py:0
+msgid ""
+"Type the reason for this stock adjustment (what was found and why it "
+"differs)."
+msgstr "اكتب سبب تسوية المخزون هذه (ما وُجد ولماذا يختلف)."
 
 #. module: alfia_controls
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_list
@@ -2111,6 +2360,14 @@ msgstr "لا يمكنك تحديد حد اعتماد يشملك؛ يجب أن ي
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/bill_price.py:0
+msgid ""
+"You entered this bill, so another purchase manager must approve its price "
+"difference."
+msgstr "أنت أدخلت هذه الفاتورة، لذا يجب أن يعتمد فرق سعرها مدير مشتريات آخر."
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/approval.py:0
 msgid ""
 "You have no approval limit for this kind of document, so you cannot approve "
@@ -2200,3 +2457,8 @@ msgstr "الكشف"
 #: code:addons/alfia_controls/models/asset_accounting.py:0
 msgid "useful life"
 msgstr "العمر الإنتاجي"
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_move_form_price_variance
+msgid "— approved by"
+msgstr "— اعتمده"

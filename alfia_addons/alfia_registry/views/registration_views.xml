@@ -89,4 +89,37 @@
             </xpath>
         </field>
     </record>
+    <record id="alfia_horse_death_view_form" model="ir.ui.view">
+        <field name="name">alfia.horse.death.form</field>
+        <field name="model">alfia.horse.death</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>The horse becomes Dead. If it is on the farm, a departure is recorded; its recurring charges stop, and if it has a
+                    carrying value, finance gets a draft disposal valuation.</p>
+                <group><field name="horse_id" readonly="1"/><field name="date"/><field name="cause"/><field name="notes"/></group>
+                <footer>
+                    <button name="action_confirm" string="Record death" type="object" class="btn-primary"
+                            confirm="This cannot be undone from this screen. Continue?"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_horse_death_action" model="ir.actions.act_window">
+        <field name="name">Record death</field>
+        <field name="res_model">alfia.horse.death</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record id="alfia_horse_form_death" model="ir.ui.view">
+        <field name="name">alfia.horse.form.death</field>
+        <field name="model">alfia.horse</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_horse_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="%(alfia_horse_death_action)d" string="Record death" type="action" context="{'active_id': id, 'active_model': 'alfia.horse'}"
+                        groups="alfia_security.group_alfia_vet_manager,alfia_security.group_alfia_breeding_manager" invisible="status in ('dead', 'sold', 'gifted')"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>

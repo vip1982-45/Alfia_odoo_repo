@@ -176,7 +176,7 @@ class TestInventory(FinanceCase):
             quant.with_user(self.storekeeper).action_apply_inventory()
         approver = self.storekeeper.copy({'login': 'adjust@fin.local'})
         approver.write({'group_ids': [Command.link(self.env.ref('alfia_security.group_alfia_stock_adjust_approver').id)]})
-        quant.with_user(approver).action_apply_inventory()
+        quant.with_user(approver).with_context(inventory_name='Damaged bags written off').action_apply_inventory()
         self.assertEqual(self._stock(self.wh.lot_stock_id), 8)
         self._balanced()
 

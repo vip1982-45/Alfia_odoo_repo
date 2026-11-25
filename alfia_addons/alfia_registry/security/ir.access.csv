@@ -19,3 +19,5 @@ acc_inc_act_user,Incident actions: owners and the people on the incident,alfia.i
 acc_inc_act_investigator,Incident actions: the investigator adds them,alfia.incident.action,base.group_user,c,"[('incident_id.investigator_id', '=', user.id)]"
 acc_inc_act_manager,Incident actions: incident managers,alfia.incident.action,alfia_registry.group_incident_manager,crud,
 acc_inc_act_auditor,Incident actions: auditor,alfia.incident.action,alfia_security.group_alfia_security_auditor,r,
+acc_death_vet,Death record wizard: vet managers,alfia.horse.death,alfia_security.group_alfia_vet_manager,crud,
+acc_death_breeding,Death record wizard: breeding managers,alfia.horse.death,alfia_security.group_alfia_breeding_manager,crud,

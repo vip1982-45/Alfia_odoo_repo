@@ -1,1 +1,1 @@
-from . import registration, external_semen, incident
+from . import registration, external_semen, incident, death

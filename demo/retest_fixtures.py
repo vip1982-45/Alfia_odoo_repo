@@ -164,5 +164,20 @@ if 'alfia.semen.statement' in env and wh:
         move._action_done()
         made.append('10 straws of batch TEST-EXT-1 at the centre')
 
+
+# Expiry: a vaccine tracked by batch with expiry dates, one batch expired and one valid, in stock.
+if 'use_expiration_date' in env['product.product']._fields and wh:
+    Product = env['product.product'].sudo()
+    vax = Product.search([('name', '=', 'TEST Vaccine (batches with expiry)')], limit=1)
+    if not vax:
+        vax = Product.create({'name': 'TEST Vaccine (batches with expiry)', 'type': 'consu', 'is_storable': True, 'tracking': 'lot',
+                              'use_expiration_date': True, 'standard_price': 40.0, 'purchase_ok': True})
+        Lot = env['stock.lot'].sudo()
+        for name, days in (('TEST-VAX-EXPIRED', -10), ('TEST-VAX-VALID', 300)):
+            lot = Lot.create({'name': name, 'product_id': vax.id, 'company_id': env.company.id,
+                              'expiration_date': fields.Datetime.now() + timedelta(days=days)})
+            env['stock.quant'].sudo()._update_available_quantity(vax, wh.lot_stock_id, 5, lot_id=lot)
+        made.append('product TEST Vaccine (batches with expiry): 5 of TEST-VAX-EXPIRED, 5 of TEST-VAX-VALID in stock')
+
 env.cr.commit()
 print('Retest fixtures: ' + ('; '.join(made) if made else 'already in place'))

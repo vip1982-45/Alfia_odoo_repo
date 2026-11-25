@@ -389,3 +389,70 @@ MORE.update({
     "Nothing held": "لا يوجد رصيد",
     "Approved by %(user)s. Follow-up activity for %(owner)s, due %(date)s.": "اعتمده %(user)s. نشاط متابعة لـ %(owner)s، مستحق في %(date)s.",
 })
+MORE.update({
+    "Stock count: second person from": "جرد المخزون: شخص ثانٍ ابتداءً من",
+    "A count adjustment worth this much or more (quantity difference × cost) must be applied by an approver who did not record the count.":
+        "تسوية الجرد التي تبلغ هذه القيمة أو أكثر (فرق الكمية × التكلفة) يجب أن يطبقها معتمِد لم يسجل الجرد.",
+    "Bill price tolerance (%)": "هامش سعر فاتورة المورد (%)",
+    "A supplier bill line may be up to this much above its purchase order price. Above it, a purchase manager approves the difference (with a reason) before the bill can be posted.":
+        "يجوز أن يزيد سطر فاتورة المورد عن سعر أمر الشراء بهذه النسبة. وفوقها يعتمد مدير المشتريات الفرق (مع السبب) قبل ترحيل الفاتورة.",
+    "Not enough in stock to issue: %s. Issue only what is there and leave the rest as a backorder, or receive the goods first.":
+        "لا يوجد مخزون كافٍ للصرف: %s. اصرف المتوفر فقط واترك الباقي كطلب متأخر، أو استلم البضاعة أولاً.",
+    "%(product)s%(lot)s in %(loc)s (short by %(short)g)": "%(product)s%(lot)s في %(loc)s (نقص %(short)g)",
+    "%(product)s batch %(lot)s expired on %(date)s and cannot be issued. Scrap it instead.":
+        "انتهت صلاحية دفعة %(lot)s من %(product)s في %(date)s ولا يمكن صرفها. أتلفها بدلاً من ذلك.",
+    "Counted by": "جرده",
+    "Type the reason for this stock adjustment (what was found and why it differs).": "اكتب سبب تسوية المخزون هذه (ما وُجد ولماذا يختلف).",
+    "%(product)s: this adjustment is worth %(value)s, and you recorded the count, so another approver must apply it.":
+        "%(product)s: قيمة هذه التسوية %(value)s، وأنت من سجل الجرد، لذا يجب أن يطبقها معتمِد آخر.",
+    "Price difference approved by": "اعتمد فرق السعر",
+    "Price difference reason": "سبب فرق السعر",
+    "Prices above the order": "أسعار أعلى من الأمر",
+    "%(bill)s is priced above its purchase order beyond the %(tol)s%% tolerance: %(lines)s. A purchase manager must approve the price difference (Approve price difference) with a reason first.":
+        "%(bill)s مسعّرة أعلى من أمر الشراء بما يتجاوز هامش %(tol)s%%: %(lines)s. يجب أن يعتمد مدير المشتريات فرق السعر (اعتماد فرق السعر) مع السبب أولاً.",
+    "Only purchase managers approve a bill's price difference.": "لا يعتمد فرق سعر الفاتورة إلا مديرو المشتريات.",
+    "Approve price difference": "اعتماد فرق السعر",
+    "Approve a supplier bill price difference": "اعتماد فرق سعر فاتورة مورد",
+    "Only a draft bill's price difference can be approved.": "لا يمكن اعتماد فرق السعر إلا لفاتورة مسودة.",
+    "You entered this bill, so another purchase manager must approve its price difference.": "أنت أدخلت هذه الفاتورة، لذا يجب أن يعتمد فرق سعرها مدير مشتريات آخر.",
+    "Price difference approved by %(user)s: %(reason)s (%(lines)s)": "اعتمد %(user)s فرق السعر: %(reason)s (%(lines)s)",
+    "Priced above the purchase order:": "مسعّرة أعلى من أمر الشراء:",
+    "— approved by": "— اعتمده",
+    "Lots and expiry": "الدفعات والصلاحية",
+    "Batches with an expiry date. Products are tracked this way when \"Tracking: by lots\" and \"Expiration date\" are set on the product. An expired batch cannot be issued, only scrapped.":
+        "الدفعات ذات تاريخ الصلاحية. تُتتبَّع المنتجات بهذه الطريقة عند ضبط \"التتبع: بالدفعات\" و\"تاريخ الانتهاء\" على المنتج. لا يمكن صرف دفعة منتهية الصلاحية، بل إتلافها فقط.",
+    "On hand": "المتوفر",
+    "Quantity rejected": "الكمية المرفوضة",
+    "For a partial acceptance: how much of the received quantity is rejected (to Rejected goods). Leave 0 to accept everything.":
+        "للقبول الجزئي: مقدار الكمية المستلمة المرفوضة (إلى البضائع المرفوضة). اتركها 0 لقبول الكل.",
+    "The rejected quantity must be more than 0 and less than %(qty)s; to reject everything use Reject.":
+        "يجب أن تكون الكمية المرفوضة أكبر من 0 وأقل من %(qty)s؛ ولرفض الكل استخدم رفض.",
+    "Invalid quantity.": "كمية غير صالحة.",
+    "Record what was found before rejecting part of %s.": "سجّل ما وُجد قبل رفض جزء من %s.",
+    "Partly accepted by %(user)s: %(ok)s accepted, %(bad)s rejected to Rejected goods. %(findings)s":
+        "قَبِله %(user)s جزئياً: %(ok)s مقبول، و%(bad)s مرفوض إلى البضائع المرفوضة. %(findings)s",
+    "%(product)s: %(bad)s rejected at inspection: %(findings)s": "%(product)s: رُفض %(bad)s عند الفحص: %(findings)s",
+    # alfia_registry: death
+    "Record the death of a horse": "تسجيل نفوق حصان",
+    "Record death": "تسجيل النفوق",
+    "Cause": "السبب",
+    "Illness": "مرض",
+    "Injury or accident": "إصابة أو حادث",
+    "Euthanasia": "قتل رحيم",
+    "Foaling complication": "مضاعفات الولادة",
+    "Unknown": "غير معروف",
+    "What happened, who certified it (vet), and any report reference.": "ما حدث، ومن وثّقه (الطبيب البيطري)، وأي مرجع لتقرير.",
+    "Only the vet manager or the breeding manager records a death.": "لا يسجل النفوق إلا مدير الطب البيطري أو مدير التناسل.",
+    "%s is already recorded as dead.": "%s مسجل بالفعل كنافق.",
+    "Death (%s)": "نفوق (%s)",
+    "Death recorded by %(user)s on %(date)s: %(cause)s. %(notes)s": "سجّل %(user)s النفوق في %(date)s: %(cause)s. %(notes)s",
+    "The horse becomes Dead. If it is on the farm, a departure is recorded; its recurring charges stop, and if it has a carrying value, finance gets a draft disposal valuation.":
+        "تصبح حالة الحصان نافقاً. إذا كان في المزرعة تُسجَّل مغادرة؛ وتتوقف رسومه الدورية، وإذا كانت له قيمة دفترية تحصل المالية على تقييم استبعاد مسودة.",
+    "This cannot be undone from this screen. Continue?": "لا يمكن التراجع عن هذا من هذه الشاشة. هل تريد المتابعة؟",
+})
+MORE.update({
+    "<strong>Priced above the purchase order:</strong>": "<strong>مسعّرة أعلى من أمر الشراء:</strong>",
+    "Journal Item": "بند اليومية",
+    "Product Moves (Stock Move Line)": "حركات المنتج (سطر حركة المخزون)",
+    "Quant": "رصيد المخزون",
+})

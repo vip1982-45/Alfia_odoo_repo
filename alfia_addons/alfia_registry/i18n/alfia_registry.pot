@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 13:15+0000\n"
-"PO-Revision-Date: 2026-11-25 13:15+0000\n"
+"POT-Creation-Date: 2026-11-25 16:05+0000\n"
+"PO-Revision-Date: 2026-11-25 16:05+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,6 +43,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/alfia_registry/models/external_semen.py:0
 msgid "%s is already posted or cancelled."
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/death.py:0
+msgid "%s is already recorded as dead."
 msgstr ""
 
 #. module: alfia_registry
@@ -244,6 +250,7 @@ msgid "Breeding certificate"
 msgstr ""
 
 #. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_horse_death_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_import_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_statement_view_form
@@ -254,6 +261,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__cancelled
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement__state__cancelled
 msgid "Cancelled"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__cause
+msgid "Cause"
 msgstr ""
 
 #. module: alfia_registry
@@ -342,6 +354,7 @@ msgid "Corrective actions"
 msgstr ""
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__create_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__create_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__create_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__create_uid
@@ -352,6 +365,7 @@ msgid "Created by"
 msgstr ""
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__create_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__create_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__create_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__create_date
@@ -388,6 +402,7 @@ msgid "DNA sample: when it was taken."
 msgstr ""
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__date
 msgid "Date"
@@ -396,6 +411,18 @@ msgstr ""
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__raw_date
 msgid "Date in file"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/death.py:0
+msgid "Death (%s)"
+msgstr ""
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/death.py:0
+msgid "Death recorded by %(user)s on %(date)s: %(cause)s. %(notes)s"
 msgstr ""
 
 #. module: alfia_registry
@@ -411,6 +438,7 @@ msgstr ""
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__display_name
@@ -446,6 +474,11 @@ msgstr ""
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__status__duplicate
 msgid "Duplicate"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_death__cause__euthanasia
+msgid "Euthanasia"
 msgstr ""
 
 #. module: alfia_registry
@@ -521,6 +554,11 @@ msgid "Findings recorded"
 msgstr ""
 
 #. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_death__cause__foaling
+msgid "Foaling complication"
+msgstr ""
+
+#. module: alfia_registry
 #. odoo-python
 #: code:addons/alfia_registry/models/registration.py:0
 msgid "Follow up %(kind)s for %(horse)s"
@@ -566,6 +604,7 @@ msgstr ""
 
 #. module: alfia_registry
 #: model:ir.model,name:alfia_registry.model_alfia_horse
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__horse_id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__horse_id
 msgid "Horse"
 msgstr ""
@@ -587,6 +626,7 @@ msgstr ""
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__id
@@ -624,6 +664,11 @@ msgstr ""
 #: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_has_error
 #: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_death__cause__illness
+msgid "Illness"
 msgstr ""
 
 #. module: alfia_registry
@@ -683,6 +728,11 @@ msgid "Incidents"
 msgstr ""
 
 #. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_death__cause__injury
+msgid "Injury or accident"
+msgstr ""
+
+#. module: alfia_registry
 #: model:ir.model,name:alfia_registry.model_stock_location
 msgid "Inventory Location"
 msgstr ""
@@ -739,6 +789,7 @@ msgid "Kind"
 msgstr ""
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__write_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__write_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__write_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__write_uid
@@ -749,6 +800,7 @@ msgid "Last Updated by"
 msgstr ""
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__write_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__write_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__write_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__write_date
@@ -856,6 +908,7 @@ msgid "No DNA test"
 msgstr ""
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__notes
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__notes
 msgid "Notes"
 msgstr ""
@@ -961,6 +1014,12 @@ msgid "Only the investigator or an incident manager records the findings."
 msgstr ""
 
 #. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/death.py:0
+msgid "Only the vet manager or the breeding manager records a death."
+msgstr ""
+
+#. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident_action__state__open
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_search
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_search
@@ -973,6 +1032,7 @@ msgid "Open Action Count"
 msgstr ""
 
 #. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_death__cause__other
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__other
 msgid "Other"
 msgstr ""
@@ -1112,6 +1172,13 @@ msgid "Received from us"
 msgstr ""
 
 #. module: alfia_registry
+#: model:ir.actions.act_window,name:alfia_registry.alfia_horse_death_action
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_horse_death_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_horse_form_death
+msgid "Record death"
+msgstr ""
+
+#. module: alfia_registry
 #. odoo-python
 #: code:addons/alfia_registry/models/registration.py:0
 msgid "Record the DNA result before completing %s."
@@ -1121,6 +1188,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/alfia_registry/models/registration.py:0
 msgid "Record the certificate or registration number before completing %s."
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_horse_death
+msgid "Record the death of a horse"
 msgstr ""
 
 #. module: alfia_registry
@@ -1367,6 +1439,13 @@ msgid "Submit for approval"
 msgstr ""
 
 #. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_horse_death_view_form
+msgid ""
+"The horse becomes Dead. If it is on the farm, a departure is recorded; its recurring charges stop, and if it has a\n"
+"                    carrying value, finance gets a draft disposal valuation."
+msgstr ""
+
+#. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_statement_view_form
 msgid "The source file is attached below, in the log."
 msgstr ""
@@ -1392,6 +1471,11 @@ msgid ""
 msgstr ""
 
 #. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_horse_death_view_form
+msgid "This cannot be undone from this screen. Continue?"
+msgstr ""
+
+#. module: alfia_registry
 #. odoo-python
 #: code:addons/alfia_registry/models/external_semen.py:0
 msgid "This file was already imported as %s."
@@ -1412,6 +1496,11 @@ msgstr ""
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__state__investigating
 msgid "Under investigation"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_death__cause__unknown
+msgid "Unknown"
 msgstr ""
 
 #. module: alfia_registry
@@ -1447,6 +1536,11 @@ msgstr ""
 #. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
 msgid "What happened"
+msgstr ""
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_horse_death__notes
+msgid "What happened, who certified it (vet), and any report reference."
 msgstr ""
 
 #. module: alfia_registry

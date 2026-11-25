@@ -243,7 +243,7 @@ class TestControlledStock(AlfiaSecurityCase):
         quant.inventory_quantity = 7
         with self.assertRaises(AccessError):
             quant.with_user(counter).action_apply_inventory()
-        quant.with_user(controller).action_apply_inventory()
+        quant.with_user(controller).with_context(inventory_name='Recount after delivery').action_apply_inventory()
         self.assertEqual(quant.quantity, 7)
 
 

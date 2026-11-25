@@ -142,7 +142,11 @@ class TestOnOffboarding(HrCase):
         departure = self.env['hr.employee.departure'].create({
             'employee_id': self.e_groom.id, 'departure_reason_id': self.env['hr.departure.reason'].search([], limit=1).id,
             'dismissal_date': self.today - relativedelta(days=2)})
+        self.assertTrue(any('Collect keys' in s for s in self.e_groom.activity_ids.mapped('summary')),
+                        "scheduling the departure starts the offboarding plan at once")
+        steps = len(self.e_groom.activity_ids)
         self.env['hr.employee.departure']._cron_apply_departure()     # Odoo's own daily job applies due departures
+        self.assertEqual(len(self.e_groom.with_context(active_test=False).activity_ids), steps, "not started twice")
         self.assertTrue(departure.apply_date)
         self.assertFalse(self.e_groom.active)
         self.assertFalse(self.u_groom.active)
@@ -204,6 +208,12 @@ class TestHrScope(HrCase):
         new = self.env['hr.employee'].with_user(self.u_officer_b).create({'name': 'New groom B', 'department_id': self.dept_b.id})
         self.assertEqual(new.department_id, self.dept_b)
         self.assertTrue(new.with_user(self.u_officer_b).read(['name']))
+        defaults = self.env['hr.employee'].with_user(self.u_officer_b).default_get(['department_id'])
+        self.assertEqual(defaults.get('department_id'), self.dept_b.id, "a new employee starts in the officer's department")
+        with self.assertRaises(UserError):
+            self.env['hr.employee'].with_user(self.u_officer_b).create({'name': 'No department'})   # Round 7 N9
+        with self.assertRaises(UserError):
+            self.env['hr.employee'].with_user(self.u_officer_b).create({'name': 'Other dept', 'department_id': self.dept_a.id})
 
 
 @tagged('post_install', '-at_install', 'alfia_hr', 'alfia_security_findings')

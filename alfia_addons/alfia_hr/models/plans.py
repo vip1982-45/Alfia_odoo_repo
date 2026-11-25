@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import api, fields, models
 
 
 class MailActivityPlanTemplate(models.Model):
@@ -21,3 +21,33 @@ class MailActivityPlanTemplate(models.Model):
             note = self.env._("assigned to %s because there is no user for this step", fallback.name)
             result['warning'] = '; '.join(filter(None, [result.get('warning'), note]))
         return result
+
+
+class HrEmployeeDeparture(models.Model):
+    """Scheduling a departure starts the farm's offboarding plan at once (not only on the leaving day), so the exit steps
+    have time to be done; its steps get owners like any plan."""
+    _inherit = 'hr.employee.departure'
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        departures = super().create(vals_list)
+        plan = self.env.ref('alfia_hr.plan_offboarding', raise_if_not_found=False)
+        if plan and plan.active:
+            employees = departures.employee_id.sudo().filtered(lambda e: not e.alfia_offboarding_started)
+            employees._alfia_start_offboarding(plan)
+            for departure in departures.filtered(lambda d: d.employee_id in employees):
+                departure.employee_id.message_post(body=self.env._("Offboarding plan started for the departure on %s.",
+                                                                   departure.departure_date))
+        return departures
+
+
+class HrEmployeeOffboarding(models.Model):
+    _inherit = 'hr.employee'
+
+    alfia_offboarding_started = fields.Boolean(readonly=True, copy=False, groups='hr.group_hr_user')
+
+    def _alfia_start_offboarding(self, plan):
+        todo = self.sudo().filtered(lambda e: not e.alfia_offboarding_started).with_env(self.env)
+        if todo:
+            todo.with_context(active_test=False)._alfia_launch_plan(plan)
+            todo.sudo().write({'alfia_offboarding_started': True})

@@ -7,7 +7,7 @@
     'description': 'Controls the stud farm RFP requires on top of purchasing and accounting. See README.md.',
     'author': 'Alfia',
     'license': 'LGPL-3',
-    'depends': ['alfia_finance'],
+    'depends': ['alfia_finance', 'product_expiry'],
     'data': [
         'security/controls_groups.xml',
         'security/ir.access.csv',
@@ -18,6 +18,7 @@
         'views/journal_views.xml',
         'views/bank_views.xml',
         'views/asset_views.xml',
+        'views/stock_controls_views.xml',
         'views/menus.xml',
     ],
     'installable': True,
