@@ -193,3 +193,85 @@ class TestFeedIssue(HorseProfitCase):
                                                      'line_ids': [Command.create({'horse_id': self.horse.id, 'quantity': 5})]})
         with self.assertRaises(UserError):
             issue.action_issue()
+
+
+@tagged('post_install', '-at_install', 'alfia_livestock')
+class TestStudExtras(HorseProfitCase):
+
+    def _manager(self, login, group):
+        return self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': login, 'login': f'{login}@liv.local',
+            'group_ids': [Command.link(self.env.ref(g).id) for g in ('base.group_user', group, 'alfia_security.group_alfia_all_locations')]})
+
+    def test_horse_sale_shows_payment_terms_paid_and_balance(self):
+        maker = self._manager('salemaker', 'alfia_security.group_alfia_training_manager')
+        checker = self._manager('salechecker', 'alfia_security.group_alfia_breeding_manager')
+        term = self.env['account.payment.term'].create({'name': '30% now, rest in 60 days', 'line_ids': [
+            Command.create({'value': 'percent', 'value_amount': 30, 'nb_days': 0}),
+            Command.create({'value': 'percent', 'value_amount': 70, 'nb_days': 60})]})
+        sale = self.env['alfia.horse.sale'].with_user(maker).create({
+            'horse_id': self.horse.id, 'buyer_id': self.client.id, 'price': 10000, 'payment_term_id': term.id})
+        sale.with_user(checker).action_approve()
+        sale.with_user(checker).action_complete()
+        invoice = sale.move_id.sudo()
+        self.assertEqual(invoice.invoice_payment_term_id, term)
+        invoice.action_post()
+        sale.invalidate_recordset()
+        total = invoice.amount_total                                    # the price plus any tax on the sale
+        self.assertEqual((sale.alfia_invoice_total, sale.alfia_amount_paid, sale.alfia_amount_due, sale.alfia_payment_state),
+                         (total, 0, total, 'not_paid'))
+        self.assertEqual(sale.alfia_due_date, invoice.invoice_date_due)
+        self.assertFalse(sale.alfia_overdue)                           # the first instalment is due today, not before
+        self.env['account.payment.register'].with_context(active_model='account.move', active_ids=invoice.ids).create(
+            {'amount': 3000, 'payment_difference_handling': 'open'})._create_payments()
+        sale.invalidate_recordset()
+        self.assertEqual((sale.alfia_amount_paid, sale.alfia_amount_due), (3000, total - 3000))
+        self.assertIn(sale.alfia_payment_state, ('partial', 'in_payment'))
+        # The stud manager reads it without access to invoices.
+        self.assertEqual(sale.with_user(checker).alfia_amount_due, total - 3000)
+
+    def test_stud_dashboard_counts_for_the_stud_manager(self):
+        today = fields.Date.today()
+        self.env['alfia.health.record'].create([
+            {'horse_id': self.horse.id, 'title': 'Overdue vaccine', 'date': today - timedelta(days=400), 'next_due': today - timedelta(days=3)},
+            {'horse_id': self.horse.id, 'title': 'Due today', 'date': today - timedelta(days=30), 'next_due': today},
+            {'horse_id': self.horse.id, 'title': 'Due soon', 'date': today, 'next_due': today + timedelta(days=10)}])
+        self.env['alfia.vet.visit'].create({'horse_id': self.horse.id, 'reason': 'Dashboard check', 'cost': 75})
+        stud = self._manager('dashstud', 'alfia_security.group_alfia_breeding_manager')
+        action = self.env['alfia.stud.dashboard'].with_user(stud).action_open_dashboard()
+        dash = self.env['alfia.stud.dashboard'].with_user(stud).browse(action['res_id'])
+        self.assertGreaterEqual(dash.health_overdue, 1)
+        self.assertGreaterEqual(dash.health_today, 1)
+        self.assertGreaterEqual(dash.health_30, 2)
+        self.assertGreaterEqual(dash.horses_active, 1)
+        self.assertTrue(dash.can_see_profit)
+        self.assertIn('Profit colt', str(dash.best_html) + str(dash.worst_html))
+        overdue = self.env['alfia.health.record'].with_user(stud).search(dash.action_health_overdue()['domain'])
+        self.assertIn('Overdue vaccine', overdue.mapped('title'))
+        self.assertNotIn('Due soon', overdue.mapped('title'))
+        vet = self._manager('dashvet', 'alfia_security.group_alfia_vet_manager')
+        vet_dash = self.env['alfia.stud.dashboard'].with_user(vet).create({})
+        self.assertFalse(vet_dash.can_see_profit)                      # results are for the stud manager and finance
+
+    def test_days_with_us_start_at_the_first_arrival(self):
+        barn = self.env['stock.warehouse'].search([('company_id', '=', self.company.id)], limit=1).lot_stock_id
+        horse = self.env['alfia.horse'].create({'name': 'Arrival mare', 'sex': 'female',
+                                                'birthdate': fields.Date.today() - timedelta(days=2000)})
+        self.env['alfia.horse.movement'].create({'horse_id': horse.id, 'kind': 'arrival', 'state': 'done', 'location_to_id': barn.id,
+                                                 'date': fields.Datetime.now() - timedelta(days=4)})
+        self.assertEqual(horse.sudo().alfia_profit_days, 5)
+
+    def test_store_cannot_save_a_feed_issue_from_another_site(self):
+        wh = self.env['stock.warehouse'].search([('company_id', '=', self.company.id)], limit=1)
+        elsewhere = self.env['stock.location'].create({'name': 'Other site store', 'usage': 'internal', 'location_id': wh.view_location_id.id})
+        profile_site = self.env['stock.location'].create({'name': 'My site store', 'usage': 'internal', 'location_id': wh.view_location_id.id})
+        store = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Scoped store', 'login': 'scopedstore@liv.local',
+            'group_ids': [Command.link(self.env.ref(g).id) for g in ('base.group_user', 'stock.group_stock_user')]})
+        if not store.alfia_scope_locations:
+            self.skipTest("Location scope is not enforced for this user in this database")
+        self.assertNotIn(elsewhere, store.alfia_location_ids)
+        feed = self.env['product.product'].create({'name': 'Scoped oats', 'is_storable': True})
+        with self.assertRaises(AccessError):
+            self.env['alfia.feed.issue'].with_user(store).create({'product_id': feed.id, 'location_id': elsewhere.id})
+        self.assertTrue(profile_site)

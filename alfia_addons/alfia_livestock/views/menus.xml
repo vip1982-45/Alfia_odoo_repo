@@ -13,4 +13,8 @@
     <menuitem id="menu_alfia_feed_issue" name="Feed issues" parent="alfia_equine.menu_alfia_care" action="alfia_feed_issue_action" sequence="285"/>
     <menuitem id="menu_alfia_feed_issue_stock" name="Feed issues" parent="stock.menu_stock_warehouse_mgmt" action="alfia_feed_issue_action"
               sequence="40" groups="stock.group_stock_user"/>
+    <menuitem id="menu_alfia_horse_result_stud" name="Result per horse" parent="alfia_equine_ops.menu_ops_reports" action="alfia_horse_profit_register_action"
+              sequence="410" groups="alfia_security.group_alfia_breeding_manager,alfia_security.group_alfia_security_auditor"/>
+    <menuitem id="menu_alfia_stud_dashboard" name="Dashboard" parent="alfia_equine.menu_alfia_equine_root" action="alfia_stud_dashboard_action"
+              sequence="1" groups="alfia_security.group_alfia_breeding_manager,alfia_security.group_alfia_vet_manager,alfia_security.group_alfia_training_manager,alfia_security.group_alfia_security_auditor"/>
 </odoo>

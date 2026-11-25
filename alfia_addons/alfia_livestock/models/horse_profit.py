@@ -228,10 +228,13 @@ class AlfiaHorse(models.Model):
                                           currency_field='alfia_company_currency_id', groups=PROFIT_READERS)
     alfia_profit_net = fields.Monetary(string='Net result', compute='_compute_alfia_profit',
                                        currency_field='alfia_company_currency_id', groups=PROFIT_READERS)
-    alfia_profit_days = fields.Integer(string='Days with us', compute='_compute_alfia_profit', groups=PROFIT_READERS)
-    alfia_profit_cost_per_day = fields.Monetary(string='Running cost per day', compute='_compute_alfia_profit',
+    alfia_profit_days = fields.Integer(string='Days with us', compute='_compute_alfia_profit', groups=PROFIT_READERS,
+                                       help="Since the acquisition date in the livestock register, else the first arrival "
+                                            "recorded, else the birth date; up to today or the day the horse left.")
+    alfia_profit_cost_per_day = fields.Monetary(string='Running cost per day (without purchase)', compute='_compute_alfia_profit',
                                                 currency_field='alfia_company_currency_id', groups=PROFIT_READERS,
-                                                help="Costs other than the purchase price, divided by the days the horse has been with us.")
+                                                help="Costs other than the purchase price, divided by the days the horse has been with us (since its acquisition "
+                                                     "date, else its first arrival, else its birth).")
 
     def _compute_alfia_profit(self):
         self.env.flush_all()        # the profit lines are read straight from the tables
@@ -245,9 +248,15 @@ class AlfiaHorse(models.Model):
             if category != 'purchase':
                 entry['running'] += cost
         today = fields.Date.context_today(self)
+        arrivals = {horse.id: first for horse, first in self.env['alfia.horse.movement'].sudo()._read_group(
+            [('horse_id', 'in', self.ids), ('kind', '=', 'arrival'), ('state', '=', 'done')], ['horse_id'], ['date:min'])}
         for horse in self:
             entry = totals.get(horse.id, {'cost': 0.0, 'income': 0.0, 'running': 0.0})
-            start = horse.sudo().alfia_acquisition_date or horse.birthdate or (horse.create_date and horse.create_date.date()) or today
+            # With us since: the acquisition date in the register, else the first arrival recorded, else birth, else
+            # when the horse was entered.
+            arrival = arrivals.get(horse.id)
+            start = (horse.sudo().alfia_acquisition_date or (arrival and arrival.date()) or horse.birthdate
+                     or (horse.create_date and horse.create_date.date()) or today)
             end = min(horse.sudo().alfia_billed_until or today, today)
             days = max((end - start).days + 1, 1)
             horse.alfia_profit_cost = entry['cost']

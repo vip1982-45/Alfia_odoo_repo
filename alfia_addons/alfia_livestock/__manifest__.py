@@ -15,6 +15,7 @@
         'views/livestock_views.xml',
         'views/horse_profit_views.xml',
         'views/feed_views.xml',
+        'views/stud_extras_views.xml',
         'views/menus.xml',
     ],
     'installable': True,

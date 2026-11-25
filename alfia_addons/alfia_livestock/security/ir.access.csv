@@ -37,3 +37,7 @@ acc_feed_issue_line_finance_mgr,Feed issue lines: finance managers,alfia.feed.is
 acc_feed_issue_breeding_mgr,Feed issues: stud managers,alfia.feed.issue,alfia_security.group_alfia_breeding_manager,r,
 acc_feed_issue_line_breeding_mgr,Feed issue lines: stud managers,alfia.feed.issue.line,alfia_security.group_alfia_breeding_manager,r,
 acc_live_horse_store,Horses: the store names the horses fed,alfia.horse,stock.group_stock_user,r,
+acc_stud_dashboard_breeding_mgr,Stud dashboard: stud (breeding) managers,alfia.stud.dashboard,alfia_security.group_alfia_breeding_manager,crud,
+acc_stud_dashboard_vet_mgr,Stud dashboard: vet managers,alfia.stud.dashboard,alfia_security.group_alfia_vet_manager,crud,
+acc_stud_dashboard_training_mgr,Stud dashboard: training managers,alfia.stud.dashboard,alfia_security.group_alfia_training_manager,crud,
+acc_stud_dashboard_auditor,Stud dashboard: auditors,alfia.stud.dashboard,alfia_security.group_alfia_security_auditor,crud,

@@ -1,0 +1,141 @@
+<odoo>
+    <!-- Health records: ready filters for overdue and due care, overdue rows in red, due today in amber -->
+    <record id="alfia_health_record_search_due" model="ir.ui.view">
+        <field name="name">alfia.health.record.search.due</field>
+        <field name="model">alfia.health.record</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_health_record_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='horse_id']" position="after">
+                <filter name="overdue" string="Overdue" domain="[('next_due', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="due_today" string="Due today" domain="[('next_due', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="due_30" string="Due in the next 30 days"
+                        domain="[('next_due', '&gt;=', context_today().strftime('%Y-%m-%d')), ('next_due', '&lt;=', (context_today() + relativedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="active_horses" string="Active horses" domain="[('horse_id.status', '=', 'active')]"/>
+                <group>
+                    <filter name="group_horse" string="Horse" context="{'group_by': 'horse_id'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'type'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="alfia_health_record_list_due" model="ir.ui.view">
+        <field name="name">alfia.health.record.list.due</field>
+        <field name="model">alfia.health.record</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_health_record_view_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-danger">next_due and next_due &lt; current_date</attribute>
+                <attribute name="decoration-warning">next_due and next_due == current_date</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Horse sales: payment terms, what was paid and what is still due -->
+    <record id="alfia_horse_sale_list_payment" model="ir.ui.view">
+        <field name="name">alfia.horse.sale.list.payment</field>
+        <field name="model">alfia.horse.sale</field>
+        <field name="inherit_id" ref="alfia_equine_ops.alfia_horse_sale_view_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price']" position="after">
+                <field name="alfia_amount_paid" optional="show"/>
+                <field name="alfia_amount_due" optional="show" decoration-danger="alfia_overdue"/>
+                <field name="alfia_due_date" optional="show"/>
+                <field name="alfia_payment_state" optional="show" widget="badge"
+                       decoration-success="alfia_payment_state == 'paid'" decoration-warning="alfia_payment_state in ('partial', 'in_payment')"
+                       decoration-danger="alfia_payment_state == 'not_paid'"/>
+                <field name="alfia_overdue" column_invisible="1"/>
+                <field name="currency_id" column_invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="alfia_horse_sale_form_payment" model="ir.ui.view">
+        <field name="name">alfia.horse.sale.form.payment</field>
+        <field name="model">alfia.horse.sale</field>
+        <field name="inherit_id" ref="alfia_equine_ops.alfia_horse_sale_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price']" position="after">
+                <field name="payment_term_id" readonly="state != 'draft'" invisible="kind != 'sale'" options="{'no_create': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='notes']/.." position="before">
+                <group string="Payment" invisible="not move_id">
+                    <group>
+                        <field name="alfia_invoice_total"/><field name="alfia_amount_paid"/>
+                        <field name="alfia_amount_due" decoration-danger="alfia_overdue"/>
+                    </group>
+                    <group>
+                        <field name="alfia_payment_state" widget="badge"/><field name="alfia_due_date"/>
+                        <field name="alfia_overdue" invisible="not alfia_overdue"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Stud dashboard -->
+    <record id="alfia_stud_dashboard_view_form" model="ir.ui.view">
+        <field name="name">alfia.stud.dashboard.form</field>
+        <field name="model">alfia.stud.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Stud dashboard" create="0" edit="0" delete="0">
+                <sheet>
+                    <h1>Stud dashboard</h1>
+                    <separator string="Health care"/>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <button name="action_health_overdue" type="object" class="btn btn-outline-danger">
+                            <field name="health_overdue" class="fs-3 fw-bold"/><br/><span>Overdue</span>
+                        </button>
+                        <button name="action_health_today" type="object" class="btn btn-outline-warning">
+                            <field name="health_today" class="fs-3 fw-bold"/><br/><span>Due today</span>
+                        </button>
+                        <button name="action_health_30" type="object" class="btn btn-outline-secondary">
+                            <field name="health_30" class="fs-3 fw-bold"/><br/><span>Due in 30 days</span>
+                        </button>
+                    </div>
+                    <separator string="Horses"/>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <button name="action_horses_active" type="object" class="btn btn-outline-primary">
+                            <field name="horses_active" class="fs-3 fw-bold"/><br/><span>Active</span>
+                        </button>
+                        <button name="action_mares_pregnant" type="object" class="btn btn-outline-primary">
+                            <field name="mares_pregnant" class="fs-3 fw-bold"/><br/><span>Mares in foal</span>
+                        </button>
+                        <button name="action_horses_sold" type="object" class="btn btn-outline-secondary">
+                            <field name="horses_sold" class="fs-3 fw-bold"/><br/><span>Sold or gifted</span>
+                        </button>
+                        <button name="action_horses_retired" type="object" class="btn btn-outline-secondary">
+                            <field name="horses_retired" class="fs-3 fw-bold"/><br/><span>Retired</span>
+                        </button>
+                        <button name="action_horses_dead" type="object" class="btn btn-outline-secondary">
+                            <field name="horses_dead" class="fs-3 fw-bold"/><br/><span>Dead</span>
+                        </button>
+                    </div>
+                    <separator string="Waiting"/>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <button name="action_feed_requested" type="object" class="btn btn-outline-secondary">
+                            <field name="feed_requested" class="fs-3 fw-bold"/><br/><span>Feed requests</span>
+                        </button>
+                        <button name="action_sales_overdue" type="object" class="btn btn-outline-danger">
+                            <field name="sales_overdue" class="fs-3 fw-bold"/><br/><span>Horse sales overdue</span>
+                        </button>
+                    </div>
+                    <field name="can_see_profit" invisible="1"/>
+                    <div invisible="not can_see_profit">
+                        <separator string="Results of active horses"/>
+                        <div class="row">
+                            <div class="col-md-6"><h4>Best</h4><field name="best_html" nolabel="1"/></div>
+                            <div class="col-md-6"><h4>Lowest</h4><field name="worst_html" nolabel="1"/></div>
+                        </div>
+                        <button name="action_profit" type="object" string="Result per horse" class="btn-secondary mt-2" icon="fa-line-chart"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_stud_dashboard_action" model="ir.actions.server">
+        <field name="name">Stud dashboard</field>
+        <field name="model_id" ref="model_alfia_stud_dashboard"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_open_dashboard()</field>
+    </record>
+</odoo>

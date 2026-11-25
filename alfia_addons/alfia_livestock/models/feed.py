@@ -42,12 +42,25 @@ class AlfiaFeedIssue(models.Model):
     def create(self, vals_list):
         for vals in vals_list:
             vals['name'] = self.env['ir.sequence'].sudo().next_by_code('alfia.feed.issue') or self.env._('Feed issue')
-        return super().create(vals_list)
+        issues = super().create(vals_list)
+        issues._alfia_check_store()
+        return issues
 
     def write(self, vals):
         if {'product_id', 'location_id', 'date', 'company_id'} & set(vals) and any(i.state != 'draft' for i in self):
             raise UserError(self.env._("An issued feed record cannot be changed."))
-        return super().write(vals)
+        res = super().write(vals)
+        if 'location_id' in vals:
+            self._alfia_check_store()
+        return res
+
+    def _alfia_check_store(self):
+        # Someone from the store (who will issue it) can only choose a store in their own sites: say so when saving, not
+        # at issue. The stable may ask from any store; the store that issues is checked again then.
+        if self.env.su or not self.env.user.has_group(STORE):
+            return
+        for issue in self:
+            self.env.user._alfia_check_location(issue.location_id, self.env._("feed store"))
 
     def action_fill_from_plans(self):
         """One line per horse whose current feed plan includes this feed, with its daily quantity."""

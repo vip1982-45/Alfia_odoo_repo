@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 17:37+0000\n"
-"PO-Revision-Date: 2026-11-25 17:37+0000\n"
+"POT-Creation-Date: 2026-11-25 18:43+0000\n"
+"PO-Revision-Date: 2026-11-25 18:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -40,6 +40,56 @@ msgstr ""
 #: code:addons/alfia_livestock/models/budget.py:0
 #: code:addons/alfia_livestock/models/livestock.py:0
 msgid "%s has already been submitted."
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "<br/><span>Active</span>"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "<br/><span>Dead</span>"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "<br/><span>Due in 30 days</span>"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "<br/><span>Due today</span>"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "<br/><span>Feed requests</span>"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "<br/><span>Horse sales overdue</span>"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "<br/><span>Mares in foal</span>"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "<br/><span>Overdue</span>"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "<br/><span>Retired</span>"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "<br/><span>Sold or gifted</span>"
 msgstr ""
 
 #. module: alfia_livestock
@@ -145,6 +195,14 @@ msgid "Action Needed"
 msgstr ""
 
 #. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__horses_active
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_health_record_search_due
+msgid "Active horses"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__actual
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_line_view_report
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
@@ -217,6 +275,13 @@ msgid "An issued feed record cannot be changed."
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_horse_sale__payment_term_id
+msgid ""
+"Applied to the sale's invoice, e.g. instalments. Empty: due on the invoice "
+"date."
+msgstr ""
+
+#. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
 msgid "Approve"
 msgstr ""
@@ -284,8 +349,23 @@ msgid "Available"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_sale__alfia_amount_due
+msgid "Balance"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__notes
 msgid "Basis and evidence"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "Best"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__best_html
+msgid "Best results"
 msgstr ""
 
 #. module: alfia_livestock
@@ -296,6 +376,11 @@ msgstr ""
 #. module: alfia_livestock
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_budget__control__block
 msgid "Block"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_sale__alfia_payment_state__blocked
+msgid "Blocked"
 msgstr ""
 
 #. module: alfia_livestock
@@ -389,6 +474,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_acquisition_kind
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__acquisition_kind
 msgid "Came to the farm by"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__can_see_profit
+msgid "Can See Profit"
 msgstr ""
 
 #. module: alfia_livestock
@@ -535,7 +625,8 @@ msgstr ""
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_horse__alfia_profit_cost_per_day
 msgid ""
 "Costs other than the purchase price, divided by the days the horse has been "
-"with us."
+"with us (since its acquisition date, else its first arrival, else its "
+"birth)."
 msgstr ""
 
 #. module: alfia_livestock
@@ -552,6 +643,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__create_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__create_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__create_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__create_uid
 msgid "Created by"
 msgstr ""
 
@@ -564,6 +656,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__create_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__create_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__create_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__create_date
 msgid "Created on"
 msgstr ""
 
@@ -583,6 +676,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__currency_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__currency_id
 msgid "Currency basis"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_stud_dashboard
+msgid "Dashboard"
 msgstr ""
 
 #. module: alfia_livestock
@@ -606,6 +704,13 @@ msgstr ""
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_profit_days
 msgid "Days with us"
+msgstr ""
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__horses_dead
+msgid "Dead"
 msgstr ""
 
 #. module: alfia_livestock
@@ -668,10 +773,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_line_mixin__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_movement__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_sale__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_odontology__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_vet_visit__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order_line__display_name
@@ -709,6 +816,21 @@ msgstr ""
 #. odoo-python
 #: code:addons/alfia_livestock/models/livestock.py:0
 msgid "Drafted when %(horse)s left the farm (%(why)s)."
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_sale__alfia_due_date
+msgid "Due"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_health_record_search_due
+msgid "Due in the next 30 days"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_health_record_search_due
+msgid "Due today"
 msgstr ""
 
 #. module: alfia_livestock
@@ -786,6 +908,13 @@ msgid "Feed plan"
 msgstr ""
 
 #. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__feed_requested
+msgid "Feed requests waiting"
+msgstr ""
+
+#. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_form
 msgid "Fill from feed plans"
 msgstr ""
@@ -834,6 +963,32 @@ msgid "Has Message"
 msgstr ""
 
 #. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "Health care"
+msgstr ""
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__health_30
+msgid "Health care due in 30 days"
+msgstr ""
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__health_today
+msgid "Health care due today"
+msgstr ""
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__health_overdue
+msgid "Health care overdue"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model,name:alfia_livestock.model_alfia_health_record
 msgid "Health record"
 msgstr ""
@@ -845,6 +1000,8 @@ msgid "Held for sale"
 msgstr ""
 
 #. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
 #: model:ir.model,name:alfia_livestock.model_alfia_horse
 #: model:ir.model.fields,field_description:alfia_livestock.field_account_move_line__alfia_horse_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__horse_id
@@ -856,6 +1013,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order_line__alfia_horse_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_sale_order_line__alfia_horse_id
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_search
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_health_record_search_due
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
 msgid "Horse"
 msgstr ""
@@ -880,7 +1038,20 @@ msgid "Horse profitability"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_horse_sale
+msgid "Horse sale or gift"
+msgstr ""
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__sales_overdue
+msgid "Horse sales with an overdue balance"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__line_ids
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
 msgid "Horses"
 msgstr ""
 
@@ -907,10 +1078,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_line_mixin__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_movement__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_sale__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_odontology__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_vet_visit__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order_line__id
@@ -941,6 +1114,11 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_sale__alfia_payment_state__in_payment
+msgid "In payment"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__income
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_list
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
@@ -950,6 +1128,16 @@ msgstr ""
 #. module: alfia_livestock
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_horse_profit__amount
 msgid "Income is positive, costs are negative."
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_sale__alfia_invoice_total
+msgid "Invoiced"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_sale__alfia_payment_state__invoicing_legacy
+msgid "Invoicing app legacy"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1016,6 +1204,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__write_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__write_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__write_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__write_uid
 msgid "Last Updated by"
 msgstr ""
 
@@ -1028,6 +1217,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__write_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__write_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__write_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -1128,6 +1318,23 @@ msgid "Livestock valuations"
 msgstr ""
 
 #. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "Lowest"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__worst_html
+msgid "Lowest results"
+msgstr ""
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__mares_pregnant
+msgid "Mares in foal"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__stock
 msgid "Medicine and supplies from stock"
 msgstr ""
@@ -1166,6 +1373,8 @@ msgid "Name"
 msgstr ""
 
 #. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_profit_net
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_list
 msgid "Net result"
@@ -1200,8 +1409,19 @@ msgid "No horse's current feed plan includes %s."
 msgstr ""
 
 #. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+msgid "Not enough horses with results yet."
+msgstr ""
+
+#. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
 msgid "Not in accounting yet"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_sale__alfia_payment_state__not_paid
+msgid "Not paid"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1352,9 +1572,37 @@ msgid ""
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_sale__alfia_overdue
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_health_record_search_due
+msgid "Overdue"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse__alfia_livestock_class__external
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_classify__livestock_class__external
 msgid "Owned by others (not ours)"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_sale__alfia_amount_paid
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_sale__alfia_payment_state__paid
+msgid "Paid"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_sale__alfia_payment_state__partial
+msgid "Partially paid"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_sale__alfia_payment_state
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_sale_form_payment
+msgid "Payment"
+msgstr ""
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_sale__payment_term_id
+msgid "Payment terms"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1535,7 +1783,21 @@ msgstr ""
 #. module: alfia_livestock
 #: model:ir.actions.act_window,name:alfia_livestock.alfia_horse_profit_register_action
 #: model:ir.ui.menu,name:alfia_livestock.menu_alfia_horse_result
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_horse_result_stud
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
 msgid "Result per horse"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "Results of active horses"
+msgstr ""
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__horses_retired
+msgid "Retired"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1545,8 +1807,13 @@ msgid "Retired / companion"
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_sale__alfia_payment_state__reversed
+msgid "Reversed"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_profit_cost_per_day
-msgid "Running cost per day"
+msgid "Running cost per day (without purchase)"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1588,6 +1855,20 @@ msgid ""
 msgstr ""
 
 #. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_horse__alfia_profit_days
+msgid ""
+"Since the acquisition date in the livestock register, else the first arrival"
+" recorded, else the birth date; up to today or the day the horse left."
+msgstr ""
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_stud_dashboard__horses_sold
+msgid "Sold or gifted"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__source
 msgid "Source"
 msgstr ""
@@ -1618,6 +1899,15 @@ msgstr ""
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__move_id
 msgid "Stock move"
+msgstr ""
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/stud_extras.py:0
+#: model:ir.actions.server,name:alfia_livestock.alfia_stud_dashboard_action
+#: model:ir.model,name:alfia_livestock.model_alfia_stud_dashboard
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "Stud dashboard"
 msgstr ""
 
 #. module: alfia_livestock
@@ -1714,6 +2004,11 @@ msgid "Transport cost"
 msgstr ""
 
 #. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_health_record_search_due
+msgid "Type"
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__uom_id
 msgid "Unit"
 msgstr ""
@@ -1784,6 +2079,11 @@ msgstr ""
 #. module: alfia_livestock
 #: model:ir.model,name:alfia_livestock.model_alfia_vet_visit
 msgid "Vet visit"
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_stud_dashboard_view_form
+msgid "Waiting"
 msgstr ""
 
 #. module: alfia_livestock
