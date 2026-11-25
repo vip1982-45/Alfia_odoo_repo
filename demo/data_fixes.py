@@ -131,6 +131,17 @@ for act in loose:
 if loose:
     done.append('%d unassigned HR checklist step(s) given an owner' % len(loose))
 
+# 9b. Horses that left before plans were ended on exit: a plan for that horse alone gets the leaving date as its end.
+if 'alfia_billed_until' in env['alfia.horse']._fields:
+    ended = 0
+    for plan in env['alfia.charge.plan'].sudo().search([('target_kind', '=', 'horse'), ('horse_id.alfia_billed_until', '!=', False)]):
+        until = plan.horse_id.alfia_billed_until
+        if not plan.end_date or plan.end_date > until:
+            plan.write({'end_date': until})
+            ended += 1
+    if ended:
+        done.append('%d boarding plan(s) of horses that had left now end on the leaving date' % ended)
+
 # 10. Last, as uninstalling reloads the registry: supplier and customer name lookup needs a paid online service (IAP)
 #    and failed with an access error.
 mod = env['ir.module.module'].sudo().search([('name', '=', 'partner_autocomplete'), ('state', '=', 'installed')])
