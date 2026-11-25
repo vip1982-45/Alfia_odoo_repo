@@ -10,10 +10,14 @@ class AccountMove(models.Model):
 
     def _post(self, soft=True):
         for move in self:
-            if move.move_type in ('in_invoice', 'in_refund') and move.create_uid == self.env.user:
+            if move.move_type in ('in_invoice', 'in_refund', 'out_refund') and move.create_uid == self.env.user:
                 amount = move.currency_id._convert(
                     abs(move.amount_total), move.company_id.currency_id, move.company_id, move.date or fields.Date.today())
                 if move._alfia_sod_applies(amount, move.company_id):
+                    if move.move_type == 'out_refund':
+                        # A customer credit note reduces what a customer owes: whoever prepares it does not also post it.
+                        raise UserError(self.env._(
+                            "Segregation of duties: you prepared this credit note, so another person must post it."))
                     raise UserError(self.env._(
                         "Segregation of duties: you entered this vendor bill, so another person must post it."))
         return super()._post(soft=soft)

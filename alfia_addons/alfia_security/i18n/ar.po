@@ -829,7 +829,7 @@ msgid ""
 "Segregation of duties: you entered this vendor bill, so another person must "
 "post it."
 msgstr ""
-"الفصل بين المهام: أنت من أدخل فاتورة المورد هذه، لذا يجب أن يرحّلها شخص آخر."
+"فصل المهام: أنت من أدخل فاتورة المورد هذه، لذا يجب أن يرحّلها شخص آخر."
 
 #. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_res_company__alfia_sod_threshold
@@ -1111,3 +1111,10 @@ msgstr "المعرّفات الخارجية"
 #: code:addons/alfia_security/models/admin_guard.py:0
 msgid "groups"
 msgstr "المجموعات"
+
+#. odoo-python
+#: code:addons/alfia_security/models/account.py:0
+msgid ""
+"Segregation of duties: you prepared this credit note, so another person must"
+" post it."
+msgstr "فصل المهام: أنت من أعدّ إشعار الدائن هذا، لذا يجب أن يرحّله شخص آخر."

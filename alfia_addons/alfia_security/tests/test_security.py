@@ -327,6 +327,22 @@ class TestSegregationOfDuties(AlfiaSecurityCase):
         bill2.sudo().action_post()
         self.assertEqual(bill2.state, 'posted', "system automation (sudo) is not blocked")
 
+    def test_customer_credit_note_cannot_be_posted_by_its_preparer(self):
+        clerk = self._make_user('cnclerk', groups=['account.group_account_invoice', 'alfia_security.group_alfia_all_journals'])
+        poster = self._make_user('cnposter', groups=['account.group_account_user', 'alfia_security.group_alfia_all_journals'])
+        invoice = self.env['account.move'].with_user(clerk).create({
+            'move_type': 'out_invoice', 'partner_id': self.supplier.id, 'invoice_date': fields.Date.today(),
+            'invoice_line_ids': [Command.create({'name': 'Boarding', 'quantity': 1, 'price_unit': 500})]})
+        invoice.with_user(clerk).action_post()
+        reversal = self.env['account.move.reversal'].with_user(clerk).with_context(
+            active_model='account.move', active_ids=invoice.ids).create({'reason': 'Returned goods', 'journal_id': invoice.journal_id.id})
+        credit = self.env['account.move'].browse(reversal.refund_moves()['res_id']).with_user(clerk)
+        self.assertEqual((credit.move_type, credit.state), ('out_refund', 'draft'))
+        with self.assertRaises(UserError):
+            credit.action_post()
+        credit.with_user(poster).action_post()
+        self.assertEqual(credit.state, 'posted')
+
 
 @tagged('post_install', '-at_install', 'alfia_security')
 class TestJournalScope(AlfiaSecurityCase):
