@@ -598,6 +598,17 @@ class TestAssetAccounting(ControlsCase):
         loss = asset.disposal_move_id.line_ids.filtered(lambda l: l.account_id == self.gainloss)
         self.assertAlmostEqual(loss.debit, 4000, places=2, msg="two months depreciated, 4,000 book value written off")
 
+    def test_finance_manager_opens_the_asset_and_retire_needs_disposal(self):
+        """Round 7 Z2: Odoo 20's finance-manager group is not an accountant group; finance could not open the asset."""
+        self.assertFalse(self.fm.has_group('account.group_account_user'), "the case under test")
+        asset = self._asset()
+        asset.with_user(self.fm).read(['name', 'cost', 'book_value', 'accounting_state', 'depreciation_line_ids'])
+        self.assertTrue(asset.with_user(self.fm).search([('id', '=', asset.id)]))
+        action = asset.with_user(self.fm).action_open_disposal()
+        self.assertEqual(action['res_model'], 'alfia.asset.disposal')
+        with self.assertRaises(UserError):
+            asset.with_user(self.fm).action_retire()                    # capitalised: only through a disposal
+
     def test_stable_staff_do_not_see_accounting(self):
         stable = self.env['res.users'].with_context(no_reset_password=True).create({
             'name': 'stableasset', 'login': 'stableasset@ctl.local',
@@ -642,6 +653,8 @@ class TestBoardingExit(ControlsCase):
         self.assertEqual((jan.amount, feb.amount), (3000, 3000))
         self.assertAlmostEqual(mar.amount, 967.74, places=2, msg="10 of 31 days in March")
         self.assertEqual(str(horse.alfia_billed_until), '2026-03-10')
+        self.assertEqual(str(plan.end_date), '2026-03-10', "the horse's own plan shows it has stopped")
+        self.assertEqual(plan.state, 'approved')
         plan.action_generate(upto=fields.Date.to_date('2026-06-01'))
         self.assertEqual(len(self._charges(horse)), 3, "no charges after the horse left")
         self.assertIn('2026-03-10', horse.message_ids[0].body)

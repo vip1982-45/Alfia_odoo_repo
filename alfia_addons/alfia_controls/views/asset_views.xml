@@ -5,15 +5,15 @@
         <field name="inherit_id" ref="alfia_equine_ops.alfia_asset_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
-                <button name="action_capitalise" string="Capitalise" type="object" groups="account.group_account_user"
+                <button name="action_capitalise" string="Capitalise" type="object" groups="account.group_account_user,account.group_account_manager"
                         invisible="accounting_state != 'none'"/>
-                <button name="action_post_depreciation" string="Post due depreciation" type="object" groups="account.group_account_user"
+                <button name="action_post_depreciation" string="Post due depreciation" type="object" groups="account.group_account_user,account.group_account_manager"
                         invisible="accounting_state != 'running'"/>
                 <button name="action_open_disposal" string="Dispose (sell / write off)" type="object" groups="account.group_account_manager"
                         invisible="accounting_state not in ('running', 'done')"/>
             </xpath>
             <xpath expr="//sheet" position="inside">
-                <notebook groups="account.group_account_user">
+                <notebook groups="account.group_account_user,account.group_account_manager">
                     <page string="Accounting" name="alfia_accounting">
                         <group>
                             <group>

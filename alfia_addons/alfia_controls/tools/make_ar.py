@@ -395,6 +395,12 @@ T.update({
     "useful life": "العمر الإنتاجي",
 })
 
+T.update({
+    "This asset is capitalised. A finance manager disposes of it (Dispose), which also retires it.":
+        "هذا الأصل مرسمل. يتخلص منه مدير مالي (التخلص)، وهذا يُخرجه من الخدمة أيضاً.",
+    "plan %(plan)s ends %(date)s": "تنتهي الخطة %(plan)s في %(date)s",
+})
+
 table = {norm(k): v for k, v in T.items()}
 pot = polib.pofile(POT)
 po = polib.POFile()

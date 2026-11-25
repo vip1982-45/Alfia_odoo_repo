@@ -7,7 +7,8 @@ from odoo.exceptions import AccessError, UserError, ValidationError
 
 from odoo.addons.alfia_security.flow import workflow
 
-ACCOUNTING = 'account.group_account_user'
+# Odoo 20's finance-manager group does not include the accountant group, so both are named.
+ACCOUNTING = 'account.group_account_user,account.group_account_manager'
 MANAGER = 'account.group_account_manager'
 LOCKED_WHEN_RUNNING = ('cost', 'salvage_value', 'useful_life_months', 'depreciation_start', 'asset_account_id',
                        'accumulated_account_id', 'expense_account_id', 'asset_journal_id')
@@ -72,8 +73,8 @@ class AlfiaAsset(models.Model):
 
     # ------------------------------------------------------------------ schedule
     def _check_accounting(self, manager=False):
-        group = MANAGER if manager else ACCOUNTING
-        if not (self.env.su or self.env.user.has_group(group)):
+        groups = [MANAGER] if manager else ACCOUNTING.split(',')
+        if not (self.env.su or any(self.env.user.has_group(g) for g in groups)):
             raise AccessError(self.env._("Only finance managers dispose of assets.") if manager
                               else self.env._("Only accounting staff capitalise and depreciate assets."))
 
@@ -124,6 +125,14 @@ class AlfiaAsset(models.Model):
     @api.model
     def _cron_post_depreciation(self):
         self.search([('accounting_state', '=', 'running')]).action_post_depreciation()
+
+    def action_retire(self):
+        # A capitalised asset leaves the books through a disposal, which also retires it; retiring it on its own would
+        # leave its cost and depreciation in the ledger for an asset no longer in use.
+        if not self.env.su and any(a.sudo().accounting_state in ('running', 'done') for a in self):
+            raise UserError(self.env._("This asset is capitalised. A finance manager disposes of it (Dispose), which also "
+                                       "retires it."))
+        return super().action_retire()
 
     def action_open_disposal(self):
         self._check_accounting(manager=True)

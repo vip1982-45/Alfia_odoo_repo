@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-24 20:32+0000\n"
-"PO-Revision-Date: 2026-11-24 20:32+0000\n"
+"POT-Creation-Date: 2026-11-25 06:38+0000\n"
+"PO-Revision-Date: 2026-11-25 06:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1864,6 +1864,14 @@ msgstr ""
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/asset_accounting.py:0
+msgid ""
+"This asset is capitalised. A finance manager disposes of it (Dispose), which"
+" also retires it."
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/bank.py:0
 msgid "This bank line has already been partly matched; undo it first."
 msgstr ""
@@ -2111,6 +2119,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/alfia_controls/models/approval.py:0
 msgid "no limit"
+msgstr ""
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/boarding.py:0
+msgid "plan %(plan)s ends %(date)s"
 msgstr ""
 
 #. module: alfia_controls

@@ -32,6 +32,12 @@ class AlfiaHorse(models.Model):
             with workflow():
                 horse.write({'alfia_billed_until': end_date})
             notes, unused = [], []
+            # A plan for this horse alone ends on the day it left, so the plan itself shows it has stopped.
+            for plan in self.env['alfia.charge.plan'].sudo().search([('target_kind', '=', 'horse'), ('horse_id', '=', horse.id),
+                                                                     ('active', '=', True)]):
+                if not plan.end_date or plan.end_date > end_date:
+                    plan.write({'end_date': end_date})
+                    notes.append(self.env._("plan %(plan)s ends %(date)s", plan=plan.name, date=end_date))
             for charge in Charge.search([('horse_id', '=', horse.id), ('plan_id', '!=', False), ('state', '!=', 'cancelled')]):
                 start = charge.date
                 period_end = start + (relativedelta(weeks=1) if charge.plan_id.interval == 'weekly' else relativedelta(months=1))
@@ -97,6 +103,7 @@ class AlfiaHorseMovement(models.Model):
                 move.horse_id._alfia_end_recurring_charges(day, move.reason or self.env._("departure"))
             elif move.kind == 'arrival' and move.horse_id.sudo().alfia_billed_until:
                 # Back on the farm: recurring charges resume from the next period (the ones in between stay unbilled).
+                # Plans that were ended because it left need a manager to restart them (a new end date, then approval).
                 with workflow():
                     move.horse_id.sudo().write({'alfia_billed_until': False})
         return res
