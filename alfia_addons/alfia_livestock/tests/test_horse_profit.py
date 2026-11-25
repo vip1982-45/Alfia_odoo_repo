@@ -1,14 +1,13 @@
 from datetime import timedelta
 
 from odoo import Command, fields
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, UserError
 from odoo.tests import tagged
 
 from .test_livestock import LivestockCase
 
 
-@tagged('post_install', '-at_install', 'alfia_livestock')
-class TestHorseProfit(LivestockCase):
+class HorseProfitCase(LivestockCase):
 
     @classmethod
     def setUpClass(cls):
@@ -29,6 +28,10 @@ class TestHorseProfit(LivestockCase):
         for line in self._lines(horse):
             totals[line.category] = round(totals.get(line.category, 0.0) + line.amount, 2)
         return totals
+
+
+@tagged('post_install', '-at_install', 'alfia_livestock')
+class TestHorseProfit(HorseProfitCase):
 
     def test_bills_and_invoices_named_for_the_horse_count_in_its_result(self):
         bill = self._bill(400)
@@ -144,3 +147,49 @@ class TestHorseProfit(LivestockCase):
             'group_ids': [Command.link(self.env.ref(g).id) for g in ('base.group_user', 'alfia_security.group_alfia_breeding_manager')]})
         self.env['alfia.horse.profit'].with_user(stud).search([])
         self.assertEqual(self.horse.with_user(stud).alfia_profit_net, 0)
+
+
+@tagged('post_install', '-at_install', 'alfia_livestock')
+class TestFeedIssue(HorseProfitCase):
+
+    def test_feed_issued_from_the_store_is_charged_to_each_horse(self):
+        wh = self.env['stock.warehouse'].search([('company_id', '=', self.company.id)], limit=1)
+        oats = self.env['product.product'].create({'name': 'Issued oats', 'is_storable': True, 'standard_price': 3.0})
+        self.env['stock.quant']._update_available_quantity(oats, wh.lot_stock_id, 100)
+        other = self.env['alfia.horse'].create({'name': 'Feed filly', 'sex': 'female'})
+        start = fields.Date.today().replace(day=1)
+        for horse, qty in ((self.horse, 4), (other, 6)):
+            self.env['alfia.diet'].create({'horse_id': horse.id, 'name': 'Plan', 'date_from': start,
+                                           'line_ids': [Command.create({'product_id': oats.id, 'qty_per_meal': qty, 'meals_per_day': 1})]})
+        self.assertIn('feed', self._by_category())                     # the plan estimate, before anything is issued
+        groom = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Feed groom', 'login': 'feedgroom@liv.local',
+            'group_ids': [Command.link(self.env.ref(g).id) for g in ('base.group_user', 'alfia_security.group_alfia_stable_user',
+                                                                       'alfia_security.group_alfia_all_locations')]})
+        store = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Feed store', 'login': 'feedstore@liv.local',
+            'group_ids': [Command.link(self.env.ref(g).id) for g in ('base.group_user', 'stock.group_stock_user',
+                                                                       'alfia_security.group_alfia_all_locations',
+                                                                       'alfia_security.group_alfia_all_warehouses')]})
+        issue = self.env['alfia.feed.issue'].with_user(groom).create({'product_id': oats.id, 'location_id': wh.lot_stock_id.id})
+        issue.with_user(groom).action_fill_from_plans()
+        self.assertEqual({l.horse_id: l.quantity for l in issue.line_ids}, {self.horse: 4, other: 6})
+        with self.assertRaises(UserError):
+            issue.with_user(groom).action_issue()                       # the store issues, not the stable
+        issue.with_user(store).action_issue()
+        self.assertEqual((issue.state, issue.total_qty, issue.total_value), ('issued', 10, 30))
+        self.assertEqual(oats.with_context(location=wh.lot_stock_id.id).qty_available, 90)
+        # This month counts what was issued (4 x 3.00), not the plan.
+        self.assertEqual(self._by_category(), {'feed': -12.0})
+        self.assertEqual(self._by_category(other), {'feed': -18.0})
+        with self.assertRaises(UserError):
+            issue.line_ids[:1].with_user(store).quantity = 1
+
+    def test_feed_beyond_stock_is_refused(self):
+        wh = self.env['stock.warehouse'].search([('company_id', '=', self.company.id)], limit=1)
+        hay = self.env['product.product'].create({'name': 'Scarce hay', 'is_storable': True, 'standard_price': 1.0})
+        self.env['stock.quant']._update_available_quantity(hay, wh.lot_stock_id, 2)
+        issue = self.env['alfia.feed.issue'].create({'product_id': hay.id, 'location_id': wh.lot_stock_id.id,
+                                                     'line_ids': [Command.create({'horse_id': self.horse.id, 'quantity': 5})]})
+        with self.assertRaises(UserError):
+            issue.action_issue()

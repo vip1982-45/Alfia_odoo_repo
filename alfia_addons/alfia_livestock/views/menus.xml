@@ -10,4 +10,7 @@
     <!-- The stud's managers see the same in the Stud app's reports. -->
     <menuitem id="menu_alfia_horse_profit_stud" name="Horse profitability" parent="alfia_equine_ops.menu_ops_reports" action="alfia_horse_profit_action"
               sequence="400" groups="alfia_security.group_alfia_breeding_manager,alfia_security.group_alfia_security_auditor"/>
+    <menuitem id="menu_alfia_feed_issue" name="Feed issues" parent="alfia_equine.menu_alfia_care" action="alfia_feed_issue_action" sequence="285"/>
+    <menuitem id="menu_alfia_feed_issue_stock" name="Feed issues" parent="stock.menu_stock_warehouse_mgmt" action="alfia_feed_issue_action"
+              sequence="40" groups="stock.group_stock_user"/>
 </odoo>

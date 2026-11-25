@@ -1,2 +1,9 @@
 <odoo>
+    <record id="seq_alfia_feed_issue" model="ir.sequence">
+        <field name="name">Feed issues</field>
+        <field name="code">alfia.feed.issue</field>
+        <field name="prefix">FEED/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
 </odoo>

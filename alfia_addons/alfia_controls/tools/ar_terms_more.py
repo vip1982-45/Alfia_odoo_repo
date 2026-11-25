@@ -518,3 +518,35 @@ MORE.update({
     "What this movement cost (transport, export papers, escort). Counted in the horse's profit.":
         "تكلفة هذه الحركة (النقل، أوراق التصدير، المرافقة). تُحتسب في ربح الحصان.",
 })
+
+# Feed issues (alfia_livestock)
+MORE.update({
+    "Add each horse with a quantity above zero.": "أضف كل حصان بكمية أكبر من صفر.",
+    "An issued feed record cannot be changed.": "لا يمكن تغيير سجل علف تم صرفه.",
+    "Choose the feed and the store, click Fill from feed plans (or add the horses), and the store issues it. Each horse is charged its share at the feed's cost, in its profit and loss.":
+        "اختر العلف والمخزن، ثم اضغط «تعبئة من خطط التغذية» (أو أضف الخيول)، ويقوم المخزن بالصرف. يُحمَّل كل حصان حصته بتكلفة العلف في أرباحه وخسائره.",
+    "Choose the feed first.": "اختر العلف أولاً.",
+    "Default unit of measure used for all stock operations.": "وحدة القياس الافتراضية المستخدمة في جميع عمليات المخزون.",
+    "Each horse appears once on a feed issue.": "يظهر كل حصان مرة واحدة في صرف العلف.",
+    "Feed": "العلف",
+    "Feed issue": "صرف علف",
+    "Feed issue to horses": "صرف علف للخيول",
+    "Feed issued to one horse": "علف مصروف لحصان واحد",
+    "Feed issues": "صرف العلف",
+    "Fill from feed plans": "تعبئة من خطط التغذية",
+    "Horses": "الخيول",
+    "Issue": "صرف",
+    "Issue feed from the store to horses": "اصرف العلف من المخزن إلى الخيول",
+    "Issue from the store": "صرف من المخزن",
+    "Issued": "تم الصرف",
+    "Issued By": "صرفه",
+    "Issued by %(user)s: %(qty)s %(uom)s of %(feed)s to %(n)s horse(s).": "صرفه %(user)s: %(qty)s %(uom)s من %(feed)s إلى %(n)s حصان.",
+    "New": "جديد",
+    "No horse's current feed plan includes %s.": "لا تتضمن خطة التغذية الحالية لأي حصان %s.",
+    "Only a requested feed issue can be cancelled.": "لا يمكن إلغاء إلا صرف علف في حالة طلب.",
+    "Only the store (inventory users) issues feed.": "المخزن فقط (مستخدمو المخزون) يصرف العلف.",
+    "Requested": "مطلوب",
+    "Stock move": "حركة المخزون",
+    "Take from": "الصرف من",
+    "feed store": "مخزن العلف",
+})

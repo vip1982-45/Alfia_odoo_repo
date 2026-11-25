@@ -1,0 +1,76 @@
+<odoo>
+    <record id="alfia_feed_issue_view_list" model="ir.ui.view">
+        <field name="name">alfia.feed.issue.list</field>
+        <field name="model">alfia.feed.issue</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'cancelled'" decoration-info="state == 'draft'">
+                <field name="name"/><field name="date"/><field name="product_id"/><field name="location_id" optional="show"/>
+                <field name="total_qty"/><field name="uom_id" optional="show"/><field name="total_value" sum="Value"/>
+                <field name="issued_by_id" optional="show"/><field name="state"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_feed_issue_view_form" model="ir.ui.view">
+        <field name="name">alfia.feed.issue.form</field>
+        <field name="model">alfia.feed.issue</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_fill_from_plans" string="Fill from feed plans" type="object" invisible="state != 'draft'"/>
+                    <button name="action_issue" string="Issue from the store" type="object" class="btn-primary" invisible="state != 'draft'"
+                            groups="stock.group_stock_user"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,issued"/>
+                </header>
+                <sheet>
+                    <h1><field name="name" readonly="1"/></h1>
+                    <group>
+                        <group>
+                            <field name="product_id" readonly="state != 'draft'" options="{'no_create': True}"/>
+                            <field name="location_id" readonly="state != 'draft'" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="state != 'draft'"/>
+                            <field name="total_qty"/><field name="uom_id"/><field name="total_value"/>
+                            <field name="issued_by_id" invisible="not issued_by_id"/><field name="move_id" invisible="not move_id"/>
+                            <field name="company_id" invisible="1"/><field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="line_ids" readonly="state != 'draft'">
+                        <list editable="bottom">
+                            <field name="horse_id" options="{'no_create': True}"/>
+                            <field name="quantity" sum="Total"/>
+                            <field name="value" sum="Value"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                    <field name="notes" placeholder="Notes"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_feed_issue_view_search" model="ir.ui.view">
+        <field name="name">alfia.feed.issue.search</field>
+        <field name="model">alfia.feed.issue</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/><field name="product_id"/><field name="line_ids" string="Horse" filter_domain="[('line_ids.horse_id', 'ilike', self)]"/>
+                <filter name="requested" string="Requested" domain="[('state', '=', 'draft')]"/>
+                <filter name="issued" string="Issued" domain="[('state', '=', 'issued')]"/>
+                <group><filter name="group_product" string="Feed" context="{'group_by': 'product_id'}"/></group>
+            </search>
+        </field>
+    </record>
+    <record id="alfia_feed_issue_action" model="ir.actions.act_window">
+        <field name="name">Feed issues</field>
+        <field name="res_model">alfia.feed.issue</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Issue feed from the store to horses</p>
+            <p>Choose the feed and the store, click Fill from feed plans (or add the horses), and the store issues it. Each horse
+               is charged its share at the feed's cost, in its profit and loss.</p>
+        </field>
+    </record>
+</odoo>

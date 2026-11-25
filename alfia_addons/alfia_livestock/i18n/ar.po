@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 17:12+0000\n"
-"PO-Revision-Date: 2026-11-25 17:12+0000\n"
+"POT-Creation-Date: 2026-11-25 17:37+0000\n"
+"PO-Revision-Date: 2026-11-25 17:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -141,6 +141,7 @@ msgstr "تكلفة الاقتناء"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_needaction
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__message_needaction
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_needaction
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_needaction
 msgid "Action Needed"
@@ -177,6 +178,12 @@ msgid "Add budget lines before submitting."
 msgstr "أضف أسطر الموازنة قبل التقديم."
 
 #. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/feed.py:0
+msgid "Add each horse with a quantity above zero."
+msgstr "أضف كل حصان بكمية أكبر من صفر."
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__move_id
 msgid "Adjustment entry"
 msgstr "قيد التسوية"
@@ -205,6 +212,12 @@ msgstr "التقييمات"
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__amount
 msgid "Amount"
 msgstr "المبلغ"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/feed.py:0
+msgid "An issued feed record cannot be changed."
+msgstr "لا يمكن تغيير سجل علف تم صرفه."
 
 #. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_view_form
@@ -261,6 +274,7 @@ msgstr ""
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_attachment_count
 msgid "Attachment Count"
@@ -383,9 +397,15 @@ msgstr "طريقة الوصول إلى المزرعة"
 
 #. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_override_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_classify_view_form
 msgid "Cancel"
 msgstr "إلغاء"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_feed_issue__state__cancelled
+msgid "Cancelled"
+msgstr "ملغى"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_carrying_value
@@ -407,6 +427,21 @@ msgid ""
 "sold) before submitting."
 msgstr ""
 "اختر الحساب المقابل للاستبعاد (مثلاً تكلفة الخيول المباعة) قبل التقديم."
+
+#. module: alfia_livestock
+#: model_terms:ir.actions.act_window,help:alfia_livestock.alfia_feed_issue_action
+msgid ""
+"Choose the feed and the store, click Fill from feed plans (or add the horses), and the store issues it. Each horse\n"
+"               is charged its share at the feed's cost, in its profit and loss."
+msgstr ""
+"اختر العلف والمخزن، ثم اضغط «تعبئة من خطط التغذية» (أو أضف الخيول)، ويقوم "
+"المخزن بالصرف. يُحمَّل كل حصان حصته بتكلفة العلف في أرباحه وخسائره."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/feed.py:0
+msgid "Choose the feed first."
+msgstr "اختر العلف أولاً."
 
 #. module: alfia_livestock
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_event__kind__classification
@@ -451,6 +486,7 @@ msgstr "إجمالي الملتزم به"
 #: model:ir.model,name:alfia_livestock.model_res_company
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__company_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__company_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__company_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__company_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__company_id
 msgid "Company"
@@ -524,6 +560,8 @@ msgstr "الحساب المقابل"
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__create_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__create_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__create_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__create_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__create_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__create_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__create_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__create_uid
@@ -534,6 +572,8 @@ msgstr "أنشأه"
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__create_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__create_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__create_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__create_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__create_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__create_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__create_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__create_date
@@ -541,6 +581,8 @@ msgid "Created on"
 msgstr "تاريخ الإنشاء"
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__currency_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__currency_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_company_currency_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_movement__alfia_currency_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__currency_id
@@ -557,6 +599,8 @@ msgid "Currency basis"
 msgstr "أساس العملة"
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__date
 msgid "Date"
@@ -576,6 +620,11 @@ msgstr "إلى تاريخ"
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_profit_days
 msgid "Days with us"
 msgstr "الأيام لدينا"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_feed_issue__uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr "وحدة القياس الافتراضية المستخدمة في جميع عمليات المخزون."
 
 #. module: alfia_livestock
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__dental
@@ -625,6 +674,8 @@ msgstr "الفرق"
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override_mixin__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_care_cost_bill__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_farrier_visit__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__display_name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_health_record__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__display_name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_line_mixin__display_name
@@ -676,6 +727,11 @@ msgid "Drafted when %(horse)s left the farm (%(why)s)."
 msgstr "أُعدّ عند مغادرة %(horse)s المزرعة (%(why)s)."
 
 #. module: alfia_livestock
+#: model:ir.model.constraint,message:alfia_livestock.constraint_alfia_feed_issue_line_one_line_per_horse
+msgid "Each horse appears once on a feed issue."
+msgstr "يظهر كل حصان مرة واحدة في صرف العلف."
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__effective_date
 msgid "Effective Date"
 msgstr "تاريخ السريان"
@@ -713,14 +769,44 @@ msgid "Farrier visit"
 msgstr "زيارة الحدّاد"
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__product_id
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__category__feed
-msgid "Feed (feed plan)"
-msgstr "العلف (خطة التغذية)"
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_search
+msgid "Feed"
+msgstr "العلف"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/feed.py:0
+msgid "Feed issue"
+msgstr "صرف علف"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_feed_issue
+msgid "Feed issue to horses"
+msgstr "صرف علف للخيول"
+
+#. module: alfia_livestock
+#: model:ir.model,name:alfia_livestock.model_alfia_feed_issue_line
+msgid "Feed issued to one horse"
+msgstr "علف مصروف لحصان واحد"
+
+#. module: alfia_livestock
+#: model:ir.actions.act_window,name:alfia_livestock.alfia_feed_issue_action
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_feed_issue
+#: model:ir.ui.menu,name:alfia_livestock.menu_alfia_feed_issue_stock
+msgid "Feed issues"
+msgstr "صرف العلف"
 
 #. module: alfia_livestock
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_horse_profit__source__plan
 msgid "Feed plan"
 msgstr "خطة التغذية"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_form
+msgid "Fill from feed plans"
+msgstr "تعبئة من خطط التغذية"
 
 #. module: alfia_livestock
 #. odoo-python
@@ -730,6 +816,7 @@ msgstr "مهر %s"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__message_follower_ids
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_follower_ids
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_follower_ids
 msgid "Followers"
@@ -737,6 +824,7 @@ msgstr "المتابعون"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__message_partner_ids
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_partner_ids
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_partner_ids
 msgid "Followers (Partners)"
@@ -757,6 +845,7 @@ msgstr "من المحاسبة"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__has_message
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__has_message
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__has_message
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__has_message
 msgid "Has Message"
@@ -776,6 +865,7 @@ msgstr "محتفظ به للبيع"
 #. module: alfia_livestock
 #: model:ir.model,name:alfia_livestock.model_alfia_horse
 #: model:ir.model.fields,field_description:alfia_livestock.field_account_move_line__alfia_horse_id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__horse_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_line_mixin__alfia_horse_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__horse_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__horse_id
@@ -783,6 +873,7 @@ msgstr "محتفظ به للبيع"
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__horse_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_purchase_order_line__alfia_horse_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_sale_order_line__alfia_horse_id
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_search
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
 msgid "Horse"
 msgstr "الحصان"
@@ -807,6 +898,11 @@ msgid "Horse profitability"
 msgstr "ربحية الخيول"
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__line_ids
+msgid "Horses"
+msgstr "الخيول"
+
+#. module: alfia_livestock
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__notes
 msgid ""
 "How the value was reached (valuer, comparable sales, insurance). Attach the "
@@ -824,6 +920,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override_mixin__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_care_cost_bill__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_farrier_visit__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__id
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_health_record__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_line_mixin__id
@@ -844,6 +942,7 @@ msgstr "المعرف"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_budget__message_needaction
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_feed_issue__message_needaction
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_event__message_needaction
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__message_needaction
 msgid "If checked, new messages require your attention."
@@ -852,6 +951,8 @@ msgstr "إذا كان محدداً، فهناك رسائل جديدة تتطلب
 #. module: alfia_livestock
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_budget__message_has_error
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_budget__message_has_sms_error
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_feed_issue__message_has_error
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_feed_issue__message_has_sms_error
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_event__message_has_error
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_event__message_has_sms_error
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__message_has_error
@@ -873,10 +974,43 @@ msgstr "الإيرادات موجبة والتكاليف سالبة."
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_is_follower
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__message_is_follower
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_is_follower
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_is_follower
 msgid "Is Follower"
 msgstr "متابع"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__issue_id
+msgid "Issue"
+msgstr "صرف"
+
+#. module: alfia_livestock
+#: model_terms:ir.actions.act_window,help:alfia_livestock.alfia_feed_issue_action
+msgid "Issue feed from the store to horses"
+msgstr "اصرف العلف من المخزن إلى الخيول"
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_form
+msgid "Issue from the store"
+msgstr "صرف من المخزن"
+
+#. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_feed_issue__state__issued
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_search
+msgid "Issued"
+msgstr "تم الصرف"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__issued_by_id
+msgid "Issued By"
+msgstr "صرفه"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/feed.py:0
+msgid "Issued by %(user)s: %(qty)s %(uom)s of %(feed)s to %(n)s horse(s)."
+msgstr "صرفه %(user)s: %(qty)s %(uom)s من %(feed)s إلى %(n)s حصان."
 
 #. module: alfia_livestock
 #: model:ir.model,name:alfia_livestock.model_account_move
@@ -897,6 +1031,8 @@ msgstr "النوع"
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__write_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__write_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__write_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__write_uid
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__write_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__write_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__write_uid
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__write_uid
@@ -907,6 +1043,8 @@ msgstr "آخر تحديث بواسطة"
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__write_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_line__write_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__write_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__write_date
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__write_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_classify__write_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__write_date
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__write_date
@@ -1019,6 +1157,7 @@ msgstr "الأدوية واللوازم من المخزون"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_has_error
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__message_has_error
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_has_error
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_has_error
 msgid "Message Delivery error"
@@ -1026,6 +1165,7 @@ msgstr "خطأ في تسليم الرسالة"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__message_ids
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_ids
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_ids
 msgid "Messages"
@@ -1043,6 +1183,7 @@ msgstr "الشهر"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__name
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__name
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__name
 msgid "Name"
 msgstr "الاسم"
@@ -1052,6 +1193,12 @@ msgstr "الاسم"
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_list
 msgid "Net result"
 msgstr "صافي النتيجة"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/feed.py:0
+msgid "New"
+msgstr "جديد"
 
 #. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_form_livestock
@@ -1070,6 +1217,12 @@ msgid "No costs or income for any horse yet"
 msgstr "لا توجد تكاليف أو إيرادات لأي حصان بعد"
 
 #. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/feed.py:0
+msgid "No horse's current feed plan includes %s."
+msgstr "لا تتضمن خطة التغذية الحالية لأي حصان %s."
+
+#. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_profit_view_search
 msgid "Not in accounting yet"
 msgstr "لم تُسجل في المحاسبة بعد"
@@ -1080,7 +1233,14 @@ msgid "Note"
 msgstr "ملاحظة"
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__notes
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_form
+msgid "Notes"
+msgstr "الملاحظات"
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__message_needaction_counter
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_needaction_counter
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_needaction_counter
 msgid "Number of Actions"
@@ -1088,6 +1248,7 @@ msgstr "عدد الإجراءات"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__message_has_error_counter
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_has_error_counter
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_has_error_counter
 msgid "Number of errors"
@@ -1095,6 +1256,7 @@ msgstr "عدد الأخطاء"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_budget__message_needaction_counter
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_feed_issue__message_needaction_counter
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_event__message_needaction_counter
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__message_needaction_counter
 msgid "Number of messages requiring action"
@@ -1102,10 +1264,17 @@ msgstr "عدد الرسائل التي تتطلب إجراءً"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_budget__message_has_error_counter
+#: model:ir.model.fields,help:alfia_livestock.field_alfia_feed_issue__message_has_error_counter
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_event__message_has_error_counter
 #: model:ir.model.fields,help:alfia_livestock.field_alfia_livestock_valuation__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr "عدد الرسائل التي بها خطأ في التسليم"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/feed.py:0
+msgid "Only a requested feed issue can be cancelled."
+msgstr "لا يمكن إلغاء إلا صرف علف في حالة طلب."
 
 #. module: alfia_livestock
 #. odoo-python
@@ -1160,6 +1329,12 @@ msgstr "لا يُعدّ الموازنات إلا موظفو المالية."
 #: code:addons/alfia_livestock/models/livestock.py:0
 msgid "Only finance staff prepare livestock valuations."
 msgstr "لا يُعدّ تقييمات الثروة الحيوانية إلا موظفو المالية."
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/feed.py:0
+msgid "Only the store (inventory users) issues feed."
+msgstr "المخزن فقط (مستخدمو المخزون) يصرف العلف."
 
 #. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_form_livestock
@@ -1270,6 +1445,11 @@ msgid "Purchased"
 msgstr "مُشترى"
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: alfia_livestock
 #: model:ir.module.module,description:base.module_alfia_livestock
 msgid "RFP REQ-BUD-01..03 and REQ-LIV-01..03. See README.md."
 msgstr "متطلبات كراسة الشروط REQ-BUD-01..03 وREQ-LIV-01..03. انظر README.md."
@@ -1282,6 +1462,7 @@ msgstr "سباقات / أداء"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__rating_ids
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__rating_ids
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__rating_ids
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__rating_ids
 msgid "Ratings"
@@ -1354,6 +1535,12 @@ msgid "Report only"
 msgstr "تقرير فقط"
 
 #. module: alfia_livestock
+#: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_feed_issue__state__draft
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_search
+msgid "Requested"
+msgstr "مطلوب"
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget_override__res_id
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse_profit__res_id
 msgid "Res"
@@ -1389,6 +1576,7 @@ msgstr "تكلفة التشغيل اليومية"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__message_has_sms_error
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_has_sms_error
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_has_sms_error
 msgid "SMS Delivery error"
@@ -1443,6 +1631,8 @@ msgstr "سجلات الإسطبل"
 
 #. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__state
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__state
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__state
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__state
 msgid "State"
 msgstr "الحالة"
@@ -1450,6 +1640,11 @@ msgstr "الحالة"
 #. module: alfia_livestock
 #: model:ir.model,name:alfia_livestock.model_stock_move
 msgid "Stock Move"
+msgstr "حركة المخزون"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__move_id
+msgid "Stock move"
 msgstr "حركة المخزون"
 
 #. module: alfia_livestock
@@ -1477,6 +1672,11 @@ msgstr "فواتير الموردين وتكاليف أخرى"
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_vet_visit__alfia_bill_ref
 msgid "Supplier invoice no."
 msgstr "رقم فاتورة المورد"
+
+#. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__location_id
+msgid "Take from"
+msgstr "الصرف من"
 
 #. module: alfia_livestock
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_budget_override_view_form
@@ -1518,6 +1718,12 @@ msgid "This year"
 msgstr "هذه السنة"
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__total_qty
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_form
+msgid "Total"
+msgstr "الإجمالي"
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_profit_cost
 msgid "Total costs"
 msgstr "إجمالي التكاليف"
@@ -1538,6 +1744,11 @@ msgid "Transport cost"
 msgstr "تكلفة النقل"
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__uom_id
+msgid "Unit"
+msgstr "الوحدة"
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__valuation_id
 #: model:ir.model.fields.selection,name:alfia_livestock.selection__alfia_livestock_event__kind__valuation
 msgid "Valuation"
@@ -1550,7 +1761,11 @@ msgid "Valuations"
 msgstr "التقييمات"
 
 #. module: alfia_livestock
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue__total_value
+#: model:ir.model.fields,field_description:alfia_livestock.field_alfia_feed_issue_line__value
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__value
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_feed_issue_view_list
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_valuation_view_list
 msgid "Value"
 msgstr "القيمة"
@@ -1665,6 +1880,12 @@ msgstr "صغار الخيل"
 #: code:addons/alfia_livestock/models/budget.py:0
 msgid "bill"
 msgstr "فاتورة المورد"
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/feed.py:0
+msgid "feed store"
+msgstr "مخزن العلف"
 
 #. module: alfia_livestock
 #. odoo-python

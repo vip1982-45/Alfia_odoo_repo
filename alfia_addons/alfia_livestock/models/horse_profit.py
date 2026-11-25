@@ -3,7 +3,7 @@
 Everything a horse costs and earns, on one page: what accounting has allocated to the horse's cost centre (medicine
 and supplies issued from stock, supplier bills, boarding and service invoices, breeding contracts and semen, the sale
 of the horse), plus what the stable records but accounting does not see yet (vet, dental and farrier visits, transport
-on movements, feed from the horse's feed plan) and the price paid for the horse.
+on movements, feed issued from the store, or estimated from the feed plan in months with no issue) and the price paid for the horse.
 
 A cost recorded by the stable that a supplier also bills is counted once: the stable notes the supplier's invoice
 number on the record, and once a posted supplier bill carries that number as its reference, the record drops out and
@@ -18,7 +18,7 @@ PROFIT_READERS = FINANCE_GROUPS + ',alfia_security.group_alfia_security_auditor,
 
 CATEGORIES = [
     ('purchase', 'Purchase of the horse'),
-    ('feed', 'Feed (feed plan)'),
+    ('feed', 'Feed'),
     ('stock', 'Medicine and supplies from stock'),
     ('vet', 'Vet and health'),
     ('dental', 'Dental'),
@@ -189,6 +189,15 @@ class AlfiaHorseProfit(models.Model):
                                                          interval '1 month') AS m(month)
                   ) f
                  WHERE f.days > 0 AND f.unit_cost > 0
+                   -- A month in which the store issued feed to the horse counts what was issued, not the plan.
+                   AND NOT EXISTS (SELECT 1 FROM alfia_feed_issue_line fl
+                                    WHERE fl.horse_id = f.horse_id AND fl.state = 'issued'
+                                      AND date_trunc('month', fl.date) = date_trunc('month', f.month_start))
+                UNION ALL
+                -- Feed the store issued to the horse, at the product's cost when it was issued.
+                SELECT fl.horse_id, fi.company_id, fi.date, 'feed', 'stable', fi.name, -fl.value, 'alfia.feed.issue', fi.id
+                  FROM alfia_feed_issue_line fl JOIN alfia_feed_issue fi ON fi.id = fl.issue_id
+                 WHERE fi.state = 'issued' AND fl.value > 0
             )
             SELECT row_number() OVER (ORDER BY date, res_model, res_id, category) AS id,
                    horse_id, company_id, date, category, source, name, amount,
