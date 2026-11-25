@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 06:38+0000\n"
-"PO-Revision-Date: 2026-11-25 06:38+0000\n"
+"POT-Creation-Date: 2026-11-25 07:03+0000\n"
+"PO-Revision-Date: 2026-11-25 07:03+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -368,6 +368,7 @@ msgstr "حد الاعتماد"
 #. module: alfia_controls
 #: model:ir.actions.act_window,name:alfia_controls.alfia_approval_limit_action
 #: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_limits
+#: model:ir.ui.menu,name:alfia_controls.menu_alfia_controls_limits_purchase
 msgid "Approval limits"
 msgstr "حدود الاعتماد"
 
