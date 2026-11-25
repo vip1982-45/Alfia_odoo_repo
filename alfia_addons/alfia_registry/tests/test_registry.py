@@ -123,6 +123,9 @@ class TestExternalSemen(RegistryCase):
             st.with_user(self.cust1).action_post()                   # imported it
         st.with_user(self.cust2).action_post()
         self.assertEqual(self._held(), 15)
+        st.invalidate_recordset(['centre_stock'])
+        self.assertIn('REG-LOT-1', st.with_user(self.cust2).centre_stock)
+        self.assertIn(': 15', st.with_user(self.cust2).centre_stock, "the statement shows what we hold there after posting")
         self.assertEqual(st.state, 'posted')
         with self.assertRaises(UserError):
             self._import("Date,Batch,Movement,Quantity,Reference\n"

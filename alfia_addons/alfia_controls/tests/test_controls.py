@@ -581,7 +581,7 @@ class TestAssetAccounting(ControlsCase):
         posted = asset.depreciation_line_ids.filtered(lambda l: l.state == 'posted')
         self.assertAlmostEqual(sum(posted.mapped('amount')), 3500, places=2, msg="Jan-Mar plus 15/30 of April")
         self.assertFalse(asset.depreciation_line_ids.filtered(lambda l: l.state == 'planned'))
-        self.assertEqual((asset.accounting_state, asset.state), ('disposed', 'retired'))
+        self.assertEqual((asset.accounting_state, asset.state), ('disposed', 'disposed'), "both statuses say disposed")
         move = asset.disposal_move_id
         self.assertEqual(move.state, 'posted')
         gain = move.line_ids.filtered(lambda l: l.account_id == self.gainloss)

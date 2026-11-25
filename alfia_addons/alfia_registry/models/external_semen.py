@@ -62,8 +62,20 @@ class AlfiaSemenStatement(models.Model):
     imported_by_id = fields.Many2one('res.users', default=lambda self: self.env.user, readonly=True)
     posted_by_id = fields.Many2one('res.users', readonly=True, copy=False)
     posted_date = fields.Datetime(readonly=True, copy=False)
+    centre_stock = fields.Text(string='Our stock at the centre now', compute='_compute_centre_stock',
+                               help="Straws we hold at this centre, by batch, as recorded now (after any posting).")
     exception_count = fields.Integer(compute='_compute_counts')
     ok_count = fields.Integer(compute='_compute_counts')
+
+    @api.depends('state', 'location_id')
+    def _compute_centre_stock(self):
+        for st in self:
+            quants = self.env['stock.quant'].sudo().search([('location_id', '=', st.location_id.id), ('quantity', '!=', 0)])
+            by_lot = {}
+            for quant in quants:
+                key = f"{quant.lot_id.name or '—'} ({quant.product_id.display_name})"
+                by_lot[key] = by_lot.get(key, 0.0) + quant.quantity
+            st.centre_stock = '\n'.join(f"{k}: {v:g}" for k, v in sorted(by_lot.items())) or self.env._("Nothing held")
 
     @api.depends('line_ids.status')
     def _compute_counts(self):

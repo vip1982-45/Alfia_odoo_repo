@@ -23,6 +23,7 @@ class AlfiaAsset(models.Model):
     and disposal (sale or write-off) with its gain or loss."""
     _inherit = 'alfia.asset'
 
+    state = fields.Selection(selection_add=[('disposed', 'Disposed (sold / written off)')], ondelete={'disposed': 'set default'})
     accounting_state = fields.Selection(
         [('none', 'Not capitalised'), ('running', 'Depreciating'), ('done', 'Fully depreciated'), ('disposed', 'Disposed')],
         default='none', required=True, tracking=True, groups=ACCOUNTING, copy=False)
@@ -129,7 +130,7 @@ class AlfiaAsset(models.Model):
     def action_retire(self):
         # A capitalised asset leaves the books through a disposal, which also retires it; retiring it on its own would
         # leave its cost and depreciation in the ledger for an asset no longer in use.
-        if not self.env.su and any(a.sudo().accounting_state in ('running', 'done') for a in self):
+        if not self.env.su and any(a.sudo().accounting_state in ('running', 'done', 'disposed') for a in self):
             raise UserError(self.env._("This asset is capitalised. A finance manager disposes of it (Dispose), which also "
                                        "retires it."))
         return super().action_retire()
@@ -235,7 +236,7 @@ class AlfiaAssetDisposal(models.TransientModel):
         move._post()
         with workflow():
             asset.write({'accounting_state': 'disposed', 'disposal_move_id': move.id, 'disposed_by_id': self.env.user.id,
-                         'state': 'retired'})
+                         'state': 'disposed'})
         asset.message_post(body=self.env._(
             "Disposed of by %(user)s on %(date)s: %(reason)s. Book value %(book)s, proceeds %(proceeds)s, %(kind)s %(result)s.",
             user=self.env.user.name, date=self.date, reason=self.reason, book=book, proceeds=self.proceeds,

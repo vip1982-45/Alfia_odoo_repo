@@ -99,6 +99,8 @@ class AlfiaHorseRegistration(models.Model):
             rec._set('approved', approved_by_id=self.env.user.id, approved_date=fields.Datetime.now())
             rec.activity_schedule('mail.mail_activity_data_todo', date_deadline=rec.due_date, user_id=rec.requested_by_id.id,
                                   summary=self.env._("Follow up %(kind)s for %(horse)s", kind=dict(KINDS)[rec.kind], horse=rec.horse_id.name))
+            rec.message_post(body=self.env._("Approved by %(user)s. Follow-up activity for %(owner)s, due %(date)s.",
+                                             user=self.env.user.name, owner=rec.requested_by_id.name, date=rec.due_date))
 
     def action_reject(self):
         self._check_manager()

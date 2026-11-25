@@ -1,5 +1,7 @@
 # Run with:  odoo-bin shell -c <conf> -d <db> < demo/data_fixes.py      (safe to run again)
 # Corrections to data created by earlier releases. Each step checks first and changes nothing once applied.
+from odoo import fields
+
 done = []
 
 # 1. The semen tank room sat outside the warehouse stock, so transfers and sales could not see the straws in it.
@@ -132,7 +134,14 @@ if loose:
     done.append('%d unassigned HR checklist step(s) given an owner' % len(loose))
 
 # 9b. Horses that left before plans were ended on exit: a plan for that horse alone gets the leaving date as its end.
+#     Horses that left before the exit date was recorded at all get it from their last completed departure.
 if 'alfia_billed_until' in env['alfia.horse']._fields:
+    Move = env['alfia.horse.movement'].sudo()
+    for horse in env['alfia.horse'].sudo().with_context(active_test=False).search([('alfia_billed_until', '=', False)]):
+        last = Move.search([('horse_id', '=', horse.id), ('state', '=', 'done')], order='date desc, id desc', limit=1)
+        if last.kind == 'departure':
+            horse.write({'alfia_billed_until': fields.Date.to_date(last.date)})
+            done.append('exit date of %s set from its departure on %s' % (horse.name, fields.Date.to_date(last.date)))
     ended = 0
     for plan in env['alfia.charge.plan'].sudo().search([('target_kind', '=', 'horse'), ('horse_id.alfia_billed_until', '!=', False)]):
         until = plan.horse_id.alfia_billed_until
@@ -142,6 +151,16 @@ if 'alfia_billed_until' in env['alfia.horse']._fields:
     if ended:
         done.append('%d boarding plan(s) of horses that had left now end on the leaving date' % ended)
 
+# 9c. Assets disposed of before the Disposed status existed: align the operational status with the accounting one.
+if 'accounting_state' in env['alfia.asset']._fields:
+    disposed = env['alfia.asset'].sudo().with_context(active_test=False).search([('accounting_state', '=', 'disposed'), ('state', '!=', 'disposed')])
+    if disposed:
+        disposed.write({'state': 'disposed'})
+        done.append('%d disposed asset(s) now show the Disposed status' % len(disposed))
+
+# Save everything above before step 10 (an odoo shell script is rolled back unless it commits).
+env.cr.commit()
+
 # 10. Last, as uninstalling reloads the registry: supplier and customer name lookup needs a paid online service (IAP)
 #    and failed with an access error.
 mod = env['ir.module.module'].sudo().search([('name', '=', 'partner_autocomplete'), ('state', '=', 'installed')])
@@ -149,4 +168,5 @@ if mod:
     mod.button_immediate_uninstall()
     done.append('removed the online company lookup (partner_autocomplete)')
 
+env.cr.commit()
 print('Data fixes: ' + ('; '.join(done) if done else 'nothing to change'))

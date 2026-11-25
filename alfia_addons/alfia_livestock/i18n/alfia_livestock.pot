@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 07:53+0000\n"
-"PO-Revision-Date: 2026-11-25 07:53+0000\n"
+"POT-Creation-Date: 2026-11-25 13:15+0000\n"
+"PO-Revision-Date: 2026-11-25 13:15+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -237,6 +237,14 @@ msgid "Approved by %s."
 msgstr ""
 
 #. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid ""
+"Attach the evidence (valuer's report, invoice, comparable sales) before "
+"submitting."
+msgstr ""
+
+#. module: alfia_livestock
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_budget__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_event__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_livestock_valuation__message_attachment_count
@@ -358,6 +366,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_livestock.field_alfia_horse__alfia_carrying_value
 #: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_register_view_list
 msgid "Carrying value"
+msgstr ""
+
+#. module: alfia_livestock
+#. odoo-python
+#: code:addons/alfia_livestock/models/livestock.py:0
+msgid ""
+"Choose the counterpart account of the disposal (for example cost of horses "
+"sold) before submitting."
 msgstr ""
 
 #. module: alfia_livestock
@@ -916,6 +932,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/alfia_livestock/models/livestock.py:0
 msgid "Only finance staff prepare livestock valuations."
+msgstr ""
+
+#. module: alfia_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_horse_form_livestock
+#: model_terms:ir.ui.view,arch_db:alfia_livestock.alfia_livestock_horse_form
+msgid "Open"
 msgstr ""
 
 #. module: alfia_livestock

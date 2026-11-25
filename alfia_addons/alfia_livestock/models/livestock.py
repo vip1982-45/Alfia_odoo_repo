@@ -77,7 +77,7 @@ class AlfiaHorse(models.Model):
         leaving = self.filtered(lambda h: h.status == 'active') if vals.get('status') in ('sold', 'gifted', 'dead') else self.browse()
         res = super().write(vals)
         for horse in self.filtered(lambda h: h.id in old_class and old_class[h.id] != h.sudo().alfia_livestock_class):
-            labels = dict(CLASSES)
+            labels = dict(self._fields['alfia_livestock_class']._description_selection(self.env))
             horse._alfia_log_event('classification', note=self.env._("%(old)s → %(new)s", old=labels.get(old_class[horse.id], '—'),
                                                                      new=labels.get(horse.sudo().alfia_livestock_class, '—')))
         for horse in leaving.sudo():
@@ -156,6 +156,10 @@ class AlfiaLivestockValuation(models.Model):
             base = rec.previous_value if rec.state == 'posted' else rec.horse_id.sudo().alfia_carrying_value
             rec.difference = rec.value - base
 
+    def action_open(self):
+        self.ensure_one()
+        return {'type': 'ir.actions.act_window', 'res_model': self._name, 'res_id': self.id, 'view_mode': 'form'}
+
     def write(self, vals):
         if {'horse_id', 'method', 'effective_date', 'value', 'counterpart_account_id', 'notes'} & set(vals) and not self.env.su:
             if any(r.state in ('submitted', 'posted') for r in self):
@@ -175,6 +179,11 @@ class AlfiaLivestockValuation(models.Model):
                 raise UserError(self.env._("%s has already been submitted.", rec.name))
             if not rec.notes:
                 raise UserError(self.env._("Describe the basis of the valuation (and attach the evidence) before submitting."))
+            if not self.env['ir.attachment'].sudo().search_count([('res_model', '=', rec._name), ('res_id', '=', rec.id)]):
+                raise UserError(self.env._("Attach the evidence (valuer's report, invoice, comparable sales) before submitting."))
+            if rec.method == 'disposal' and not rec.counterpart_account_id:
+                raise UserError(self.env._("Choose the counterpart account of the disposal (for example cost of horses sold) "
+                                           "before submitting."))
             with workflow():
                 rec.write({'state': 'submitted', 'prepared_by_id': self.env.user.id})
 

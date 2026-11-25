@@ -54,11 +54,23 @@ class AlfiaIncident(models.Model):
                 vals['name'] = self.env['ir.sequence'].next_by_code('alfia.incident') or 'New'
         incidents = super().create(vals_list)
         for rec in incidents.filtered(lambda r: r.severity in ('high', 'critical')):
-            managers = self.env.ref(MANAGER).sudo().all_user_ids.filtered(lambda u: not u.share)[:1]
+            managers = rec._alfia_reviewer()
             if managers:
                 rec.activity_schedule('mail.mail_activity_data_todo', user_id=managers.id,
                                       summary=self.env._("%s incident reported: review and assign an investigator", rec.severity))
         return incidents
+
+    def _alfia_reviewer(self):
+        """The manager who reviews a serious incident first: the vet manager for horse and biosecurity incidents, the HR
+        manager for staff injuries, otherwise the training manager; any incident manager when that role has nobody."""
+        self.ensure_one()
+        by_kind = {'horse_injury': 'alfia_security.group_alfia_vet_manager', 'biosecurity': 'alfia_security.group_alfia_vet_manager',
+                   'staff_injury': 'hr.group_hr_manager'}
+        preferred = self.env.ref(by_kind.get(self.kind, 'alfia_security.group_alfia_training_manager'), raise_if_not_found=False)
+        users = self.env['res.users']
+        if preferred:
+            users = preferred.sudo().all_user_ids.filtered(lambda u: not u.share and u.active and u.id != self.env.ref('base.user_admin').id)
+        return users[:1] or self.env.ref(MANAGER).sudo().all_user_ids.filtered(lambda u: not u.share and u.active)[:1]
 
     def write(self, vals):
         if not self.env.su and any(r.state == 'closed' for r in self) and set(vals) - {'message_follower_ids'}:

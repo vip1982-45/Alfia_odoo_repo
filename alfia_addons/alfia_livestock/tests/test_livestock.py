@@ -141,8 +141,12 @@ class TestLivestock(LivestockCase):
         val = self.env['alfia.livestock.valuation'].with_user(user or self.acc).create({
             'horse_id': horse.id, 'value': value, 'method': method, 'effective_date': date or fields.Date.today(),
             'counterpart_account_id': counterpart and counterpart.id, 'notes': 'Independent valuer report attached'})
+        self._attach(val)
         val.with_user(user or self.acc).action_submit()
         return val
+
+    def _attach(self, val):
+        self.env['ir.attachment'].create({'name': 'valuer-report.pdf', 'raw': b'%PDF-1.4 test', 'res_model': val._name, 'res_id': val.id})
 
     def test_classification_and_acquisition_are_logged(self):
         horse = self._horse()
@@ -184,11 +188,23 @@ class TestLivestock(LivestockCase):
         horse = self._horse()
         val = self.env['alfia.livestock.valuation'].with_user(self.acc).create({'horse_id': horse.id, 'value': 1000})
         with self.assertRaises(UserError):
-            val.action_submit()
+            val.action_submit()                                         # no basis
+        val.notes = 'Valuer report'
+        with self.assertRaises(UserError):
+            val.action_submit()                                         # basis but no evidence file (Round 7 L2)
+        self._attach(val)
+        val.action_submit()
         self._valuation(horse, 90000, counterpart=self.clearing).with_user(self.fm1).action_approve()
         horse.write({'status': 'sold'})
         draft = self.env['alfia.livestock.valuation'].search([('horse_id', '=', horse.id), ('method', '=', 'disposal')])
         self.assertEqual((draft.state, draft.value), ('draft', 0))
+        self._attach(draft)
+        with self.assertRaises(UserError):
+            draft.with_user(self.fm1).action_submit()                   # no counterpart chosen
+        draft.with_user(self.fm1).counterpart_account_id = self.loss
+        draft.with_user(self.fm1).action_submit()
+        draft.with_user(self.fm2).action_approve()
+        self.assertEqual(horse.sudo().alfia_carrying_value, 0)
         self.assertIn('disposal', horse.sudo().alfia_livestock_event_ids.mapped('kind'))
 
     def test_valuation_entries_are_not_manual_entries(self):

@@ -378,3 +378,14 @@ MORE = {
     "quantity %r is not a positive number": "الكمية %r ليست رقماً موجباً",
     "unknown movement %r": "حركة غير معروفة %r",
 }
+MORE.update({
+    "Attach the evidence (valuer's report, invoice, comparable sales) before submitting.": "أرفق الأدلة (تقرير المقيِّم، الفاتورة، المبيعات المماثلة) قبل التقديم.",
+    "Choose the counterpart account of the disposal (for example cost of horses sold) before submitting.":
+        "اختر الحساب المقابل للاستبعاد (مثلاً تكلفة الخيول المباعة) قبل التقديم.",
+    "Disposed (sold / written off)": "تم التخلص منه (بيع / شطب)",
+    "Controls": "الضوابط",
+    "Our stock at the centre now": "مخزوننا في المركز الآن",
+    "Straws we hold at this centre, by batch, as recorded now (after any posting).": "القشات التي نحتفظ بها في هذا المركز حسب الدفعة، كما هي مسجلة الآن (بعد أي ترحيل).",
+    "Nothing held": "لا يوجد رصيد",
+    "Approved by %(user)s. Follow-up activity for %(owner)s, due %(date)s.": "اعتمده %(user)s. نشاط متابعة لـ %(owner)s، مستحق في %(date)s.",
+})
