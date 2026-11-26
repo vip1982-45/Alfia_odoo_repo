@@ -204,5 +204,31 @@ if not Employee.with_context(active_test=False).search([('name', '=', 'TEST Cont
         'contract_date_start': start, 'wage': 4000})
     made.append(f'employee TEST Contract employee with a contract from {start}')
 
+# Semen by the straw (spec 26 Nov): a canister and cane under the first semen tank, and a TEST freeze lot of 40 straws at 4
+# straws per dose loaded into the cane, from a released collection of TEST H1 sale horse.
+if 'alfia.semen.freeze.lot' in env:
+    FreezeLot = env['alfia.semen.freeze.lot'].sudo()
+    if not FreezeLot.search([('notes', '=', 'TEST freeze lot')], limit=1):
+        Loc = env['stock.location'].sudo()
+        tank = Loc.search([('name', 'ilike', 'Tank 1'), ('usage', '=', 'internal')], limit=1) or \
+            Loc.search([('name', 'ilike', 'Semen tank room'), ('usage', '=', 'internal')], limit=1)
+        stallion = env['alfia.horse'].sudo().search([('name', '=', 'TEST H1 sale horse')], limit=1)
+        if tank and stallion:
+            tank.alfia_location_kind = tank.alfia_location_kind or 'tank'
+            canister = Loc.search([('name', '=', 'TEST Canister 1'), ('location_id', '=', tank.id)], limit=1) or Loc.create(
+                {'name': 'TEST Canister 1', 'usage': 'internal', 'location_id': tank.id, 'alfia_location_kind': 'canister', 'alfia_position': 1})
+            cane = Loc.search([('name', '=', 'TEST Cane A'), ('location_id', '=', canister.id)], limit=1) or Loc.create(
+                {'name': 'TEST Cane A', 'usage': 'internal', 'location_id': canister.id, 'alfia_location_kind': 'cane',
+                 'alfia_capacity_straws': 60})
+            collection = env['alfia.semen.collection'].sudo().create({'stallion_id': stallion.id, 'concentration': 200, 'motility': 70,
+                                                                     'doses': 0, 'notes': 'TEST collection for straws'})
+            collection.action_release()
+            lot = FreezeLot.create({'collection_id': collection.id, 'straws_produced': 40, 'straws_per_dose': 4,
+                                    'load_location_id': cane.id, 'post_thaw_test_date': today, 'post_thaw_motility_pct': 40,
+                                    'post_thaw_progressive_pct': 30, 'notes': 'TEST freeze lot'})
+            lot.action_qc_pass()
+            lot.action_approve_load()
+            made.append(f'freeze lot {lot.name}: 40 straws, 4 per dose, in {cane.complete_name}')
+
 env.cr.commit()
 print('Retest fixtures: ' + ('; '.join(made) if made else 'already in place'))

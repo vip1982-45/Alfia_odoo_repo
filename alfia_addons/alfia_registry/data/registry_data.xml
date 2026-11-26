@@ -17,5 +17,38 @@
             <field name="usage">inventory</field>
             <field name="company_id" eval="False"/>
         </record>
+        <!-- Frozen semen by the straw (spec 26 Nov 2026). -->
+        <record id="seq_semen_freeze_lot" model="ir.sequence">
+            <field name="name">Semen freeze lot</field>
+            <field name="code">alfia.semen.freeze.lot</field>
+            <field name="prefix">FRZ-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <record id="seq_semen_tank_audit" model="ir.sequence">
+            <field name="name">Semen tank count</field>
+            <field name="code">alfia.semen.tank.audit</field>
+            <field name="prefix">TANK/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <record id="stock_location_semen_destroyed" model="stock.location">
+            <field name="name">سائل متلف · Semen wasted or destroyed</field>
+            <field name="usage">inventory</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="uom_straw" model="uom.uom">
+            <field name="name">قشة · Straw</field>
+            <field name="relative_factor" eval="1"/>
+        </record>
+        <record id="product_semen_straw" model="product.product">
+            <field name="name">Frozen semen straw</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="tracking">lot</field>
+            <field name="uom_id" ref="uom_straw"/>
+            <field name="categ_id" ref="alfia_equine.category_semen"/>
+            <field name="sale_ok" eval="True"/>
+        </record>
     </data>
 </odoo>

@@ -14,6 +14,7 @@
         'data/registry_data.xml',
         'views/registration_views.xml',
         'views/semen_views.xml',
+        'views/semen_straw_views.xml',
         'views/incident_views.xml',
         'views/menus.xml',
     ],

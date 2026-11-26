@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 16:05+0000\n"
-"PO-Revision-Date: 2026-11-25 16:05+0000\n"
+"POT-Creation-Date: 2026-11-26 14:14+0000\n"
+"PO-Revision-Date: 2026-11-26 14:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -18,6 +18,69 @@ msgstr ""
 #: code:addons/alfia_registry/models/incident.py:0
 msgid "%(count)s corrective action(s) of %(name)s are still open."
 msgstr "لا يزال %(count)s من الإجراءات التصحيحية لـ %(name)s مفتوحاً."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"%(lot)s has no storage place with %(n)s free straws (reserved straws are not"
+" used)."
+msgstr ""
+"لا يوجد في %(lot)s موقع تخزين فيه %(n)s قشة متاحة (القشات المحجوزة لا "
+"تُستخدم)."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"%(lot)s: motility after thaw %(got)s%% is below the stud's minimum of "
+"%(min)s%%."
+msgstr ""
+"%(lot)s: الحركة بعد الذوبان %(got)s%% أقل من الحد الأدنى للمربط %(min)s%%."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"%(lot)s: progressive motility after thaw %(got)s%% is below the stud's "
+"minimum of %(min)s%%."
+msgstr ""
+"%(lot)s: الحركة التقدمية بعد الذوبان %(got)s%% أقل من الحد الأدنى للمربط "
+"%(min)s%%."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"%(n)s straws of %(lot)s taken from %(where)s for this service (%(doses)s "
+"doses)."
+msgstr "سُحبت %(n)s قشة من %(lot)s من %(where)s لهذه الخدمة (%(doses)s جرعة)."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "%(n)s straws of %(lot)s thawed by %(user)s."
+msgstr "أذاب %(user)s عدد %(n)s قشة من %(lot)s."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"%(n)s straws recorded as wasted by %(user)s from %(where)s. Reason: "
+"%(reason)s"
+msgstr "سجّل %(user)s عدد %(n)s قشة كهدر من %(where)s. السبب: %(reason)s"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "%(where)s holds %(n)s straws of %(lot)s."
+msgstr "يحتوي %(where)s على %(n)s قشة من %(lot)s."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "%s has already been loaded or cancelled."
+msgstr "تم تحميل %s أو إلغاؤه مسبقاً."
 
 #. module: alfia_registry
 #. odoo-python
@@ -68,6 +131,22 @@ msgid "%s is not under investigation."
 msgstr "%s ليس قيد التحقيق."
 
 #. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "%s must pass its thaw test before it is loaded."
+msgstr "يجب أن ينجح %s في اختبار الذوبان قبل تحميله."
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_freeze_lot__straw_volume__0_25
+msgid "0.25 ml"
+msgstr "0.25 مل"
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_freeze_lot__straw_volume__0_5
+msgid "0.5 ml"
+msgstr "0.5 مل"
+
+#. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_import_view_form
 msgid ""
 "A CSV from the centre with the columns <b>Date</b>, <b>Batch</b>, <b>Movement</b> (received, used, shipped, balance)\n"
@@ -78,6 +157,12 @@ msgstr ""
 "(received، used، shipped، balance) و<b>الكمية</b>، واختيارياً <b>المرجع</b> "
 "(مثلاً الفرس). لا يمكن استيراد الملف نفسه مرتين، وتُعلَّم الأسطر المرحّلة من"
 " كشف سابق كمكررة."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "A capacity cannot be negative."
+msgstr "لا يمكن أن تكون السعة سالبة."
 
 #. module: alfia_registry
 #. odoo-python
@@ -99,6 +184,38 @@ msgstr "يُحتفظ بالطلب المكتمل كسجل."
 
 #. module: alfia_registry
 #. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "A confirmed count cannot be changed."
+msgstr "لا يمكن تغيير جرد مؤكد."
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_res_company__alfia_semen_qc_gate
+msgid ""
+"A freeze lot is loaded into a tank only after its thaw test has passed."
+msgstr "لا تُحمَّل دفعة التجميد في الخزان إلا بعد نجاح اختبار الذوبان."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"A loaded freeze lot is not cancelled: count, waste or transfer its straws "
+"instead."
+msgstr ""
+"لا تُلغى دفعة تجميد محمّلة: اجرد قشاتها أو سجّل هدرها أو انقلها بدلاً من "
+"ذلك."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"A loaded freeze lot's straws and storage change only through stock moves "
+"(count, waste, transfer)."
+msgstr ""
+"تتغير قشات دفعة التجميد المحمّلة ومواقعها عبر حركات المخزون فقط (جرد، هدر، "
+"نقل)."
+
+#. module: alfia_registry
+#. odoo-python
 #: code:addons/alfia_registry/models/external_semen.py:0
 msgid "A posted statement is kept; correct it with the next statement."
 msgstr "يُحتفظ بالكشف المرحّل؛ صحّحه بالكشف التالي."
@@ -116,7 +233,9 @@ msgstr "الإجراء"
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_needaction
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_needaction
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__message_needaction
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_needaction
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__message_needaction
 msgid "Action Needed"
 msgstr "إجراء مطلوب"
 
@@ -186,6 +305,11 @@ msgid "Approve"
 msgstr "اعتماد"
 
 #. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
+msgid "Approve and load"
+msgstr "اعتماد وتحميل"
+
+#. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
 msgid "Approve closure"
 msgstr "اعتماد الإغلاق"
@@ -201,10 +325,30 @@ msgid "Approved Date"
 msgstr "تاريخ الاعتماد"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__approved_by_id
+msgid "Approved and loaded by"
+msgstr "اعتمدها وحمّلها"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__user_id
+msgid "Approved by"
+msgstr "اعتمدها"
+
+#. module: alfia_registry
 #. odoo-python
 #: code:addons/alfia_registry/models/registration.py:0
 msgid "Approved by %(user)s. Follow-up activity for %(owner)s, due %(date)s."
 msgstr "اعتمده %(user)s. نشاط متابعة لـ %(owner)s، مستحق في %(date)s."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"Approved by %(user)s: %(n)s straws loaded into %(where)s (%(doses)s doses of"
+" %(ratio)s straws)."
+msgstr ""
+"اعتمدها %(user)s: حُمّلت %(n)s قشة في %(where)s (%(doses)s جرعة من %(ratio)s"
+" قشات)."
 
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__approved
@@ -219,9 +363,16 @@ msgstr "أرفق الطلب أو نموذج العينة أو الشهادة أ�
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__message_attachment_count
 msgid "Attachment Count"
 msgstr "عدد المرفقات"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__audit_id
+msgid "Audit"
+msgstr "الجرد"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__authority_id
@@ -234,12 +385,38 @@ msgid "Authority reference"
 msgstr "مرجع الجهة"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__doses_available
+msgid "Available doses"
+msgstr "الجرعات المتاحة"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_available
+msgid "Available straws"
+msgstr "القشات المتاحة"
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_freeze_lot__straws_remainder
+msgid "Available straws that do not make a whole dose."
+msgstr "قشات متاحة لا تكفي جرعة كاملة."
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_freeze_lot__doses_available
+msgid "Available straws ÷ straws per dose, for this lot only (rounded down)."
+msgstr "القشات المتاحة ÷ القشات لكل جرعة، لهذه الدفعة فقط (مقرّبة للأسفل)."
+
+#. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__movement__balance
 msgid "Balance held"
 msgstr "الرصيد المحتفظ به"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__balance_ok
+msgid "Balances add up"
+msgstr "الأرصدة متوازنة"
+
+#. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__batch
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__lot_id
 msgid "Batch"
 msgstr "الدفعة"
 
@@ -254,18 +431,58 @@ msgid "Breeding certificate"
 msgstr "شهادة التناسل"
 
 #. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_breeding_service
+msgid "Breeding service (attempt)"
+msgstr "خدمة تلقيح (محاولة)"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__user_id
+msgid "By"
+msgstr "بواسطة"
+
+#. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_horse_death_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_import_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_ratio_correction_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_statement_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_waste_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_service_correction_view_form
 msgid "Cancel"
 msgstr "إلغاء"
 
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__cancelled
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_freeze_lot__state__cancelled
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement__state__cancelled
 msgid "Cancelled"
 msgstr "ملغى"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"Cancelled after thawing: the %(n)s thawed straws do not return to frozen "
+"stock. Record them as used or wasted (with a reason) on the freeze lot."
+msgstr ""
+"أُلغيت بعد الإذابة: القشات المذابة (%(n)s) لا تعود إلى المخزون المجمد. "
+"سجّلها مستخدمة أو مهدورة (مع السبب) في دفعة التجميد."
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__stock_location__alfia_location_kind__cane
+msgid "Cane"
+msgstr "عصا"
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__stock_location__alfia_location_kind__canister
+msgid "Canister"
+msgstr "كانستر"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_stock_location__alfia_capacity_straws
+msgid "Capacity (straws)"
+msgstr "السعة (قشات)"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__cause
@@ -305,6 +522,12 @@ msgid "Choose the investigator for %s first."
 msgstr "اختر محقق %s أولاً."
 
 #. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Choose where the straws are loaded (tank, canister, cane or goblet)."
+msgstr "اختر مكان تحميل القشات (خزان، كانستر، عصا أو كوب)."
+
+#. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__state__closed
 msgid "Closed"
 msgstr "مغلق"
@@ -330,9 +553,25 @@ msgid "Closure Notes"
 msgstr "ملاحظات الإغلاق"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__collection_id
+msgid "Collection"
+msgstr "القذفة"
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_collection__straw_count_known
+msgid ""
+"Collections released before straws were recorded keep their doses; their "
+"straw count is unknown."
+msgstr ""
+"القذفات المعتمدة قبل تسجيل القشات تحتفظ بجرعاتها؛ وعدد قشاتها غير معروف."
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_res_company
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__company_id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__company_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__company_id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__company_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__company_id
 msgid "Company"
 msgstr "الشركة"
 
@@ -352,19 +591,140 @@ msgid "Completed Date"
 msgstr "تاريخ الإكمال"
 
 #. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Completed with a stallion that differs from the batch. Reason: %s"
+msgstr "أُنجزت بفحل مختلف عن فحل الدفعة. السبب: %s"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_collection__concentration
+msgid "Concentration at collection (M/ml)"
+msgstr "التركيز عند الجمع (مليون/مل)"
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_tank_audit_view_form
+msgid "Confirm count"
+msgstr "تأكيد الجرد"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Confirm that the straws were not taken out of the tank."
+msgstr "أكّد أن القشات لم تُسحب من الخزان."
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_tank_audit__state__done
+msgid "Confirmed"
+msgstr "مؤكد"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__confirmed_by_id
+msgid "Confirmed By"
+msgstr "أكّده"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"Confirmed by %(user)s: %(n)s place(s) adjusted (%(total)s straws or doses in"
+" total)."
+msgstr "أكّده %(user)s: تمت تسوية %(n)s موقع (إجمالي %(total)s قشة أو جرعة)."
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_ratio_correction_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_service_correction_view_form
+msgid "Correct"
+msgstr "تصحيح"
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_breeding_service_form_straws
+msgid "Correct (completed by mistake)"
+msgstr "تصحيح (أُنجزت خطأً)"
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_service_correction
+msgid "Correct a service completed by mistake"
+msgstr "تصحيح خدمة أُنجزت خطأً"
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_ratio_correction
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
+msgid "Correct straws per dose"
+msgstr "تصحيح القشات لكل جرعة"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__corrected_by_id
+msgid "Corrected by"
+msgstr "صحّحها"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"Corrected by %(user)s: completed by mistake, straws not pulled. %(n)s straws"
+" back to %(where)s. Reason: %(reason)s"
+msgstr ""
+"صحّحها %(user)s: أُنجزت خطأً ولم تُسحب القشات. عادت %(n)s قشة إلى %(where)s."
+" السبب: %(reason)s"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__correction_reason
+msgid "Correction Reason"
+msgstr "سبب التصحيح"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__reversal_move_id
+msgid "Correction move"
+msgstr "حركة التصحيح"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Correction of %(move)s: %(reason)s"
+msgstr "تصحيح %(move)s: %(reason)s"
+
+#. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__action_ids
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
 msgid "Corrective actions"
 msgstr "الإجراءات التصحيحية"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__line_ids
+msgid "Count"
+msgstr "العدّ"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_adjusted
+msgid "Count adjustments"
+msgstr "تسويات الجرد"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__counted
+msgid "Counted"
+msgstr "المعدود"
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_tank_audit__state__draft
+msgid "Counting"
+msgstr "قيد العدّ"
+
+#. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__create_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__create_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__create_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__create_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_correction__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__create_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__create_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_waste__create_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_service_correction__create_uid
 msgid "Created by"
 msgstr "أنشأه"
 
@@ -373,9 +733,17 @@ msgstr "أنشأه"
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__create_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__create_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__create_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_correction__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__create_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__create_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_waste__create_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_service_correction__create_date
 msgid "Created on"
 msgstr "تاريخ الإنشاء"
 
@@ -409,6 +777,7 @@ msgstr "عينة الحمض النووي: متى أُخذت."
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__date
 msgid "Date"
 msgstr "التاريخ"
 
@@ -430,10 +799,25 @@ msgid "Death recorded by %(user)s on %(date)s: %(cause)s. %(notes)s"
 msgstr "سجّل %(user)s النفوق في %(date)s: %(cause)s. %(notes)s"
 
 #. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_stock_report__bucket__out
+msgid "Delivered out"
+msgstr "مُسلّم للخارج"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_out
+msgid "Delivered out of our ownership"
+msgstr "مُسلّم خارج ملكيتنا"
+
+#. module: alfia_registry
 #. odoo-python
 #: code:addons/alfia_registry/models/incident.py:0
 msgid "Describe the evidence that the action was done."
 msgstr "صِف الدليل على إنجاز الإجراء."
+
+#. module: alfia_registry
+#: model_terms:ir.actions.act_window,help:alfia_registry.alfia_semen_storage_action
+msgid "Describe the tanks' canisters, canes and goblets"
+msgstr "عرّف كانسترات الخزانات وعصيها وأكوابها"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__description
@@ -441,15 +825,34 @@ msgid "Description"
 msgstr "الوصف"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__difference
+msgid "Difference"
+msgstr "الفرق"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_collection__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_correction__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_stock_report__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_waste__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_service_correction__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_res_company__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:alfia_registry.field_stock_location__display_name
+#: model:ir.model.fields,field_description:alfia_registry.field_stock_move__display_name
 msgid "Display Name"
 msgstr "الاسم المعروض"
 
@@ -465,7 +868,24 @@ msgid "Done Date"
 msgstr "تاريخ الإنجاز"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_sale_order_line__alfia_doses
+msgid "Doses"
+msgstr "الجرعات"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Doses cannot be negative."
+msgstr "لا يمكن أن تكون الجرعات سالبة."
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__doses_used
+msgid "Doses used"
+msgstr "الجرعات المستخدمة"
+
+#. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__draft
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_freeze_lot__state__draft
 msgid "Draft"
 msgstr "مسودة"
 
@@ -479,6 +899,60 @@ msgstr "تاريخ الاستحقاق"
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__status__duplicate
 msgid "Duplicate"
 msgstr "مكرر"
+
+#. module: alfia_registry
+#: model_terms:ir.actions.act_window,help:alfia_registry.alfia_semen_storage_action
+msgid ""
+"Each is a place under its tank (any depth), with its kind, position and "
+"optional capacity in straws."
+msgstr ""
+"كل منها موقع تحت خزانه (بأي عمق)، بنوعه وموضعه وسعته الاختيارية بالقشات."
+
+#. module: alfia_registry
+#: model_terms:ir.actions.act_window,help:alfia_registry.alfia_semen_freeze_lot_action
+msgid ""
+"Each lot records its straws, its own straws per dose, and its thaw test. Approving it loads the straws into a tank,\n"
+"               canister, cane or goblet."
+msgstr ""
+"تسجّل كل دفعة قشاتها وعدد القشات لكل جرعة الخاص بها واختبار الذوبان. "
+"اعتمادها يحمّل القشات في خزان أو كانستر أو عصا أو كوب."
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_ratio_correction_view_form
+msgid "Earlier reservations and uses keep the straws recorded at the time."
+msgstr "الحجوزات والاستخدامات السابقة تحتفظ بالقشات المسجلة وقتها."
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_freeze_lot__owner_partner_id
+msgid ""
+"Empty: the stud. Otherwise the stallion owner or client who owns these "
+"straws."
+msgstr "فارغ: المربط. وإلا مالك الفحل أو العميل الذي يملك هذه القشات."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Enter a different number of straws per dose, above zero."
+msgstr "أدخل عدداً مختلفاً من القشات لكل جرعة، أكبر من صفر."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"Enter concentration and motility before the collection can be released."
+msgstr "أدخل التركيز والحركة قبل اعتماد القذفة."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Enter how many straws, above zero."
+msgstr "أدخل عدد القشات، أكبر من صفر."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Enter the straws used for this service."
+msgstr "أدخل القشات المستخدمة لهذه الخدمة."
 
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_death__cause__euthanasia
@@ -506,9 +980,19 @@ msgid "Exception accepted"
 msgstr "استثناء مقبول"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__expected
+msgid "Expected"
+msgstr "المتوقع"
+
+#. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__expiry_date
 msgid "Expiry Date"
 msgstr "تاريخ الانتهاء"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__freeze_protocol
+msgid "Extender / protocol"
+msgstr "المخفف / البروتوكول"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_stock_location__alfia_external_centre_id
@@ -530,6 +1014,11 @@ msgstr "سطر كشف السائل المنوي الخارجي"
 #: model:ir.ui.menu,name:alfia_registry.menu_alfia_semen_statements
 msgid "External semen statements"
 msgstr "كشوف السائل المنوي الخارجي"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__external_stallion_owner_id
+msgid "External stallion: centre or owner"
+msgstr "الفحل الخارجي: المركز أو المالك"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__file
@@ -563,6 +1052,11 @@ msgid "Foaling complication"
 msgstr "مضاعفات الولادة"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__foal_count
+msgid "Foals"
+msgstr "المهور"
+
+#. module: alfia_registry
 #. odoo-python
 #: code:addons/alfia_registry/models/registration.py:0
 msgid "Follow up %(kind)s for %(horse)s"
@@ -571,14 +1065,18 @@ msgstr "متابعة %(kind)s لـ %(horse)s"
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_follower_ids
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__message_follower_ids
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__message_follower_ids
 msgid "Followers"
 msgstr "المتابعون"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_partner_ids
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__message_partner_ids
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__message_partner_ids
 msgid "Followers (Partners)"
 msgstr "المتابعون (الشركاء)"
 
@@ -591,9 +1089,82 @@ msgstr ""
 "مثلاً سجل الخيل العربية في قطر، أو سجل مرتبط بالواهو، أو مختبر حمض نووي."
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__freeze_date
+msgid "Freeze Date"
+msgstr "تاريخ التجميد"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_correction__freeze_lot_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__freeze_lot_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_stock_report__freeze_lot_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_waste__freeze_lot_id
+msgid "Freeze Lot"
+msgstr "دفعة التجميد"
+
+#. module: alfia_registry
+#: model_terms:ir.actions.act_window,help:alfia_registry.alfia_semen_freeze_lot_action
+msgid "Freeze a released collection into straws"
+msgstr "جمّد قذفة معتمدة إلى قشات"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__freeze_lot_id
+#: model:ir.model.fields,field_description:alfia_registry.field_sale_order_line__alfia_freeze_lot_id
+msgid "Freeze lot"
+msgstr "دفعة التجميد"
+
+#. module: alfia_registry
+#: model:ir.actions.act_window,name:alfia_registry.alfia_semen_freeze_lot_action
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_collection__freeze_lot_ids
+#: model:ir.ui.menu,name:alfia_registry.menu_alfia_semen_freeze_lot
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_collection_form_straws
+msgid "Freeze lots"
+msgstr "دفعات التجميد"
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
+msgid "Freezing"
+msgstr "التجميد"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__effective_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_waste__location_id
+msgid "From"
+msgstr "من"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_frozen
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_stock_report__bucket__frozen
+msgid "Frozen in storage"
+msgstr "مجمد في التخزين"
+
+#. module: alfia_registry
+#: model:product.template,name:alfia_registry.product_semen_straw_product_template
+msgid "Frozen semen straw"
+msgstr "قشة سائل منوي مجمد"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_quarantine
+msgid "Frozen, in quarantine"
+msgstr "مجمد، تحت الحجر"
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_freeze_lot__straws_available
+msgid "Frozen, not in quarantine and not reserved."
+msgstr "مجمد، غير خاضع للحجر وغير محجوز."
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__stock_location__alfia_location_kind__goblet
+msgid "Goblet"
+msgstr "كوب"
+
+#. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__has_message
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__has_message
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__has_message
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__has_message
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__has_message
 msgid "Has Message"
 msgstr "لديه رسالة"
 
@@ -630,15 +1201,29 @@ msgid "Horse registration and certificate request"
 msgstr "طلب تسجيل وشهادة حصان"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse__id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_collection__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_correction__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__id
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_stock_report__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_waste__id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_service_correction__id
+#: model:ir.model.fields,field_description:alfia_registry.field_res_company__id
+#: model:ir.model.fields,field_description:alfia_registry.field_sale_order_line__id
 #: model:ir.model.fields,field_description:alfia_registry.field_stock_location__id
+#: model:ir.model.fields,field_description:alfia_registry.field_stock_move__id
 msgid "ID"
 msgstr "المعرف"
 
@@ -657,7 +1242,9 @@ msgstr "أيقونة تشير إلى نشاط استثنائي."
 #. module: alfia_registry
 #: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__message_needaction
 #: model:ir.model.fields,help:alfia_registry.field_alfia_incident__message_needaction
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_freeze_lot__message_needaction
 #: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_needaction
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_tank_audit__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr "إذا كان محدداً، فهناك رسائل جديدة تتطلب انتباهك."
 
@@ -666,8 +1253,12 @@ msgstr "إذا كان محدداً، فهناك رسائل جديدة تتطلب
 #: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__message_has_sms_error
 #: model:ir.model.fields,help:alfia_registry.field_alfia_incident__message_has_error
 #: model:ir.model.fields,help:alfia_registry.field_alfia_incident__message_has_sms_error
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_freeze_lot__message_has_error
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_freeze_lot__message_has_sms_error
 #: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_has_error
 #: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_has_sms_error
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_tank_audit__message_has_error
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_tank_audit__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "إذا كان محدداً، فبعض الرسائل بها خطأ في التسليم."
 
@@ -768,7 +1359,9 @@ msgstr "المحقق"
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_is_follower
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_is_follower
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__message_is_follower
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_is_follower
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__message_is_follower
 msgid "Is Follower"
 msgstr "متابع"
 
@@ -800,9 +1393,17 @@ msgstr "النوع"
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__write_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__write_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__write_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_correction__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__write_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__write_uid
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_waste__write_uid
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_service_correction__write_uid
 msgid "Last Updated by"
 msgstr "آخر تحديث بواسطة"
 
@@ -811,16 +1412,73 @@ msgstr "آخر تحديث بواسطة"
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__write_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__write_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__write_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_import__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_correction__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__write_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__write_date
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_waste__write_date
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_service_correction__write_date
 msgid "Last Updated on"
 msgstr "آخر تحديث في"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_stock_location__alfia_last_audit_date
+msgid "Last counted"
+msgstr "آخر جرد"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Levels and litres cannot be negative."
+msgstr "لا يمكن أن تكون المستويات واللترات سالبة."
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__line_ids
 msgid "Line"
 msgstr "السطر"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__litres_added
+msgid "Litres added"
+msgstr "اللترات المضافة"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Load %s"
+msgstr "تحميل %s"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__load_location_id
+msgid "Load into"
+msgstr "التحميل في"
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_tank_audit_view_form
+msgid "Load the tank's contents"
+msgstr "تحميل محتويات الخزان"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Load the tank's contents and enter what was counted first."
+msgstr "حمّل محتويات الخزان وأدخل ما تم عدّه أولاً."
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_freeze_lot__state__loaded
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_search
+msgid "Loaded"
+msgstr "محمّلة"
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_stock_report__bucket__source
+msgid "Loaded or counted in"
+msgstr "محمّل أو مضاف بالجرد"
 
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__severity__low
@@ -841,16 +1499,30 @@ msgstr "متوسط"
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_has_error
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_has_error
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__message_has_error
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_has_error
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__message_has_error
 msgid "Message Delivery error"
 msgstr "خطأ في تسليم الرسالة"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_ids
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__message_ids
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__message_ids
 msgid "Messages"
 msgstr "الرسائل"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__post_thaw_motility_pct
+msgid "Motility after thaw (%)"
+msgstr "الحركة بعد الذوبان (%)"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_collection__motility
+msgid "Motility at collection (%)"
+msgstr "الحركة عند الجمع (%)"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__move_id
@@ -876,14 +1548,34 @@ msgstr "موعد نشاطي النهائي"
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__name
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__name
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__name
 msgid "Name"
 msgstr "الاسم"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Name the centre or owner of the external stallion %s."
+msgstr "حدّد مركز أو مالك الفحل الخارجي %s."
 
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__near_miss
 msgid "Near miss"
 msgstr "حادث وشيك"
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_breeding_service__mismatch_reason
+msgid ""
+"Needed when the service's stallion is not the stallion of the semen batch."
+msgstr "مطلوب عندما لا يكون فحل الخدمة هو فحل دفعة السائل."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "New"
+msgstr "جديد"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__activity_calendar_event_id
@@ -910,13 +1602,34 @@ msgid "Next Activity Type"
 msgstr "نوع النشاط التالي"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__level_cm
+msgid "Nitrogen level (cm)"
+msgstr "مستوى النيتروجين (سم)"
+
+#. module: alfia_registry
+#: model:ir.actions.act_window,name:alfia_registry.alfia_semen_tank_level_action
+#: model:ir.ui.menu,name:alfia_registry.menu_alfia_semen_tank_level
+msgid "Nitrogen log"
+msgstr "سجل النيتروجين"
+
+#. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse__alfia_dna_status__none
 msgid "No DNA test"
 msgstr "لا يوجد فحص حمض نووي"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_collection__morphology
+msgid "Normal morphology at collection (%)"
+msgstr "الشكل الطبيعي عند الجمع (%)"
+
+#. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_death__notes
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__notes
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__notes
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__notes
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__notes
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_tank_audit_view_form
 msgid "Notes"
 msgstr "الملاحظات"
 
@@ -927,30 +1640,43 @@ msgid "Nothing held"
 msgstr "لا يوجد رصيد"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__new_value
+msgid "Now"
+msgstr "الآن"
+
+#. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_needaction_counter
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__message_needaction_counter
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__message_needaction_counter
 msgid "Number of Actions"
 msgstr "عدد الإجراءات"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_has_error_counter
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__message_has_error_counter
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__message_has_error_counter
 msgid "Number of errors"
 msgstr "عدد الأخطاء"
 
 #. module: alfia_registry
 #: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__message_needaction_counter
 #: model:ir.model.fields,help:alfia_registry.field_alfia_incident__message_needaction_counter
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_freeze_lot__message_needaction_counter
 #: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_needaction_counter
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_tank_audit__message_needaction_counter
 msgid "Number of messages requiring action"
 msgstr "عدد الرسائل التي تتطلب إجراءً"
 
 #. module: alfia_registry
 #: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__message_has_error_counter
 #: model:ir.model.fields,help:alfia_registry.field_alfia_incident__message_has_error_counter
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_freeze_lot__message_has_error_counter
 #: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__message_has_error_counter
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_tank_audit__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr "عدد الرسائل التي بها خطأ في التسليم"
 
@@ -963,6 +1689,26 @@ msgstr "سليم"
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__ok_count
 msgid "Ok Count"
 msgstr "عدد السليم"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Only %s can do this."
+msgstr "فقط %s يمكنه القيام بذلك."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"Only a completed service whose straws were taken, and not yet corrected, can"
+" be corrected."
+msgstr "لا يُصحَّح إلا خدمة منجزة سُحبت قشاتها ولم تُصحَّح بعد."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Only a planned frozen service with a freeze-lot batch is thawed."
+msgstr "لا تتم الإذابة إلا لخدمة مجمدة مخططة بدفعة تجميد."
 
 #. module: alfia_registry
 #. odoo-python
@@ -993,6 +1739,15 @@ msgstr "لا يمكن قبول إلا استثناء في كشف لم يُرحَ
 #: code:addons/alfia_registry/models/registration.py:0
 msgid "Only breeding managers approve registration and certificate requests."
 msgstr "لا يعتمد طلبات التسجيل والشهادات إلا مديرو التناسل."
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_service_correction_view_form
+msgid ""
+"Only for a service recorded as done by mistake, whose straws never left the tank. Thawed straws never\n"
+"                    return to frozen stock."
+msgstr ""
+"فقط لخدمة سُجلت منجزة خطأً ولم تغادر قشاتها الخزان. القشات المذابة لا تعود "
+"إلى المخزون المجمد أبداً."
 
 #. module: alfia_registry
 #. odoo-python
@@ -1040,8 +1795,31 @@ msgid "Open Action Count"
 msgstr "عدد الإجراءات المفتوحة"
 
 #. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_res_company__alfia_semen_min_progressive
+msgid "Optional, as above."
+msgstr "اختياري، كما أعلاه."
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_res_company__alfia_semen_min_motility
+msgid ""
+"Optional. A thaw test below this cannot be passed. Empty: the vet decides."
+msgstr "اختياري. لا يُجاز اختبار ذوبان أقل من ذلك. فارغ: يقرر الطبيب."
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_stock_location__alfia_capacity_straws
+msgid "Optional. A warning is shown when it is exceeded."
+msgstr "اختياري. يظهر تحذير عند تجاوزه."
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_stock_location__alfia_position
+msgid "Order inside the parent (e.g. canister 3, upper or lower place)."
+msgstr "الترتيب داخل الموقع الأب (مثل كانستر 3، موضع علوي أو سفلي)."
+
+#. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_death__cause__other
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__other
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_freeze_lot__straw_volume__other
+#: model:ir.model.fields.selection,name:alfia_registry.selection__stock_location__alfia_location_kind__other
 msgid "Other"
 msgstr "أخرى"
 
@@ -1061,6 +1839,11 @@ msgid "Our stock at the centre now"
 msgstr "مخزوننا في المركز الآن"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_stock_location__alfia_over_capacity
+msgid "Over capacity"
+msgstr "تجاوز السعة"
+
+#. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_search
 msgid "Overdue"
 msgstr "متأخر"
@@ -1072,8 +1855,14 @@ msgstr "متأخر: انقضى تاريخ الاستحقاق."
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__owner_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_stock_report__owner_partner_id
 msgid "Owner"
 msgstr "المسؤول"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__owner_partner_id
+msgid "Owner of the semen"
+msgstr "مالك السائل"
 
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse__alfia_dna_status__not_verified
@@ -1090,6 +1879,16 @@ msgstr "النسب غير مُثبت"
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__dna_result__verified
 msgid "Parentage verified"
 msgstr "النسب مُثبت"
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
+msgid "Pass thaw test"
+msgstr "إجازة اختبار الذوبان"
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_freeze_lot__qc_state__passed
+msgid "Passed"
+msgstr "مُجاز"
 
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__kind__passport
@@ -1110,6 +1909,17 @@ msgstr "قيد الانتظار"
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__employee_id
 msgid "Person involved"
 msgstr "الشخص المعني"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_stock_report__location_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__location_id
+msgid "Place"
+msgstr "الموقع"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_stock_location__alfia_position
+msgid "Position"
+msgstr "الموضع"
 
 #. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_statement_view_form
@@ -1138,6 +1948,16 @@ msgid "Posted by %(user)s. Lines still in exception were not posted: %(exc)s."
 msgstr "رحّله %(user)s. لم تُرحَّل الأسطر التي ما زالت استثناءً: %(exc)s."
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__pregnancy_count
+msgid "Pregnancies confirmed"
+msgstr "حمل مؤكد"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit_line__product_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse__alfia_dna_status__profile_only
 msgid "Profile only"
 msgstr "الملف الوراثي فقط"
@@ -1148,9 +1968,24 @@ msgid "Profile recorded (no parentage test)"
 msgstr "تم تسجيل الملف الوراثي (دون فحص نسب)"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__post_thaw_progressive_pct
+msgid "Progressive motility after thaw (%)"
+msgstr "الحركة التقدمية بعد الذوبان (%)"
+
+#. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__damage
 msgid "Property or vehicle damage"
 msgstr "ضرر في الممتلكات أو المركبات"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__qc_state
+msgid "Quality"
+msgstr "الجودة"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__qc_by_id
+msgid "Quality decided by"
+msgstr "قرر الجودة"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__quantity
@@ -1163,6 +1998,11 @@ msgid "Quantity in file"
 msgstr "الكمية في الملف"
 
 #. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_stock_report__bucket__quarantine
+msgid "Quarantine"
+msgstr "الحجر"
+
+#. module: alfia_registry
 #: model:ir.module.module,description:base.module_alfia_registry
 msgid "RFP REQ-HOR-03, REQ-SEM-04 and REQ-SAF-01. See README.md."
 msgstr ""
@@ -1171,9 +2011,29 @@ msgstr ""
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__rating_ids
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__rating_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__rating_ids
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__rating_ids
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__rating_ids
 msgid "Ratings"
 msgstr "التقييمات"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__ratio_locked
+msgid "Ratio Locked"
+msgstr "المعامل مقفل"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_correction__reason
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__reason
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_waste__reason
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_service_correction__reason
+msgid "Reason"
+msgstr "السبب"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__mismatch_reason
+msgid "Reason the stallion differs from the batch"
+msgstr "سبب اختلاف الفحل عن الدفعة"
 
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_statement_line__movement__received
@@ -1220,6 +2080,23 @@ msgstr "سجّل نتائج التحقيق أولاً."
 
 #. module: alfia_registry
 #. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Record the thaw test (date and motility after thaw) before passing %s."
+msgstr "سجّل اختبار الذوبان (التاريخ والحركة بعد الذوبان) قبل إجازة %s."
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_waste_view_form
+msgid "Record waste"
+msgstr "تسجيل هدر"
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_waste
+msgid "Record wasted straws"
+msgstr "تسجيل قشات مهدورة"
+
+#. module: alfia_registry
+#. odoo-python
 #: code:addons/alfia_registry/models/registration.py:0
 msgid "Record when the DNA sample was taken before submitting %s."
 msgstr "سجّل متى أُخذت عينة الحمض النووي قبل تقديم %s."
@@ -1228,6 +2105,11 @@ msgstr "سجّل متى أُخذت عينة الحمض النووي قبل تق�
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__reference
 msgid "Reference"
 msgstr "المرجع"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__refilled
+msgid "Refilled"
+msgstr "أُعيدت التعبئة"
 
 #. module: alfia_registry
 #: model:ir.module.module,summary:base.module_alfia_registry
@@ -1254,11 +2136,13 @@ msgstr "التسجيلات والشهادات"
 
 #. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
 msgid "Reject"
 msgstr "رفض"
 
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__rejected
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_freeze_lot__qc_state__rejected
 msgid "Rejected"
 msgstr "مرفوض"
 
@@ -1267,6 +2151,20 @@ msgstr "مرفوض"
 #: code:addons/alfia_registry/models/registration.py:0
 msgid "Rejected by %s."
 msgstr "رفضه %s."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Release the collection %s first."
+msgstr "اعتمد القذفة %s أولاً."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"Released by %s for freezing: its straws enter stock with each approved "
+"freeze lot."
+msgstr "اعتمدها %s للتجميد: تدخل قشاتها المخزون مع كل دفعة تجميد معتمدة."
 
 #. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__state__reported
@@ -1300,6 +2198,11 @@ msgid "Requested By"
 msgstr "مقدّم الطلب"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_reserved
+msgid "Reserved"
+msgstr "محجوز"
+
+#. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement_line__resolution
 msgid "Resolution"
 msgstr "المعالجة"
@@ -1324,9 +2227,16 @@ msgstr "قَبِل %(user)s السطر %(row)s: %(why)s (كان: %(msg)s)"
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__message_has_sms_error
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__message_has_sms_error
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr "خطأ في تسليم الرسالة النصية"
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "سطر أمر البيع"
 
 #. module: alfia_registry
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__sample_taken_by_id
@@ -1344,6 +2254,67 @@ msgid "Security"
 msgstr "الأمن"
 
 #. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_company_form_semen
+msgid "Semen"
+msgstr "السائل المنوي"
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_collection
+msgid "Semen collection"
+msgstr "قذفة سائل منوي"
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_freeze_lot
+msgid "Semen freeze lot"
+msgstr "دفعة تجميد سائل منوي"
+
+#. module: alfia_registry
+#: model:ir.actions.act_window,name:alfia_registry.alfia_semen_stock_report_action
+#: model:ir.ui.menu,name:alfia_registry.menu_alfia_semen_stock
+msgid "Semen stock"
+msgstr "مخزون السائل المنوي"
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_stock_location_form_semen
+msgid "Semen storage"
+msgstr "تخزين السائل المنوي"
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_stock_report_view_pivot
+msgid "Semen straws"
+msgstr "قشات السائل المنوي"
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_stock_report
+msgid "Semen straws by stallion and lot"
+msgstr "قشات السائل حسب الفحل والدفعة"
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_tank_audit
+msgid "Semen tank count"
+msgstr "جرد خزان السائل"
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_tank_audit_line
+msgid "Semen tank count line"
+msgstr "سطر جرد خزان السائل"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_res_company__alfia_semen_min_motility
+msgid "Semen: lowest motility after thaw (%)"
+msgstr "السائل: أدنى حركة بعد الذوبان (%)"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_res_company__alfia_semen_min_progressive
+msgid "Semen: lowest progressive motility after thaw (%)"
+msgstr "السائل: أدنى حركة تقدمية بعد الذوبان (%)"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_res_company__alfia_semen_qc_gate
+msgid "Semen: quality check before loading"
+msgstr "السائل: فحص الجودة قبل التحميل"
+
+#. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
 msgid "Send back"
 msgstr "إعادة"
@@ -1358,6 +2329,37 @@ msgstr "تاريخ الإرسال"
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_registration_view_form
 msgid "Sent to the authority"
 msgstr "أُرسل إلى الجهة"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_service_correction__service_id
+msgid "Service"
+msgstr "الخدمة"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Service of %(mare)s corrected: %(n)s straws back to storage."
+msgstr "صُحّحت خدمة %(mare)s: عادت %(n)s قشة إلى التخزين."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Service of %(mare)s on %(date)s"
+msgstr "تلقيح %(mare)s بتاريخ %(date)s"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__service_count
+msgid "Services"
+msgstr "الخدمات"
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_freeze_lot__straws_per_dose
+msgid ""
+"Set per lot (no fixed number). Locked after the first reservation, use or "
+"sale; a correction is made with Correct straws per dose, with a reason."
+msgstr ""
+"يُحدد لكل دفعة (بلا رقم ثابت). يُقفل بعد أول حجز أو استخدام أو بيع؛ ويتم "
+"التصحيح عبر «تصحيح القشات لكل جرعة» مع السبب."
 
 #. module: alfia_registry
 #: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__centre_id
@@ -1381,9 +2383,21 @@ msgid "Shipped to a third party"
 msgstr "شُحن إلى طرف ثالث"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__sperm_per_straw_m
+msgid "Sperm per straw (million)"
+msgstr "الحيوانات المنوية لكل قشة (مليون)"
+
+#. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__kind__staff_injury
 msgid "Staff injury"
 msgstr "إصابة موظف"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__stallion_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_stock_report__stallion_id
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_search
+msgid "Stallion"
+msgstr "الفحل"
 
 #. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_incident_view_form
@@ -1394,7 +2408,10 @@ msgstr "بدء التحقيق"
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_horse_registration__state
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident__state
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_incident_action__state
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__state
 #: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_statement__state
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_stock_report__bucket
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__state
 msgid "State"
 msgstr "الحالة"
 
@@ -1433,6 +2450,122 @@ msgstr ""
 "اليوم مخطط: أنشطة مستقبلية."
 
 #. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_stock_move
+msgid "Stock Move"
+msgstr "حركة المخزون"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__stock_lot_id
+msgid "Stock batch"
+msgstr "دفعة المخزون"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__thaw_move_id
+msgid "Stock move (thaw)"
+msgstr "حركة المخزون (إذابة)"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__stock_move_id
+msgid "Stock move (use)"
+msgstr "حركة المخزون (استخدام)"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_stock_location__alfia_location_kind
+msgid "Storage kind"
+msgstr "نوع التخزين"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straw_volume
+msgid "Straw volume"
+msgstr "حجم القشة"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straw_volume_other_ml
+msgid "Straw volume (ml, other)"
+msgstr "حجم القشة (مل، أخرى)"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_stock_report__straws
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_waste__straws
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_stock_report_view_list
+msgid "Straws"
+msgstr "القشات"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_produced
+msgid "Straws Produced"
+msgstr "القشات المنتجة"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_stock_location__alfia_straws_here
+msgid "Straws here"
+msgstr "القشات هنا"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_remainder
+msgid "Straws left over"
+msgstr "القشات المتبقية"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_per_dose
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_correction__new_straws_per_dose
+msgid "Straws per dose"
+msgstr "القشات لكل جرعة"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"Straws per dose corrected by %(user)s: %(old)s → %(new)s. Reason: "
+"%(reason)s. Earlier reservations and uses keep the straws recorded at the "
+"time."
+msgstr ""
+"صحّح %(user)s القشات لكل جرعة: %(old)s ← %(new)s. السبب: %(reason)s. "
+"الحجوزات والاستخدامات السابقة تحتفظ بالقشات المسجلة وقتها."
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_ratio_version
+msgid "Straws per dose correction"
+msgstr "تصحيح القشات لكل جرعة"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__ratio_version_ids
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
+msgid "Straws per dose history"
+msgstr "سجل القشات لكل جرعة"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"Straws per dose is locked once straws were reserved, used or sold. Use "
+"Correct straws per dose, with a reason."
+msgstr ""
+"عدد القشات لكل جرعة مقفل بعد حجز القشات أو استخدامها أو بيعها. استخدم «تصحيح"
+" القشات لكل جرعة» مع السبب."
+
+#. module: alfia_registry
+#: model:ir.model.constraint,message:alfia_registry.constraint_alfia_semen_freeze_lot_positive
+msgid "Straws produced and straws per dose must be above zero."
+msgstr "يجب أن تكون القشات المنتجة والقشات لكل جرعة أكبر من صفر."
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_collection__straw_count_known
+msgid "Straws recorded"
+msgstr "القشات مسجلة"
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_breeding_service__straws_used
+msgid "Straws taken for this service. Default: one dose of the lot."
+msgstr "القشات المسحوبة لهذه الخدمة. الافتراضي: جرعة واحدة من الدفعة."
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__straws_used
+msgid "Straws used"
+msgstr "القشات المستخدمة"
+
+#. module: alfia_registry
 #: model:ir.model.fields,help:alfia_registry.field_alfia_semen_statement__centre_stock
 msgid ""
 "Straws we hold at this centre, by batch, as recorded now (after any "
@@ -1457,6 +2590,74 @@ msgid "Submit for approval"
 msgstr "تقديم للاعتماد"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_audit__tank_id
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__tank_id
+#: model:ir.model.fields.selection,name:alfia_registry.selection__stock_location__alfia_location_kind__tank
+msgid "Tank"
+msgstr "الخزان"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Tank count"
+msgstr "جرد الخزان"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Tank count %(name)s by %(user)s"
+msgstr "جرد الخزان %(name)s بواسطة %(user)s"
+
+#. module: alfia_registry
+#: model:ir.actions.act_window,name:alfia_registry.alfia_semen_tank_audit_action
+#: model:ir.ui.menu,name:alfia_registry.menu_alfia_semen_tank_audit
+msgid "Tank counts"
+msgstr "جرد الخزانات"
+
+#. module: alfia_registry
+#: model:ir.model,name:alfia_registry.model_alfia_semen_tank_level
+msgid "Tank nitrogen reading"
+msgstr "قراءة نيتروجين الخزان"
+
+#. module: alfia_registry
+#: model:ir.actions.act_window,name:alfia_registry.alfia_semen_storage_action
+#: model:ir.ui.menu,name:alfia_registry.menu_alfia_semen_storage
+msgid "Tank storage"
+msgstr "تخزين الخزانات"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Thaw for %s"
+msgstr "إذابة لـ %s"
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_breeding_service_form_straws
+msgid "Thaw straws"
+msgstr "إذابة القشات"
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
+msgid "Thaw test"
+msgstr "اختبار الذوبان"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__post_thaw_test_date
+msgid "Thaw test date"
+msgstr "تاريخ اختبار الذوبان"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_breeding_service__thaw_datetime
+msgid "Thawed at"
+msgstr "وقت الإذابة"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_thawed
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_stock_report__bucket__thawed
+msgid "Thawed, in use"
+msgstr "مذاب، قيد الاستخدام"
+
+#. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_horse_death_view_form
 msgid ""
 "The horse becomes Dead. If it is on the farm, a departure is recorded; its recurring charges stop, and if it has a\n"
@@ -1464,6 +2665,16 @@ msgid ""
 msgstr ""
 "تصبح حالة الحصان نافقاً. إذا كان في المزرعة تُسجَّل مغادرة؛ وتتوقف رسومه "
 "الدورية، وإذا كانت له قيمة دفترية تحصل المالية على تقييم استبعاد مسودة."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"The semen batch %(lot)s is from %(batch)s, but the service names "
+"%(service)s. Correct the stallion, or record the reason they differ."
+msgstr ""
+"دفعة السائل %(lot)s من %(batch)s، لكن الخدمة تذكر %(service)s. صحّح الفحل، "
+"أو سجّل سبب الاختلاف."
 
 #. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_statement_view_form
@@ -1493,6 +2704,45 @@ msgstr ""
 " الناقص: %s"
 
 #. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "The straws for this service were already thawed."
+msgstr "تمت إذابة قشات هذه الخدمة مسبقاً."
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_form
+msgid "The straws of this lot do not add up: check the counts and moves."
+msgstr "قشات هذه الدفعة غير متوازنة: راجع الجرد والحركات."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"The straws were already taken for this service; a mistake is corrected by "
+"the vet manager."
+msgstr "سُحبت قشات هذه الخدمة مسبقاً؛ يصحح الخطأ مدير الطب البيطري."
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_service_correction__not_pulled
+msgid "The straws were not taken out of the tank"
+msgstr "لم تُسحب القشات من الخزان"
+
+#. module: alfia_registry
+#: model:ir.model.fields,help:alfia_registry.field_alfia_semen_freeze_lot__load_location_id
+msgid "The tank, canister, cane or goblet that receives the straws."
+msgstr "الخزان أو الكانستر أو العصا أو الكوب الذي يستقبل القشات."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"These straws were thawed: thawed straws never return to frozen stock. Record"
+" them as used or wasted instead."
+msgstr ""
+"هذه القشات مذابة: القشات المذابة لا تعود إلى المخزون المجمد. سجّلها مستخدمة "
+"أو مهدورة بدلاً من ذلك."
+
+#. module: alfia_registry
 #: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_horse_death_view_form
 msgid "This cannot be undone from this screen. Continue?"
 msgstr "لا يمكن التراجع عن هذا من هذه الشاشة. هل تريد المتابعة؟"
@@ -1508,6 +2758,15 @@ msgstr "تم استيراد هذا الملف بالفعل باسم %s."
 #: code:addons/alfia_registry/models/external_semen.py:0
 msgid "This line cannot be posted: %s"
 msgstr "لا يمكن ترحيل هذا السطر: %s"
+
+#. module: alfia_registry
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_collection_form_straws
+msgid ""
+"To freeze into straws, leave Doses produced at 0, release\n"
+"                    the collection, then add its freeze lots."
+msgstr ""
+"للتجميد إلى قشات، اترك «الجرعات المنتجة» صفراً، واعتمد القذفة، ثم أضف دفعات "
+"التجميد."
 
 #. module: alfia_registry
 #: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__activity_exception_decoration
@@ -1540,7 +2799,19 @@ msgstr ""
 "تُرحَّل أسطر الاستثناء. هل تريد المتابعة؟"
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_used
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_stock_report__bucket__used
+msgid "Used in services"
+msgstr "مستخدم في الخدمات"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_collection__volume_ml
+msgid "Volume at collection (ml)"
+msgstr "الحجم عند الجمع (مل)"
+
+#. module: alfia_registry
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_horse_registration__state__submitted
+#: model_terms:ir.ui.view,arch_db:alfia_registry.alfia_semen_freeze_lot_view_search
 msgid "Waiting for approval"
 msgstr "بانتظار الاعتماد"
 
@@ -1548,6 +2819,40 @@ msgstr "بانتظار الاعتماد"
 #: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_incident__state__to_close
 msgid "Waiting for closure approval"
 msgstr "بانتظار اعتماد الإغلاق"
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_freeze_lot__qc_state__pending
+msgid "Waiting for thaw test"
+msgstr "بانتظار اختبار الذوبان"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid ""
+"Warning: %(where)s now holds %(n)s straws, above its capacity of %(cap)s."
+msgstr ""
+"تحذير: يحتوي %(where)s الآن على %(n)s قشة، أعلى من سعته البالغة %(cap)s."
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_ratio_version__old_value
+msgid "Was"
+msgstr "كان"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Waste %(lot)s: %(reason)s"
+msgstr "هدر %(lot)s: %(reason)s"
+
+#. module: alfia_registry
+#: model:ir.model.fields.selection,name:alfia_registry.selection__alfia_semen_stock_report__bucket__wasted
+msgid "Wasted"
+msgstr "مهدور"
+
+#. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_freeze_lot__straws_wasted
+msgid "Wasted or destroyed"
+msgstr "مهدور أو متلف"
 
 #. module: alfia_registry
 #. odoo-python
@@ -1578,6 +2883,11 @@ msgid "What was done and how it was checked."
 msgstr "ما تم وكيف تم التحقق منه."
 
 #. module: alfia_registry
+#: model:ir.model.fields,field_description:alfia_registry.field_alfia_semen_tank_level__reading_datetime
+msgid "When"
+msgstr "متى"
+
+#. module: alfia_registry
 #: model:ir.model.fields,help:alfia_registry.field_alfia_horse_registration__due_date
 msgid "When the authority's answer or the certificate is due."
 msgstr "موعد استحقاق رد الجهة أو الشهادة."
@@ -1600,6 +2910,12 @@ msgstr "اكتب ملاحظات الإغلاق (ما تم وكيف تم التح
 
 #. module: alfia_registry
 #. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "Write what was found in the notes before rejecting %s."
+msgstr "اكتب ما تم العثور عليه في الملاحظات قبل رفض %s."
+
+#. module: alfia_registry
+#. odoo-python
 #: code:addons/alfia_registry/models/external_semen.py:0
 msgid "Write why the exception is accepted."
 msgstr "اكتب سبب قبول الاستثناء."
@@ -1609,6 +2925,12 @@ msgstr "اكتب سبب قبول الاستثناء."
 #: code:addons/alfia_registry/models/external_semen.py:0
 msgid "You imported %s, so another person must review and post it."
 msgstr "أنت استوردت %s، لذا يجب أن يراجعه ويرحّله شخص آخر."
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "You prepared %s, so another vet approves and loads it."
+msgstr "أنت من أعدّ %s، لذا يعتمده ويحمّله طبيب آخر."
 
 #. module: alfia_registry
 #. odoo-python
@@ -1663,12 +2985,53 @@ msgstr "يبلّغ المركز عن استلام %(qty)s لكننا شحنّا 
 
 #. module: alfia_registry
 #. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "no stallion"
+msgstr "بلا فحل"
+
+#. module: alfia_registry
+#. odoo-python
 #: code:addons/alfia_registry/models/external_semen.py:0
 msgid "quantity %r is not a positive number"
 msgstr "الكمية %r ليست رقماً موجباً"
 
 #. module: alfia_registry
 #. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "semen storage"
+msgstr "تخزين السائل المنوي"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "the semen custodian or the vet manager"
+msgstr "أمين السائل المنوي أو مدير الطب البيطري"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "the semen custodian or veterinary staff"
+msgstr "أمين السائل المنوي أو الطاقم البيطري"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "the vet manager"
+msgstr "مدير الطب البيطري"
+
+#. module: alfia_registry
+#. odoo-python
 #: code:addons/alfia_registry/models/external_semen.py:0
 msgid "unknown movement %r"
 msgstr "حركة غير معروفة %r"
+
+#. module: alfia_registry
+#. odoo-python
+#: code:addons/alfia_registry/models/semen_straws.py:0
+msgid "veterinary staff"
+msgstr "الطاقم البيطري"
+
+#. module: alfia_registry
+#: model:uom.uom,name:alfia_registry.uom_straw
+msgid "قشة · Straw"
+msgstr "قشة"

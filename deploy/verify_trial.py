@@ -215,6 +215,45 @@ def r2():
 
 check('R2', 'a credit note is not posted by the person who prepared it', r2, expect_error='UserError')
 
+# Semen by the straw (spec 26 Nov)
+test_lot = env['alfia.semen.freeze.lot'].search([('notes', '=', 'TEST freeze lot')], limit=1) if 'alfia.semen.freeze.lot' in env else None
+
+
+def s1():
+    lot = need(test_lot, 'TEST freeze lot')
+    if not lot.balance_ok:
+        raise ValueError(f"balances do not add up for {lot.name}")
+    return f"{lot.name}: {lot.straws_available} straws, {lot.doses_available} doses + {lot.straws_remainder} left over"
+
+
+def s2():
+    lot = need(test_lot, 'TEST freeze lot')
+    mare = need(env['alfia.horse'].search([('name', '=', 'TEST E2 service mare')], limit=1), 'TEST E2 service mare')
+    before = lot.straws_used
+    service = env['alfia.breeding.service'].create({'mare_id': mare.id, 'stallion_id': lot.stallion_id.id, 'method': 'ai_frozen',
+                                                    'semen_lot_id': lot.stock_lot_id.id})
+    service.action_done()
+    service._alfia_use_dose()
+    lot.invalidate_recordset()
+    taken = lot.straws_used - before
+    if not service.stock_move_id or taken != lot.straws_per_dose:
+        raise ValueError(f"took {taken} straws, move {service.stock_move_id.id}")
+    return f"one dose = {taken} straws, linked to move {service.stock_move_id.id}, taken once"
+
+
+def s3():
+    lot = need(test_lot, 'TEST freeze lot')
+    mare = need(env['alfia.horse'].search([('name', '=', 'TEST E2 service mare')], limit=1), 'TEST E2 service mare')
+    other = need(env['alfia.horse'].search([('sex', '=', 'male'), ('id', '!=', lot.stallion_id.id)], limit=1), 'another stallion')
+    env['alfia.breeding.service'].create({'mare_id': mare.id, 'stallion_id': other.id, 'method': 'ai_frozen',
+                                          'semen_lot_id': lot.stock_lot_id.id}).action_done()
+    return 'completed'
+
+
+check('S1', 'TEST freeze lot balances add up (straws, doses, left over)', s1)
+check('S2', 'a frozen service takes one dose of straws once, linked by field', s2)
+check('S3', 'a different stallion without a reason is refused', s3, expect_error='UserError')
+
 env.cr.rollback()
 print(f"VERIFY SUMMARY {results.count('PASS')} passed, {results.count('FAIL')} failed, {results.count('SKIP')} skipped "
       f"(nothing saved; checked {fields.Datetime.now()} UTC)")

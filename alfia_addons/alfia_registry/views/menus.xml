@@ -10,4 +10,12 @@
     <!-- Everyone may report an incident, with or without the Stud app. -->
     <menuitem id="menu_alfia_incidents_root" name="Incidents" sequence="95" web_icon="base,static/description/icon.png"
               action="alfia_incident_action"/>
+    <!-- Frozen semen by the straw -->
+    <menuitem id="menu_alfia_semen_freeze_lot" name="Freeze lots" parent="alfia_equine.menu_alfia_breeding" action="alfia_semen_freeze_lot_action" sequence="241"/>
+    <menuitem id="menu_alfia_semen_stock" name="Semen stock" parent="alfia_equine.menu_alfia_breeding" action="alfia_semen_stock_report_action" sequence="242"/>
+    <menuitem id="menu_alfia_semen_storage" name="Tank storage" parent="alfia_equine.menu_alfia_breeding" action="alfia_semen_storage_action" sequence="243"
+              groups="alfia_security.group_alfia_semen_custodian,alfia_security.group_alfia_vet_manager"/>
+    <menuitem id="menu_alfia_semen_tank_audit" name="Tank counts" parent="alfia_equine.menu_alfia_breeding" action="alfia_semen_tank_audit_action" sequence="244"
+              groups="alfia_security.group_alfia_semen_custodian,alfia_security.group_alfia_vet_manager,alfia_security.group_alfia_security_auditor"/>
+    <menuitem id="menu_alfia_semen_tank_level" name="Nitrogen log" parent="alfia_equine.menu_alfia_breeding" action="alfia_semen_tank_level_action" sequence="245"/>
 </odoo>

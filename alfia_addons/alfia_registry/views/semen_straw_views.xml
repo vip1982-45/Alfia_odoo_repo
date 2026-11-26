@@ -1,0 +1,350 @@
+<odoo>
+    <!-- Freeze lots -->
+    <record id="alfia_semen_freeze_lot_view_list" model="ir.ui.view">
+        <field name="name">alfia.semen.freeze.lot.list</field>
+        <field name="model">alfia.semen.freeze.lot</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'cancelled'" decoration-info="state == 'draft'" decoration-danger="not balance_ok">
+                <field name="name"/><field name="stallion_id"/><field name="collection_id" optional="show"/><field name="freeze_date"/>
+                <field name="straws_per_dose"/><field name="straws_produced" optional="show"/>
+                <field name="straws_available"/><field name="doses_available"/><field name="straws_remainder" optional="show"/>
+                <field name="straws_reserved" optional="show"/><field name="straws_used" optional="show"/>
+                <field name="qc_state" widget="badge" decoration-success="qc_state == 'passed'" decoration-danger="qc_state == 'rejected'"/>
+                <field name="owner_partner_id" optional="hide"/><field name="state"/><field name="balance_ok" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_semen_freeze_lot_view_form" model="ir.ui.view">
+        <field name="name">alfia.semen.freeze.lot.form</field>
+        <field name="model">alfia.semen.freeze.lot</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_qc_pass" string="Pass thaw test" type="object" invisible="state != 'draft' or qc_state != 'pending'"/>
+                    <button name="action_qc_reject" string="Reject" type="object" invisible="state != 'draft' or qc_state != 'pending'"/>
+                    <button name="action_approve_load" string="Approve and load" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_open_waste" string="Record waste" type="object" invisible="state != 'loaded'"/>
+                    <button name="action_open_ratio_correction" string="Correct straws per dose" type="object" invisible="state != 'loaded'"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,loaded"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-danger" role="alert" invisible="balance_ok">
+                        The straws of this lot do not add up: check the counts and moves.
+                    </div>
+                    <h1><field name="name" readonly="1"/></h1>
+                    <group>
+                        <group string="Freezing">
+                            <field name="collection_id" readonly="state != 'draft'" options="{'no_create': True}"/>
+                            <field name="stallion_id"/>
+                            <field name="freeze_date" readonly="state != 'draft'"/><field name="freeze_protocol"/>
+                            <field name="straw_volume"/><field name="straw_volume_other_ml" invisible="straw_volume != 'other'"/>
+                            <field name="straws_produced" readonly="state != 'draft'"/>
+                            <field name="straws_per_dose" readonly="ratio_locked"/><field name="ratio_locked" invisible="1"/>
+                            <field name="sperm_per_straw_m"/><field name="owner_partner_id"/>
+                            <field name="load_location_id" readonly="state != 'draft'" options="{'no_create': True}"/>
+                            <field name="stock_lot_id"/>
+                        </group>
+                        <group string="Thaw test">
+                            <field name="post_thaw_test_date"/><field name="post_thaw_motility_pct"/><field name="post_thaw_progressive_pct"/>
+                            <field name="qc_state"/><field name="qc_by_id" invisible="not qc_by_id"/>
+                            <field name="approved_by_id" invisible="not approved_by_id"/>
+                        </group>
+                    </group>
+                    <group string="Straws" invisible="state != 'loaded'">
+                        <group>
+                            <field name="straws_frozen"/><field name="straws_quarantine"/><field name="straws_thawed"/>
+                            <field name="straws_reserved"/><field name="straws_available"/>
+                            <field name="doses_available"/><field name="straws_remainder"/>
+                        </group>
+                        <group>
+                            <field name="straws_used"/><field name="straws_wasted"/><field name="straws_out"/><field name="straws_adjusted"/>
+                            <field name="balance_ok"/>
+                            <field name="service_count"/><field name="pregnancy_count"/><field name="foal_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Straws per dose history" name="ratio" invisible="not ratio_version_ids">
+                            <field name="ratio_version_ids" readonly="1">
+                                <list><field name="effective_date"/><field name="old_value"/><field name="new_value"/><field name="reason"/><field name="user_id"/></list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes"><field name="notes"/></page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_semen_freeze_lot_view_search" model="ir.ui.view">
+        <field name="name">alfia.semen.freeze.lot.search</field>
+        <field name="model">alfia.semen.freeze.lot</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/><field name="stallion_id"/><field name="collection_id"/>
+                <filter name="loaded" string="Loaded" domain="[('state', '=', 'loaded')]"/>
+                <filter name="draft" string="Waiting for approval" domain="[('state', '=', 'draft')]"/>
+                <group><filter name="group_stallion" string="Stallion" context="{'group_by': 'stallion_id'}"/></group>
+            </search>
+        </field>
+    </record>
+    <record id="alfia_semen_freeze_lot_action" model="ir.actions.act_window">
+        <field name="name">Freeze lots</field>
+        <field name="res_model">alfia.semen.freeze.lot</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Freeze a released collection into straws</p>
+            <p>Each lot records its straws, its own straws per dose, and its thaw test. Approving it loads the straws into a tank,
+               canister, cane or goblet.</p>
+        </field>
+    </record>
+
+    <!-- Wizards -->
+    <record id="alfia_semen_ratio_correction_view_form" model="ir.ui.view">
+        <field name="name">alfia.semen.ratio.correction.form</field>
+        <field name="model">alfia.semen.ratio.correction</field>
+        <field name="arch" type="xml">
+            <form>
+                <group><field name="freeze_lot_id"/><field name="new_straws_per_dose"/><field name="reason"/></group>
+                <p class="text-muted">Earlier reservations and uses keep the straws recorded at the time.</p>
+                <footer>
+                    <button name="action_confirm" string="Correct" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_semen_waste_view_form" model="ir.ui.view">
+        <field name="name">alfia.semen.waste.form</field>
+        <field name="model">alfia.semen.waste</field>
+        <field name="arch" type="xml">
+            <form>
+                <group><field name="freeze_lot_id"/><field name="location_id" options="{'no_create': True}"/><field name="straws"/><field name="reason"/></group>
+                <footer>
+                    <button name="action_confirm" string="Record waste" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_service_correction_view_form" model="ir.ui.view">
+        <field name="name">alfia.service.correction.form</field>
+        <field name="model">alfia.service.correction</field>
+        <field name="arch" type="xml">
+            <form>
+                <group><field name="service_id"/><field name="reason"/><field name="not_pulled"/></group>
+                <p class="text-muted">Only for a service recorded as done by mistake, whose straws never left the tank. Thawed straws never
+                    return to frozen stock.</p>
+                <footer>
+                    <button name="action_confirm" string="Correct" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Breeding service: straws, link to the stock move, stallion check, thaw and correction -->
+    <record id="alfia_breeding_service_form_straws" model="ir.ui.view">
+        <field name="name">alfia.breeding.service.form.straws</field>
+        <field name="model">alfia.breeding.service</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_breeding_service_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_done']" position="before">
+                <button name="action_thaw" string="Thaw straws" type="object"
+                        invisible="state != 'planned' or method != 'ai_frozen' or not freeze_lot_id or thaw_move_id"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_open_correction" string="Correct (completed by mistake)" type="object"
+                        invisible="state != 'done' or not stock_move_id or reversal_move_id or thaw_move_id"
+                        groups="alfia_security.group_alfia_vet_manager"/>
+            </xpath>
+            <xpath expr="//field[@name='stallion_name']" position="after">
+                <field name="external_stallion_owner_id" invisible="not stallion_name" options="{'no_create': True}"/>
+                <field name="mismatch_reason"/>
+            </xpath>
+            <xpath expr="//field[@name='semen_lot_id']" position="after">
+                <field name="freeze_lot_id" invisible="not freeze_lot_id"/>
+                <field name="straws_used" invisible="method != 'ai_frozen'"/>
+                <field name="doses_used" invisible="not freeze_lot_id"/>
+                <field name="thaw_datetime" invisible="not thaw_datetime"/>
+                <field name="thaw_move_id" invisible="1"/>
+                <field name="stock_move_id" invisible="not stock_move_id"/>
+                <field name="reversal_move_id" invisible="not reversal_move_id"/>
+                <field name="correction_reason" invisible="not correction_reason"/>
+                <field name="corrected_by_id" invisible="not corrected_by_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Collection: freeze lots and quality measured at collection -->
+    <record id="alfia_semen_collection_form_straws" model="ir.ui.view">
+        <field name="name">alfia.semen.collection.form.straws</field>
+        <field name="model">alfia.semen.collection</field>
+        <field name="inherit_id" ref="alfia_equine.alfia_semen_collection_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='notes']/.." position="before">
+                <separator string="Freeze lots"/>
+                <p class="text-muted" invisible="freeze_lot_ids or state != 'draft'">To freeze into straws, leave Doses produced at 0, release
+                    the collection, then add its freeze lots.</p>
+                <field name="freeze_lot_ids" context="{'default_collection_id': id}" readonly="state != 'released'">
+                    <list><field name="name"/><field name="freeze_date"/><field name="straws_produced"/><field name="straws_per_dose"/>
+                        <field name="straws_available"/><field name="doses_available"/><field name="qc_state"/><field name="state"/></list>
+                </field>
+                <field name="straw_count_known" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Storage places: kind, position, capacity -->
+    <record id="alfia_stock_location_form_semen" model="ir.ui.view">
+        <field name="name">stock.location.form.alfia.semen</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Semen storage">
+                    <group>
+                        <field name="alfia_location_kind"/><field name="alfia_position"/><field name="alfia_capacity_straws"/>
+                    </group>
+                    <group>
+                        <field name="alfia_straws_here"/><field name="alfia_over_capacity" invisible="not alfia_over_capacity"/>
+                        <field name="alfia_last_audit_date"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="alfia_semen_storage_view_list" model="ir.ui.view">
+        <field name="name">stock.location.semen.storage.list</field>
+        <field name="model">stock.location</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="alfia_over_capacity" default_order="complete_name">
+                <field name="complete_name"/><field name="alfia_location_kind"/><field name="alfia_position"/>
+                <field name="alfia_capacity_straws"/><field name="alfia_straws_here"/><field name="alfia_last_audit_date"/>
+                <field name="alfia_over_capacity" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_semen_storage_action" model="ir.actions.act_window">
+        <field name="name">Tank storage</field>
+        <field name="res_model">stock.location</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="alfia_semen_storage_view_list"/>
+        <field name="domain">[('alfia_location_kind', '!=', False)]</field>
+        <field name="context">{'default_usage': 'internal', 'default_alfia_location_kind': 'canister'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Describe the tanks' canisters, canes and goblets</p>
+            <p>Each is a place under its tank (any depth), with its kind, position and optional capacity in straws.</p>
+        </field>
+    </record>
+
+    <!-- Tank counts -->
+    <record id="alfia_semen_tank_audit_view_list" model="ir.ui.view">
+        <field name="name">alfia.semen.tank.audit.list</field>
+        <field name="model">alfia.semen.tank.audit</field>
+        <field name="arch" type="xml">
+            <list><field name="name"/><field name="date"/><field name="tank_id"/><field name="confirmed_by_id"/><field name="state"/></list>
+        </field>
+    </record>
+    <record id="alfia_semen_tank_audit_view_form" model="ir.ui.view">
+        <field name="name">alfia.semen.tank.audit.form</field>
+        <field name="model">alfia.semen.tank.audit</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_load_lines" string="Load the tank's contents" type="object" invisible="state != 'draft'"/>
+                    <button name="action_confirm" string="Confirm count" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <h1><field name="name" readonly="1"/></h1>
+                    <group><group><field name="tank_id" readonly="state != 'draft'" options="{'no_create': True}"/><field name="date" readonly="state != 'draft'"/></group>
+                        <group><field name="confirmed_by_id" invisible="not confirmed_by_id"/></group></group>
+                    <field name="line_ids" readonly="state != 'draft'">
+                        <list editable="bottom" create="0" decoration-danger="difference != 0">
+                            <field name="location_id" readonly="1"/><field name="lot_id" readonly="1"/><field name="product_id" readonly="1"/>
+                            <field name="expected"/><field name="counted"/><field name="difference"/>
+                        </list>
+                    </field>
+                    <field name="notes" placeholder="Notes"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="alfia_semen_tank_audit_action" model="ir.actions.act_window">
+        <field name="name">Tank counts</field>
+        <field name="res_model">alfia.semen.tank.audit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Nitrogen log -->
+    <record id="alfia_semen_tank_level_view_list" model="ir.ui.view">
+        <field name="name">alfia.semen.tank.level.list</field>
+        <field name="model">alfia.semen.tank.level</field>
+        <field name="arch" type="xml">
+            <list editable="top">
+                <field name="tank_id" options="{'no_create': True}"/><field name="reading_datetime"/><field name="level_cm"/>
+                <field name="refilled"/><field name="litres_added"/><field name="user_id"/><field name="notes"/>
+            </list>
+        </field>
+    </record>
+    <record id="alfia_semen_tank_level_action" model="ir.actions.act_window">
+        <field name="name">Nitrogen log</field>
+        <field name="res_model">alfia.semen.tank.level</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- Semen stock report -->
+    <record id="alfia_semen_stock_report_view_pivot" model="ir.ui.view">
+        <field name="name">alfia.semen.stock.report.pivot</field>
+        <field name="model">alfia.semen.stock.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Semen straws">
+                <field name="stallion_id" type="row"/><field name="bucket" type="col"/><field name="straws" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="alfia_semen_stock_report_view_list" model="ir.ui.view">
+        <field name="name">alfia.semen.stock.report.list</field>
+        <field name="model">alfia.semen.stock.report</field>
+        <field name="arch" type="xml">
+            <list><field name="stallion_id"/><field name="freeze_lot_id"/><field name="owner_partner_id"/><field name="location_id"/>
+                <field name="bucket"/><field name="straws" sum="Straws"/></list>
+        </field>
+    </record>
+    <record id="alfia_semen_stock_report_action" model="ir.actions.act_window">
+        <field name="name">Semen stock</field>
+        <field name="res_model">alfia.semen.stock.report</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="domain">[('bucket', '!=', 'source')]</field>
+    </record>
+
+    <!-- Selling by the dose -->
+    <record id="alfia_sale_order_form_semen_doses" model="ir.ui.view">
+        <field name="name">sale.order.form.alfia.semen.doses</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/column[@name='product_and_description']" position="after">
+                <field name="alfia_freeze_lot_id" optional="hide" options="{'no_create': True}"/>
+                <field name="alfia_doses" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Company settings -->
+    <record id="alfia_company_form_semen" model="ir.ui.view">
+        <field name="name">res.company.form.alfia.semen</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Semen" name="alfia_semen" groups="base.group_system,alfia_security.group_alfia_vet_manager">
+                    <group><field name="alfia_semen_qc_gate"/><field name="alfia_semen_min_motility"/><field name="alfia_semen_min_progressive"/></group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
