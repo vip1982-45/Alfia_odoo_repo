@@ -52,14 +52,28 @@ class StockMove(models.Model):
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
 
+    def _alfia_is_dispatch_step(self):
+        """A move towards the customer: to a non-stock location, or within the warehouse to its packing or output area,
+        or as a pick, pack or delivery operation."""
+        self.ensure_one()
+        dest = self.location_dest_id
+        if dest.usage not in ('internal', 'inventory'):
+            return True
+        warehouses = self.env['stock.warehouse'].sudo().search([('company_id', '=', self.company_id.id)])
+        dispatch_areas = warehouses.wh_output_stock_loc_id | warehouses.wh_pack_stock_loc_id
+        dispatch_types = warehouses.pick_type_id | warehouses.pack_type_id | warehouses.out_type_id
+        return bool(dest & dispatch_areas) or bool(self.move_id.picking_type_id & dispatch_types) \
+            or self.move_id.picking_type_id.code == 'outgoing'
+
     def _action_done(self):
-        # An expired batch is not issued (it may only be scrapped or counted); the expiry date comes from the batch.
+        # An expired batch is not issued (it may only be scrapped, counted or moved within the store, e.g. to quarantine);
+        # it does not go towards a customer either, not even to the packing or output area. The expiry date comes from
+        # the batch.
         for ml in self:
             lot = ml.lot_id
             expiry = 'expiration_date' in lot._fields and lot.expiration_date
             if (expiry and expiry <= fields.Datetime.now() and ml.location_id.usage == 'internal'
-                    and ml.location_dest_id.usage not in ('internal', 'inventory') and not ml.move_id.is_scrap
-                    and not ml.move_id.is_inventory):
+                    and not ml.move_id.is_scrap and not ml.move_id.is_inventory and ml._alfia_is_dispatch_step()):
                 raise UserError(self.env._("%(product)s batch %(lot)s expired on %(date)s and cannot be issued. Scrap it "
                                            "instead.", product=ml.product_id.display_name, lot=lot.name,
                                            date=fields.Date.to_date(expiry)))

@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-08 21:38+0000\n"
-"PO-Revision-Date: 2026-11-08 21:38+0000\n"
+"POT-Creation-Date: 2026-11-26 04:33+0000\n"
+"PO-Revision-Date: 2026-11-26 04:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"Plural-Forms: \n"
 
 #. module: alfia_security
 #: model:ir.module.module,description:base.module_alfia_security
@@ -53,6 +53,28 @@ msgstr ""
 #: code:addons/alfia_security/models/res_users.py:0
 msgid "%(place)s is outside the sites you may work in%(what)s."
 msgstr "%(place)s خارج المواقع المسموح لك بالعمل فيها%(what)s."
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid "%(product)s%(lot)s is not available in %(loc)s; it is in: %(where)s"
+msgstr "%(product)s%(lot)s غير متوفر في %(loc)s؛ وهو موجود في: %(where)s"
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid ""
+"%(product)s%(lot)s: %(loc)s holds %(have)g (%(held)g already taken by other "
+"transfers), not %(qty)g. Take it from where it is: %(where)s"
+msgstr ""
+"%(product)s%(lot)s: يحتوي %(loc)s على %(have)g (منها %(held)g محجوزة "
+"لتحويلات أخرى)، وليس %(qty)g. خذه من مكان وجوده: %(where)s"
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/flow.py:0
+msgid "%(what)s: %(fields)s can change only through the record's buttons."
+msgstr "%(what)s: لا يمكن تغيير %(fields)s إلا عبر أزرار السجل."
 
 #. module: alfia_security
 #. odoo-python
@@ -284,6 +306,11 @@ msgid "Company"
 msgstr "الشركة"
 
 #. module: alfia_security
+#: model:ir.model,name:alfia_security.model_res_partner
+msgid "Contact"
+msgstr "جهة الاتصال"
+
+#. module: alfia_security
 #: model:res.groups.privilege,name:alfia_security.privilege_alfia_inventory
 msgid "Controlled inventory"
 msgstr "المخزون الخاضع للرقابة"
@@ -380,6 +407,7 @@ msgstr "معتمِد الصرف: البيطري"
 #: model:ir.model.fields,field_description:alfia_security.field_account_payment__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_account_payment_register__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_guarded_mixin__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__display_name
@@ -387,9 +415,11 @@ msgstr "معتمِد الصرف: البيطري"
 #: model:ir.model.fields,field_description:alfia_security.field_ir_access__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_ir_model_data__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_product_category__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_product_template__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_purchase_order__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_res_company__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_res_groups__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_res_partner__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_res_users__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_stock_move__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_stock_move_line__display_name
@@ -429,6 +459,11 @@ msgid "Effective approver groups"
 msgstr "مجموعات المعتمِدين الفعلية"
 
 #. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_effective_lot_reader_group_ids
+msgid "Effective batch readers"
+msgstr "من يرى الدفعات فعلياً"
+
+#. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_effective_group_id
 msgid "Effective restriction"
 msgstr "القيد الفعلي"
@@ -450,11 +485,6 @@ msgid "Enter the site name."
 msgstr "أدخل اسم الموقع."
 
 #. module: alfia_security
-#: model:res.groups,name:alfia_security.group_alfia_sod_exempt
-msgid "Exempt from segregation of duties (emergency use)"
-msgstr "معفى من الفصل بين المهام (للطوارئ)"
-
-#. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__location_id
 msgid "Existing location"
 msgstr "موقع قائم"
@@ -468,6 +498,11 @@ msgstr "المراقب المالي"
 #: model:ir.model.fields,help:alfia_security.field_alfia_site_setup__site_name
 msgid "For example: Barn C (yearlings)."
 msgstr "مثال: إسطبل ج (الحوليات)."
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_sod_exempt
+msgid "Former segregation-of-duties exemption (no longer waives any approval)"
+msgstr "الإعفاء السابق من فصل المهام (لم يعد يُعفي من أي اعتماد)"
 
 #. module: alfia_security
 #: model_terms:ir.ui.view,arch_db:alfia_security.alfia_access_profile_view_form
@@ -496,10 +531,21 @@ msgid "Groups granted by profiles"
 msgstr "المجموعات الممنوحة من ملفات الصلاحيات"
 
 #. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_product_category__alfia_lot_reader_group_ids
+msgid ""
+"Groups that may see the batches (lots) of this restricted stock, to refer to"
+" them (e.g. the semen batch used for a service), without seeing its stock or"
+" moving it."
+msgstr ""
+"المجموعات التي يمكنها رؤية دفعات هذا المخزون المقيد للإشارة إليها (مثل دفعة "
+"السائل المنوي المستخدمة في تلقيح)، دون رؤية رصيده أو تحريكه."
+
+#. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_account_move__id
 #: model:ir.model.fields,field_description:alfia_security.field_account_payment__id
 #: model:ir.model.fields,field_description:alfia_security.field_account_payment_register__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__id
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_guarded_mixin__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__id
@@ -507,9 +553,11 @@ msgstr "المجموعات الممنوحة من ملفات الصلاحيات"
 #: model:ir.model.fields,field_description:alfia_security.field_ir_access__id
 #: model:ir.model.fields,field_description:alfia_security.field_ir_model_data__id
 #: model:ir.model.fields,field_description:alfia_security.field_product_category__id
+#: model:ir.model.fields,field_description:alfia_security.field_product_template__id
 #: model:ir.model.fields,field_description:alfia_security.field_purchase_order__id
 #: model:ir.model.fields,field_description:alfia_security.field_res_company__id
 #: model:ir.model.fields,field_description:alfia_security.field_res_groups__id
+#: model:ir.model.fields,field_description:alfia_security.field_res_partner__id
 #: model:ir.model.fields,field_description:alfia_security.field_res_users__id
 #: model:ir.model.fields,field_description:alfia_security.field_stock_move__id
 #: model:ir.model.fields,field_description:alfia_security.field_stock_move_line__id
@@ -555,6 +603,11 @@ msgid "Login at the time"
 msgstr "اسم الدخول في حينه"
 
 #. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_lot_reader_group_ids
+msgid "May see batch names"
+msgstr "يمكنه رؤية أسماء الدفعات"
+
+#. module: alfia_security
 #: model:res.groups,name:alfia_security.group_alfia_medicine_custodian
 msgid "Medicine store custodian"
 msgstr "أمين مخزن الأدوية"
@@ -568,6 +621,16 @@ msgstr "الاعتمادات الناقصة"
 #: model:ir.model,name:alfia_security.model_ir_model_data
 msgid "Model Data"
 msgstr "بيانات النموذج"
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/product_category.py:0
+msgid ""
+"Moving a product to a category with different stock restrictions is for "
+"security officers and system administrators."
+msgstr ""
+"نقل منتج إلى فئة بقيود مخزون مختلفة من صلاحية مسؤولي الأمن ومديري النظام "
+"فقط."
 
 #. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__name
@@ -610,6 +673,18 @@ msgstr "مسؤول النظام وحده يمكنه تغيير صلاحيات ا
 #: code:addons/alfia_security/models/res_users.py:0
 msgid "Only a system administrator can change the account of %s."
 msgstr "مسؤول النظام وحده يمكنه تغيير حساب %s."
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/admin_guard.py:0
+msgid "Only a system administrator can change the contact details of %s."
+msgstr "مدير النظام فقط يمكنه تغيير بيانات الاتصال الخاصة بـ %s."
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/admin_guard.py:0
+msgid "Only a system administrator can delete the contact of %s."
+msgstr "مدير النظام فقط يمكنه حذف جهة الاتصال الخاصة بـ %s."
 
 #. module: alfia_security
 #: model:ir.model.fields,help:alfia_security.field_res_company__alfia_sod_threshold
@@ -689,6 +764,11 @@ msgstr "معتمِد المشتريات"
 #: model:alfia.access.profile,name:alfia_security.profile_procurement_officer
 msgid "Procurement officer"
 msgstr "مسؤول المشتريات"
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_product_template
+msgid "Product"
+msgstr "المنتج"
 
 #. module: alfia_security
 #: model:ir.model,name:alfia_security.model_product_category
@@ -830,6 +910,14 @@ msgid ""
 "post it."
 msgstr ""
 "فصل المهام: أنت من أدخل فاتورة المورد هذه، لذا يجب أن يرحّلها شخص آخر."
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/account.py:0
+msgid ""
+"Segregation of duties: you prepared this credit note, so another person must"
+" post it."
+msgstr "فصل المهام: أنت من أعدّ إشعار الدائن هذا، لذا يجب أن يرحّله شخص آخر."
 
 #. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_res_company__alfia_sod_threshold
@@ -975,6 +1063,16 @@ msgstr ""
 "لا يزال ملف الصلاحيات هذا مسندًا إلى مستخدمين. أزله منهم (أو أرشفه) أولًا."
 
 #. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid ""
+"This transfer would make stock negative, which is not allowed for tracked or controlled items. Pick from where the stock is:\n"
+"%s"
+msgstr ""
+"هذا التحويل سيجعل المخزون سالباً، وهذا غير مسموح للأصناف المتتبعة أو الخاضعة للرقابة. اصرف من مكان وجود المخزون:\n"
+"%s"
+
+#. module: alfia_security
 #: model:alfia.access.profile,name:alfia_security.profile_training_manager
 #: model:res.groups,name:alfia_security.group_alfia_training_manager
 msgid "Training manager"
@@ -1062,6 +1160,11 @@ msgid "Where they may work"
 msgstr "أماكن العمل المسموح بها"
 
 #. module: alfia_security
+#: model:ir.model,name:alfia_security.model_alfia_guarded_mixin
+msgid "Workflow-owned fields"
+msgstr "حقول يتحكم بها سير العمل"
+
+#. module: alfia_security
 #. odoo-python
 #: code:addons/alfia_security/models/stock.py:0
 msgid ""
@@ -1112,9 +1215,8 @@ msgstr "المعرّفات الخارجية"
 msgid "groups"
 msgstr "المجموعات"
 
+#. module: alfia_security
 #. odoo-python
-#: code:addons/alfia_security/models/account.py:0
-msgid ""
-"Segregation of duties: you prepared this credit note, so another person must"
-" post it."
-msgstr "فصل المهام: أنت من أعدّ إشعار الدائن هذا، لذا يجب أن يرحّله شخص آخر."
+#: code:addons/alfia_security/models/stock.py:0
+msgid "nowhere in stock"
+msgstr "غير موجود في المخزون"

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 08:39+0000\n"
-"PO-Revision-Date: 2026-11-09 08:39+0000\n"
+"POT-Creation-Date: 2026-11-26 04:34+0000\n"
+"PO-Revision-Date: 2026-11-26 04:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,14 @@ msgid "%(doc)s of %(name)s expires on %(date)s"
 msgstr ""
 
 #. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/employee.py:0
+msgid ""
+"%s has administration rights, so the account was not switched off. Ask a "
+"system administrator to remove its access."
+msgstr ""
+
+#. module: alfia_hr
 #: model:ir.model,name:alfia_hr.model_alfia_access_profile
 msgid "Access profile"
 msgstr ""
@@ -29,6 +37,11 @@ msgstr ""
 #. module: alfia_hr
 #: model:hr.job,name:alfia_hr.job_accountant
 msgid "Accountant"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model,name:alfia_hr.model_mail_activity_plan_template
+msgid "Activity plan template"
 msgstr ""
 
 #. module: alfia_hr
@@ -51,6 +64,11 @@ msgstr ""
 #. module: alfia_hr
 #: model:ir.actions.server,name:alfia_hr.cron_alfia_document_expiry_ir_actions_server
 msgid "Alfia HR: remind HR of expiring Qatar IDs, passports and health cards"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__alfia_offboarding_started
+msgid "Alfia Offboarding Started"
 msgstr ""
 
 #. module: alfia_hr
@@ -84,6 +102,14 @@ msgid "Breeding manager"
 msgstr ""
 
 #. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/scope.py:0
+msgid ""
+"Choose one of your departments for the new employee: %s. Employees of other "
+"departments are created by HR staff responsible for them."
+msgstr ""
+
+#. module: alfia_hr
 #: model:hr.work.entry.type,name:alfia_hr.leave_compassionate
 msgid "Compassionate leave"
 msgstr ""
@@ -102,9 +128,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_hr.field_alfia_access_profile__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_alfia_site_setup__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee_departure__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_expense__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_leave__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_leave_allocation__display_name
+#: model:ir.model.fields,field_description:alfia_hr.field_mail_activity_plan_template__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_res_users__display_name
 msgid "Display Name"
 msgstr ""
@@ -117,6 +145,11 @@ msgstr ""
 #. module: alfia_hr
 #: model:ir.model,name:alfia_hr.model_hr_employee
 msgid "Employee"
+msgstr ""
+
+#. module: alfia_hr
+#: model:ir.model,name:alfia_hr.model_hr_employee_departure
+msgid "Employee Departure"
 msgstr ""
 
 #. module: alfia_hr
@@ -216,9 +249,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_hr.field_alfia_access_profile__id
 #: model:ir.model.fields,field_description:alfia_hr.field_alfia_site_setup__id
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__id
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee_departure__id
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_expense__id
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_leave__id
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_leave_allocation__id
+#: model:ir.model.fields,field_description:alfia_hr.field_mail_activity_plan_template__id
 #: model:ir.model.fields,field_description:alfia_hr.field_res_users__id
 msgid "ID"
 msgstr ""
@@ -236,6 +271,20 @@ msgstr ""
 #. module: alfia_hr
 #: model:hr.work.entry.type,name:alfia_hr.leave_maternity
 msgid "Maternity leave"
+msgstr ""
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/scope.py:0
+msgid ""
+"Move employees only between your departments: %s. A move to another "
+"department is made by HR staff responsible for it."
+msgstr ""
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/plans.py:0
+msgid "Offboarding plan started for the departure on %s."
 msgstr ""
 
 #. module: alfia_hr
@@ -402,4 +451,10 @@ msgstr ""
 msgid ""
 "You cannot approve your own time-off allocation. Another approver must do "
 "it."
+msgstr ""
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/plans.py:0
+msgid "assigned to %s because there is no user for this step"
 msgstr ""

@@ -3,21 +3,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 08:39+0000\n"
-"PO-Revision-Date: 2026-11-09 08:39+0000\n"
+"POT-Creation-Date: 2026-11-26 04:34+0000\n"
+"PO-Revision-Date: 2026-11-26 04:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"Plural-Forms: \n"
 
 #. module: alfia_hr
 #. odoo-python
 #: code:addons/alfia_hr/models/employee.py:0
 msgid "%(doc)s of %(name)s expires on %(date)s"
 msgstr "تنتهي %(doc)s الخاصة بـ %(name)s في %(date)s"
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/employee.py:0
+msgid ""
+"%s has administration rights, so the account was not switched off. Ask a "
+"system administrator to remove its access."
+msgstr ""
+"لدى %s صلاحيات إدارة النظام، لذا لم يُعطَّل الحساب. اطلب من مدير النظام "
+"إزالة صلاحياته."
 
 #. module: alfia_hr
 #: model:ir.model,name:alfia_hr.model_alfia_access_profile
@@ -28,6 +38,11 @@ msgstr "ملف صلاحيات الوصول"
 #: model:hr.job,name:alfia_hr.job_accountant
 msgid "Accountant"
 msgstr "محاسب"
+
+#. module: alfia_hr
+#: model:ir.model,name:alfia_hr.model_mail_activity_plan_template
+msgid "Activity plan template"
+msgstr "قالب خطة الأنشطة"
 
 #. module: alfia_hr
 #: model:ir.model,name:alfia_hr.model_alfia_site_setup
@@ -54,6 +69,11 @@ msgid "Alfia HR: remind HR of expiring Qatar IDs, passports and health cards"
 msgstr ""
 "ألفية - الموارد البشرية: تذكير بانتهاء البطاقات الشخصية وجوازات السفر "
 "والبطاقات الصحية"
+
+#. module: alfia_hr
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__alfia_offboarding_started
+msgid "Alfia Offboarding Started"
+msgstr "بدأت إجراءات إنهاء الخدمة"
 
 #. module: alfia_hr
 #: model:ir.model.fields,field_description:alfia_hr.field_res_users__alfia_scope_departments
@@ -86,6 +106,16 @@ msgid "Breeding manager"
 msgstr "مدير التناسل"
 
 #. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/scope.py:0
+msgid ""
+"Choose one of your departments for the new employee: %s. Employees of other "
+"departments are created by HR staff responsible for them."
+msgstr ""
+"اختر أحد أقسامك للموظف الجديد: %s. موظفو الأقسام الأخرى ينشئهم موظفو الموارد"
+" البشرية المسؤولون عنها."
+
+#. module: alfia_hr
 #: model:hr.work.entry.type,name:alfia_hr.leave_compassionate
 msgid "Compassionate leave"
 msgstr "إجازة وفاة"
@@ -104,9 +134,11 @@ msgstr "الأقسام"
 #: model:ir.model.fields,field_description:alfia_hr.field_alfia_access_profile__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_alfia_site_setup__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee_departure__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_expense__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_leave__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_leave_allocation__display_name
+#: model:ir.model.fields,field_description:alfia_hr.field_mail_activity_plan_template__display_name
 #: model:ir.model.fields,field_description:alfia_hr.field_res_users__display_name
 msgid "Display Name"
 msgstr "الاسم المعروض"
@@ -120,6 +152,11 @@ msgstr "سائق"
 #: model:ir.model,name:alfia_hr.model_hr_employee
 msgid "Employee"
 msgstr "الموظف"
+
+#. module: alfia_hr
+#: model:ir.model,name:alfia_hr.model_hr_employee_departure
+msgid "Employee Departure"
+msgstr "مغادرة الموظف"
 
 #. module: alfia_hr
 #: model:ir.module.module,summary:base.module_alfia_hr
@@ -225,9 +262,11 @@ msgstr "نقل الخيول"
 #: model:ir.model.fields,field_description:alfia_hr.field_alfia_access_profile__id
 #: model:ir.model.fields,field_description:alfia_hr.field_alfia_site_setup__id
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_employee__id
+#: model:ir.model.fields,field_description:alfia_hr.field_hr_employee_departure__id
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_expense__id
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_leave__id
 #: model:ir.model.fields,field_description:alfia_hr.field_hr_leave_allocation__id
+#: model:ir.model.fields,field_description:alfia_hr.field_mail_activity_plan_template__id
 #: model:ir.model.fields,field_description:alfia_hr.field_res_users__id
 msgid "ID"
 msgstr "المعرّف"
@@ -246,6 +285,22 @@ msgstr "الإدارة العليا"
 #: model:hr.work.entry.type,name:alfia_hr.leave_maternity
 msgid "Maternity leave"
 msgstr "إجازة الأمومة"
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/scope.py:0
+msgid ""
+"Move employees only between your departments: %s. A move to another "
+"department is made by HR staff responsible for it."
+msgstr ""
+"انقل الموظفين بين أقسامك فقط: %s. النقل إلى قسم آخر يقوم به موظفو الموارد "
+"البشرية المسؤولون عنه."
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/plans.py:0
+msgid "Offboarding plan started for the departure on %s."
+msgstr "بدأت خطة إنهاء الخدمة للمغادرة بتاريخ %s."
 
 #. module: alfia_hr
 #. odoo-python
@@ -414,3 +469,9 @@ msgid ""
 "You cannot approve your own time-off allocation. Another approver must do "
 "it."
 msgstr "لا يمكنك اعتماد رصيد إجازاتك. يجب أن يعتمده شخص آخر."
+
+#. module: alfia_hr
+#. odoo-python
+#: code:addons/alfia_hr/models/plans.py:0
+msgid "assigned to %s because there is no user for this step"
+msgstr "أُسندت إلى %s لعدم وجود مستخدم لهذه الخطوة"

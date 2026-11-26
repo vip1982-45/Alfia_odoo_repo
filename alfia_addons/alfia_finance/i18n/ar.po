@@ -3,15 +3,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-08 22:53+0000\n"
-"PO-Revision-Date: 2026-11-08 22:53+0000\n"
+"POT-Creation-Date: 2026-11-26 04:34+0000\n"
+"PO-Revision-Date: 2026-11-26 04:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"Plural-Forms: \n"
+
+#. module: alfia_finance
+#. odoo-python
+#: code:addons/alfia_finance/models/controls.py:0
+msgid ""
+"%(order)s, %(product)s: receiving %(total)g against %(ordered)g ordered "
+"exceeds the %(tol)g%% tolerance. Receive only what was ordered, or ask a "
+"purchase manager to validate the excess."
+msgstr ""
+"%(order)s، %(product)s: استلام %(total)g مقابل %(ordered)g مطلوبة يتجاوز "
+"نسبة السماح %(tol)g%%. استلم المطلوب فقط، أو اطلب من مدير المشتريات اعتماد "
+"الزيادة."
+
+#. module: alfia_finance
+#. odoo-python
+#: code:addons/alfia_finance/models/controls.py:0
+msgid ""
+"%(user)s accepted a receipt of %(total)g against %(ordered)g ordered for "
+"%(product)s (above the %(tol)g%% tolerance)."
+msgstr ""
+"قبل %(user)s استلام %(total)g مقابل %(ordered)g مطلوبة من %(product)s (فوق "
+"نسبة السماح %(tol)g%%)."
 
 #. module: alfia_finance
 #: model:ir.model.fields.selection,name:alfia_finance.selection__alfia_aged_balance__bucket__1_30
@@ -27,6 +49,22 @@ msgstr "31–60 يومًا"
 #: model:ir.model.fields.selection,name:alfia_finance.selection__alfia_aged_balance__bucket__3_90
 msgid "61–90 days"
 msgstr "61–90 يومًا"
+
+#. module: alfia_finance
+#: model:ir.model.fields,help:alfia_finance.field_res_company__alfia_receipt_tolerance
+msgid ""
+"A goods receipt may exceed its purchase order line by up to this percentage."
+" Anything more is refused unless a purchase manager validates the receipt "
+"(and the excess is recorded on the order)."
+msgstr ""
+"يجوز أن يتجاوز استلام البضاعة سطر أمر الشراء حتى هذه النسبة. ما يزيد عنها "
+"يُرفض ما لم يعتمد مدير المشتريات الاستلام (وتُسجل الزيادة على الأمر)."
+
+#. module: alfia_finance
+#. odoo-python
+#: code:addons/alfia_finance/models/horse.py:0
+msgid "A horse's cost centre is set by the system."
+msgstr "مركز تكلفة الحصان يحدده النظام."
 
 #. module: alfia_finance
 #: model_terms:ir.ui.view,arch_db:alfia_finance.alfia_aged_balance_pivot
@@ -56,10 +94,20 @@ msgid "Alfia Finance and Supply Chain"
 msgstr "ألفية - المالية وسلسلة الإمداد"
 
 #. module: alfia_finance
+#: model_terms:ir.ui.view,arch_db:alfia_finance.product_template_form_purchase_units
+msgid "Also bought in"
+msgstr "يُشترى أيضاً بوحدة"
+
+#. module: alfia_finance
 #: model:ir.actions.act_window,name:alfia_finance.alfia_balance_sheet_action
 #: model:ir.ui.menu,name:alfia_finance.menu_alfia_balance_sheet
 msgid "Balance sheet"
 msgstr "الميزانية العمومية"
+
+#. module: alfia_finance
+#: model:ir.model,name:alfia_finance.model_alfia_breeding_contract
+msgid "Breeding contract"
+msgstr "عقد تربية"
 
 #. module: alfia_finance
 #: model:ir.model,name:alfia_finance.model_alfia_charge
@@ -111,10 +159,14 @@ msgstr "أيام التأخير"
 
 #. module: alfia_finance
 #: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__display_name
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_breeding_contract__display_name
 #: model:ir.model.fields,field_description:alfia_finance.field_alfia_charge__display_name
 #: model:ir.model.fields,field_description:alfia_finance.field_alfia_horse__display_name
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_horse_sale__display_name
 #: model:ir.model.fields,field_description:alfia_finance.field_alfia_medicine_issue__display_name
+#: model:ir.model.fields,field_description:alfia_finance.field_product_template__display_name
 #: model:ir.model.fields,field_description:alfia_finance.field_res_company__display_name
+#: model:ir.model.fields,field_description:alfia_finance.field_stock_move__display_name
 msgid "Display Name"
 msgstr "الاسم المعروض"
 
@@ -150,11 +202,20 @@ msgid "Horse"
 msgstr "الحصان"
 
 #. module: alfia_finance
+#: model:ir.model,name:alfia_finance.model_alfia_horse_sale
+msgid "Horse sale or gift"
+msgstr "بيع أو إهداء حصان"
+
+#. module: alfia_finance
 #: model:ir.model.fields,field_description:alfia_finance.field_alfia_aged_balance__id
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_breeding_contract__id
 #: model:ir.model.fields,field_description:alfia_finance.field_alfia_charge__id
 #: model:ir.model.fields,field_description:alfia_finance.field_alfia_horse__id
+#: model:ir.model.fields,field_description:alfia_finance.field_alfia_horse_sale__id
 #: model:ir.model.fields,field_description:alfia_finance.field_alfia_medicine_issue__id
+#: model:ir.model.fields,field_description:alfia_finance.field_product_template__id
 #: model:ir.model.fields,field_description:alfia_finance.field_res_company__id
+#: model:ir.model.fields,field_description:alfia_finance.field_stock_move__id
 msgid "ID"
 msgstr "المعرّف"
 
@@ -205,15 +266,30 @@ msgid "Payable"
 msgstr "دائن"
 
 #. module: alfia_finance
+#: model:ir.model,name:alfia_finance.model_product_template
+msgid "Product"
+msgstr "المنتج"
+
+#. module: alfia_finance
 #: model:ir.actions.act_window,name:alfia_finance.alfia_profit_loss_action
 #: model:ir.ui.menu,name:alfia_finance.menu_alfia_profit_loss
 msgid "Profit and loss"
 msgstr "الأرباح والخسائر"
 
 #. module: alfia_finance
+#: model:ir.model.fields,field_description:alfia_finance.field_res_company__alfia_receipt_tolerance
+msgid "Receipt tolerance (%)"
+msgstr "نسبة السماح في الاستلام (%)"
+
+#. module: alfia_finance
 #: model:ir.model.fields.selection,name:alfia_finance.selection__alfia_aged_balance__kind__receivable
 msgid "Receivable"
 msgstr "مدين"
+
+#. module: alfia_finance
+#: model:ir.model,name:alfia_finance.model_stock_move
+msgid "Stock Move"
+msgstr "حركة المخزون"
 
 #. module: alfia_finance
 #: model_terms:ir.ui.view,arch_db:alfia_finance.alfia_aged_balance_list
@@ -236,3 +312,18 @@ msgid ""
 msgstr ""
 "ميزان المراجعة، دفتر الأستاذ العام، أعمار الأرصدة، تحميل التكاليف على "
 "الخيول، التقييم المستمر للمخزون، والانتقاء ثم الشحن"
+
+#. module: alfia_finance
+#: model:uom.uom,name:alfia_finance.uom_bag_20kg
+msgid "كيس 20 كغ · Bag 20 kg"
+msgstr "كيس 20 كغ"
+
+#. module: alfia_finance
+#: model:uom.uom,name:alfia_finance.uom_bag_25kg
+msgid "كيس 25 كغ · Bag 25 kg"
+msgstr "كيس 25 كغ"
+
+#. module: alfia_finance
+#: model:uom.uom,name:alfia_finance.uom_bag_50kg
+msgid "كيس 50 كغ · Bag 50 kg"
+msgstr "كيس 50 كغ"

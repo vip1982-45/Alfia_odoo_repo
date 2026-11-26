@@ -14,14 +14,16 @@ acc_alfia_charge_group_alfia_vet_manager,alfia.charge: group_alfia_vet_manager,a
 acc_alfia_charge_group_account_invoice,alfia.charge: group_account_invoice,alfia.charge,account.group_account_invoice,cru,
 acc_alfia_charge_group_alfia_security_auditor,alfia.charge: group_alfia_security_auditor,alfia.charge,alfia_security.group_alfia_security_auditor,r,
 acc_alfia_charge_system,alfia.charge: system administrators,alfia.charge,base.group_system,crud,
-scope_alfia_charge,Alfia site scope: alfia.charge,alfia.charge,,crud,"[('horse_id.location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+scope_alfia_charge,Alfia site scope: alfia.charge,alfia.charge,,cud,"[('horse_id.location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+scope_alfia_charge_read,Alfia site scope: alfia.charge (reading; also horses that have left),alfia.charge,,r,"['|', ('horse_id.location_id', '=', False), ('horse_id.location_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
 acc_alfia_charge_plan_group_alfia_breeding_manager,alfia.charge.plan: group_alfia_breeding_manager,alfia.charge.plan,alfia_security.group_alfia_breeding_manager,crud,
 acc_alfia_charge_plan_group_alfia_training_manager,alfia.charge.plan: group_alfia_training_manager,alfia.charge.plan,alfia_security.group_alfia_training_manager,cru,
 acc_alfia_charge_plan_group_alfia_vet_manager,alfia.charge.plan: group_alfia_vet_manager,alfia.charge.plan,alfia_security.group_alfia_vet_manager,r,
 acc_alfia_charge_plan_group_account_invoice,alfia.charge.plan: group_account_invoice,alfia.charge.plan,account.group_account_invoice,cru,
 acc_alfia_charge_plan_group_alfia_security_auditor,alfia.charge.plan: group_alfia_security_auditor,alfia.charge.plan,alfia_security.group_alfia_security_auditor,r,
 acc_alfia_charge_plan_system,alfia.charge.plan: system administrators,alfia.charge.plan,base.group_system,crud,
-scope_alfia_charge_plan,Alfia site scope: alfia.charge.plan,alfia.charge.plan,,crud,"['|', '|', ('horse_id.location_id', 'child_of', user.alfia_location_ids.ids), ('location_id', 'child_of', user.alfia_location_ids.ids), ('create_uid', '=', user.id)] if user.alfia_scope_locations else []"
+scope_alfia_charge_plan,Alfia site scope: alfia.charge.plan,alfia.charge.plan,,cud,"['|', '|', ('horse_id.location_id', 'child_of', user.alfia_location_ids.ids), ('location_id', 'child_of', user.alfia_location_ids.ids), ('create_uid', '=', user.id)] if user.alfia_scope_locations else []"
+scope_alfia_charge_plan_read,Alfia site scope: alfia.charge.plan (reading; also horses that have left and farm-wide plans),alfia.charge.plan,,r,"['|', '|', '|', '|', ('horse_id.location_id', 'child_of', user.alfia_location_ids.ids), ('location_id', 'child_of', user.alfia_location_ids.ids), ('create_uid', '=', user.id), '&', ('horse_id', '!=', False), ('horse_id.location_id', '=', False), '&', ('horse_id', '=', False), ('location_id', '=', False)] if user.alfia_scope_locations else []"
 acc_alfia_horse_sale_group_alfia_breeding_manager,alfia.horse.sale: group_alfia_breeding_manager,alfia.horse.sale,alfia_security.group_alfia_breeding_manager,cru,
 acc_alfia_horse_sale_group_alfia_training_manager,alfia.horse.sale: group_alfia_training_manager,alfia.horse.sale,alfia_security.group_alfia_training_manager,cru,
 acc_alfia_horse_sale_group_alfia_vet_manager,alfia.horse.sale: group_alfia_vet_manager,alfia.horse.sale,alfia_security.group_alfia_vet_manager,cru,

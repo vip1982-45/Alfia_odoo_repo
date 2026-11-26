@@ -337,6 +337,19 @@ class AlfiaHorseMovement(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        if not self.env.su:
+            # Checked before saving, so a move outside the person's sites gets a message naming the place (the access rule
+            # would otherwise refuse it with a generic error).
+            for vals in vals_list:
+                horse = self.env['alfia.horse'].sudo().browse(vals.get('horse_id'))
+                location_to = self.env['stock.location'].sudo().browse(vals.get('location_to_id'))
+                if horse.location_id:
+                    self.env.user._alfia_check_location(horse.location_id, self.env._("current place of %s", horse.name))
+                elif not location_to:
+                    raise UserError(self.env._("%s is not on the farm, so it cannot leave it. Record an arrival with its "
+                                               "destination instead.", horse.name))
+                if location_to:
+                    self.env.user._alfia_check_location(location_to, self.env._("destination"))
         moves = super().create(vals_list)
         if not self.env.su:
             for move in moves:

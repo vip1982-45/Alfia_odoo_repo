@@ -3,15 +3,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-08 21:38+0000\n"
-"PO-Revision-Date: 2026-11-08 21:38+0000\n"
+"POT-Creation-Date: 2026-11-26 04:34+0000\n"
+"PO-Revision-Date: 2026-11-26 04:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"Plural-Forms: \n"
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid " until %s"
+msgstr " حتى %s"
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/clinical.py:0
+msgid ""
+"%(horse)s is clinically restricted by the vet%(until)s: only a rest day can "
+"be recorded on %(date)s."
+msgstr ""
+"%(horse)s مقيد طبياً من البيطري%(until)s: لا يمكن تسجيل سوى يوم راحة في "
+"%(date)s."
 
 #. module: alfia_equine
 #. odoo-python
@@ -52,6 +68,16 @@ msgstr "لا يمكن أن يكون %s سلفًا لنفسه."
 #: code:addons/alfia_equine/models/horse.py:0
 msgid "%s is not on site, so it cannot be moved internally."
 msgstr "%s ليس موجودًا في الموقع، لذا لا يمكن نقله نقلًا داخليًا."
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/horse.py:0
+msgid ""
+"%s is not on the farm, so it cannot leave it. Record an arrival with its "
+"destination instead."
+msgstr ""
+"%s ليس في المربط، لذا لا يمكن تسجيل مغادرته. سجّل وصولاً مع وجهته بدلاً من "
+"ذلك."
 
 #. module: alfia_equine
 #. odoo-python
@@ -111,6 +137,12 @@ msgid "A %s needs a destination location."
 msgstr "الحركة من نوع «%s» تحتاج إلى موقع وجهة."
 
 #. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "A birth confirmed by the vet cannot be changed."
+msgstr "لا يمكن تغيير ولادة أكدها البيطري."
+
+#. module: alfia_equine
 #: model:ir.model.constraint,message:alfia_equine.constraint_alfia_foaling_one_per_pregnancy
 msgid "A birth is already recorded for this pregnancy."
 msgstr "تم تسجيل ولادة لهذا الحمل بالفعل."
@@ -133,6 +165,12 @@ msgstr "لا يمكن تعديل حركة مكتملة. سجّل حركة جدي
 #. module: alfia_equine
 #. odoo-python
 #: code:addons/alfia_equine/models/breeding.py:0
+msgid "A completed service is not cancelled."
+msgstr "لا يُلغى تلقيح مكتمل."
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
 msgid ""
 "A confirmed ovulation date is corrected with 'Correct date', which keeps the"
 " history."
@@ -143,6 +181,12 @@ msgstr "يُصحَّح تاريخ الإباضة المؤكد عبر «تصحي�
 #: code:addons/alfia_equine/models/breeding.py:0
 msgid "A released batch is stock and cannot be deleted."
 msgstr "الدفعة المعتمدة للاستخدام أصبحت مخزونًا ولا يمكن حذفها."
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "A released or rejected batch cannot be changed."
+msgstr "لا يمكن تغيير دفعة تم اعتمادها أو رفضها."
 
 #. module: alfia_equine
 #: model:ir.model.constraint,message:alfia_equine.constraint_alfia_horse_ownership_share_range
@@ -184,9 +228,11 @@ msgstr "إجهاض"
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_needaction
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__message_needaction
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_needaction
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_needaction
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_needaction
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__message_needaction
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_needaction
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_needaction
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_needaction
@@ -360,9 +406,11 @@ msgstr "الجمعية"
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_attachment_count
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_attachment_count
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_attachment_count
@@ -456,6 +504,7 @@ msgstr "التصوير المقطعي (CT)"
 
 #. module: alfia_equine
 #: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_breeding_service_view_form
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_embryo_transfer_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_merge_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_horse_movement_view_form
 #: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_task_view_form
@@ -729,6 +778,7 @@ msgstr "التكلفة"
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__create_uid
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__create_uid
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__create_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo_transfer__create_uid
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__create_uid
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__create_uid
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__create_uid
@@ -765,6 +815,7 @@ msgstr "أنشئ بواسطة"
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__create_date
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__create_date
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__create_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo_transfer__create_date
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__create_date
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__create_date
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__create_date
@@ -961,6 +1012,7 @@ msgid "Discipline"
 msgstr "التخصص"
 
 #. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_attachment_owner__display_name
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__display_name
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__display_name
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__display_name
@@ -968,6 +1020,7 @@ msgstr "التخصص"
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__display_name
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_display_mixin__display_name
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo_transfer__display_name
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__display_name
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__display_name
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__display_name
@@ -995,6 +1048,7 @@ msgstr "التخصص"
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__display_name
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__display_name
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__display_name
+#: model:ir.model.fields,field_description:alfia_equine.field_product_category__display_name
 msgid "Display Name"
 msgstr "اسم العرض"
 
@@ -1022,6 +1076,7 @@ msgstr "تاريخ الإنجاز"
 
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__donor_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo_transfer__donor_id
 msgid "Donor mare (genetic dam)"
 msgstr "الفرس المانحة (الأم الوراثية)"
 
@@ -1098,6 +1153,7 @@ msgstr "حالة الأهلية"
 
 #. module: alfia_equine
 #: model:ir.model,name:alfia_equine.model_alfia_embryo
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo_transfer__embryo_id
 msgid "Embryo"
 msgstr "جنين"
 
@@ -1295,6 +1351,7 @@ msgstr "تاريخ غسل الرحم"
 
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__foal_id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__foal_id
 msgid "Foal"
 msgstr "المهر"
 
@@ -1351,9 +1408,11 @@ msgstr "المتابعة"
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_follower_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__message_follower_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_follower_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_follower_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_follower_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__message_follower_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_follower_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_follower_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_follower_ids
@@ -1364,9 +1423,11 @@ msgstr "المتابعون"
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_partner_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__message_partner_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_partner_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_partner_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_partner_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__message_partner_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_partner_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_partner_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_partner_ids
@@ -1466,9 +1527,11 @@ msgstr "الدرجة"
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__has_message
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__has_message
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__has_message
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__has_message
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__has_message
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__has_message
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__has_message
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__has_message
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__has_message
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__has_message
@@ -1618,6 +1681,7 @@ msgstr ""
 "المربط. راجع ملف README.md."
 
 #. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_attachment_owner__id
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__id
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__id
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_clearance__id
@@ -1625,6 +1689,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__id
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_display_mixin__id
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__id
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo_transfer__id
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__id
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__id
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__id
@@ -1652,6 +1717,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment__id
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_treatment_dose__id
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_vet_visit__id
+#: model:ir.model.fields,field_description:alfia_equine.field_product_category__id
 msgid "ID"
 msgstr "المعرّف"
 
@@ -1694,9 +1760,11 @@ msgstr "أكمل %s الهوية."
 #. module: alfia_equine
 #: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_rule__message_needaction
 #: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_service__message_needaction
+#: model:ir.model.fields,help:alfia_equine.field_alfia_diag_image__message_needaction
 #: model:ir.model.fields,help:alfia_equine.field_alfia_embryo__message_needaction
 #: model:ir.model.fields,help:alfia_equine.field_alfia_foaling__message_needaction
 #: model:ir.model.fields,help:alfia_equine.field_alfia_horse__message_needaction
+#: model:ir.model.fields,help:alfia_equine.field_alfia_lab_test__message_needaction
 #: model:ir.model.fields,help:alfia_equine.field_alfia_ovulation__message_needaction
 #: model:ir.model.fields,help:alfia_equine.field_alfia_pregnancy__message_needaction
 #: model:ir.model.fields,help:alfia_equine.field_alfia_semen_collection__message_needaction
@@ -1709,12 +1777,16 @@ msgstr "إذا كان محددًا، فهناك رسائل جديدة تتطلب
 #: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_rule__message_has_sms_error
 #: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_service__message_has_error
 #: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_service__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_diag_image__message_has_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_diag_image__message_has_sms_error
 #: model:ir.model.fields,help:alfia_equine.field_alfia_embryo__message_has_error
 #: model:ir.model.fields,help:alfia_equine.field_alfia_embryo__message_has_sms_error
 #: model:ir.model.fields,help:alfia_equine.field_alfia_foaling__message_has_error
 #: model:ir.model.fields,help:alfia_equine.field_alfia_foaling__message_has_sms_error
 #: model:ir.model.fields,help:alfia_equine.field_alfia_horse__message_has_error
 #: model:ir.model.fields,help:alfia_equine.field_alfia_horse__message_has_sms_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_lab_test__message_has_error
+#: model:ir.model.fields,help:alfia_equine.field_alfia_lab_test__message_has_sms_error
 #: model:ir.model.fields,help:alfia_equine.field_alfia_ovulation__message_has_error
 #: model:ir.model.fields,help:alfia_equine.field_alfia_ovulation__message_has_sms_error
 #: model:ir.model.fields,help:alfia_equine.field_alfia_pregnancy__message_has_error
@@ -1779,9 +1851,11 @@ msgstr "يُفوتر إلى"
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_is_follower
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__message_is_follower
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_is_follower
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_is_follower
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_is_follower
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__message_is_follower
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_is_follower
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_is_follower
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_is_follower
@@ -1807,6 +1881,11 @@ msgid "Laboratory"
 msgstr "المختبر"
 
 #. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__attachment_ids
+msgid "Laboratory report"
+msgstr "تقرير المختبر"
+
+#. module: alfia_equine
 #: model:ir.model,name:alfia_equine.model_alfia_lab_test
 msgid "Laboratory test"
 msgstr "فحص مختبري"
@@ -1824,6 +1903,7 @@ msgstr "الفحوصات المختبرية"
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__write_uid
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__write_uid
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__write_uid
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo_transfer__write_uid
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__write_uid
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__write_uid
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__write_uid
@@ -1860,6 +1940,7 @@ msgstr "آخر تحديث بواسطة"
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_competition__write_date
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__write_date
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__write_date
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo_transfer__write_date
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_farrier_visit__write_date
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__write_date
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_health_record__write_date
@@ -2008,9 +2089,11 @@ msgstr ""
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_has_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__message_has_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_has_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_has_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_has_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__message_has_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_has_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_has_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_has_error
@@ -2021,9 +2104,11 @@ msgstr "خطأ في تسليم الرسالة"
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__message_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__message_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_ids
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_ids
@@ -2117,6 +2202,11 @@ msgid "Next Action"
 msgstr "الإجراء التالي"
 
 #. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "حدث التقويم للنشاط التالي"
+
+#. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__activity_date_deadline
 msgid "Next Activity Deadline"
 msgstr "الموعد النهائي للنشاط التالي"
@@ -2167,6 +2257,16 @@ msgstr ""
 "جدولة العمل وفقًا لها."
 
 #. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid ""
+"No free dose of semen batch %s is in stock (doses reserved for a dispatch "
+"are not used)."
+msgstr ""
+"لا توجد جرعة متاحة من دفعة السائل المنوي %s في المخزون (الجرعات المحجوزة "
+"للشحن لا تُستخدم)."
+
+#. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__morphology
 msgid "Normal morphology (%)"
 msgstr "الشكل الطبيعي (%)"
@@ -2212,9 +2312,11 @@ msgstr "الرقم"
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_needaction_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__message_needaction_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_needaction_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_needaction_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_needaction_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__message_needaction_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_needaction_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_needaction_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_needaction_counter
@@ -2225,9 +2327,11 @@ msgstr "عدد الإجراءات"
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_has_error_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__message_has_error_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_has_error_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_has_error_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_has_error_counter
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__message_has_error_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_has_error_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_has_error_counter
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_has_error_counter
@@ -2238,9 +2342,11 @@ msgstr "عدد الأخطاء"
 #. module: alfia_equine
 #: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_rule__message_needaction_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_service__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_diag_image__message_needaction_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_embryo__message_needaction_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_foaling__message_needaction_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_horse__message_needaction_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_lab_test__message_needaction_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_ovulation__message_needaction_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_pregnancy__message_needaction_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_semen_collection__message_needaction_counter
@@ -2251,9 +2357,11 @@ msgstr "عدد الرسائل التي تتطلب إجراءً"
 #. module: alfia_equine
 #: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_rule__message_has_error_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_breeding_service__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_diag_image__message_has_error_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_embryo__message_has_error_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_foaling__message_has_error_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_horse__message_has_error_counter
+#: model:ir.model.fields,help:alfia_equine.field_alfia_lab_test__message_has_error_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_ovulation__message_has_error_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_pregnancy__message_has_error_counter
 #: model:ir.model.fields,help:alfia_equine.field_alfia_semen_collection__message_has_error_counter
@@ -2283,6 +2391,12 @@ msgstr "في الموقع"
 
 #. module: alfia_equine
 #. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "One dose of batch %(lot)s was taken from %(where)s for this service."
+msgstr "أُخذت جرعة واحدة من الدفعة %(lot)s من %(where)s لهذا التلقيح."
+
+#. module: alfia_equine
+#. odoo-python
 #: code:addons/alfia_equine/models/clinical.py:0
 msgid "Only %s can decide this."
 msgstr "لا يستطيع اتخاذ هذا القرار إلا %s."
@@ -2302,6 +2416,12 @@ msgstr "لا يمكن اعتماد دفعة للاستخدام إلا إذا ك�
 #. module: alfia_equine
 #. odoo-python
 #: code:addons/alfia_equine/models/breeding.py:0
+msgid "Only a collected embryo is put into storage."
+msgstr "لا يُحفظ إلا جنين تم جمعه."
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
 msgid "Only a draft rule set can be approved."
 msgstr "لا يمكن اعتماد إلا مجموعة قواعد في حالة مسودة."
 
@@ -2310,6 +2430,18 @@ msgstr "لا يمكن اعتماد إلا مجموعة قواعد في حالة 
 #: code:addons/alfia_equine/models/horse.py:0
 msgid "Only a planned movement can be completed."
 msgstr "لا يمكن إكمال إلا حركة مخططة."
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Only a planned service can be marked done."
+msgstr "لا يمكن تعليم إلا تلقيح مخطط كمكتمل."
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Only a product in the %s category can be released as a semen batch."
+msgstr "لا يمكن اعتماد دفعة سائل منوي إلا لمنتج من فئة %s."
 
 #. module: alfia_equine
 #. odoo-python
@@ -2578,6 +2710,11 @@ msgid "Prize Money"
 msgstr "قيمة الجائزة المالية"
 
 #. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_product_category
+msgid "Product Category"
+msgstr "فئة المنتج"
+
+#. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_training_session__program
 msgid "Program / discipline"
 msgstr "البرنامج / التخصص"
@@ -2599,6 +2736,21 @@ msgid "Quantities cannot be negative."
 msgstr "لا يمكن أن تكون الكميات سالبة."
 
 #. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__rating_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__rating_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__rating_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__rating_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__rating_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__rating_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__rating_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__rating_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__rating_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__rating_ids
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_task__rating_ids
+msgid "Ratings"
+msgstr "التقييمات"
+
+#. module: alfia_equine
 #. odoo-python
 #: code:addons/alfia_equine/models/breeding.py:0
 msgid "Re-check after inconclusive result"
@@ -2618,10 +2770,25 @@ msgid "Reason"
 msgstr "السبب"
 
 #. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo_transfer__recipient_id
+msgid "Recipient (carrier)"
+msgstr "الفرس المستقبلة (الحاضنة)"
+
+#. module: alfia_equine
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo_transfer__pregnancy_id
+msgid "Recipient pregnancy"
+msgstr "حمل الفرس المستقبلة"
+
+#. module: alfia_equine
 #. odoo-python
 #: code:addons/alfia_equine/models/horse.py:0
 msgid "Record created"
 msgstr "تم إنشاء السجل"
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_attachment_owner
+msgid "Record that owns its uploaded files"
+msgstr "سجل يملك ملفاته المرفوعة"
 
 #. module: alfia_equine
 #: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_ovulation__state__draft
@@ -2833,9 +3000,11 @@ msgstr "تحت الجلد (SC)"
 #. module: alfia_equine
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_rule__message_has_sms_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_diag_image__message_has_sms_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_embryo__message_has_sms_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_foaling__message_has_sms_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_horse__message_has_sms_error
+#: model:ir.model.fields,field_description:alfia_equine.field_alfia_lab_test__message_has_sms_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_ovulation__message_has_sms_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_pregnancy__message_has_sms_error
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_semen_collection__message_has_sms_error
@@ -2920,6 +3089,12 @@ msgstr "خدمة التلقيح"
 #: model:ir.model.fields,field_description:alfia_equine.field_alfia_breeding_service__date
 msgid "Service date"
 msgstr "تاريخ التلقيح"
+
+#. module: alfia_equine
+#. odoo-python
+#: code:addons/alfia_equine/models/breeding.py:0
+msgid "Service of %(mare)s on %(date)s"
+msgstr "تلقيح %(mare)s بتاريخ %(date)s"
 
 #. module: alfia_equine
 #: model:ir.actions.act_window,name:alfia_equine.alfia_breeding_service_action
@@ -3225,6 +3400,11 @@ msgid "The dose was due but not given."
 msgstr "كانت الجرعة مستحقة لكنها لم تُعطَ."
 
 #. module: alfia_equine
+#: model:ir.model.fields,help:alfia_equine.field_alfia_pregnancy__foal_id
+msgid "The foal registered by this pregnancy's foaling record."
+msgstr "المهر المسجل في سجل ولادة هذا الحمل."
+
+#. module: alfia_equine
 #. odoo-python
 #: code:addons/alfia_equine/models/breeding.py:0
 msgid "The genetic dam must be a mare."
@@ -3396,6 +3576,21 @@ msgstr "حصة تدريب"
 #: model:ir.ui.menu,name:alfia_equine.menu_alfia_training_session
 msgid "Training sessions"
 msgstr "حصص التدريب"
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_embryo_transfer_view_form
+msgid "Transfer"
+msgstr "نقل"
+
+#. module: alfia_equine
+#: model:ir.model,name:alfia_equine.model_alfia_embryo_transfer
+msgid "Transfer an embryo to a recipient"
+msgstr "نقل جنين إلى فرس مستقبلة"
+
+#. module: alfia_equine
+#: model_terms:ir.ui.view,arch_db:alfia_equine.alfia_embryo_view_form
+msgid "Transfer to recipient"
+msgstr "نقل إلى الفرس المستقبلة"
 
 #. module: alfia_equine
 #: model:ir.model.fields.selection,name:alfia_equine.selection__alfia_embryo__state__transferred

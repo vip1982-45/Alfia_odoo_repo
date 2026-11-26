@@ -788,6 +788,23 @@ class TestStockAndBillControls(ControlsCase):
                                             'picked': True, 'location_id': self.stock.id, 'location_dest_id': move.location_dest_id.id})
         with self.assertRaises(UserError):
             move._action_done()
+        # Not towards the customer within the warehouse either (findings 26 Nov), but it may still go to quarantine.
+        wh = self.env['stock.warehouse'].search([('lot_stock_id', 'parent_of', self.stock.id)], limit=1) or \
+            self.env['stock.warehouse'].search([('company_id', '=', self.env.company.id)], limit=1)
+        quarantine = self.env['stock.location'].create({'name': 'Expired quarantine', 'usage': 'internal', 'location_id': wh.view_location_id.id})
+        for dest, refused in ((wh.wh_output_stock_loc_id, True), (quarantine, False)):
+            internal = self.env['stock.move'].create({'product_id': product.id, 'product_uom_qty': 1, 'uom_id': product.uom_id.id,
+                                                      'location_id': self.stock.id, 'location_dest_id': dest.id})
+            internal._action_confirm()
+            internal.move_line_ids.unlink()
+            self.env['stock.move.line'].create({'move_id': internal.id, 'product_id': product.id, 'lot_id': expired.id, 'quantity': 1,
+                                                'picked': True, 'location_id': self.stock.id, 'location_dest_id': dest.id})
+            if refused:
+                with self.assertRaises(UserError):
+                    internal._action_done()
+            else:
+                internal._action_done()
+                self.assertEqual(internal.state, 'done')
 
 
 @tagged('post_install', '-at_install', 'alfia_controls')

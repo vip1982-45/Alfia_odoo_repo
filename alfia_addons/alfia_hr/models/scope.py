@@ -85,3 +85,14 @@ class HrEmployeeScope(models.Model):
                         "Choose one of your departments for the new employee: %s. Employees of other departments are "
                         "created by HR staff responsible for them.", ', '.join(user.alfia_department_ids.mapped('name')) or '—'))
         return super().create(vals_list)
+
+    def write(self, vals):
+        # Moving an employee to a department outside the user's scope would save and then hide the record from them.
+        user = self.env.user
+        if 'department_id' in vals and not self.env.su and user.alfia_scope_departments:
+            allowed = self.env['hr.department'].sudo().search([('id', 'child_of', user.alfia_department_ids.ids)]) if user.alfia_department_ids else self.env['hr.department']
+            if vals['department_id'] not in allowed.ids and any(emp.user_id != user for emp in self):
+                raise UserError(self.env._(
+                    "Move employees only between your departments: %s. A move to another department is made by HR staff "
+                    "responsible for it.", ', '.join(user.alfia_department_ids.mapped('name')) or '—'))
+        return super().write(vals)

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-08 22:53+0000\n"
-"PO-Revision-Date: 2026-11-08 22:53+0000\n"
+"POT-Creation-Date: 2026-11-26 04:33+0000\n"
+"PO-Revision-Date: 2026-11-26 04:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,6 +42,26 @@ msgstr ""
 #. odoo-python
 #: code:addons/alfia_security/models/res_users.py:0
 msgid "%(place)s is outside the sites you may work in%(what)s."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid "%(product)s%(lot)s is not available in %(loc)s; it is in: %(where)s"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid ""
+"%(product)s%(lot)s: %(loc)s holds %(have)g (%(held)g already taken by other "
+"transfers), not %(qty)g. Take it from where it is: %(where)s"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/flow.py:0
+msgid "%(what)s: %(fields)s can change only through the record's buttons."
 msgstr ""
 
 #. module: alfia_security
@@ -273,6 +293,11 @@ msgid "Company"
 msgstr ""
 
 #. module: alfia_security
+#: model:ir.model,name:alfia_security.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: alfia_security
 #: model:res.groups.privilege,name:alfia_security.privilege_alfia_inventory
 msgid "Controlled inventory"
 msgstr ""
@@ -365,6 +390,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_security.field_account_payment__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_account_payment_register__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_guarded_mixin__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__display_name
@@ -372,9 +398,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_security.field_ir_access__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_ir_model_data__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_product_category__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_product_template__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_purchase_order__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_res_company__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_res_groups__display_name
+#: model:ir.model.fields,field_description:alfia_security.field_res_partner__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_res_users__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_stock_move__display_name
 #: model:ir.model.fields,field_description:alfia_security.field_stock_move_line__display_name
@@ -412,6 +440,11 @@ msgid "Effective approver groups"
 msgstr ""
 
 #. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_effective_lot_reader_group_ids
+msgid "Effective batch readers"
+msgstr ""
+
+#. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_effective_group_id
 msgid "Effective restriction"
 msgstr ""
@@ -433,11 +466,6 @@ msgid "Enter the site name."
 msgstr ""
 
 #. module: alfia_security
-#: model:res.groups,name:alfia_security.group_alfia_sod_exempt
-msgid "Exempt from segregation of duties (emergency use)"
-msgstr ""
-
-#. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__location_id
 msgid "Existing location"
 msgstr ""
@@ -450,6 +478,11 @@ msgstr ""
 #. module: alfia_security
 #: model:ir.model.fields,help:alfia_security.field_alfia_site_setup__site_name
 msgid "For example: Barn C (yearlings)."
+msgstr ""
+
+#. module: alfia_security
+#: model:res.groups,name:alfia_security.group_alfia_sod_exempt
+msgid "Former segregation-of-duties exemption (no longer waives any approval)"
 msgstr ""
 
 #. module: alfia_security
@@ -479,10 +512,19 @@ msgid "Groups granted by profiles"
 msgstr ""
 
 #. module: alfia_security
+#: model:ir.model.fields,help:alfia_security.field_product_category__alfia_lot_reader_group_ids
+msgid ""
+"Groups that may see the batches (lots) of this restricted stock, to refer to"
+" them (e.g. the semen batch used for a service), without seeing its stock or"
+" moving it."
+msgstr ""
+
+#. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_account_move__id
 #: model:ir.model.fields,field_description:alfia_security.field_account_payment__id
 #: model:ir.model.fields,field_description:alfia_security.field_account_payment_register__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_access_profile__id
+#: model:ir.model.fields,field_description:alfia_security.field_alfia_guarded_mixin__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_picking_approval__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_security_audit__id
 #: model:ir.model.fields,field_description:alfia_security.field_alfia_site_setup__id
@@ -490,9 +532,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:alfia_security.field_ir_access__id
 #: model:ir.model.fields,field_description:alfia_security.field_ir_model_data__id
 #: model:ir.model.fields,field_description:alfia_security.field_product_category__id
+#: model:ir.model.fields,field_description:alfia_security.field_product_template__id
 #: model:ir.model.fields,field_description:alfia_security.field_purchase_order__id
 #: model:ir.model.fields,field_description:alfia_security.field_res_company__id
 #: model:ir.model.fields,field_description:alfia_security.field_res_groups__id
+#: model:ir.model.fields,field_description:alfia_security.field_res_partner__id
 #: model:ir.model.fields,field_description:alfia_security.field_res_users__id
 #: model:ir.model.fields,field_description:alfia_security.field_stock_move__id
 #: model:ir.model.fields,field_description:alfia_security.field_stock_move_line__id
@@ -538,6 +582,11 @@ msgid "Login at the time"
 msgstr ""
 
 #. module: alfia_security
+#: model:ir.model.fields,field_description:alfia_security.field_product_category__alfia_lot_reader_group_ids
+msgid "May see batch names"
+msgstr ""
+
+#. module: alfia_security
 #: model:res.groups,name:alfia_security.group_alfia_medicine_custodian
 msgid "Medicine store custodian"
 msgstr ""
@@ -550,6 +599,14 @@ msgstr ""
 #. module: alfia_security
 #: model:ir.model,name:alfia_security.model_ir_model_data
 msgid "Model Data"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/product_category.py:0
+msgid ""
+"Moving a product to a category with different stock restrictions is for "
+"security officers and system administrators."
 msgstr ""
 
 #. module: alfia_security
@@ -592,6 +649,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/alfia_security/models/res_users.py:0
 msgid "Only a system administrator can change the account of %s."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/admin_guard.py:0
+msgid "Only a system administrator can change the contact details of %s."
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/admin_guard.py:0
+msgid "Only a system administrator can delete the contact of %s."
 msgstr ""
 
 #. module: alfia_security
@@ -664,6 +733,11 @@ msgstr ""
 #. module: alfia_security
 #: model:alfia.access.profile,name:alfia_security.profile_procurement_officer
 msgid "Procurement officer"
+msgstr ""
+
+#. module: alfia_security
+#: model:ir.model,name:alfia_security.model_product_template
+msgid "Product"
 msgstr ""
 
 #. module: alfia_security
@@ -804,6 +878,14 @@ msgid ""
 msgstr ""
 
 #. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/account.py:0
+msgid ""
+"Segregation of duties: you prepared this credit note, so another person must"
+" post it."
+msgstr ""
+
+#. module: alfia_security
 #: model:ir.model.fields,field_description:alfia_security.field_res_company__alfia_sod_threshold
 msgid "Segregation threshold"
 msgstr ""
@@ -939,6 +1021,14 @@ msgid ""
 msgstr ""
 
 #. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid ""
+"This transfer would make stock negative, which is not allowed for tracked or controlled items. Pick from where the stock is:\n"
+"%s"
+msgstr ""
+
+#. module: alfia_security
 #: model:alfia.access.profile,name:alfia_security.profile_training_manager
 #: model:res.groups,name:alfia_security.group_alfia_training_manager
 msgid "Training manager"
@@ -1024,6 +1114,11 @@ msgid "Where they may work"
 msgstr ""
 
 #. module: alfia_security
+#: model:ir.model,name:alfia_security.model_alfia_guarded_mixin
+msgid "Workflow-owned fields"
+msgstr ""
+
+#. module: alfia_security
 #. odoo-python
 #: code:addons/alfia_security/models/stock.py:0
 msgid ""
@@ -1072,4 +1167,10 @@ msgstr ""
 #. odoo-python
 #: code:addons/alfia_security/models/admin_guard.py:0
 msgid "groups"
+msgstr ""
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid "nowhere in stock"
 msgstr ""

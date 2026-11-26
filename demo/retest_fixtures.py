@@ -89,6 +89,9 @@ def account(login, name, profile_xmlid):
     made.append(f'account {login}')
 
 
+user_account = account   # a later helper reuses the name `account` for ledger accounts
+
+
 if 'alfia.quality.check' in env:
     inspector_profile = env.ref('alfia_controls.profile_quality_inspector', raise_if_not_found=False)
     if inspector_profile and wh and not inspector_profile.warehouse_ids:
@@ -178,6 +181,28 @@ if 'use_expiration_date' in env['product.product']._fields and wh:
                               'expiration_date': fields.Datetime.now() + timedelta(days=days)})
             env['stock.quant'].sudo()._update_available_quantity(vax, wh.lot_stock_id, 5, lot_id=lot)
         made.append('product TEST Vaccine (batches with expiry): 5 of TEST-VAX-EXPIRED, 5 of TEST-VAX-VALID in stock')
+
+# Findings 26 Nov: a TEST recipient mare with an open pregnancy, so an embryo transfer can be tested without a real mare.
+et = horse('TEST ET recipient mare', 'female', barn_a)
+if et and not env['alfia.pregnancy'].sudo().search([('mare_id', '=', et.id)], limit=1):
+    ov = env['alfia.ovulation'].sudo().create({'mare_id': et.id, 'date': today - timedelta(days=6)})
+    ov.action_confirm()
+    made.append(f'recipient pregnancy {ov.pregnancy_id.display_name} (bred, awaiting result)')
+
+# Findings 26 Nov: two stock-count approvers (counts of 1,000 QAR or more need one who did not record the count).
+user_account('stock.controller', 'مراقب المخزون · Stock controller (TEST)', 'alfia_security.profile_stock_controller')
+user_account('stock.controller2', 'مراقب المخزون ٢ · Stock controller 2 (TEST)', 'alfia_security.profile_stock_controller')
+
+# Findings 26 Nov: an employee whose contract began on 1 January, so End of collaboration can be tested on any day (Odoo
+# needs a contract version that starts before the departure date).
+Employee = env['hr.employee'].sudo()
+if not Employee.with_context(active_test=False).search([('name', '=', 'TEST Contract employee')], limit=1):
+    start = today.replace(month=1, day=1)
+    dept = env['hr.department'].sudo().search([('name', '=', 'Stud operations')], limit=1)
+    Employee.with_context(alfia_no_onboarding=True).create({
+        'name': 'TEST Contract employee', 'department_id': dept.id or False, 'date_version': start,
+        'contract_date_start': start, 'wage': 4000})
+    made.append(f'employee TEST Contract employee with a contract from {start}')
 
 env.cr.commit()
 print('Retest fixtures: ' + ('; '.join(made) if made else 'already in place'))

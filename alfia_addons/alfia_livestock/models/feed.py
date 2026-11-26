@@ -56,8 +56,9 @@ class AlfiaFeedIssue(models.Model):
 
     def _alfia_check_store(self):
         # Someone from the store (who will issue it) can only choose a store in their own sites: say so when saving, not
-        # at issue. The stable may ask from any store; the store that issues is checked again then.
-        if self.env.su or not self.env.user.has_group(STORE):
+        # at issue. Stable staff ask from any store (even with inventory rights); the store that issues is checked then.
+        user = self.env.user
+        if self.env.su or not user.has_group(STORE) or user.has_group('alfia_security.group_alfia_stable_user'):
             return
         for issue in self:
             self.env.user._alfia_check_location(issue.location_id, self.env._("feed store"))

@@ -214,6 +214,9 @@ class TestHrScope(HrCase):
             self.env['hr.employee'].with_user(self.u_officer_b).create({'name': 'No department'})   # Round 7 N9
         with self.assertRaises(UserError):
             self.env['hr.employee'].with_user(self.u_officer_b).create({'name': 'Other dept', 'department_id': self.dept_a.id})
+        with self.assertRaises(UserError):
+            new.with_user(self.u_officer_b).write({'department_id': self.dept_a.id})   # findings 26 Nov: no move out of scope
+        self.assertEqual(new.department_id, self.dept_b)
 
 
 @tagged('post_install', '-at_install', 'alfia_hr', 'alfia_security_findings')

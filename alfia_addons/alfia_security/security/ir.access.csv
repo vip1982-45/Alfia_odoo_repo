@@ -15,12 +15,15 @@ alfia_scope_po,Alfia warehouse scope: purchase orders,purchase.order,,crud,"[('p
 alfia_scope_po_line,Alfia warehouse scope: purchase lines,purchase.order.line,,crud,"[('order_id.picking_type_id.warehouse_id', 'in', user.alfia_warehouse_ids.ids)] if user.alfia_scope_warehouses else []"
 alfia_scope_so,Alfia warehouse scope: sales orders,sale.order,,crud,"[('warehouse_id', 'in', user.alfia_warehouse_ids.ids)] if user.alfia_scope_warehouses else []"
 alfia_scope_so_line,Alfia warehouse scope: sales lines,sale.order.line,,crud,"[('order_id.warehouse_id', 'in', user.alfia_warehouse_ids.ids)] if user.alfia_scope_warehouses else []"
-alfia_scope_move_journal,Alfia journal scope: entries,account.move,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
-alfia_scope_move_line_journal,Alfia journal scope: entry lines,account.move.line,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
+alfia_scope_move_journal,Alfia journal scope: entries,account.move,,cud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
+alfia_scope_move_journal_read,Alfia journal scope: entries (reading; purchase managers also read supplier bills to approve their prices),account.move,,r,"(['|', ('journal_id', 'in', user.alfia_journal_ids.ids), ('move_type', 'in', ('in_invoice', 'in_refund'))] if user.has_group('purchase.group_purchase_manager') else [('journal_id', 'in', user.alfia_journal_ids.ids)]) if user.alfia_scope_journals else []"
+alfia_scope_move_line_journal,Alfia journal scope: entry lines,account.move.line,,cud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
+alfia_scope_move_line_journal_read,Alfia journal scope: entry lines (reading; purchase managers also read supplier bill lines),account.move.line,,r,"(['|', ('journal_id', 'in', user.alfia_journal_ids.ids), ('move_id.move_type', 'in', ('in_invoice', 'in_refund'))] if user.has_group('purchase.group_purchase_manager') else [('journal_id', 'in', user.alfia_journal_ids.ids)]) if user.alfia_scope_journals else []"
 alfia_scope_payment_journal,Alfia journal scope: payments,account.payment,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
 alfia_scope_statement_journal,Alfia journal scope: bank statements,account.bank.statement,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
 alfia_scope_statement_line_journal,Alfia journal scope: statement lines,account.bank.statement.line,,crud,"[('journal_id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
-alfia_scope_journal,Alfia journal scope: journals,account.journal,,crud,"[('id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
+alfia_scope_journal,Alfia journal scope: journals,account.journal,,cud,"[('id', 'in', user.alfia_journal_ids.ids)] if user.alfia_scope_journals else []"
+alfia_scope_journal_read,Alfia journal scope: journals (reading; purchase managers also see purchase journals by name),account.journal,,r,"(['|', ('id', 'in', user.alfia_journal_ids.ids), ('type', '=', 'purchase')] if user.has_group('purchase.group_purchase_manager') else [('id', 'in', user.alfia_journal_ids.ids)]) if user.alfia_scope_journals else []"
 alfia_access_profile_system,Access profile: system administrators,alfia.access.profile,base.group_system,crud,
 alfia_access_profile_officer,Access profile: security officers read,alfia.access.profile,alfia_security.group_alfia_security_officer,r,
 alfia_access_profile_auditor,Access profile: auditors read,alfia.access.profile,alfia_security.group_alfia_security_auditor,r,

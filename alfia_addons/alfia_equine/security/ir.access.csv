@@ -200,7 +200,8 @@ acc_alfia_horse_movement_group_alfia_breeding_manager,alfia.horse.movement: grou
 acc_alfia_horse_movement_group_alfia_training_manager,alfia.horse.movement: group_alfia_training_manager,alfia.horse.movement,alfia_security.group_alfia_training_manager,cru,
 acc_alfia_horse_movement_group_alfia_vet_manager,alfia.horse.movement: group_alfia_vet_manager,alfia.horse.movement,alfia_security.group_alfia_vet_manager,cru,
 acc_alfia_horse_movement_system,alfia.horse.movement: system administrators,alfia.horse.movement,base.group_system,crud,
-scope_alfia_horse_movement,Alfia site scope: alfia.horse.movement,alfia.horse.movement,,crud,"['|', ('horse_id.location_id', 'child_of', user.alfia_location_ids.ids), ('location_to_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+scope_alfia_horse_movement,Alfia site scope: alfia.horse.movement,alfia.horse.movement,,cud,"['|', ('horse_id.location_id', 'child_of', user.alfia_location_ids.ids), ('location_to_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
+scope_alfia_horse_movement_read,Alfia site scope: alfia.horse.movement (reading; also horses that have left),alfia.horse.movement,,r,"['|', '|', ('horse_id.location_id', '=', False), ('horse_id.location_id', 'child_of', user.alfia_location_ids.ids), ('location_to_id', 'child_of', user.alfia_location_ids.ids)] if user.alfia_scope_locations else []"
 acc_alfia_horse_status_log_group_alfia_vet_user,alfia.horse.status.log: group_alfia_vet_user,alfia.horse.status.log,alfia_security.group_alfia_vet_user,r,
 acc_alfia_horse_status_log_group_alfia_breeding_user,alfia.horse.status.log: group_alfia_breeding_user,alfia.horse.status.log,alfia_security.group_alfia_breeding_user,r,
 acc_alfia_horse_status_log_group_alfia_training_user,alfia.horse.status.log: group_alfia_training_user,alfia.horse.status.log,alfia_security.group_alfia_training_user,r,
