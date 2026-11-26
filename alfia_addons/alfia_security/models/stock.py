@@ -5,6 +5,8 @@ from odoo.addons.alfia_security.flow import in_trusted, trusted
 
 MOVE_WATCHED = {'product_id', 'product_uom_qty', 'quantity', 'location_id', 'location_dest_id', 'lot_id', 'uom_id',
                 'product_uom', 'partner_id', 'picking_id', 'package_id', 'result_package_id', 'owner_id'}
+STOCK_KEEPERS = ('stock.group_stock_user', 'alfia_security.group_alfia_semen_custodian',
+                 'alfia_security.group_alfia_medicine_custodian', 'alfia_security.group_alfia_stock_adjust_approver')
 PICKING_WATCHED = {'partner_id', 'location_id', 'location_dest_id', 'picking_type_id', 'owner_id', 'scheduled_date', 'date_deadline'}
 
 
@@ -85,6 +87,11 @@ class StockPicking(models.Model):
         return super().write(vals)
 
     def button_validate(self):
+        # Goods move in or out of stock only by the people who keep it: warehouse staff and the custodians of controlled
+        # stock. Sales and other staff may prepare a transfer (e.g. start a customer return), not validate it.
+        if not self.env.su and not any(self.env.user.has_group(g) for g in STOCK_KEEPERS):
+            raise AccessError(self.env._("Only warehouse staff validate transfers. %s is ready for the store to receive or "
+                                         "send.", ', '.join(self.mapped('name'))))
         self._alfia_check_dual_approval()
         with trusted('alfia_keep_approvals'):
             return super().button_validate()

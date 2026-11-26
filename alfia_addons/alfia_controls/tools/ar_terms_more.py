@@ -607,3 +607,20 @@ MORE.update({
     "Type": "النوع",
     "Waiting": "بانتظار الإجراء",
 })
+
+# Customer returns (alfia_controls)
+MORE.update({
+    "A credit note is made from a validated return of goods sold.": "يُعدّ إشعار الدائن من إرجاع مُعتمد لبضاعة مباعة.",
+    "Alfia Is Customer Return": "إرجاع من عميل",
+    "Credit note %s drafted for the returned goods.": "تم إعداد مسودة إشعار الدائن %s للبضاعة المرجعة.",
+    "Credit note for the goods returned on %(ret)s (sale %(sale)s).": "إشعار دائن للبضاعة المرجعة في %(ret)s (البيع %(sale)s).",
+    "Credit note for this return": "إشعار دائن لهذا الإرجاع",
+    "Credit notes for this return": "إشعارات الدائن لهذا الإرجاع",
+    "No credit note was needed for %s.": "لم تكن هناك حاجة لإشعار دائن لـ %s.",
+    "Nothing to credit for %s: the returned goods were not invoiced yet (the next invoice bills only what was kept), or a credit note for them already exists.":
+        "لا يوجد ما يُقيد دائناً لـ %s: البضاعة المرجعة لم تُفوتر بعد (الفاتورة القادمة تشمل ما تم الاحتفاظ به فقط)، أو يوجد لها إشعار دائن مسبقاً.",
+    "Only accounting staff prepare credit notes.": "موظفو المحاسبة فقط يُعدّون إشعارات الدائن.",
+    "Return %s": "إرجاع %s",
+    "Sales Order": "أمر البيع",
+    "Transfer": "التحويل",
+})

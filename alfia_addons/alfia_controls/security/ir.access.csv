@@ -33,3 +33,4 @@ acc_bank_import_manager,Bank import wizard: finance managers,alfia.bank.import,a
 acc_asset_accounting_manager,Assets: finance managers,alfia.asset,account.group_account_manager,ru,
 acc_asset_dep_manager,Asset depreciation: finance managers,alfia.asset.depreciation,account.group_account_manager,r,
 acc_bill_price_approval,Bill price approval wizard: purchase managers,alfia.bill.price.approval,purchase.group_purchase_manager,crud,
+acc_scrap_reason_tag_salesman,Scrap reasons: sales staff start customer returns (the store validates them),stock.scrap.reason.tag,sales_team.group_sale_salesman,r,

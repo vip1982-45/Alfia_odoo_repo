@@ -834,3 +834,72 @@ class TestPartialAcceptance(TestReceiptQuality):
         check.with_user(self.inspector2).write({'rejected_qty': 4, 'findings': 'Wrong strength on 4'})
         check.with_user(self.inspector2).action_accept()
         self.assertEqual(self._qty(self.wh.lot_stock_id), 6)
+
+
+@tagged('post_install', '-at_install', 'alfia_controls')
+class TestCustomerReturns(ControlsCase):
+    """Findings 26 Nov: a sales clerk starts a customer return and the store validates it; the credit note covers what came
+    back, not the whole invoice."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        env = cls.env
+        mk = lambda login, groups: env['res.users'].with_context(no_reset_password=True).create({  # noqa: E731
+            'name': login, 'login': f'{login}@ctl.local',
+            'group_ids': [Command.link(env.ref(x).id) for x in ['base.group_user', 'alfia_security.group_alfia_all_locations',
+                                                                 'alfia_security.group_alfia_all_warehouses',
+                                                                 'alfia_security.group_alfia_all_journals'] + groups]})
+        cls.clerk = mk('retclerk', ['sales_team.group_sale_salesman', 'account.group_account_invoice'])
+        cls.store = mk('retstore', ['stock.group_stock_user'])
+        cls.acc = mk('retacc', ['account.group_account_user'])
+        cls.customer = env['res.partner'].create({'name': 'Return customer'})
+        cls.oats = env['product.product'].create({'name': 'Return oats', 'is_storable': True, 'type': 'consu', 'list_price': 2.0,
+                                                  'invoice_policy': 'delivery', 'taxes_id': False})
+        env['stock.quant']._update_available_quantity(cls.oats, cls.wh.lot_stock_id, 10)
+
+    def _deliver(self, qty):
+        order = self.env['sale.order'].create({'partner_id': self.customer.id, 'order_line': [
+            Command.create({'product_id': self.oats.id, 'product_uom_qty': qty, 'tax_ids': False})]})
+        order.action_confirm()
+        for _ in range(4):
+            todo = order.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel'))
+            if not todo:
+                break
+            for picking in todo:
+                picking.action_assign()
+                picking.move_ids.picked = True
+                picking.with_user(self.store).button_validate()
+        return order, order.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing')
+
+    def test_clerk_starts_the_return_and_the_store_validates_it(self):
+        order, delivery = self._deliver(2)
+        action = delivery.with_user(self.clerk).action_return()                  # needs the scrap reasons, read-only
+        ret = self.env['stock.picking'].browse(action['res_id'])
+        ret.move_ids.product_uom_qty = 1
+        ret.move_ids.picked = True
+        with self.assertRaises(AccessError):
+            ret.with_user(self.clerk).button_validate()                         # only the store moves goods into stock
+        ret.with_user(self.store).button_validate()
+        self.assertEqual(ret.state, 'done')
+        self.assertEqual(order.order_line.qty_delivered, 1)
+
+    def test_credit_note_covers_what_came_back(self):
+        order, delivery = self._deliver(2)
+        invoice = order._create_invoices()
+        invoice.action_post()
+        self.assertEqual(invoice.amount_total, 4.0)
+        action = delivery.with_user(self.store).action_return()
+        ret = self.env['stock.picking'].browse(action['res_id'])
+        ret.move_ids.product_uom_qty = 1
+        ret.move_ids.picked = True
+        ret.with_user(self.store).button_validate()
+        with self.assertRaises(AccessError):
+            ret.with_user(self.store).action_alfia_return_credit_note()        # accounting prepares credit notes
+        credit = self.env['account.move'].browse(ret.with_user(self.acc).action_alfia_return_credit_note()['res_id'])
+        self.assertEqual((credit.move_type, credit.state, credit.amount_total), ('out_refund', 'draft', 2.0))
+        self.assertEqual(credit.invoice_line_ids.quantity, 1)
+        self.assertIn(ret.name, credit.ref)
+        self.assertEqual(ret.alfia_return_credit_ids, credit)
+        with self.assertRaises(UserError):
+            ret.with_user(self.acc).action_alfia_return_credit_note()          # not twice

@@ -75,6 +75,8 @@ if [ "${LOAD_DEMO_FARM:-1}" = "1" ]; then
   python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < demo/power_user.py || echo "WARNING: could not create the power user" >&2
   # TEST records inside each role's sites, for retests the role accounts must be able to reach (safe to run again).
   python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < demo/retest_fixtures.py || echo "WARNING: could not create the retest fixtures" >&2
+  # Read-only proof that the testers' findings are fixed on this database (acts as the TEST accounts, saves nothing).
+  python odoo-bin shell -c "$CONF" -d "$DB_NAME" --log-level=error < deploy/verify_trial.py || echo "WARNING: the findings check did not run" >&2
 fi
 if [ "${INIT_ONLY:-0}" = "1" ]; then
   echo "Initialisation finished."

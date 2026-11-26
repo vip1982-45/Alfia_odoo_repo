@@ -68,4 +68,22 @@
             </xpath>
         </field>
     </record>
+    <!-- A validated customer return: accounting drafts a credit note for exactly what came back -->
+    <record id="alfia_picking_form_return_credit" model="ir.ui.view">
+        <field name="name">stock.picking.form.alfia.return.credit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="alfia_is_customer_return" invisible="1"/>
+                <button name="action_alfia_return_credit_note" type="object" string="Credit note for this return" class="btn-secondary"
+                        invisible="not alfia_is_customer_return"
+                        groups="account.group_account_invoice,account.group_account_user,account.group_account_manager"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="alfia_return_credit_ids" widget="many2many_tags" invisible="not alfia_return_credit_ids"
+                       groups="account.group_account_invoice,account.group_account_user,account.group_account_manager"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>

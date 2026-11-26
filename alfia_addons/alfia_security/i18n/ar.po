@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-26 04:33+0000\n"
-"PO-Revision-Date: 2026-11-26 04:33+0000\n"
+"POT-Creation-Date: 2026-11-26 05:17+0000\n"
+"PO-Revision-Date: 2026-11-26 05:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -725,6 +725,15 @@ msgstr "مسؤولو الأمن ومسؤولو النظام وحدهم يمكن�
 #: code:addons/alfia_security/models/res_users.py:0
 msgid "Only security officers can assign access profiles."
 msgstr "مسؤولو الأمن وحدهم يمكنهم إسناد ملفات صلاحيات الوصول."
+
+#. module: alfia_security
+#. odoo-python
+#: code:addons/alfia_security/models/stock.py:0
+msgid ""
+"Only warehouse staff validate transfers. %s is ready for the store to "
+"receive or send."
+msgstr ""
+"موظفو المستودع فقط يعتمدون التحويلات. %s جاهز ليستلمه المخزن أو يرسله."
 
 #. module: alfia_security
 #: model:ir.model.fields,help:alfia_security.field_product_category__alfia_dual_approval

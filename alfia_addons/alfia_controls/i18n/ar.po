@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-25 16:05+0000\n"
-"PO-Revision-Date: 2026-11-25 16:05+0000\n"
+"POT-Creation-Date: 2026-11-26 05:17+0000\n"
+"PO-Revision-Date: 2026-11-26 05:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -220,6 +220,12 @@ msgstr ""
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/returns.py:0
+msgid "A credit note is made from a validated return of goods sold."
+msgstr "يُعدّ إشعار الدائن من إرجاع مُعتمد لبضاعة مباعة."
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/approval.py:0
 msgid "A delegation cannot start in the past."
 msgstr "لا يمكن أن يبدأ التفويض بتاريخ سابق."
@@ -372,6 +378,11 @@ msgstr "الفحص المطبق"
 #: model:ir.model.fields,field_description:alfia_controls.field_account_bank_statement_line__alfia_import_key
 msgid "Alfia Import Key"
 msgstr "بصمة الاستيراد"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_stock_picking__alfia_is_customer_return
+msgid "Alfia Is Customer Return"
+msgstr "إرجاع من عميل"
 
 #. module: alfia_controls
 #: model:ir.module.module,shortdesc:base.module_alfia_controls
@@ -743,6 +754,28 @@ msgid "Created on"
 msgstr "تاريخ الإنشاء"
 
 #. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/returns.py:0
+msgid "Credit note %s drafted for the returned goods."
+msgstr "تم إعداد مسودة إشعار الدائن %s للبضاعة المرجعة."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/returns.py:0
+msgid "Credit note for the goods returned on %(ret)s (sale %(sale)s)."
+msgstr "إشعار دائن للبضاعة المرجعة في %(ret)s (البيع %(sale)s)."
+
+#. module: alfia_controls
+#: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_picking_form_return_credit
+msgid "Credit note for this return"
+msgstr "إشعار دائن لهذا الإرجاع"
+
+#. module: alfia_controls
+#: model:ir.model.fields,field_description:alfia_controls.field_stock_picking__alfia_return_credit_ids
+msgid "Credit notes for this return"
+msgstr "إشعارات الدائن لهذا الإرجاع"
+
+#. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_limit__currency_id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset__company_currency_id
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_depreciation__currency_id
@@ -862,8 +895,10 @@ msgstr "قيد الفرق على"
 #: model:ir.model.fields,field_description:alfia_controls.field_purchase_order__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_purchase_order_line__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_res_company__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_sale_order__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_stock_move__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:alfia_controls.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:alfia_controls.field_stock_quant__display_name
 msgid "Display Name"
 msgstr "الاسم المعروض"
@@ -1127,8 +1162,10 @@ msgstr "حركة الحصان"
 #: model:ir.model.fields,field_description:alfia_controls.field_purchase_order__id
 #: model:ir.model.fields,field_description:alfia_controls.field_purchase_order_line__id
 #: model:ir.model.fields,field_description:alfia_controls.field_res_company__id
+#: model:ir.model.fields,field_description:alfia_controls.field_sale_order__id
 #: model:ir.model.fields,field_description:alfia_controls.field_stock_move__id
 #: model:ir.model.fields,field_description:alfia_controls.field_stock_move_line__id
+#: model:ir.model.fields,field_description:alfia_controls.field_stock_picking__id
 #: model:ir.model.fields,field_description:alfia_controls.field_stock_quant__id
 msgid "ID"
 msgstr "المعرف"
@@ -1409,6 +1446,12 @@ msgid "No charge needed adjusting."
 msgstr "لم يحتج أي رسم إلى تعديل."
 
 #. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/returns.py:0
+msgid "No credit note was needed for %s."
+msgstr "لم تكن هناك حاجة لإشعار دائن لـ %s."
+
+#. module: alfia_controls
 #: model:ir.model.fields.selection,name:alfia_controls.selection__alfia_asset__accounting_state__none
 msgid "Not capitalised"
 msgstr "غير مرسمل"
@@ -1422,6 +1465,17 @@ msgid ""
 msgstr ""
 "لا يوجد مخزون كافٍ للصرف: %s. اصرف المتوفر فقط واترك الباقي كطلب متأخر، أو "
 "استلم البضاعة أولاً."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/returns.py:0
+msgid ""
+"Nothing to credit for %s: the returned goods were not invoiced yet (the next"
+" invoice bills only what was kept), or a credit note for them already "
+"exists."
+msgstr ""
+"لا يوجد ما يُقيد دائناً لـ %s: البضاعة المرجعة لم تُفوتر بعد (الفاتورة "
+"القادمة تشمل ما تم الاحتفاظ به فقط)، أو يوجد لها إشعار دائن مسبقاً."
 
 #. module: alfia_controls
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_approval_delegation__message_needaction_counter
@@ -1527,6 +1581,12 @@ msgstr "لا يمكن رفض إلا طلب مقدَّم."
 #: code:addons/alfia_controls/models/asset_accounting.py:0
 msgid "Only accounting staff capitalise and depreciate assets."
 msgstr "لا يرسمل الأصول ويهلكها إلا موظفو المحاسبة."
+
+#. module: alfia_controls
+#. odoo-python
+#: code:addons/alfia_controls/models/returns.py:0
+msgid "Only accounting staff prepare credit notes."
+msgstr "موظفو المحاسبة فقط يُعدّون إشعارات الدائن."
 
 #. module: alfia_controls
 #. odoo-python
@@ -1975,6 +2035,12 @@ msgstr "النتيجة"
 
 #. module: alfia_controls
 #. odoo-python
+#: code:addons/alfia_controls/models/returns.py:0
+msgid "Return %s"
+msgstr "إرجاع %s"
+
+#. module: alfia_controls
+#. odoo-python
 #: code:addons/alfia_controls/models/journal.py:0
 msgid "Reviewed and posted by %s."
 msgstr "راجعه ورحّله %s."
@@ -1992,6 +2058,11 @@ msgstr "خطأ في تسليم الرسالة النصية"
 #: model:ir.model.fields,field_description:alfia_controls.field_alfia_asset_disposal__proceeds
 msgid "Sale proceeds"
 msgstr "عائدات البيع"
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_sale_order
+msgid "Sales Order"
+msgstr "أمر البيع"
 
 #. module: alfia_controls
 #. odoo-python
@@ -2203,6 +2274,11 @@ msgstr "لإعادة الفتح، اختر تاريخاً قبل تاريخ ال
 #: model_terms:ir.ui.view,arch_db:alfia_controls.alfia_bank_line_view_list
 msgid "Total"
 msgstr "الإجمالي"
+
+#. module: alfia_controls
+#: model:ir.model,name:alfia_controls.model_stock_picking
+msgid "Transfer"
+msgstr "التحويل"
 
 #. module: alfia_controls
 #. odoo-python
